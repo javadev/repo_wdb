@@ -18,8 +18,8 @@ import org.wdbuilder.plugin.common.domain.CommonBlock;
 import org.wdbuilder.plugin.common.domain.CommonBlock.Background;
 import org.wdbuilder.plugin.common.domain.CommonBlock.Shape;
 import org.wdbuilder.validator.BlockValidator;
-import org.wdbuilder.validator.CompositeBlockValidator;
-import org.wdbuilder.validator.IBlockValidator;
+import org.wdbuilder.validator.CompositeValidator;
+import org.wdbuilder.validator.IValidator;
 
 public class CommonBlockPluginFacade implements IPluginFacade {
 
@@ -109,13 +109,13 @@ public class CommonBlockPluginFacade implements IPluginFacade {
 	}
 
 	@Override
-	public IBlockValidator getValidator() {
-		return new CompositeBlockValidator(new BlockValidator()) {
+	public IValidator getValidator() {
+		return new CompositeValidator(new BlockValidator()) {
 
 			@Override
-			protected Iterable<IBlockValidator> getNestedValidators() {
-				List<IBlockValidator> result = new ArrayList<IBlockValidator>(2);
-				result.add(new IBlockValidator() {
+			protected Iterable<IValidator> getNestedValidators() {
+				List<IValidator> result = new ArrayList<IValidator>(2);
+				result.add(new IValidator() {
 
 					@Override
 					public void validate(Diagram diagram, Block entity)
@@ -127,7 +127,7 @@ public class CommonBlockPluginFacade implements IPluginFacade {
 						}
 					}
 				});
-				result.add(new IBlockValidator() {
+				result.add(new IValidator() {
 
 					@Override
 					public void validate(Diagram diagram, Block entity)

@@ -3,13 +3,13 @@ package org.wdbuilder.validator;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 
-public abstract class CompositeBlockValidator implements
-		IBlockValidator {
-	private final IBlockValidator baseValidator;
+public abstract class CompositeValidator implements
+		IValidator {
+	private final IValidator baseValidator;
 
-	protected abstract Iterable<IBlockValidator> getNestedValidators();
+	protected abstract Iterable<IValidator> getNestedValidators();
 
-	public CompositeBlockValidator(IBlockValidator baseValidator) {
+	public CompositeValidator(IValidator baseValidator) {
 		this.baseValidator = baseValidator;
 	}
 	
@@ -18,7 +18,7 @@ public abstract class CompositeBlockValidator implements
 		if( null!=baseValidator ) {
 			baseValidator.validate(diagram, entity);
 		}
-		for( final IBlockValidator validator : getNestedValidators()) {
+		for( final IValidator validator : getNestedValidators()) {
 			validator.validate(diagram, entity);
 		}
 	}

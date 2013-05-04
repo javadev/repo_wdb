@@ -5,7 +5,7 @@ import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.gui.UIExistingBlockFormFactory;
 import org.wdbuilder.gui.UINewBlockFormFactory;
 import org.wdbuilder.input.InputAdapter;
-import org.wdbuilder.validator.IBlockValidator;
+import org.wdbuilder.validator.IValidator;
 
 public interface IPluginFacade {
 
@@ -26,5 +26,5 @@ public interface IPluginFacade {
 
 	public Block create(InputAdapter input);
 
-	public IBlockValidator getValidator();
+	public IValidator getValidator();
 }

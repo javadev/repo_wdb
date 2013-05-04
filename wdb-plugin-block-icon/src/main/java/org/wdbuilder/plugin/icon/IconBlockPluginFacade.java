@@ -12,7 +12,7 @@ import org.wdbuilder.plugin.IPluginFacade;
 import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.plugin.icon.domain.IconBlock;
 import org.wdbuilder.validator.BlockValidator;
-import org.wdbuilder.validator.IBlockValidator;
+import org.wdbuilder.validator.IValidator;
 
 public class IconBlockPluginFacade implements IPluginFacade {
 
@@ -99,7 +99,7 @@ public class IconBlockPluginFacade implements IPluginFacade {
 	}
 
 	@Override
-	public IBlockValidator getValidator() {
+	public IValidator getValidator() {
 		return new BlockValidator();
 	}
 
