@@ -3,6 +3,8 @@
 *.jar
 *.prefs
 *.launch
+*.war
+*.ears
 target/
 .settings/
 .idea/
