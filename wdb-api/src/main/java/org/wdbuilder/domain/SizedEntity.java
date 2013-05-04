@@ -2,7 +2,7 @@ package org.wdbuilder.domain;
 
 import org.wdbuilder.domain.helper.Dimension;
 
-public class DiagramEntity extends NamedEntity {
+public class SizedEntity extends Entity {
 	private static final long serialVersionUID = 1L;
 
 	private Dimension size;

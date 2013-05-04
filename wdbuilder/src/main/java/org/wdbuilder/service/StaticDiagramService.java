@@ -9,7 +9,7 @@ import java.util.UUID;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.DiagramBackground;
-import org.wdbuilder.domain.DiagramEntity;
+import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Dimension;
@@ -301,7 +301,7 @@ public class StaticDiagramService implements DiagramService {
 		return key;
 	}
 
-	private static final void fillEntity(DiagramEntity result, String id,
+	private static final void fillEntity(SizedEntity result, String id,
 			String name, int width, int height) {
 		result.setKey(id);
 		result.setName(name);

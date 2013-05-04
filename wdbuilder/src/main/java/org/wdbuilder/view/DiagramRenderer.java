@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.domain.DiagramEntity;
+import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.plugin.IPluginFacade;
 import org.wdbuilder.plugin.IRenderContext;
@@ -36,7 +36,7 @@ public class DiagramRenderer implements IRenderer {
 	}
 
 	@Override
-	public void draw(DiagramEntity entity, IRenderContext diagramRenderCtx) {
+	public void draw(SizedEntity entity, IRenderContext diagramRenderCtx) {
 		if (!Diagram.class.isInstance(entity)) {
 			return;
 		}

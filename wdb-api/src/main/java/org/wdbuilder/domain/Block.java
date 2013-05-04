@@ -2,7 +2,7 @@ package org.wdbuilder.domain;
 
 import org.wdbuilder.domain.helper.Point;
 
-public abstract class Block extends DiagramEntity {
+public abstract class Block extends SizedEntity {
 	private static final long serialVersionUID = 1L;
 
 	private Point location;

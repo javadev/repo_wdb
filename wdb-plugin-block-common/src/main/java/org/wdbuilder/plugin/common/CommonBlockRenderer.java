@@ -10,7 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import org.wdbuilder.domain.DiagramEntity;
+import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.IGradientBackgroundProvider;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.common.domain.CommonBlock;
@@ -21,7 +21,7 @@ class CommonBlockRenderer extends BlockRenderer {
 
 	// Helper methods and values:
 	@Override
-	public void draw(DiagramEntity entity, IRenderContext renderCtx) {
+	public void draw(SizedEntity entity, IRenderContext renderCtx) {
 		if (!CommonBlock.class.isInstance(entity)) {
 			return;
 		}

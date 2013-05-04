@@ -1,7 +1,7 @@
 package org.wdbuilder.plugin;
 
-import org.wdbuilder.domain.DiagramEntity;
+import org.wdbuilder.domain.SizedEntity;
 
 public interface IRenderer {
-	void draw(DiagramEntity entity, IRenderContext renderCtx);
+	void draw(SizedEntity entity, IRenderContext renderCtx);
 }
