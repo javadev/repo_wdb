@@ -6,13 +6,13 @@ import java.util.List;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
-import org.wdbuilder.gui.UIExistingBlockFormFactory;
+import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.plugin.common.CommonBlockPluginFacade.Parameter;
 import org.wdbuilder.plugin.common.domain.CommonBlock;
 
-class EditFormFactory extends UIExistingBlockFormFactory {
+class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 
 	EditFormFactory(String diagramKey, Block block) {
 		super(diagramKey, block);
@@ -20,11 +20,11 @@ class EditFormFactory extends UIExistingBlockFormFactory {
 
 	@Override
 	public TwoColumnForm getForm() {
-		if (!CommonBlock.class.isInstance(block)) {
+		if (!CommonBlock.class.isInstance(entity)) {
 			return null;
 		}
 
-		final CommonBlock commonBlock = CommonBlock.class.cast(block);
+		final CommonBlock commonBlock = CommonBlock.class.cast(entity);
 
 		final CommonBlock.Shape activeShape = commonBlock.getShape();
 		final CommonBlock.Shape[] compatibleShapes = activeShape
@@ -37,15 +37,15 @@ class EditFormFactory extends UIExistingBlockFormFactory {
 
 		final TwoColumnForm form = new TwoColumnForm("edit-common-block-save")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
-				.addReadOnlyField(BlockParameter.BlockKey, block.getKey())
-				.addTextField(BlockParameter.Name, block.getName())
+				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
+				.addTextField(BlockParameter.Name, entity.getName())
 				.addSelectField(Parameter.Shape, String.valueOf(activeShape),
 						shapeSelectField)
 
 				.addTextField(BlockParameter.Width,
-						String.valueOf(block.getSize().getWidth()))
+						String.valueOf(entity.getSize().getWidth()))
 				.addTextField(BlockParameter.Height,
-						String.valueOf(block.getSize().getHeight()))
+						String.valueOf(entity.getSize().getHeight()))
 
 				.addSelectField(Parameter.Background,
 						String.valueOf(commonBlock.getBackground()),
@@ -57,7 +57,7 @@ class EditFormFactory extends UIExistingBlockFormFactory {
 	@Override
 	public String getSubmitCall() {
 		StringBuilder sb = new StringBuilder(128).append("submitEditBlock('")
-				.append(diagramKey).append("','").append(block.getKey())
+				.append(diagramKey).append("','").append(entity.getKey())
 				.append("',");
 		appendFieldNames(sb, getParameters());
 		sb.append(')');

@@ -7,7 +7,7 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.gui.IUIActionClick;
-import org.wdbuilder.gui.UIExistingBlockFormFactory;
+import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.gui.UINewBlockFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.input.IParameter;
@@ -150,13 +150,13 @@ public class CommonBlockPluginFacade implements IPluginFacade {
 	}
 
 	@Override
-	public UIExistingBlockFormFactory getViewBlockFormFactory(
+	public UIExistingEntityFormFactory<Block> getViewBlockFormFactory(
 			String diagramKey, Block block) {			
 		return new ViewFormFactory(diagramKey, block);
 	}
 
 	@Override
-	public UIExistingBlockFormFactory getEditBlockFormFactory(
+	public UIExistingEntityFormFactory<Block> getEditBlockFormFactory(
 			String diagramKey, Block block) {
 		return new EditFormFactory(diagramKey, block);
 	}

@@ -2,7 +2,7 @@ package org.wdbuilder.plugin;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.IUIActionClick;
-import org.wdbuilder.gui.UIExistingBlockFormFactory;
+import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.gui.UINewBlockFormFactory;
 import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.validator.IValidator;
@@ -17,12 +17,11 @@ public interface IPluginFacade {
 
 	public UINewBlockFormFactory getCreateBlockFormFactory(String diagramKey);
 
-	public UIExistingBlockFormFactory getViewBlockFormFactory(
+	public UIExistingEntityFormFactory<Block> getViewBlockFormFactory(
 			String diagramKey, Block block);
-	
-	public UIExistingBlockFormFactory getEditBlockFormFactory(
+
+	public UIExistingEntityFormFactory<Block> getEditBlockFormFactory(
 			String diagramKey, Block block);
-	
 
 	public Block create(InputAdapter input);
 

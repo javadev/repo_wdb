@@ -2,12 +2,12 @@ package org.wdbuilder.plugin.common;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.TwoColumnForm;
-import org.wdbuilder.gui.UIExistingBlockFormFactory;
+import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.plugin.common.CommonBlockPluginFacade.Parameter;
 import org.wdbuilder.plugin.common.domain.CommonBlock;
 
-class ViewFormFactory extends UIExistingBlockFormFactory {
+class ViewFormFactory extends UIExistingEntityFormFactory<Block> {
 
 	ViewFormFactory(String diagramKey, Block block) {
 		super(diagramKey, block);
@@ -15,16 +15,15 @@ class ViewFormFactory extends UIExistingBlockFormFactory {
 
 	@Override
 	public TwoColumnForm getForm() {
-		if (!CommonBlock.class.isInstance(block)) {
+		if (!CommonBlock.class.isInstance(entity)) {
 			return null;
 		}
 
-		final CommonBlock commonBlock = CommonBlock.class.cast(block);
+		final CommonBlock commonBlock = CommonBlock.class.cast(entity);
 
 		final TwoColumnForm form = new TwoColumnForm("none")
-				.addReadOnlyField(BlockParameter.BlockKey,
-						block.getKey())
-				.addReadOnlyField(BlockParameter.Name, block.getName())
+				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
+				.addReadOnlyField(BlockParameter.Name, entity.getName())
 				.addReadOnlyField(Parameter.Shape,
 						commonBlock.getShape().getDisplayName());
 		return form;

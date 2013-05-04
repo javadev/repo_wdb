@@ -2,12 +2,12 @@ package org.wdbuilder.plugin.icon;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.TwoColumnForm;
-import org.wdbuilder.gui.UIExistingBlockFormFactory;
+import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.plugin.icon.IconBlockPluginFacade.Parameter;
 import org.wdbuilder.plugin.icon.domain.IconBlock;
 
-class ViewFormFactory extends UIExistingBlockFormFactory {
+class ViewFormFactory extends UIExistingEntityFormFactory<Block> {
 
 	ViewFormFactory(String diagramKey, Block block) {
 		super(diagramKey, block);
@@ -15,15 +15,15 @@ class ViewFormFactory extends UIExistingBlockFormFactory {
 
 	@Override
 	public TwoColumnForm getForm() {
-		if (!IconBlock.class.isInstance(block)) {
+		if (!IconBlock.class.isInstance(entity)) {
 			return null;
 		}
 
-		final IconBlock iconBlock = IconBlock.class.cast(block);
+		final IconBlock iconBlock = IconBlock.class.cast(entity);
 
 		final TwoColumnForm form = new TwoColumnForm("none")
-				.addReadOnlyField(BlockParameter.BlockKey, block.getKey())
-				.addReadOnlyField(BlockParameter.Name, block.getName())
+				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
+				.addReadOnlyField(BlockParameter.Name, entity.getName())
 				.addReadOnlyField(Parameter.IconID,
 						String.valueOf(iconBlock.getIcon()));
 		return form;

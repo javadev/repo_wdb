@@ -1,6 +1,6 @@
 package org.wdbuilder.gui;
 
-public abstract class UINewBlockFormFactory extends UIBlockFormFactory {
+public abstract class UINewBlockFormFactory extends UIEntityFormFactory {
 	
 	protected final Class<?> blockClass; 
 

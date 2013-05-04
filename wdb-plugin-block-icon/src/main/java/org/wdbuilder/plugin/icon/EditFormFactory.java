@@ -6,13 +6,13 @@ import java.util.List;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
-import org.wdbuilder.gui.UIExistingBlockFormFactory;
+import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.plugin.icon.IconBlockPluginFacade.Parameter;
 import org.wdbuilder.plugin.icon.domain.IconBlock;
 
-class EditFormFactory extends UIExistingBlockFormFactory {
+class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 
 	EditFormFactory(String diagramKey, Block block) {
 		super(diagramKey, block);
@@ -20,19 +20,19 @@ class EditFormFactory extends UIExistingBlockFormFactory {
 
 	@Override
 	public TwoColumnForm getForm() {
-		if (!IconBlock.class.isInstance(block)) {
+		if (!IconBlock.class.isInstance(entity)) {
 			return null;
 		}
 
-		final IconBlock iconBlock = IconBlock.class.cast(block);
+		final IconBlock iconBlock = IconBlock.class.cast(entity);
 
 		final PredefinedSelect<Icon> iconSelectField = new PredefinedSelect<Icon>(
 				Icon.values(), Icon.Avatar);
 
 		final TwoColumnForm form = new TwoColumnForm("edit-icon-block-save")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
-				.addReadOnlyField(BlockParameter.BlockKey, block.getKey())
-				.addTextField(BlockParameter.Name, block.getName())
+				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
+				.addTextField(BlockParameter.Name, entity.getName())
 				.addSelectField(Parameter.IconID,
 						String.valueOf(iconBlock.getIcon()), iconSelectField);
 
@@ -42,7 +42,7 @@ class EditFormFactory extends UIExistingBlockFormFactory {
 	@Override
 	public String getSubmitCall() {
 		StringBuilder sb = new StringBuilder(128).append("submitEditBlock('")
-				.append(diagramKey).append("','").append(block.getKey())
+				.append(diagramKey).append("','").append(entity.getKey())
 				.append("',");
 		appendFieldNames(sb, getParameters());
 		sb.append(')');

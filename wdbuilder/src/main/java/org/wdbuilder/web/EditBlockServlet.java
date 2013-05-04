@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.TwoColumnForm;
-import org.wdbuilder.gui.UIExistingBlockFormFactory;
+import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.IPluginFacade;
@@ -46,7 +46,7 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 		if (null == pluginFacade) {
 			return;
 		}
-		final UIExistingBlockFormFactory formFactory = pluginFacade
+		final UIExistingEntityFormFactory<Block> formFactory = pluginFacade
 				.getEditBlockFormFactory(diagramHelper.getDiagram().getKey(),
 						block);
 

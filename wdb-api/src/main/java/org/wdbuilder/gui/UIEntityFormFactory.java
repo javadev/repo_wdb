@@ -2,7 +2,7 @@ package org.wdbuilder.gui;
 
 import org.wdbuilder.input.IParameter;
 
-abstract class UIBlockFormFactory {
+abstract class UIEntityFormFactory {
 
 	public abstract TwoColumnForm getForm();
 
@@ -12,7 +12,7 @@ abstract class UIBlockFormFactory {
 
 	protected final String diagramKey;
 
-	UIBlockFormFactory(String diagramKey) {
+	UIEntityFormFactory(String diagramKey) {
 		this.diagramKey = diagramKey;
 	}
 
