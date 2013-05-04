@@ -7,8 +7,8 @@ import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 
 import org.wdbuilder.domain.Block;
-import org.wdbuilder.gui.IUIFormFactory;
 import org.wdbuilder.gui.TwoColumnForm;
+import org.wdbuilder.gui.UIExistingBlockFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.IPluginFacade;
@@ -46,18 +46,18 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 		if (null == pluginFacade) {
 			return;
 		}
-		IUIFormFactory formFactory = pluginFacade.getFormFactory();
+		final UIExistingBlockFormFactory formFactory = pluginFacade
+				.getEditBlockFormFactory(diagramHelper.getDiagram().getKey(),
+						block);
 
-		String submitFunctionCall = formFactory.getEditSubmitCall(diagramHelper
-				.getDiagram().getKey(), block.getKey());
+		String submitFunctionCall = formFactory.getSubmitCall();
 
 		String closeHandler = "loadCanvas(" + diagramId + ",'" + block.getKey()
 				+ "')";
 
-		htmlWriter.write(new SectionHeader(formFactory.getEditBlockTitle()));
+		htmlWriter.write(new SectionHeader(formFactory.getTitle()));
 
-		final TwoColumnForm form = formFactory.getEditHTML(
-				diagramHelper.getDiagram().getKey(), block).addFooter(
+		final TwoColumnForm form = formFactory.getForm().addFooter(
 				submitFunctionCall, closeHandler);
 
 		htmlWriter.write(form);
