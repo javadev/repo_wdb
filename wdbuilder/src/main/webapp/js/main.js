@@ -109,6 +109,7 @@ function callbackReloadBlock(response, diagramKey, blockKey) {
 
 //Submit data for new block creation
 function submitCreateBlock(diagramKey, blockClass, fieldNames ) {
+	
 	var formElem = document.getElementById("formId");
 	if (!formElem) {
 		return;
@@ -117,6 +118,7 @@ function submitCreateBlock(diagramKey, blockClass, fieldNames ) {
 	for( var i=0; i<fieldNames.length; i++ ) {
 		params += "&" + fieldNames[i] + "=" + formElem[ fieldNames[i] ].value;
 	}
+	
 	var blockKey = null; // variable for callback function
 	submitForm("create-block-save", params, callbackReloadBlock);
 }

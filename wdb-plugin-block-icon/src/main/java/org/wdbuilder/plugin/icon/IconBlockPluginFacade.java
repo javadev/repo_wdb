@@ -169,7 +169,6 @@ public class IconBlockPluginFacade implements IPluginFacade {
 			private void appendFieldNames(StringBuilder sb) {
 				sb.append('[');
 				for (IParameter param : new IParameter[] { BlockParameter.Name,
-						BlockParameter.Width, BlockParameter.Height,
 						IconBlockParameter.IconID }) {
 					sb.append("'").append(param.getName()).append("',");
 				}
