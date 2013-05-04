@@ -10,6 +10,7 @@ public class Entity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String key;
+	private String name;
 
 	@XmlAttribute
 	public String getKey() {
@@ -21,6 +22,17 @@ public class Entity implements Serializable {
 			throw new IllegalArgumentException( "Key can't be empty" );
 		}
 		this.key = key;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		if (isEmpty(name)) {
+			throw new IllegalArgumentException("Name can't be empty");
+		}
+		this.name = name;
 	}
 
 }

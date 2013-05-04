@@ -5,8 +5,8 @@ import java.io.PrintWriter;
 import javax.servlet.annotation.WebServlet;
 
 import org.apache.commons.lang.StringUtils;
-import org.wdbuilder.gui.IUIFormFactory;
 import org.wdbuilder.gui.TwoColumnForm;
+import org.wdbuilder.gui.UINewBlockFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.IPluginFacade;
@@ -35,19 +35,17 @@ public class CreateBlockServlet extends DiagramHelperFormServlet {
 		if (null == pluginFacade) {
 			return;
 		}
-		IUIFormFactory formFactory = pluginFacade.getFormFactory();
+		final UINewBlockFormFactory formFactory = pluginFacade
+				.getCreateBlockFormFactory(str);
 
-		String submitFunctionCall = formFactory
-				.getCreateSubmitCall(BlockParameter.DiagramKey.getString(input));
+		final String submitFunctionCall = formFactory.getSubmitCall();
 
 		String closeHandler = "loadCanvas(" + diagramId + ",null)";
 
-		final TwoColumnForm form = formFactory.getCreateHTML(
-				diagramHelper.getDiagram().getKey()).addFooter(
+		final TwoColumnForm form = formFactory.getForm().addFooter(
 				submitFunctionCall, closeHandler);
 
-		new HtmlWriter(writer).write(new SectionHeader(formFactory
-				.getCreateBlockTitle()));
+		new HtmlWriter(writer).write(new SectionHeader(formFactory.getTitle()));
 
 		new HtmlWriter(writer).write(form);
 	}

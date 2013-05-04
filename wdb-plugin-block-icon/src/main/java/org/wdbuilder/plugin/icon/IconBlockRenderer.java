@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 import org.wdbuilder.domain.Block;
-import org.wdbuilder.domain.DiagramEntity;
+import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.icon.domain.IconBlock;
 import org.wdbuilder.view.BlockRenderer;
@@ -25,7 +25,7 @@ class IconBlockRenderer extends BlockRenderer {
 	private static final Logger LOG = Logger.getLogger(IconBlockRenderer.class);
 
 	@Override
-	public void draw(DiagramEntity entity, IRenderContext renderCtx) {
+	public void draw(SizedEntity entity, IRenderContext renderCtx) {
 		if (!IconBlock.class.isInstance(entity)) {
 			return;
 		}

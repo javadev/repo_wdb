@@ -4,7 +4,7 @@
 	<groupId>org.wdbuilder</groupId>
 	<artifactId>wdbuilder</artifactId>
 	<packaging>war</packaging>
-	<version>0.4a</version>
+	<version>0.5a</version>
 	<name>wdbuilder</name>
 	<url>http://wdbuilder-project.org</url>
 
@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>org.wdbuilder</groupId>
 			<artifactId>wdb-api</artifactId>
-			<version>0.3a</version>
+			<version>0.4a</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>

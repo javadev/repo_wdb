@@ -6,10 +6,10 @@ import java.util.List;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.helper.Dimension;
-import org.wdbuilder.validator.CompositeBlockValidator;
-import org.wdbuilder.validator.IBlockValidator;
+import org.wdbuilder.validator.CompositeValidator;
+import org.wdbuilder.validator.IValidator;
 
-public class DiagramValidator extends CompositeBlockValidator {
+public class DiagramValidator extends CompositeValidator {
 
   private static final int MIN_NAME_LENGTH = 3;
 	private static final int MAX_NAME_LENGTH = 128;
@@ -22,9 +22,9 @@ public class DiagramValidator extends CompositeBlockValidator {
 	}
 
 	@Override
-	protected Iterable<IBlockValidator> getNestedValidators() {
-		List<IBlockValidator> result = new ArrayList<IBlockValidator>(2);
-		result.add(new IBlockValidator() {
+	protected Iterable<IValidator> getNestedValidators() {
+		List<IValidator> result = new ArrayList<IValidator>(2);
+		result.add(new IValidator() {
 			@Override
 			public void validate(Diagram diagram, Block entity)
 					throws IllegalArgumentException {
@@ -34,7 +34,7 @@ public class DiagramValidator extends CompositeBlockValidator {
 			}
 		});
 
-		result.add(new IBlockValidator() {
+		result.add(new IValidator() {
 			@Override
 			public void validate(Diagram diagram, Block entity)
 					throws IllegalArgumentException {
@@ -55,7 +55,7 @@ public class DiagramValidator extends CompositeBlockValidator {
 			}
 		});
 
-		result.add(new IBlockValidator() {
+		result.add(new IValidator() {
 
 			@Override
 			public void validate(Diagram diagram, Block entity)
@@ -73,7 +73,7 @@ public class DiagramValidator extends CompositeBlockValidator {
 			}
 		});
 		
-		result.add(new IBlockValidator() {
+		result.add(new IValidator() {
 
 			@Override
 			public void validate(Diagram diagram, Block entity)

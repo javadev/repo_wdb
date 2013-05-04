@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @XmlRootElement
 //@XmlSeeAlso({ CommonBlock.class, IconBlock.class, Block.class, Diagram.class, LinkSocket.class, Link.class })
 @XmlSeeAlso({ Block.class, Diagram.class, LinkSocket.class, Link.class })
-public class Diagram extends DiagramEntity {
+public class Diagram extends SizedEntity {
 	private static final long serialVersionUID = 1L;
 
 	private Collection<Block> blocks;

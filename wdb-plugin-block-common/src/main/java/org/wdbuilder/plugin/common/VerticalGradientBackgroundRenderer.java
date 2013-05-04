@@ -4,14 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
-import org.wdbuilder.domain.DiagramEntity;
+import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.IGradientBackgroundProvider;
 import org.wdbuilder.view.IBackgroundRenderer;
 
 public class VerticalGradientBackgroundRenderer implements IBackgroundRenderer<IGradientBackgroundProvider> {
 
 	@Override
-	public void render(Graphics2D gr, DiagramEntity entity, IGradientBackgroundProvider backgroundProvider) {
+	public void render(Graphics2D gr, SizedEntity entity, IGradientBackgroundProvider backgroundProvider) {
 		Dimension size = entity.getSize().toAWT();
 
 		final Color colorFrom = backgroundProvider.getPrimaryBackgroundColor();

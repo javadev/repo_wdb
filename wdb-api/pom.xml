@@ -4,7 +4,7 @@
 
 	<groupId>org.wdbuilder</groupId>
 	<artifactId>wdb-api</artifactId>
-	<version>0.3a</version>
+	<version>0.4a</version>
 	<packaging>jar</packaging>
 
 	<name>wdb-api</name>

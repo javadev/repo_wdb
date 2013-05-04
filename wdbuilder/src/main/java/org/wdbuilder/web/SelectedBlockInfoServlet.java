@@ -3,8 +3,8 @@ package org.wdbuilder.web;
 import javax.servlet.annotation.WebServlet;
 
 import org.wdbuilder.domain.Block;
-import org.wdbuilder.gui.IUIFormFactory;
 import org.wdbuilder.gui.TwoColumnForm;
+import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.IPluginFacade;
@@ -34,9 +34,10 @@ public class SelectedBlockInfoServlet extends DiagramHelperFormServlet {
 		if (null == pluginFacade) {
 			return;
 		}
-		IUIFormFactory formFactory = pluginFacade.getFormFactory();
-		TwoColumnForm form = formFactory.getViewHTML(diagramHelper.getDiagram()
-				.getKey(), block);
+		final UIExistingEntityFormFactory<Block> formFactory = pluginFacade
+				.getViewBlockFormFactory(
+						BlockParameter.DiagramKey.getString(input), block);
+		TwoColumnForm form = formFactory.getForm();
 		String openDialogMethodJS = "openEditBlockDialog";
 
 		String blockKey = "'" + block.getKey() + "'";
