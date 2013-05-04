@@ -81,7 +81,8 @@ class CommonBlockRenderer extends BlockRenderer {
 				* MARGIN, size.height - 2 * MARGIN);
 		block.getShape().fill(gr, rect);
 
-		IBackgroundRenderer<IGradientBackgroundProvider> backgroundRenderer = new VerticalGradientBackgroundRenderer();
+		IBackgroundRenderer<IGradientBackgroundProvider> backgroundRenderer = 
+				new VerticalGradientBackgroundRenderer();
 		backgroundRenderer.render(gr, block, block.getBackground());
 
 		drawText(gr, block);

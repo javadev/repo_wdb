@@ -15,7 +15,7 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.Link;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.utility.DiagramHelper;
@@ -66,7 +66,7 @@ public class DiagramRenderer implements IRenderer {
 			blockCtx.getOffset().setY(block.getLocation().getY());
 			blockCtx.setGraphics(gr);
 
-			IPluginFacade pluginFacade = pluginFacadeRepository
+			IBlockPluginFacade pluginFacade = pluginFacadeRepository
 					.getFacade(block.getClass());
 			IRenderer renderer = pluginFacade.getRenderer();
 			renderer.draw(block, blockCtx);

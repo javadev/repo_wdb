@@ -1,12 +1,12 @@
 package org.wdbuilder.utility;
 
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 
 public interface IPluginFacadeRepository {
   
-	public Iterable<IPluginFacade> getBlockPlugins();
+	public Iterable<IBlockPluginFacade> getBlockPlugins();
 
-	public IPluginFacade getFacade(Class<?> klass);
+	public IBlockPluginFacade getFacade(Class<?> klass);
 	
 	public Iterable<Class<?>> getBlockClasses();
 }

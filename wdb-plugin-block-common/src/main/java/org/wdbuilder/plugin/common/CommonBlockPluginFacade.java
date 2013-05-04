@@ -12,7 +12,7 @@ import org.wdbuilder.gui.UINewBlockFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.input.InputAdapter;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.plugin.common.domain.CommonBlock;
 import org.wdbuilder.plugin.common.domain.CommonBlock.Background;
@@ -21,7 +21,7 @@ import org.wdbuilder.validator.BlockValidator;
 import org.wdbuilder.validator.CompositeValidator;
 import org.wdbuilder.validator.IValidator;
 
-public class CommonBlockPluginFacade implements IPluginFacade {
+public class CommonBlockPluginFacade implements IBlockPluginFacade {
 
 	private static final Dimension MIN_BLOCK_SIZE = new Dimension(70, 40);
 
@@ -63,7 +63,7 @@ public class CommonBlockPluginFacade implements IPluginFacade {
 	}
 
 	@Override
-	public Class<?> getBlockClass() {
+	public Class<?> getEntityClass() {
 		return CommonBlock.class;
 	}
 
@@ -102,7 +102,7 @@ public class CommonBlockPluginFacade implements IPluginFacade {
 			@Override
 			public String getOnClickHandler() {
 				return "openCreateBlockDialog(" + diagramKey + ", '"
-						+ getBlockClass().getCanonicalName() + "' )";
+						+ getEntityClass().getCanonicalName() + "' )";
 			}
 
 		};
@@ -146,7 +146,7 @@ public class CommonBlockPluginFacade implements IPluginFacade {
 
 	@Override
 	public UINewBlockFormFactory getCreateBlockFormFactory(String diagramKey) {
-		return new CreateFormFactory(diagramKey, getBlockClass());
+		return new CreateFormFactory(diagramKey, getEntityClass());
 	}
 
 	@Override

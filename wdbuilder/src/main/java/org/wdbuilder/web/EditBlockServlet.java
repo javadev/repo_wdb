@@ -11,7 +11,7 @@ import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.serialize.html.LinkListsTable;
 import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
@@ -41,7 +41,7 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
-		IPluginFacade pluginFacade = pluginFacadeRepository.getFacade(block
+		IBlockPluginFacade pluginFacade = pluginFacadeRepository.getFacade(block
 				.getClass());
 		if (null == pluginFacade) {
 			return;

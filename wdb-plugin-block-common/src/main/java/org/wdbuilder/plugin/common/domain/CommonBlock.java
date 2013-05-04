@@ -15,7 +15,6 @@ import org.wdbuilder.domain.IGradientBackgroundProvider;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.service.DiagramService;
 
-// TODO: create subpacake domain and put this file there (2013/05/03)
 public class CommonBlock extends Block {
   private static final long serialVersionUID = 1L;
 
