@@ -1,0 +1,45 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="main.css" />
+
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/WDB.js"></script>
+
+<script type="text/javascript" src="js/dragBlockManager.js"></script>
+<script type="text/javascript" src="js/diagramResizeManager.js"></script>
+<script type="text/javascript" src="js/drawLineManager.js"></script>
+<script type="text/javascript" src="js/linkArrangeManager.js"></script>
+
+<script type="text/javascript" src="js/main.js"></script>
+
+</head>
+<body onload="init()">
+	<table style="border: 0">
+		<tbody>
+			<tr>
+				<td colspan="3"><div id="errorArea"></div></td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" rowspan="2">
+					<div class="section" id="canvasList"></div>
+				</td>
+				<td align="left" valign="top">
+					<div id="lineFrame" style="display: none"></div>
+					<div id="canvasFrame" class="section" style="display: none;"></div>
+					<div id="car" style="display: none"></div>
+					<div id="resizeFrame" style="display: none"></div>
+					<div id="arrangeLink1" style="display: none"></div>
+					<div id="arrangeLink2" style="display: none"></div>
+					<div id="targetDiv" style="display:none">
+						<img src="resources/target.png" width="12" height="12" alt="" title=""/>
+					</div>
+				</td>
+				<td align="left" valign="top">
+					<div id="properties" class="section" style="display: none;"></div>
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

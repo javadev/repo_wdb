@@ -1,0 +1,11 @@
+.classpath
+.project
+*.jar
+*.prefs
+*.launch
+target/
+.settings/
+.idea/
+*.iml
+.plugins/
+.metadata/

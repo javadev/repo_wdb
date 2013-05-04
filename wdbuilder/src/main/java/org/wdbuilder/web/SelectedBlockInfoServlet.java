@@ -1,0 +1,52 @@
+package org.wdbuilder.web;
+
+import javax.servlet.annotation.WebServlet;
+
+import org.wdbuilder.domain.Block;
+import org.wdbuilder.gui.IUIFormFactory;
+import org.wdbuilder.gui.TwoColumnForm;
+import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.jaxbhtml.HtmlWriter;
+import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.serialize.html.SectionHeader;
+import org.wdbuilder.web.base.DiagramHelperFormServlet;
+import org.wdbuilder.web.base.ServletInput;
+
+@WebServlet("/selected-block-info")
+public class SelectedBlockInfoServlet extends DiagramHelperFormServlet {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
+		final Block block = diagramHelper
+				.findBlockByKey(BlockParameter.BlockKey.getString(input));
+		if (null == block) {
+			return;
+		}
+		final HtmlWriter writer = new HtmlWriter(input.getResponse()
+				.getWriter());
+
+		writer.write(new SectionHeader("Block \"" + block.getName()
+				+ "\" Details"));
+
+		IPluginFacade pluginFacade = pluginFacadeRepository.getFacade(block
+				.getClass());
+		if (null == pluginFacade) {
+			return;
+		}
+		IUIFormFactory formFactory = pluginFacade.getFormFactory();
+		TwoColumnForm form = formFactory.getViewHTML(diagramHelper.getDiagram()
+				.getKey(), block);
+		String openDialogMethodJS = "openEditBlockDialog";
+
+		String blockKey = "'" + block.getKey() + "'";
+		String diagramKey = "'" + diagramHelper.getDiagram().getKey() + "'";
+
+		form.addLinks(new TwoColumnForm.LinkButton[] {
+				new TwoColumnForm.LinkButton("Edit", openDialogMethodJS + "("
+						+ diagramKey + "," + blockKey + ")"),
+				new TwoColumnForm.LinkButton("Delete", "deleteBlock("
+						+ diagramKey + "," + blockKey + ")") });
+		writer.write(form);
+	}
+}
