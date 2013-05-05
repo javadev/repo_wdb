@@ -69,8 +69,7 @@ public class DefaultLinkPluginFacade implements IPluginFacade<Link> {
 	@Override
 	public UIExistingEntityFormFactory<Link> getEditFormFactory(
 			String diagramKey, Link entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return new EditFormFactory(diagramKey, entity);
 	}
 
 }
