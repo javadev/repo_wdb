@@ -4,7 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.input.BlockParameter;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.web.base.ServletInput;
 
 // TODO: set "/edit-block-save" here
@@ -23,7 +23,7 @@ public class EditBlockSaveServlet extends DiagramServlet {
 			return;
 		}
 		
-		IPluginFacade pluginFacade = pluginFacadeRepository
+		IBlockPluginFacade pluginFacade = pluginFacadeRepository
 				.getFacade(persistedBlock.getClass());
 		Block block = pluginFacade.create(input);
 		

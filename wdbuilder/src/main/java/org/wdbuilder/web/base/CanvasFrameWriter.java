@@ -23,7 +23,7 @@ import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.Area;
 import org.wdbuilder.jaxbhtml.element.Map;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.serialize.html.IUIActionURL;
 import org.wdbuilder.service.DiagramService;
@@ -70,7 +70,7 @@ public class CanvasFrameWriter {
 				if (!ApplicationState.Mode.BLOCK.equals(mode)) {
 					return result;
 				}
-				for (final IPluginFacade pluginFacade : pluginFacadeRepository
+				for (final IBlockPluginFacade pluginFacade : pluginFacadeRepository
 						.getBlockPlugins()) {
 					result.add(pluginFacade.getUIActionCreate(diagramKey));
 				}

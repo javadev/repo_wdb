@@ -9,7 +9,6 @@ import javax.xml.bind.JAXBException;
 
 import org.wdbuilder.jaxbhtml.element.*;
 
-
 public class HtmlWriter {
 
 	private final PrintWriter writer;
@@ -17,9 +16,10 @@ public class HtmlWriter {
 
 	public HtmlWriter(PrintWriter writer) throws JAXBException {
 		this.writer = writer;
-		this.jaxbContext = JAXBContext.newInstance(Img.class, Area.class, Map.class, Td.class, Tr.class, Table.class,
-		        Div.class, Ul.class, Li.class, Span.class, A.class, Input.class, Form.class, Select.class,
-		        Option.class, NoBr.class);
+		this.jaxbContext = JAXBContext.newInstance(Img.class, Area.class,
+				Map.class, Td.class, Tr.class, Table.class, Div.class,
+				Ul.class, Ol.class, Li.class, Span.class, A.class, Input.class,
+				Form.class, Select.class, Option.class, NoBr.class);
 	}
 
 	public void write(IHtml obj) throws JAXBException, IOException {

@@ -4,7 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.input.BlockParameter;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.web.base.ServletInput;
 
 @WebServlet("/create-block-save")
@@ -18,7 +18,7 @@ public class CreateBlockSaveServlet extends DiagramServlet {
 		final String blockClassStr = BlockParameter.BlockClass.getString(input);
 		final Class<?> blockClass = Class.forName(blockClassStr);
 
-		final IPluginFacade pluginFacade = pluginFacadeRepository
+		final IBlockPluginFacade pluginFacade = pluginFacadeRepository
 				.getFacade(blockClass);
 		final Block block = pluginFacade.create(input);
 		final String blockKey = service.persistBlock(diagramKey, block);

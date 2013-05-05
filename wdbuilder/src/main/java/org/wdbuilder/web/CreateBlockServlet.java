@@ -9,7 +9,7 @@ import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UINewBlockFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
 import org.wdbuilder.web.base.ServletInput;
@@ -30,7 +30,7 @@ public class CreateBlockServlet extends DiagramHelperFormServlet {
 			return;
 		}
 
-		IPluginFacade pluginFacade = pluginFacadeRepository.getFacade(Class
+		IBlockPluginFacade pluginFacade = pluginFacadeRepository.getFacade(Class
 				.forName(blockClassStr));
 		if (null == pluginFacade) {
 			return;

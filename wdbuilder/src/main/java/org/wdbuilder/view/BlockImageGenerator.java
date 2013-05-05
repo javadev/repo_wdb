@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.utility.DiagramHelper;
 import org.wdbuilder.utility.IPluginFacadeRepository;
@@ -44,7 +44,7 @@ public class BlockImageGenerator extends ImageGenerator {
 		renderCtx.setAppState(appState);
 		renderCtx.setGraphics(gr);
 
-		IPluginFacade pluginFacade = pluginFacadeRepository.getFacade(block.getClass());
+		IBlockPluginFacade pluginFacade = pluginFacadeRepository.getFacade(block.getClass());
 		IRenderer renderer = pluginFacade.getRenderer();
 		renderer.draw(block, renderCtx);
 		gr.dispose();

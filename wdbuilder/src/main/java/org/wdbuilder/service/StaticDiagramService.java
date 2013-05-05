@@ -14,7 +14,7 @@ import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.domain.helper.Point;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.service.validator.DiagramValidator;
 import org.wdbuilder.utility.DiagramHelper;
 import org.wdbuilder.utility.IPluginFacadeRepository;
@@ -119,7 +119,7 @@ public class StaticDiagramService implements DiagramService {
 			return;
 		}
 
-		IPluginFacade pluginFacade = pluginRepository.getFacade(block
+		IBlockPluginFacade pluginFacade = pluginRepository.getFacade(block
 				.getClass());
 		// Save old values:
 		Point oldLocation = new Point(block.getLocation().getX(), block
@@ -163,7 +163,7 @@ public class StaticDiagramService implements DiagramService {
 		block.setKey(key);
 		block.setLocation(new Point(offsetX, offsetY));
 
-		IPluginFacade pluginFacade = pluginRepository.getFacade(block
+		IBlockPluginFacade pluginFacade = pluginRepository.getFacade(block
 				.getClass());
 		pluginFacade.getValidator().validate(diagram, block);
 
@@ -188,7 +188,7 @@ public class StaticDiagramService implements DiagramService {
 		block.setKey(blockKey);
 		block.setLocation(savedBlock.getLocation());
 
-		IPluginFacade pluginFacade = pluginRepository.getFacade(block
+		IBlockPluginFacade pluginFacade = pluginRepository.getFacade(block
 				.getClass());
 		pluginFacade.getValidator().validate(diagram, block);
 
@@ -241,10 +241,12 @@ public class StaticDiagramService implements DiagramService {
 		link.setEndKey(endBlockKey);
 		link.setBeginSocket(beginSocket);
 		link.setEndSocket(endSocket);
+		
+		// TODO: set the default name fo a while (2013/05/05)
+		link.setName(link.getKey());
 
 		diagramHelper.calculatePivot(link);
 
-		// TODO: check for doubling:
 		if (!diagramHelper.hasLinkWithSameEnds(link)) {
 			diagram.getLinks().add(link);
 		}

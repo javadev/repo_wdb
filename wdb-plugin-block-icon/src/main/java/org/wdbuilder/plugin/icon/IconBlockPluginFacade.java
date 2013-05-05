@@ -8,13 +8,13 @@ import org.wdbuilder.gui.UINewBlockFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.input.InputAdapter;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.plugin.icon.domain.IconBlock;
 import org.wdbuilder.validator.BlockValidator;
 import org.wdbuilder.validator.IValidator;
 
-public class IconBlockPluginFacade implements IPluginFacade {
+public class IconBlockPluginFacade implements IBlockPluginFacade {
 
 	static enum Parameter implements IParameter {
 		IconID("iconID", "Icon");
@@ -54,7 +54,7 @@ public class IconBlockPluginFacade implements IPluginFacade {
 	}
 
 	@Override
-	public Class<?> getBlockClass() {
+	public Class<?> getEntityClass() {
 		return IconBlock.class;
 	}
 
@@ -92,7 +92,7 @@ public class IconBlockPluginFacade implements IPluginFacade {
 			@Override
 			public String getOnClickHandler() {
 				return "openCreateBlockDialog(" + diagramKey + ", '"
-						+ getBlockClass().getCanonicalName() + "' )";
+						+ getEntityClass().getCanonicalName() + "' )";
 			}
 		};
 
@@ -105,17 +105,17 @@ public class IconBlockPluginFacade implements IPluginFacade {
 
 	@Override
 	public UINewBlockFormFactory getCreateBlockFormFactory(String diagramKey) {
-		return new CreateFormFactory(diagramKey, getBlockClass());
+		return new CreateFormFactory(diagramKey, getEntityClass());
 	}
 
 	@Override
-	public UIExistingEntityFormFactory getViewBlockFormFactory(
+	public UIExistingEntityFormFactory<Block> getViewBlockFormFactory(
 			String diagramKey, Block block) {
 		return new ViewFormFactory(diagramKey, block);
 	}
 
 	@Override
-	public UIExistingEntityFormFactory getEditBlockFormFactory(
+	public UIExistingEntityFormFactory<Block> getEditBlockFormFactory(
 			String diagramKey, Block block) {
 		return new EditFormFactory(diagramKey, block);
 	}

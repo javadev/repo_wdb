@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.service.DiagramService;
 import org.wdbuilder.service.StaticDiagramService;
 import org.wdbuilder.service.StaticPluginFacadeRepository;
@@ -77,8 +77,8 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 	}
 
 	private class PluginRepositoryConfiguration {
-		private Collection<IPluginFacade> getBlockPlugins() {
-			Set<IPluginFacade> result = new HashSet<IPluginFacade>(2);
+		private Collection<IBlockPluginFacade> getBlockPlugins() {
+			Set<IBlockPluginFacade> result = new HashSet<IBlockPluginFacade>(2);
 
 			String contextParamStr = getServletContext().getInitParameter(
 					"block-plugins");
@@ -91,13 +91,13 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 				if (null != klass) {
 					try {
 						Object obj = klass.newInstance();
-						if (IPluginFacade.class.isInstance(obj)) {
-							IPluginFacade facade = IPluginFacade.class
+						if (IBlockPluginFacade.class.isInstance(obj)) {
+							IBlockPluginFacade facade = IBlockPluginFacade.class
 									.cast(obj);
 							result.add(facade);
 
 							LOG.info("plugin " + klass.getName() + " ("
-									+ facade.getBlockClass().getName() + ") - OK");
+									+ facade.getEntityClass().getName() + ") - OK");
 						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
