@@ -3,13 +3,12 @@ package org.wdbuilder.service.validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.validator.CompositeValidator;
 import org.wdbuilder.validator.IValidator;
 
-public class DiagramValidator extends CompositeValidator {
+public class DiagramValidator extends CompositeValidator<Diagram> {
 
   private static final int MIN_NAME_LENGTH = 3;
 	private static final int MAX_NAME_LENGTH = 128;
@@ -22,11 +21,11 @@ public class DiagramValidator extends CompositeValidator {
 	}
 
 	@Override
-	protected Iterable<IValidator> getNestedValidators() {
-		List<IValidator> result = new ArrayList<IValidator>(2);
-		result.add(new IValidator() {
+	protected Iterable<IValidator<Diagram>> getNestedValidators() {
+		List<IValidator<Diagram>> result = new ArrayList<IValidator<Diagram>>(2);
+		result.add(new IValidator<Diagram>() {
 			@Override
-			public void validate(Diagram diagram, Block entity)
+			public void validate(Diagram diagram, Diagram entity) // TODO ????
 					throws IllegalArgumentException {
 				if (null == diagram) {
 					throw new IllegalArgumentException("Diagram can't be null");
@@ -34,9 +33,9 @@ public class DiagramValidator extends CompositeValidator {
 			}
 		});
 
-		result.add(new IValidator() {
+		result.add(new IValidator<Diagram>() {
 			@Override
-			public void validate(Diagram diagram, Block entity)
+			public void validate(Diagram diagram, Diagram entity)
 					throws IllegalArgumentException {
 				String name = diagram.getName();
 				if (null == name) {
@@ -55,10 +54,10 @@ public class DiagramValidator extends CompositeValidator {
 			}
 		});
 
-		result.add(new IValidator() {
+		result.add(new IValidator<Diagram>() {
 
 			@Override
-			public void validate(Diagram diagram, Block entity)
+			public void validate(Diagram diagram, Diagram entity)
 					throws IllegalArgumentException {
 				int width = diagram.getSize().getWidth();
 
@@ -73,10 +72,10 @@ public class DiagramValidator extends CompositeValidator {
 			}
 		});
 		
-		result.add(new IValidator() {
+		result.add(new IValidator<Diagram>() {
 
 			@Override
-			public void validate(Diagram diagram, Block entity)
+			public void validate(Diagram diagram, Diagram entity)
 					throws IllegalArgumentException {
 				int height = diagram.getSize().getHeight();
 

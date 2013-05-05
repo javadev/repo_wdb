@@ -99,23 +99,23 @@ public class IconBlockPluginFacade implements IBlockPluginFacade {
 	}
 
 	@Override
-	public IValidator getValidator() {
+	public IValidator<Block> getValidator() {
 		return new BlockValidator();
 	}
 
 	@Override
-	public UINewBlockFormFactory getCreateBlockFormFactory(String diagramKey) {
+	public UINewBlockFormFactory getCreateFormFactory(String diagramKey) {
 		return new CreateFormFactory(diagramKey, getEntityClass());
 	}
 
 	@Override
-	public UIExistingEntityFormFactory<Block> getViewBlockFormFactory(
+	public UIExistingEntityFormFactory<Block> getViewFormFactory(
 			String diagramKey, Block block) {
 		return new ViewFormFactory(diagramKey, block);
 	}
 
 	@Override
-	public UIExistingEntityFormFactory<Block> getEditBlockFormFactory(
+	public UIExistingEntityFormFactory<Block> getEditFormFactory(
 			String diagramKey, Block block) {
 		return new EditFormFactory(diagramKey, block);
 	}

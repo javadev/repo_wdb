@@ -48,7 +48,7 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 			return;
 		}
 		final UIExistingEntityFormFactory<Block> formFactory = pluginFacade
-				.getEditBlockFormFactory(diagramHelper.getDiagram().getKey(),
+				.getEditFormFactory(diagramHelper.getDiagram().getKey(),
 						block);
 
 		String submitFunctionCall = formFactory.getSubmitCall();

@@ -10,7 +10,7 @@ public interface IPluginFacade<T extends Entity> {
 
 	public IValidator getValidator();
 
-	public UIExistingEntityFormFactory<T> getEditBlockFormFactory(
+	public UIExistingEntityFormFactory<T> getEditFormFactory(
 			String diagramKey, T entity);
 
 }

@@ -12,9 +12,9 @@ public interface IBlockPluginFacade extends IPluginFacade<Block> {
 
 	public IUIActionClick getUIActionCreate(String diagramKey);
 
-	public UINewBlockFormFactory getCreateBlockFormFactory(String diagramKey);
+	public UINewBlockFormFactory getCreateFormFactory(String diagramKey);
 
-	public UIExistingEntityFormFactory<Block> getViewBlockFormFactory(
+	public UIExistingEntityFormFactory<Block> getViewFormFactory(
 			String diagramKey, Block block);
 
 	public Block create(InputAdapter input);

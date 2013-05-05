@@ -36,7 +36,7 @@ public class CreateBlockServlet extends DiagramHelperFormServlet {
 			return;
 		}
 		final UINewBlockFormFactory formFactory = pluginFacade
-				.getCreateBlockFormFactory(str);
+				.getCreateFormFactory(str);
 
 		final String submitFunctionCall = formFactory.getSubmitCall();
 
