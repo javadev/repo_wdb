@@ -14,9 +14,10 @@
 	<modules>
 		<module>wdb-api</module>
 		<module>wdb-jaxb-html</module>
+		<module>wdbuilder</module>		
 		<module>wdb-plugin-block-common</module>
 		<module>wdb-plugin-block-icon</module>
-		<module>wdbuilder</module>
+		<module>wdb-plugin-link-default</module>
     <module>wdb-plugin-link-default</module>
   </modules>
 
