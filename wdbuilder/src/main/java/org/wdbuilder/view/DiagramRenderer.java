@@ -74,10 +74,14 @@ public class DiagramRenderer implements IRenderer {
 
 		gr.setColor(Color.black);
 		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
+		// TODO: draw more than 1 to 1 link (2013/05/05)
+
 		for (final Link link : diagram.getLinks()) {
-			new LinkRenderer(gr, link, diagramHelper.findBlockByKey(link
-					.getBeginKey()), diagramHelper.findBlockByKey(link
-					.getEndKey())).render(appState.getMode());
+			final String key0 = link.getSockets().get(0).getBlockKey();
+			final String key1 = link.getSockets().get(1).getBlockKey();
+			new LinkRenderer(gr, link, diagramHelper.findBlockByKey(key0),
+					diagramHelper.findBlockByKey(key1)).render(appState
+					.getMode());
 		}
 	}
 

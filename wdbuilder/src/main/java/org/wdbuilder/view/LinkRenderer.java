@@ -8,7 +8,6 @@ import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.web.ApplicationState;
 
-
 import static org.wdbuilder.service.DiagramService.LINE_AREA;
 
 public class LinkRenderer {
@@ -18,7 +17,8 @@ public class LinkRenderer {
 	private final Block endBlock;
 	private final Graphics2D gr;
 
-	public LinkRenderer(Graphics2D gr, Link link, Block beginBlock, Block endBlock) {
+	public LinkRenderer(Graphics2D gr, Link link, Block beginBlock,
+			Block endBlock) {
 		this.gr = gr;
 		this.link = link;
 		this.beginBlock = beginBlock;
@@ -26,13 +26,14 @@ public class LinkRenderer {
 	}
 
 	public void render(ApplicationState.Mode mode) {
-		if( null==gr || null==link || null==beginBlock || null==endBlock ) {
+		if (null == gr || null == link || null == beginBlock
+				|| null == endBlock) {
 			return;
 		}
 
-		renderLine(getBeginLocation(), link.getBeginSocket());
-		renderLine(getEndLocation(), link.getEndSocket());
-		DivAnalog.render(gr, link, beginBlock, endBlock );		
+		renderLine(getBeginLocation(), link.getSockets().get(0));
+		renderLine(getEndLocation(), link.getSockets().get(1));
+		DivAnalog.render(gr, link, beginBlock, endBlock);
 
 		renderArrow();
 
@@ -52,16 +53,16 @@ public class LinkRenderer {
 	}
 
 	private void renderArrow() {
-		final int[][] a = link.getEndSocket().getArrow(getEndLocation());
+		final int[][] a = link.getSockets().get(1).getArrow(getEndLocation());
 		gr.fillPolygon(a[0], a[1], 3);
 	}
 
 	private Point getEndLocation() {
-		return getPoint(endBlock, link.getEndSocket());
+		return getPoint(endBlock, link.getSockets().get(1));
 	}
 
 	private Point getBeginLocation() {
-		return getPoint(beginBlock, link.getBeginSocket());
+		return getPoint(beginBlock, link.getSockets().get(0));
 	}
 
 	private static Point getPoint(Block b, LinkSocket s) {

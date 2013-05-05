@@ -35,11 +35,13 @@ public class LinkSocket {
 
 	private Direction direction;
 	private int index;
+	private String blockKey;
 
 	public LinkSocket() {
 	}
 
-	public LinkSocket(Direction direction, int index) {
+	public LinkSocket(String blockKey, Direction direction, int index) {
+		setBlockKey(blockKey);
 		setDirection(direction);
 		setIndex(index);
 	}
@@ -51,6 +53,10 @@ public class LinkSocket {
 	public void setIndex(int index) {
 		this.index = index;
 	}
+	
+	public void setBlockKey(String blockKey) {
+		this.blockKey = blockKey;
+	}	
 
 	public final Point getLocation(Block b) {
 		return this.direction.getLocation(b, this.index);
@@ -64,6 +70,11 @@ public class LinkSocket {
 	@XmlAttribute
 	public int getIndex() {
 		return this.index;
+	}
+	
+	@XmlAttribute
+	public String getBlockKey() {
+		return blockKey;
 	}
 
 	public final boolean isHorizontal() {
@@ -91,6 +102,8 @@ public class LinkSocket {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
+				+ ((blockKey == null) ? 0 : blockKey.hashCode());
+		result = prime * result
 				+ ((direction == null) ? 0 : direction.hashCode());
 		result = prime * result + index;
 		return result;
@@ -98,34 +111,37 @@ public class LinkSocket {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
-		LinkSocket other = LinkSocket.class.cast(obj);
-		if (direction != other.direction) {
+		LinkSocket other = (LinkSocket) obj;
+		if (blockKey == null) {
+			if (other.blockKey != null)
+				return false;
+		} else if (!blockKey.equals(other.blockKey))
 			return false;
-		}
-		if (index != other.index) {
+		if (direction != other.direction)
 			return false;
-		}
+		if (index != other.index)
+			return false;
 		return true;
 	}
 
+	// TODO (2013/05/05) extract better method
 	public static Collection<LinkSocket> getAvailable(
 			final Collection<LinkSocket> forbiden, Block b) {
+		String blockKey = b.getKey();
 		final List<LinkSocket> values = new ArrayList<LinkSocket>(4);
 
 		final int maxY = b.getMaxLinkSocketNumY();
-		addLinkSocketsForDirections(DIRECTION_HORIZONTAL, maxY, values);
-		
+		addLinkSocketsForDirections(blockKey, DIRECTION_HORIZONTAL, maxY,
+				values);
+
 		final int maxX = b.getMaxLinkSocketNumX();
-		addLinkSocketsForDirections(DIRECTION_VERTICAL, maxX, values);
+		addLinkSocketsForDirections(blockKey, DIRECTION_VERTICAL, maxX, values);
 
 		final Predicate<LinkSocket> predicate = new Predicate<LinkSocket>() {
 			@Override
@@ -137,12 +153,12 @@ public class LinkSocket {
 		return Collections2.filter(values, predicate);
 	}
 
-	private static void addLinkSocketsForDirections(
+	private static void addLinkSocketsForDirections(String blockKey,
 			final Iterable<Direction> dirs, final int max,
 			final List<LinkSocket> values) {
 		for (final Direction dir : dirs) {
 			for (int n = -max; n <= max; n++) {
-				values.add(new LinkSocket(dir, n));
+				values.add(new LinkSocket(blockKey, dir, n));
 			}
 		}
 	}

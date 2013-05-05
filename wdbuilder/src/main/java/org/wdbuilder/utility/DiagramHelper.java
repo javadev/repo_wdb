@@ -3,9 +3,7 @@ package org.wdbuilder.utility;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -52,11 +50,10 @@ public class DiagramHelper {
 			return result;
 		}
 		for (final Link link : this.diagram.getLinks()) {
-			if (link.getBeginKey().equals(key)) {
-				result.add(link.getBeginSocket());
-			}
-			if (link.getEndKey().equals(key)) {
-				result.add(link.getEndSocket());
+			for (LinkSocket socket : link.getSockets()) {
+				if (key.equals(socket.getBlockKey())) {
+					result.add(socket);
+				}
 			}
 		}
 
@@ -68,11 +65,10 @@ public class DiagramHelper {
 		final Predicate<Link> predicate = new Predicate<Link>() {
 			@Override
 			public boolean apply(@Nullable Link link) {
-				if (baseBlockKey.equals(link.getBeginKey())) {
-					return true;
-				}
-				if (baseBlockKey.equals(link.getEndKey())) {
-					return true;
+				for (final LinkSocket socket : link.getSockets()) {
+					if (baseBlockKey.equals(socket.getBlockKey())) {
+						return true;
+					}
 				}
 				return false;
 			}
@@ -80,31 +76,8 @@ public class DiagramHelper {
 		return Collections2.filter(diagram.getLinks(), predicate);
 	}
 
-	public Map<String, Block> getBlocksConnectedTo(Block baseBlock,
-			boolean begin) {
-		Map<String, Block> result = new LinkedHashMap<String, Block>(diagram
-				.getBlocks().size());
-
-		final String baseBlockKey = baseBlock.getKey();
-		for (final Link link : diagram.getLinks()) {
-			final String key = begin ? link.getBeginKey() : link.getEndKey();
-			final String anotherKey = begin ? link.getEndKey() : link
-					.getBeginKey();
-			if (!key.equals(baseBlockKey)) {
-				continue;
-			}
-
-			Block block = findBlockByKey(anotherKey);
-			if (null != block) {
-				result.put(link.getKey(), block);
-			}
-		}
-		return result;
-
-	}
-
-	public Point getOffset(LinkSocket socket, String key) {
-		Block block = findBlockByKey(key);
+	public Point getOffset(LinkSocket socket) {
+		Block block = findBlockByKey(socket.getBlockKey());
 		if (null == block) {
 			return null;
 		}
@@ -168,16 +141,24 @@ public class DiagramHelper {
 	}
 
 	public final void calculatePivot(Link link) {
-		final Block begin = findBlockByKey(link.getBeginKey());
+
+		// Every link should have at least 2 ends:
+		final LinkSocket socket0 = link.getSockets().get(0);
+		final LinkSocket socket1 = link.getSockets().get(1);
+
+		final String key0 = socket0.getBlockKey();
+		final String key1 = socket1.getBlockKey();
+
+		final Block begin = findBlockByKey(key0);
 		if (null == begin) {
 			return;
 		}
-		final Block end = findBlockByKey(link.getEndKey());
+		final Block end = findBlockByKey(key1);
 		if (null == end) {
 			return;
 		}
-		Point beginP = link.getBeginSocket().getOffset(begin);
-		Point endP = link.getEndSocket().getOffset(end);
+		Point beginP = socket0.getOffset(begin);
+		Point endP = socket1.getOffset(end);
 
 		link.setPivot(new Point((beginP.getX() + endP.getX()) / 2, (beginP
 				.getY() + endP.getY()) / 2));
@@ -185,10 +166,9 @@ public class DiagramHelper {
 
 	public boolean hasLinkWithSameEnds(Link probeLink) {
 		for (Link link : diagram.getLinks()) {
-			if (link.getBeginKey().equals(probeLink.getBeginKey())
-					&& link.getEndKey().equals(probeLink.getEndKey())
-					&& link.getBeginSocket().equals(probeLink.getBeginSocket())
-					&& link.getEndSocket().equals(probeLink.getEndSocket())) {
+			if (link.getSockets().get(0).equals(probeLink.getSockets().get(0))
+					&& link.getSockets().get(1)
+							.equals(probeLink.getSockets().get(1))) {
 				return true;
 			}
 		}
