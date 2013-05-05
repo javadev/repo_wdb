@@ -241,10 +241,12 @@ public class StaticDiagramService implements DiagramService {
 		link.setEndKey(endBlockKey);
 		link.setBeginSocket(beginSocket);
 		link.setEndSocket(endSocket);
+		
+		// TODO: set the default name fo a while (2013/05/05)
+		link.setName(link.getKey());
 
 		diagramHelper.calculatePivot(link);
 
-		// TODO: check for doubling:
 		if (!diagramHelper.hasLinkWithSameEnds(link)) {
 			diagram.getLinks().add(link);
 		}

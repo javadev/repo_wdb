@@ -11,8 +11,9 @@ import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
+import org.wdbuilder.jaxbhtml.element.Div;
 import org.wdbuilder.plugin.IBlockPluginFacade;
-import org.wdbuilder.serialize.html.LinkListsTable;
+import org.wdbuilder.serialize.html.ConnectedLinkList;
 import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
 import org.wdbuilder.web.base.ServletInput;
@@ -61,7 +62,12 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 				submitFunctionCall, closeHandler);
 
 		htmlWriter.write(form);
-		htmlWriter.write(new LinkListsTable(diagramHelper.getDiagram(), block));
+		
+		Div header = new Div();
+		header.setText("Connected Links:");
+		htmlWriter.write(header);
+		
+		htmlWriter.write(new ConnectedLinkList(diagramHelper.getDiagram(), block));
 	}
 
 }
