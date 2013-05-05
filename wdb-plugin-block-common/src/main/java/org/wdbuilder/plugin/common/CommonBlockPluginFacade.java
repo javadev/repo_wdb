@@ -109,13 +109,14 @@ public class CommonBlockPluginFacade implements IBlockPluginFacade {
 	}
 
 	@Override
-	public IValidator getValidator() {
-		return new CompositeValidator(new BlockValidator()) {
+	public IValidator<Block> getValidator() {
+		return new CompositeValidator<Block>(new BlockValidator()) {
 
 			@Override
-			protected Iterable<IValidator> getNestedValidators() {
-				List<IValidator> result = new ArrayList<IValidator>(2);
-				result.add(new IValidator() {
+			protected Iterable<IValidator<Block>> getNestedValidators() {
+				List<IValidator<Block>> result = new ArrayList<IValidator<Block>>(
+						2);
+				result.add(new IValidator<Block>() {
 
 					@Override
 					public void validate(Diagram diagram, Block entity)
@@ -127,7 +128,7 @@ public class CommonBlockPluginFacade implements IBlockPluginFacade {
 						}
 					}
 				});
-				result.add(new IValidator() {
+				result.add(new IValidator<Block>() {
 
 					@Override
 					public void validate(Diagram diagram, Block entity)
@@ -145,18 +146,18 @@ public class CommonBlockPluginFacade implements IBlockPluginFacade {
 	}
 
 	@Override
-	public UINewBlockFormFactory getCreateBlockFormFactory(String diagramKey) {
+	public UINewBlockFormFactory getCreateFormFactory(String diagramKey) {
 		return new CreateFormFactory(diagramKey, getEntityClass());
 	}
 
 	@Override
-	public UIExistingEntityFormFactory<Block> getViewBlockFormFactory(
-			String diagramKey, Block block) {			
+	public UIExistingEntityFormFactory<Block> getViewFormFactory(
+			String diagramKey, Block block) {
 		return new ViewFormFactory(diagramKey, block);
 	}
 
 	@Override
-	public UIExistingEntityFormFactory<Block> getEditBlockFormFactory(
+	public UIExistingEntityFormFactory<Block> getEditFormFactory(
 			String diagramKey, Block block) {
 		return new EditFormFactory(diagramKey, block);
 	}

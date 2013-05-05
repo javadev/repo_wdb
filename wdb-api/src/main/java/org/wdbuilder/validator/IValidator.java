@@ -1,9 +1,9 @@
 package org.wdbuilder.validator;
 
-import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
+import org.wdbuilder.domain.Entity;
 
-public interface IValidator {
-  void validate(Diagram diagram, Block entity)
+public interface IValidator<T extends Entity> {
+  void validate(Diagram diagram, T entity)
 			throws IllegalArgumentException;
 }

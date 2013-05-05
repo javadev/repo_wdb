@@ -35,7 +35,7 @@ public class SelectedBlockInfoServlet extends DiagramHelperFormServlet {
 			return;
 		}
 		final UIExistingEntityFormFactory<Block> formFactory = pluginFacade
-				.getViewBlockFormFactory(
+				.getViewFormFactory(
 						BlockParameter.DiagramKey.getString(input), block);
 		TwoColumnForm form = formFactory.getForm();
 		String openDialogMethodJS = "openEditBlockDialog";

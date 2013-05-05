@@ -8,7 +8,7 @@ import org.wdbuilder.domain.Diagram;
 
 import static org.wdbuilder.service.DiagramService.LINE_OFFSET;
 
-public class BlockValidator extends CompositeValidator {
+public class BlockValidator extends CompositeValidator<Block> {
 
 	private static final int MIN_NAME_LENGTH = 1;
 	private static final int MAX_NAME_LENGTH = 64;
@@ -18,9 +18,9 @@ public class BlockValidator extends CompositeValidator {
 	}
 
 	@Override
-	protected Iterable<IValidator> getNestedValidators() {
-		List<IValidator> result = new ArrayList<IValidator>(2);
-		result.add(new IValidator() {
+	protected Iterable<IValidator<Block>> getNestedValidators() {
+		List<IValidator<Block>> result = new ArrayList<IValidator<Block>>(2);
+		result.add(new IValidator<Block>() {
 			@Override
 			public void validate(Diagram diagram, Block entity)
 					throws IllegalArgumentException {
@@ -30,7 +30,7 @@ public class BlockValidator extends CompositeValidator {
 			}
 		});
 
-		result.add(new IValidator() {
+		result.add(new IValidator<Block>() {
 			@Override
 			public void validate(Diagram diagram, Block entity)
 					throws IllegalArgumentException {
@@ -51,7 +51,7 @@ public class BlockValidator extends CompositeValidator {
 			}
 		});
 
-		result.add(new IValidator() {
+		result.add(new IValidator<Block>() {
 
 			@Override
 			public void validate(Diagram diagram, Block entity)
@@ -65,7 +65,7 @@ public class BlockValidator extends CompositeValidator {
 			}
 		});
 
-		result.add(new IValidator() {
+		result.add(new IValidator<Block>() {
 
 			@Override
 			public void validate(Diagram diagram, Block entity)
@@ -79,7 +79,7 @@ public class BlockValidator extends CompositeValidator {
 			}
 		});
 
-		result.add(new IValidator() {
+		result.add(new IValidator<Block>() {
 
 			@Override
 			public void validate(Diagram diagram, Block entity)
@@ -93,7 +93,7 @@ public class BlockValidator extends CompositeValidator {
 			}
 		});
 
-		result.add(new IValidator() {
+		result.add(new IValidator<Block>() {
 
 			@Override
 			public void validate(Diagram diagram, Block entity)

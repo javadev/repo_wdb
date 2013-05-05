@@ -285,12 +285,13 @@ public class CanvasFrameWriter {
 		}
 
 		private String createOnMouseDownHandler(Link link) {
-			boolean isHorizontal = link.getBeginSocket().isHorizontal();
+			final LinkSocket beginSocket = link.getSockets().get(0);
+			final LinkSocket endSocket = link.getSockets().get(1);
+			
+			boolean isHorizontal = beginSocket.isHorizontal();
 
-			Point beginPoint = diagramHelper.getOffset(link.getBeginSocket(),
-					link.getBeginKey());
-			Point endPoint = diagramHelper.getOffset(link.getEndSocket(),
-					link.getEndKey());
+			Point beginPoint = diagramHelper.getOffset(beginSocket);
+			Point endPoint = diagramHelper.getOffset(endSocket);
 
 			final String result = getOnMouseDownFunctionCall(
 					"WDB.LinkArrange.mouseDown", diagramHelper.getDiagram()

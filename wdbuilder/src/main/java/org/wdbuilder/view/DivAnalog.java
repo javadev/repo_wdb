@@ -22,11 +22,11 @@ public class DivAnalog {
 	public static void render(Graphics2D gr, Link link, Block beginBlock,
 			Block endBlock) {
 
-		Point begin = link.getBeginSocket().getOffset(beginBlock);
-		Point end = link.getEndSocket().getOffset(endBlock);
+		Point begin = link.getSockets().get(0).getOffset(beginBlock);
+		Point end = link.getSockets().get(1).getOffset(endBlock);
 		Point pivot = link.getPivot();
 
-		final boolean hintHorizontal = link.getBeginSocket().isHorizontal();
+		final boolean hintHorizontal = link.getSockets().get(0).isHorizontal();
 
 		DivAnalog div1 = new DivAnalog(pivot, begin, hintHorizontal);
 		DivAnalog div2 = new DivAnalog(pivot, end, !hintHorizontal);

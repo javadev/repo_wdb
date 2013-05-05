@@ -228,20 +228,20 @@ public class StaticDiagramService implements DiagramService {
 		if (null == endBlock) {
 			return;
 		}
-		final LinkSocket beginSocket = new LinkSocket(
-				LinkSocket.Direction.valueOf(LinkSocket.Direction.class,
-						beginSocketDirection), beginSocketIndex);
-		final LinkSocket endSocket = new LinkSocket(
-				LinkSocket.Direction.valueOf(LinkSocket.Direction.class,
-						endSocketDirection), endSocketIndex);
+		final LinkSocket beginSocket = new LinkSocket(beginBlockKey,
+				LinkSocket.Direction.valueOf(beginSocketDirection),
+				beginSocketIndex);
+		final LinkSocket endSocket = new LinkSocket(endBlockKey,
+				LinkSocket.Direction.valueOf(endSocketDirection),
+				endSocketIndex);
 
 		Link link = new Link();
 		link.setKey(UUID.randomUUID().toString());
-		link.setBeginKey(beginBlockKey);
-		link.setEndKey(endBlockKey);
-		link.setBeginSocket(beginSocket);
-		link.setEndSocket(endSocket);
 		
+		link.setSockets( new ArrayList<LinkSocket>(2));
+		link.getSockets().add(beginSocket);
+		link.getSockets().add(endSocket);
+
 		// TODO: set the default name fo a while (2013/05/05)
 		link.setName(link.getKey());
 
