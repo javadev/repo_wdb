@@ -123,7 +123,6 @@ function submitCreateBlock(diagramKey, blockClass, fieldNames ) {
 	submitForm("create-block-save", params, callbackReloadBlock);
 }
 
-//Submit data for new block creation
 function submitEditBlock(diagramKey, blockKey, fieldNames ) {
 	var formElem = document.getElementById("formId");
 	if (!formElem) {
@@ -136,6 +135,26 @@ function submitEditBlock(diagramKey, blockKey, fieldNames ) {
 	}
 	
 	submitForm("edit-block-save", params, callbackReloadBlock);
+	
+	// Hide the moving block:
+	hideTemporaryObject( document.getElementById("car"));
+}
+
+function submitEditLink(diagramKey, linkKey, fieldNames ) {
+	var formElem = document.getElementById("formId");
+	if (!formElem) {
+		return;
+	}
+	
+	var params = "dkey=" + diagramKey + "&lkey=" + linkKey;
+	for( var i=0; i<fieldNames.length; i++ ) {
+		params += "&" + fieldNames[i] + "=" + formElem[ fieldNames[i] ].value;
+	}
+	
+	submitForm("edit-link-save", params, callbackReloadBlock);
+	
+	// Hide the moving block:
+	hideTemporaryObject( document.getElementById("car"));	
 }
 
 // Drop diagram
@@ -209,6 +228,12 @@ function switchMode(diagramKey) {
 	loadContent("switch-mode?r=" + Math.random(), "canvasFrame");
 	cleanElement("properties");
 	loadCanvas(diagramKey, null);
+}
+
+//Open form for existing block data update in additional section
+function openEditLinkDialog(diagramKey, linkKey) {
+	loadContent("edit-link?r=" + Math.random() + "&lkey=" + linkKey
+			+ "&dkey=" + diagramKey, "properties");
 }
 
 // Remove link handler
