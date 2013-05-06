@@ -17,8 +17,8 @@ import static org.apache.commons.lang.StringUtils.isEmpty;
 
 public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 
-	protected static final Font FONT = new Font(Font.SANS_SERIF, Font.ITALIC,
-			12);
+	private static final Font FONT = new Font(Font.SANS_SERIF, Font.ITALIC, 10);
+	private static final int TEXT_MARGIN = 2;
 
 	@Override
 	public void draw(Link link, ILinkRenderContext renderCtx) {
@@ -35,6 +35,7 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 
 		final Point pivot = link.getPivot();
 
+		// TODO: implement the custom link end (default is the straight line) (2013/05/06)
 		renderArrow(link, renderCtx);
 
 		// For line mode render
@@ -80,10 +81,11 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 		final int width = metrics.stringWidth(str);
 		final int height = metrics.getHeight();
 
-		int x = p.getX() - width / 2;
-		int y = p.getY() + height / 2;
+		int x = p.getX() - width / 2 - TEXT_MARGIN;
+		int y = p.getY() + height / 2 + TEXT_MARGIN;
 		gr.setColor(renderCtx.getDiagramBackgroundColor());
-		gr.fillRect(x, y - height, width, height);
+		gr.fillRect(x, y - height, width + 2 * TEXT_MARGIN, height + 2
+				* TEXT_MARGIN);
 		gr.setColor(Color.black);
 		gr.setFont(FONT);
 		gr.drawString(str, x, y);
