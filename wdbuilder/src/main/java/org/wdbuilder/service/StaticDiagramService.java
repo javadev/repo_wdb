@@ -241,6 +241,7 @@ class StaticDiagramService implements DiagramService {
 
 		Link link = new Link();
 		link.setKey(UUID.randomUUID().toString());
+		link.setLineColor(Link.LineColor.Black);
 
 		link.setSockets(new ArrayList<LinkSocket>(2));
 		link.getSockets().add(beginSocket);

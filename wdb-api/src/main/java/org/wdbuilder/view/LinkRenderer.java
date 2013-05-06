@@ -1,6 +1,5 @@
 package org.wdbuilder.view;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -35,7 +34,8 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 
 		final Point pivot = link.getPivot();
 
-		// TODO: implement the custom link end (default is the straight line) (2013/05/06)
+		// TODO: implement the custom link end (default is the straight line)
+		// (2013/05/06)
 		renderArrow(link, renderCtx);
 
 		// For line mode render
@@ -46,7 +46,7 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 			gr.fillRect(pivot.getX() - w / 2, pivot.getY() - h / 2, w, h);
 		} else {
 			// Render the name:
-			drawText(renderCtx, pivot, link.getName());
+			drawText(renderCtx, pivot, link);
 		}
 	}
 
@@ -54,6 +54,8 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 		final LinkSocket s = link.getSockets().get(index);
 		final Point p = getLocation(link, renderCtx, index);
 		Point o = s.getOffset(p);
+		renderCtx.getGraphics().setColor(
+				link.getLineColor().getForegroundColor());
 		renderCtx.getGraphics()
 				.drawLine(p.getX(), p.getY(), o.getX(), o.getY());
 	}
@@ -61,6 +63,8 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 	private void renderArrow(Link link, ILinkRenderContext renderCtx) {
 		Point p = getLocation(link, renderCtx, 1);
 		final int[][] a = link.getSockets().get(1).getArrow(p);
+		renderCtx.getGraphics().setColor(
+				link.getLineColor().getForegroundColor());
 		renderCtx.getGraphics().fillPolygon(a[0], a[1], 3);
 	}
 
@@ -71,7 +75,8 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 	}
 
 	private static void drawText(ILinkRenderContext renderCtx, Point p,
-			String str) {
+			Link link) {
+		String str = link.getName();
 		if (isEmpty(str)) {
 			return;
 		}
@@ -86,7 +91,7 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 		gr.setColor(renderCtx.getDiagramBackgroundColor());
 		gr.fillRect(x, y - height, width + 2 * TEXT_MARGIN, height + 2
 				* TEXT_MARGIN);
-		gr.setColor(Color.black);
+		gr.setColor(link.getLineColor().getForegroundColor());
 		gr.setFont(FONT);
 		gr.drawString(str, x, y);
 	}

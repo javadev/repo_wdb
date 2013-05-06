@@ -16,7 +16,8 @@ public enum BlockParameter implements IParameter {
 	BlockOnly("blockOnly", "load block only"), 
 	X("x", "X"), 
 	Y("y", "Y"),
-	Background("background", "Diagram Background");
+	Background("background", "Diagram Background"),
+	LineColor("lineColor", "Line Color");
 	
 	private final String name;
 	private final String label;

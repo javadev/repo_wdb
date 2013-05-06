@@ -85,7 +85,9 @@ public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 	@Override
 	public Link create(InputAdapter input) {
 		Link result = new Link();
-		result.setName( BlockParameter.Name.getString(input));
+		result.setName(BlockParameter.Name.getString(input));
+		result.setLineColor(Link.LineColor.valueOf(BlockParameter.LineColor
+				.getString(input)));
 		return result;
 	}
 
