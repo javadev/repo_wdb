@@ -44,7 +44,8 @@ public interface DiagramService {
 			String beginSocketDirection, int beginSocketIndex,
 			String endBlockKey, String endSocketDirection, int endSocketIndex);
 
-	void updateLink(String diagramKey, String linkKey, int x, int y);
+	void moveLinkPivot(String diagramKey, String linkKey, int x, int y);
+
 
 	void deleteLink(String diagramKey, String linkKey);
 

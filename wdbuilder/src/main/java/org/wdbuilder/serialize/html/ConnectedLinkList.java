@@ -1,8 +1,6 @@
 package org.wdbuilder.serialize.html;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
@@ -14,16 +12,9 @@ import org.wdbuilder.jaxbhtml.element.Span;
 import org.wdbuilder.utility.DiagramHelper;
 
 import static org.wdbuilder.gui.TwoColumnForm.CLASS_LINKBUTTON;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 public class ConnectedLinkList extends Ol {
-
-	private static final Map<Boolean, String> LINK_TITLES = new LinkedHashMap<Boolean, String>(
-			2);
-
-	static {
-		LINK_TITLES.put(true, "Link begins (to delete):");
-		LINK_TITLES.put(false, "Link ends (to delete):");
-	}
 
 	private final DiagramHelper diagramHelper;
 
@@ -41,16 +32,17 @@ public class ConnectedLinkList extends Ol {
 	private Li createListItem(Link link) {
 		String key = link.getKey();
 		Li result = new Li();
-		result.add( createNameDiv(link.getName()));
+		result.add( createNameDiv(link));
 		result.add(createEditButton(key));
 		result.add(createDeleteButton(key));
 
 		return result;
 	}
 	
-	private Span createNameDiv(String name) {
+	private Span createNameDiv(Link link) {
 		Span result = new Span();
-		result.setText( name );
+		String text = isEmpty( link.getName() ) ? "(" + link.getKey() + ")" : link.getName();
+		result.setText( text );
 		return result;
 	}	
 

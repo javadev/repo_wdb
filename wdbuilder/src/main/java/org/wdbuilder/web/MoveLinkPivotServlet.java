@@ -6,14 +6,14 @@ import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
 
-@WebServlet("/update-link")
-public class UpdateLinkServlet extends EmptyOutputServlet {
+@WebServlet("/move-link-pivot")
+public class MoveLinkPivotServlet extends EmptyOutputServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 
-		serviceFacade.getDiagramService().updateLink(
+		serviceFacade.getDiagramService().moveLinkPivot(
 				BlockParameter.DiagramKey.getString(input),
 				BlockParameter.LinkKey.getString(input),
 				BlockParameter.X.getInt(input), BlockParameter.Y.getInt(input));

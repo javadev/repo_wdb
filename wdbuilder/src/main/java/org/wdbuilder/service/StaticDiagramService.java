@@ -252,7 +252,7 @@ class StaticDiagramService implements DiagramService {
 	}
 
 	@Override
-	public void updateLink(String diagramKey, String linkKey, int x, int y) {
+	public void moveLinkPivot(String diagramKey, String linkKey, int x, int y) {
 
 		if (diagramKey.isEmpty() || linkKey.isEmpty()) {
 			return;
