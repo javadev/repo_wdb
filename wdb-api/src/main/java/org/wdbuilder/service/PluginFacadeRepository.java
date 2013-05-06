@@ -12,7 +12,7 @@ public class PluginFacadeRepository<T extends Entity, S extends IPluginFacade<T>
 
 	private final Map<Class<?>, S> plugins = new LinkedHashMap<Class<?>, S>(2);
 
-	PluginFacadeRepository(Collection<S> plugins) {
+	public PluginFacadeRepository(Collection<S> plugins) {
 		for (S plugin : plugins) {
 			this.plugins.put(plugin.getEntityClass(), plugin);
 		}
