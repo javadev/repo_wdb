@@ -18,7 +18,6 @@
 		<module>wdb-plugin-block-common</module>
 		<module>wdb-plugin-block-icon</module>
 		<module>wdb-plugin-link-default</module>
-    <module>wdb-plugin-link-default</module>
   </modules>
 
 

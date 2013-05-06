@@ -1,7 +1,7 @@
 package org.wdbuilder.plugin.common;
 
-import static org.wdbuilder.util.ImageUtility.getImageObserver;
 import static org.wdbuilder.util.ImageUtility.getGraphics;
+import static org.wdbuilder.util.ImageUtility.getImageObserver;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -10,22 +10,17 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.IGradientBackgroundProvider;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.common.domain.CommonBlock;
 import org.wdbuilder.view.BlockRenderer;
 import org.wdbuilder.view.IBackgroundRenderer;
 
-class CommonBlockRenderer extends BlockRenderer {
+class CommonBlockRenderer extends BlockRenderer<CommonBlock> {
 
 	// Helper methods and values:
 	@Override
-	public void draw(SizedEntity entity, IRenderContext renderCtx) {
-		if (!CommonBlock.class.isInstance(entity)) {
-			return;
-		}
-		CommonBlock block = CommonBlock.class.cast(entity);
+	public void draw(CommonBlock block, IRenderContext renderCtx) {
 
 		// Use additional image:
 		final BufferedImage blockImage = new BufferedImage(block.getSize()

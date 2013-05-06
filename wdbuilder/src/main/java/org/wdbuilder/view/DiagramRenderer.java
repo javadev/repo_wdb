@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderContext;
@@ -24,7 +23,7 @@ import org.wdbuilder.web.ApplicationState;
 
 import com.google.common.io.Resources;
 
-public class DiagramRenderer implements IRenderer {
+public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 
 	private final ApplicationState appState;
 	private final IPluginFacadeRepository pluginFacadeRepository;
@@ -36,11 +35,7 @@ public class DiagramRenderer implements IRenderer {
 	}
 
 	@Override
-	public void draw(SizedEntity entity, IRenderContext diagramRenderCtx) {
-		if (!Diagram.class.isInstance(entity)) {
-			return;
-		}
-		Diagram diagram = Diagram.class.cast(entity);
+	public void draw(Diagram diagram, IRenderContext diagramRenderCtx) {
 
 		Graphics2D gr = diagramRenderCtx.getGraphics();
 
@@ -68,7 +63,8 @@ public class DiagramRenderer implements IRenderer {
 
 			IBlockPluginFacade pluginFacade = pluginFacadeRepository
 					.getFacade(block.getClass());
-			IRenderer renderer = pluginFacade.getRenderer();
+			IRenderer<Block, IRenderContext> renderer = pluginFacade
+					.getRenderer();
 			renderer.draw(block, blockCtx);
 		}
 

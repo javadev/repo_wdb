@@ -11,7 +11,8 @@ import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.IRenderer;
 
-public abstract class BlockRenderer implements IRenderer {
+public abstract class BlockRenderer<T extends Block> implements
+		IRenderer<T, IRenderContext> {
 
 	protected static final int MARGIN = 3;
 

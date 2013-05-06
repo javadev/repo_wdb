@@ -8,9 +8,9 @@ public interface IPluginFacade<T extends Entity> {
 
 	public Class<?> getEntityClass();
 
-	public IValidator getValidator();
+	public IValidator<T> getValidator();
 
-	public UIExistingEntityFormFactory<T> getEditFormFactory(
-			String diagramKey, T entity);
+	public UIExistingEntityFormFactory<T> getEditFormFactory(String diagramKey,
+			T entity);
 
 }
