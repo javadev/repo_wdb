@@ -1,6 +1,7 @@
 package org.wdbuilder.view;
 
-import static org.wdbuilder.utility.Utility.isBetween;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 import java.awt.Graphics2D;
 
@@ -80,4 +81,8 @@ public class DivAnalog {
 					this.getOrigin().getY());
 		}
 	}
+	
+	private static boolean isBetween(int m, int n1, int n2) {
+		return m >= min(n1, n2) && m <= max(n1, n2);
+	}	
 }

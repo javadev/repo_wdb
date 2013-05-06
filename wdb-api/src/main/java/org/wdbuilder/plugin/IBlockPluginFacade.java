@@ -8,7 +8,7 @@ import org.wdbuilder.input.InputAdapter;
 
 public interface IBlockPluginFacade extends IPluginFacade<Block> {
 
-	public IRenderer getRenderer();
+	public IRenderer<Block,IRenderContext> getRenderer();
 
 	public IUIActionClick getUIActionCreate(String diagramKey);
 

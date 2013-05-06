@@ -13,18 +13,17 @@ import javax.imageio.ImageIO;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.plugin.IBlockPluginFacade;
+import org.wdbuilder.plugin.ILinkRenderContext;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.IRenderer;
-import org.wdbuilder.utility.DiagramHelper;
 import org.wdbuilder.utility.IPluginFacadeRepository;
 import org.wdbuilder.web.ApplicationState;
 
 import com.google.common.io.Resources;
 
-public class DiagramRenderer implements IRenderer {
+public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 
 	private final ApplicationState appState;
 	private final IPluginFacadeRepository pluginFacadeRepository;
@@ -36,11 +35,7 @@ public class DiagramRenderer implements IRenderer {
 	}
 
 	@Override
-	public void draw(SizedEntity entity, IRenderContext diagramRenderCtx) {
-		if (!Diagram.class.isInstance(entity)) {
-			return;
-		}
-		Diagram diagram = Diagram.class.cast(entity);
+	public void draw(Diagram diagram, IRenderContext diagramRenderCtx) {
 
 		Graphics2D gr = diagramRenderCtx.getGraphics();
 
@@ -68,20 +63,23 @@ public class DiagramRenderer implements IRenderer {
 
 			IBlockPluginFacade pluginFacade = pluginFacadeRepository
 					.getFacade(block.getClass());
-			IRenderer renderer = pluginFacade.getRenderer();
+			IRenderer<Block, IRenderContext> renderer = pluginFacade
+					.getRenderer();
 			renderer.draw(block, blockCtx);
 		}
 
 		gr.setColor(Color.black);
-		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
+		
+		final LinkRenderContext linkRenderCtx = new LinkRenderContext(appState, gr);
+		
+		
 		// TODO: draw more than 1 to 1 link (2013/05/05)
-
 		for (final Link link : diagram.getLinks()) {
-			final String key0 = link.getSockets().get(0).getBlockKey();
-			final String key1 = link.getSockets().get(1).getBlockKey();
-			new LinkRenderer(gr, link, diagramHelper.findBlockByKey(key0),
-					diagramHelper.findBlockByKey(key1)).render(appState
-					.getMode());
+			
+			// TODO: get the link plugin facade from repository (2013/05/06)
+			IRenderer<Link, ILinkRenderContext> linkRenderer =
+					new LinkRenderer();
+			linkRenderer.draw(link, linkRenderCtx);
 		}
 	}
 
