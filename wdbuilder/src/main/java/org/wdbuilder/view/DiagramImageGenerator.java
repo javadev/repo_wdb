@@ -5,16 +5,18 @@ import static org.wdbuilder.util.ImageUtility.getGraphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.utility.IPluginFacadeRepository;
+import org.wdbuilder.plugin.IBlockPluginFacade;
+import org.wdbuilder.service.IPluginFacadeRepository;
 import org.wdbuilder.web.ApplicationState;
 
 public class DiagramImageGenerator extends ImageGenerator {
 
-	private final IPluginFacadeRepository pluginFacadeRepository;
+	private final IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository;
 
 	public DiagramImageGenerator(ApplicationState appState,
-			IPluginFacadeRepository pluginFacadeRepository) {
+			IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository) {
 		super(appState);
 		this.pluginFacadeRepository = pluginFacadeRepository;
 	}

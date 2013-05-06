@@ -17,22 +17,16 @@ import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.service.validator.DiagramValidator;
 import org.wdbuilder.utility.DiagramHelper;
-import org.wdbuilder.utility.IPluginFacadeRepository;
 
-public class StaticDiagramService implements DiagramService {
-
-	private static StaticDiagramService instance = new StaticDiagramService();
-
-	private IPluginFacadeRepository pluginRepository;
-
-	public static final DiagramService getInstance() {
-		return instance;
-	}
+class StaticDiagramService implements DiagramService {
 
 	private final Map<String, Diagram> diagrams = new LinkedHashMap<String, Diagram>(
 			2);
 
-	private StaticDiagramService() {
+	private final IServiceFacade serviceFacade;
+
+	StaticDiagramService(IServiceFacade serviceFacade) {
+		this.serviceFacade = serviceFacade;
 	}
 
 	@Override
@@ -119,8 +113,7 @@ public class StaticDiagramService implements DiagramService {
 			return;
 		}
 
-		IBlockPluginFacade pluginFacade = pluginRepository.getFacade(block
-				.getClass());
+		IBlockPluginFacade pluginFacade = getBlockPluginFacade(block);
 		// Save old values:
 		Point oldLocation = new Point(block.getLocation().getX(), block
 				.getLocation().getY());
@@ -134,6 +127,14 @@ public class StaticDiagramService implements DiagramService {
 
 			throw ex;
 		}
+	}
+
+	private IBlockPluginFacade getBlockPluginFacade(final Block block) {
+		return getBlockPluginFacade(block.getClass());
+	}
+
+	private IBlockPluginFacade getBlockPluginFacade(final Class<?> klass) {
+		return serviceFacade.getBlockPluginRepository().getFacade(klass);
 	}
 
 	@Override
@@ -163,8 +164,7 @@ public class StaticDiagramService implements DiagramService {
 		block.setKey(key);
 		block.setLocation(new Point(offsetX, offsetY));
 
-		IBlockPluginFacade pluginFacade = pluginRepository.getFacade(block
-				.getClass());
+		IBlockPluginFacade pluginFacade = getBlockPluginFacade(block);
 		pluginFacade.getValidator().validate(diagram, block);
 
 		diagram.getBlocks().add(block);
@@ -188,8 +188,7 @@ public class StaticDiagramService implements DiagramService {
 		block.setKey(blockKey);
 		block.setLocation(savedBlock.getLocation());
 
-		IBlockPluginFacade pluginFacade = pluginRepository.getFacade(block
-				.getClass());
+		IBlockPluginFacade pluginFacade = getBlockPluginFacade(block);
 		pluginFacade.getValidator().validate(diagram, block);
 
 		// TODO: doubtful code (2013/04/29)
@@ -237,8 +236,8 @@ public class StaticDiagramService implements DiagramService {
 
 		Link link = new Link();
 		link.setKey(UUID.randomUUID().toString());
-		
-		link.setSockets( new ArrayList<LinkSocket>(2));
+
+		link.setSockets(new ArrayList<LinkSocket>(2));
 		link.getSockets().add(beginSocket);
 		link.getSockets().add(endSocket);
 
@@ -308,9 +307,5 @@ public class StaticDiagramService implements DiagramService {
 		result.setKey(id);
 		result.setName(name);
 		result.setSize(new Dimension(width, height));
-	}
-
-	public void setPluginRepository(IPluginFacadeRepository pluginRepository) {
-		this.pluginRepository = pluginRepository;
 	}
 }

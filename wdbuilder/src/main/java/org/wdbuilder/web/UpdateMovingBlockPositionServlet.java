@@ -12,7 +12,8 @@ public class UpdateMovingBlockPositionServlet extends EmptyOutputServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		service.updateBlockPosition(BlockParameter.DiagramKey.getString(input),
+		serviceFacade.getDiagramService().updateBlockPosition(
+				BlockParameter.DiagramKey.getString(input),
 				BlockParameter.BlockKey.getString(input),
 				BlockParameter.X.getInt(input), BlockParameter.Y.getInt(input));
 	}

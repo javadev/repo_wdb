@@ -13,7 +13,8 @@ public class UpdateLinkServlet extends EmptyOutputServlet {
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 
-		service.updateLink(BlockParameter.DiagramKey.getString(input),
+		serviceFacade.getDiagramService().updateLink(
+				BlockParameter.DiagramKey.getString(input),
 				BlockParameter.LinkKey.getString(input),
 				BlockParameter.X.getInt(input), BlockParameter.Y.getInt(input));
 	}

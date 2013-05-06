@@ -12,7 +12,8 @@ public class DeleteLinkServlet extends EmptyOutputServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		service.deleteLink(BlockParameter.DiagramKey.getString(input),
+		serviceFacade.getDiagramService().deleteLink(
+				BlockParameter.DiagramKey.getString(input),
 				BlockParameter.LinkKey.getString(input));
 	}
 }

@@ -18,7 +18,7 @@ import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.ILinkRenderContext;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.IRenderer;
-import org.wdbuilder.utility.IPluginFacadeRepository;
+import org.wdbuilder.service.IPluginFacadeRepository;
 import org.wdbuilder.web.ApplicationState;
 
 import com.google.common.io.Resources;
@@ -26,10 +26,10 @@ import com.google.common.io.Resources;
 public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 
 	private final ApplicationState appState;
-	private final IPluginFacadeRepository pluginFacadeRepository;
+	private final IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository;
 
 	public DiagramRenderer(ApplicationState appState,
-			IPluginFacadeRepository pluginFacadeRepository) {
+			IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository) {
 		this.appState = appState;
 		this.pluginFacadeRepository = pluginFacadeRepository;
 	}

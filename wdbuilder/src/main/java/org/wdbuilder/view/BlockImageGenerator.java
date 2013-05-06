@@ -6,18 +6,20 @@ import java.awt.image.BufferedImage;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.plugin.IBlockPluginFacade;
+import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.IRenderer;
+import org.wdbuilder.service.IPluginFacadeRepository;
 import org.wdbuilder.utility.DiagramHelper;
-import org.wdbuilder.utility.IPluginFacadeRepository;
 import static org.wdbuilder.util.ImageUtility.getGraphics;
 import org.wdbuilder.web.ApplicationState;
 
 public class BlockImageGenerator extends ImageGenerator {
 
-	private final IPluginFacadeRepository pluginFacadeRepository;
+	private final IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository;
 
-	public BlockImageGenerator(ApplicationState appState,
-			IPluginFacadeRepository pluginFacadeRepository) {
+	public BlockImageGenerator(
+			ApplicationState appState,
+			IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository) {
 		super(appState);
 		this.pluginFacadeRepository = pluginFacadeRepository;
 	}
@@ -44,8 +46,9 @@ public class BlockImageGenerator extends ImageGenerator {
 		renderCtx.setAppState(appState);
 		renderCtx.setGraphics(gr);
 
-		IBlockPluginFacade pluginFacade = pluginFacadeRepository.getFacade(block.getClass());
-		IRenderer renderer = pluginFacade.getRenderer();
+		IBlockPluginFacade pluginFacade = pluginFacadeRepository
+				.getFacade(block.getClass());
+		IRenderer<Block, IRenderContext> renderer = pluginFacade.getRenderer();
 		renderer.draw(block, renderCtx);
 		gr.dispose();
 		return image;

@@ -18,10 +18,11 @@ public class CreateBlockSaveServlet extends DiagramServlet {
 		final String blockClassStr = BlockParameter.BlockClass.getString(input);
 		final Class<?> blockClass = Class.forName(blockClassStr);
 
-		final IBlockPluginFacade pluginFacade = pluginFacadeRepository
-				.getFacade(blockClass);
+		final IBlockPluginFacade pluginFacade = serviceFacade
+				.getBlockPluginRepository().getFacade(blockClass);
 		final Block block = pluginFacade.create(input);
-		final String blockKey = service.persistBlock(diagramKey, block);
+		final String blockKey = serviceFacade.getDiagramService().persistBlock(
+				diagramKey, block);
 
 		printCanvasFrame(input, blockKey);
 	}

@@ -1,8 +1,6 @@
 package org.wdbuilder.web;
 
 import java.io.PrintWriter;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -22,14 +20,6 @@ import org.wdbuilder.web.base.ServletInput;
 public class EditBlockServlet extends DiagramHelperFormServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final Map<Boolean, String> LINK_TITLES = new LinkedHashMap<Boolean, String>(
-			2);
-
-	static {
-		LINK_TITLES.put(true, "Link begins (to delete):");
-		LINK_TITLES.put(false, "Link ends (to delete):");
-	}
-
 	@Override
 	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
@@ -42,14 +32,13 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
-		IBlockPluginFacade pluginFacade = pluginFacadeRepository.getFacade(block
-				.getClass());
+		IBlockPluginFacade pluginFacade = serviceFacade
+				.getBlockPluginRepository().getFacade(block.getClass());
 		if (null == pluginFacade) {
 			return;
 		}
 		final UIExistingEntityFormFactory<Block> formFactory = pluginFacade
-				.getEditFormFactory(diagramHelper.getDiagram().getKey(),
-						block);
+				.getEditFormFactory(diagramHelper.getDiagram().getKey(), block);
 
 		String submitFunctionCall = formFactory.getSubmitCall();
 
@@ -62,12 +51,13 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 				submitFunctionCall, closeHandler);
 
 		htmlWriter.write(form);
-		
+
 		Div header = new Div();
 		header.setText("Connected Links:");
 		htmlWriter.write(header);
-		
-		htmlWriter.write(new ConnectedLinkList(diagramHelper.getDiagram(), block));
+
+		htmlWriter.write(new ConnectedLinkList(diagramHelper.getDiagram(),
+				block));
 	}
 
 }

@@ -16,7 +16,7 @@ public class CreateDiagramSaveServlet extends DiagramServiceServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		final String key = service.persistDiagram(
+		final String key = serviceFacade.getDiagramService().persistDiagram(
 				BlockParameter.Name.getString(input),
 				BlockParameter.Width.getInt(input),
 				BlockParameter.Height.getInt(input),
@@ -24,7 +24,8 @@ public class CreateDiagramSaveServlet extends DiagramServiceServlet {
 		this.diagramHelper = createDiagramHelper(key);
 		// Skip block selection:
 		input.getState().setSelectedBlockKey(null);
-		new CanvasFrameWriter(diagramHelper, pluginFacadeRepository)
+		new CanvasFrameWriter(diagramHelper,
+				serviceFacade.getBlockPluginRepository())
 				.printCanvasFrame(input);
 	}
 

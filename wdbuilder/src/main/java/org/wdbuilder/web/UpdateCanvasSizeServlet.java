@@ -12,7 +12,8 @@ public class UpdateCanvasSizeServlet extends EmptyOutputServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		service.updateDiagramSize(BlockParameter.DiagramKey.getString(input),
+		serviceFacade.getDiagramService().updateDiagramSize(
+				BlockParameter.DiagramKey.getString(input),
 				BlockParameter.Width.getInt(input),
 				BlockParameter.Height.getInt(input));
 	}
