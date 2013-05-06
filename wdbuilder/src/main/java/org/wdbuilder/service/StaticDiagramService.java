@@ -285,6 +285,9 @@ class StaticDiagramService implements DiagramService {
 			return;
 		}
 		link.setKey(linkKey);
+		link.setPivot(savedLink.getPivot());
+		link.setSockets( savedLink.getSockets() );
+		
 		ILinkPluginFacade pluginFacade = getLinkPluginFacade(link);
 		pluginFacade.getValidator().validate(diagram, link);
 
