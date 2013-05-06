@@ -142,7 +142,7 @@ function LinkArrange() {
 		if (!args.valid) {
 			return;
 		}
-		var url = "update-link?r=" + Math.random() + "&dkey="
+		var url = "move-link-pivot?r=" + Math.random() + "&dkey="
 			+ args.diagram + "&lkey=" + args.link + "&x=" + args.x
 			+ "&y=" + args.y;
 		loadContent(url, null );

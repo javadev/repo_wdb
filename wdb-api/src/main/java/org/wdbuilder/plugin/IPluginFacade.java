@@ -2,6 +2,7 @@ package org.wdbuilder.plugin;
 
 import org.wdbuilder.domain.Entity;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
+import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.validator.IValidator;
 
 public interface IPluginFacade<T extends Entity> {
@@ -12,5 +13,7 @@ public interface IPluginFacade<T extends Entity> {
 
 	public UIExistingEntityFormFactory<T> getEditFormFactory(String diagramKey,
 			T entity);
+	
+	public T create(InputAdapter input);
 
 }

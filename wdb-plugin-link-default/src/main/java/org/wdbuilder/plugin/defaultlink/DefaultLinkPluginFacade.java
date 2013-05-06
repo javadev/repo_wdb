@@ -8,6 +8,8 @@ import java.util.List;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
+import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.plugin.ILinkPluginFacade;
 import org.wdbuilder.plugin.ILinkRenderContext;
 import org.wdbuilder.plugin.IRenderer;
@@ -78,6 +80,13 @@ public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 	@Override
 	public IRenderer<Link, ILinkRenderContext> getRenderer() {
 		return new LinkRenderer();
+	}
+
+	@Override
+	public Link create(InputAdapter input) {
+		Link result = new Link();
+		result.setName( BlockParameter.Name.getString(input));
+		return result;
 	}
 
 }
