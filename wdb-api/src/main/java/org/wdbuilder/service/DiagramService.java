@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
+import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.helper.Dimension;
 
 public interface DiagramService {
@@ -46,6 +47,7 @@ public interface DiagramService {
 
 	void moveLinkPivot(String diagramKey, String linkKey, int x, int y);
 
+	void updateLink(String diagramKey, String linkKey, Link link);
 
 	void deleteLink(String diagramKey, String linkKey);
 

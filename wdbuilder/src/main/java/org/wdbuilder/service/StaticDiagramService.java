@@ -15,6 +15,7 @@ import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IBlockPluginFacade;
+import org.wdbuilder.plugin.ILinkPluginFacade;
 import org.wdbuilder.service.validator.DiagramValidator;
 import org.wdbuilder.utility.DiagramHelper;
 
@@ -128,6 +129,10 @@ class StaticDiagramService implements DiagramService {
 			throw ex;
 		}
 	}
+	
+	private ILinkPluginFacade getLinkPluginFacade(final Link link) {
+		return serviceFacade.getLinkPluginRepository().getFacade( link.getClass());
+	}	
 
 	private IBlockPluginFacade getBlockPluginFacade(final Block block) {
 		return getBlockPluginFacade(block.getClass());
@@ -241,9 +246,6 @@ class StaticDiagramService implements DiagramService {
 		link.getSockets().add(beginSocket);
 		link.getSockets().add(endSocket);
 
-		// TODO: set the default name fo a while (2013/05/05)
-		link.setName(link.getKey());
-
 		diagramHelper.calculatePivot(link);
 
 		if (!diagramHelper.hasLinkWithSameEnds(link)) {
@@ -268,6 +270,28 @@ class StaticDiagramService implements DiagramService {
 		}
 		link.setPivot(new Point(x, y));
 	}
+	
+	@Override
+	public void updateLink(String diagramKey, String linkKey, Link link) {
+		final Diagram diagram = getDiagram(diagramKey);
+		if (null == diagram) {
+			return;
+		}
+
+		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
+		final Link savedLink = diagramHelper.findLinkByKey(linkKey);
+		if (null == savedLink) {
+			// Nothing to update
+			return;
+		}
+		link.setKey(linkKey);
+		ILinkPluginFacade pluginFacade = getLinkPluginFacade(link);
+		pluginFacade.getValidator().validate(diagram, link);
+
+		// TODO: doubtful code (2013/05/06)
+		diagram.getLinks().remove(savedLink);
+		diagram.getLinks().add(link);
+	}	
 
 	@Override
 	public void deleteLink(String diagramKey, String linkKey) {
