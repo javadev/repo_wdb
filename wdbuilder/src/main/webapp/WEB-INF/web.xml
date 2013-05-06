@@ -15,4 +15,11 @@
   		org.wdbuilder.plugin.icon.IconBlockPluginFacade
   	]]></param-value>
 	</context-param>
+    <context-param>
+        <description>List of link plugins</description>
+        <param-name>link-plugins</param-name>
+        <param-value><![CDATA[
+        org.wdbuilder.plugin.defaultlink.DefaultLinkPluginFacade
+    ]]></param-value>
+    </context-param>
 </web-app>

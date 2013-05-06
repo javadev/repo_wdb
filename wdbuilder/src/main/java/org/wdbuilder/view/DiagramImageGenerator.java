@@ -5,20 +5,18 @@ import static org.wdbuilder.util.ImageUtility.getGraphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.plugin.IBlockPluginFacade;
-import org.wdbuilder.service.IPluginFacadeRepository;
+import org.wdbuilder.service.IServiceFacade;
 import org.wdbuilder.web.ApplicationState;
 
 public class DiagramImageGenerator extends ImageGenerator {
 
-	private final IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository;
+	private final IServiceFacade serviceFacade;
 
 	public DiagramImageGenerator(ApplicationState appState,
-			IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository) {
+			IServiceFacade serviceFacade) {
 		super(appState);
-		this.pluginFacadeRepository = pluginFacadeRepository;
+		this.serviceFacade = serviceFacade;
 	}
 
 	@Override
@@ -34,8 +32,7 @@ public class DiagramImageGenerator extends ImageGenerator {
 		renderCtx.setOpaque(false);
 		renderCtx.setGraphics(gr);
 
-		new DiagramRenderer(appState, pluginFacadeRepository).draw(diagram,
-				renderCtx);
+		new DiagramRenderer(appState, serviceFacade).draw(diagram, renderCtx);
 		gr.dispose();
 		return image;
 	}

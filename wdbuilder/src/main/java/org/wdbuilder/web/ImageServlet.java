@@ -2,11 +2,8 @@ package org.wdbuilder.web;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.input.BlockParameter;
-import org.wdbuilder.plugin.IBlockPluginFacade;
-import org.wdbuilder.service.IPluginFacadeRepository;
 import org.wdbuilder.view.BlockImageGenerator;
 import org.wdbuilder.view.DiagramImageGenerator;
 import org.wdbuilder.view.ImageGenerator;
@@ -47,12 +44,11 @@ public class ImageServlet extends DiagramHelperServlet {
 
 	private ImageGenerator getImageGenerator(boolean blockOnly,
 			ApplicationState appState) {
-		final IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository = serviceFacade
-				.getBlockPluginRepository();
 		if (blockOnly) {
-			return new BlockImageGenerator(appState, pluginFacadeRepository);
+			return new BlockImageGenerator(appState,
+					serviceFacade.getBlockPluginRepository());
 		} else {
-			return new DiagramImageGenerator(appState, pluginFacadeRepository);
+			return new DiagramImageGenerator(appState, serviceFacade);
 		}
 	}
 
