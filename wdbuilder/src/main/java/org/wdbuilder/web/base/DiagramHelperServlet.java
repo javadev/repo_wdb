@@ -15,7 +15,7 @@ public abstract class DiagramHelperServlet extends DiagramServiceServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		if (null == service) {
+		if (null == serviceFacade) {
 			throw new IllegalArgumentException(
 					"Diagram service is not initialized");
 		}

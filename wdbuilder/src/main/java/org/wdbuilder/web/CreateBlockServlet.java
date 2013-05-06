@@ -30,8 +30,9 @@ public class CreateBlockServlet extends DiagramHelperFormServlet {
 			return;
 		}
 
-		IBlockPluginFacade pluginFacade = pluginFacadeRepository.getFacade(Class
-				.forName(blockClassStr));
+		IBlockPluginFacade pluginFacade = serviceFacade
+				.getBlockPluginRepository().getFacade(
+						Class.forName(blockClassStr));
 		if (null == pluginFacade) {
 			return;
 		}

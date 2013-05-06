@@ -40,10 +40,8 @@ public class ExportDiagramServlet extends DiagramHelperServlet {
 	
 	private Class<?>[] getClassesForMarchaling() {
 		List<Class<?>> list = new ArrayList<Class<?>>(4);
-		for( Class<?> klass : pluginFacadeRepository.getBlockClasses() ) {
-			list.add(klass);
-		}
-		
+		list.addAll( serviceFacade.getBlockPluginRepository().getEntityClasses() );
+		list.addAll( serviceFacade.getLinkPluginRepository().getEntityClasses() );		
 		list.add(Diagram.class);
 		
 		Class<?>[] result = new Class<?>[list.size()];

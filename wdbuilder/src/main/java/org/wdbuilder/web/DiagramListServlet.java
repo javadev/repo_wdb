@@ -123,7 +123,8 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		public DiagramList() throws JAXBException {
 			super(CLASS);
-			final Collection<Diagram> list = service.getDiagrams();
+			final Collection<Diagram> list = serviceFacade.getDiagramService()
+					.getDiagrams();
 			for (final Diagram obj : list) {
 				add(createItem(obj));
 			}

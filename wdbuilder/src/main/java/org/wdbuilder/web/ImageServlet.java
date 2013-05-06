@@ -45,9 +45,10 @@ public class ImageServlet extends DiagramHelperServlet {
 	private ImageGenerator getImageGenerator(boolean blockOnly,
 			ApplicationState appState) {
 		if (blockOnly) {
-			return new BlockImageGenerator(appState, pluginFacadeRepository);
+			return new BlockImageGenerator(appState,
+					serviceFacade.getBlockPluginRepository());
 		} else {
-			return new DiagramImageGenerator(appState, pluginFacadeRepository);
+			return new DiagramImageGenerator(appState, serviceFacade);
 		}
 	}
 

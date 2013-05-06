@@ -27,9 +27,9 @@ import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.serialize.html.IUIActionURL;
 import org.wdbuilder.service.DiagramService;
+import org.wdbuilder.service.IPluginFacadeRepository;
 import org.wdbuilder.service.validator.DiagramValidator;
 import org.wdbuilder.utility.DiagramHelper;
-import org.wdbuilder.utility.IPluginFacadeRepository;
 import org.wdbuilder.utility.Utility;
 import org.wdbuilder.web.ApplicationState;
 
@@ -38,10 +38,11 @@ public class CanvasFrameWriter {
 	private static final String ID_IMAGE_MAP = "diagramImageMap";
 
 	private final DiagramHelper diagramHelper;
-	private IPluginFacadeRepository pluginFacadeRepository;
+	private IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository;
 
-	public CanvasFrameWriter(final DiagramHelper diagramHelper,
-			IPluginFacadeRepository pluginFacadeRepository) {
+	public CanvasFrameWriter(
+			final DiagramHelper diagramHelper,
+			IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository) {
 		this.diagramHelper = diagramHelper;
 		this.pluginFacadeRepository = pluginFacadeRepository;
 	}
@@ -71,7 +72,7 @@ public class CanvasFrameWriter {
 					return result;
 				}
 				for (final IBlockPluginFacade pluginFacade : pluginFacadeRepository
-						.getBlockPlugins()) {
+						.getPlugins()) {
 					result.add(pluginFacade.getUIActionCreate(diagramKey));
 				}
 
@@ -287,7 +288,7 @@ public class CanvasFrameWriter {
 		private String createOnMouseDownHandler(Link link) {
 			final LinkSocket beginSocket = link.getSockets().get(0);
 			final LinkSocket endSocket = link.getSockets().get(1);
-			
+
 			boolean isHorizontal = beginSocket.isHorizontal();
 
 			Point beginPoint = diagramHelper.getOffset(beginSocket);

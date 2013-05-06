@@ -1,33 +1,22 @@
 package org.wdbuilder.web.base;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.wdbuilder.plugin.IBlockPluginFacade;
-import org.wdbuilder.service.DiagramService;
-import org.wdbuilder.service.StaticDiagramService;
-import org.wdbuilder.service.StaticPluginFacadeRepository;
+import org.wdbuilder.service.IServiceFacade;
+import org.wdbuilder.service.ServletRelatedStaticServiceFacade;
 import org.wdbuilder.utility.DiagramHelper;
-import org.wdbuilder.utility.IPluginFacadeRepository;
 
 public abstract class DiagramServiceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger LOG = Logger.getLogger(DiagramServiceServlet.class);
-
 	public static final String CONTENT_TYPE_XML = "text/xml;charset=UTF-8";
 
-	protected DiagramService service = null;
-	protected IPluginFacadeRepository pluginFacadeRepository = null;
+	protected IServiceFacade serviceFacade;
 
 	protected abstract void do4DiagramService(ServletInput input)
 			throws Exception;
@@ -36,15 +25,8 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 
 	@Override
 	public void init() {
-		// TODO replace this ugly code by some inversion of control (2013/05/03)
-		StaticDiagramService serviceImpl = (StaticDiagramService) StaticDiagramService.getInstance();
-		this.service = serviceImpl;
-
-		PluginRepositoryConfiguration config = new PluginRepositoryConfiguration();
-
-		this.pluginFacadeRepository = StaticPluginFacadeRepository.getInstance(
-				config.getBlockPlugins());
-		serviceImpl.setPluginRepository(pluginFacadeRepository);
+		serviceFacade = ServletRelatedStaticServiceFacade
+				.getInstance(getServletConfig());
 	}
 
 	@Override
@@ -61,7 +43,8 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 	}
 
 	protected final DiagramHelper createDiagramHelper(final String key) {
-		return new DiagramHelper(service.getDiagram(key));
+		return new DiagramHelper(serviceFacade.getDiagramService().getDiagram(
+				key));
 	}
 
 	protected void flush(HttpServletResponse response) throws IOException {
@@ -74,51 +57,5 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 		sb.append(name);
 		sb.append('=');
 		sb.append(value);
-	}
-
-	private class PluginRepositoryConfiguration {
-		private Collection<IBlockPluginFacade> getBlockPlugins() {
-			Set<IBlockPluginFacade> result = new HashSet<IBlockPluginFacade>(2);
-
-			String contextParamStr = getServletContext().getInitParameter(
-					"block-plugins");
-			if (StringUtils.isEmpty(contextParamStr)) {
-				return result;
-			}
-			String[] pairs = contextParamStr.split(",");
-			for (final String str : pairs) {
-				Class<?> klass = getClass(str);
-				if (null != klass) {
-					try {
-						Object obj = klass.newInstance();
-						if (IBlockPluginFacade.class.isInstance(obj)) {
-							IBlockPluginFacade facade = IBlockPluginFacade.class
-									.cast(obj);
-							result.add(facade);
-
-							LOG.info("plugin " + klass.getName() + " ("
-									+ facade.getEntityClass().getName() + ") - OK");
-						}
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				}
-			}
-
-			return result;
-		}
-
-		private Class<?> getClass(String str) {
-			try {
-				// TODO: doubtful code (2013/04/28)
-				Class<?> result = Class.forName(str.trim());
-				return result;
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				return null;
-			}
-
-		}
-
 	}
 }

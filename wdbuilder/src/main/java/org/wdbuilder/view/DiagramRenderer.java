@@ -15,10 +15,12 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.plugin.IBlockPluginFacade;
+import org.wdbuilder.plugin.ILinkPluginFacade;
 import org.wdbuilder.plugin.ILinkRenderContext;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.IRenderer;
-import org.wdbuilder.utility.IPluginFacadeRepository;
+import org.wdbuilder.service.IPluginFacadeRepository;
+import org.wdbuilder.service.IServiceFacade;
 import org.wdbuilder.web.ApplicationState;
 
 import com.google.common.io.Resources;
@@ -26,12 +28,16 @@ import com.google.common.io.Resources;
 public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 
 	private final ApplicationState appState;
-	private final IPluginFacadeRepository pluginFacadeRepository;
+	private final IPluginFacadeRepository<Block, IBlockPluginFacade> blockPluginFacadeRepository;
+	private final IPluginFacadeRepository<Link, ILinkPluginFacade> linkPluginFacadeRepository;
 
 	public DiagramRenderer(ApplicationState appState,
-			IPluginFacadeRepository pluginFacadeRepository) {
+			IServiceFacade serviceFacade) {
 		this.appState = appState;
-		this.pluginFacadeRepository = pluginFacadeRepository;
+		this.blockPluginFacadeRepository = serviceFacade
+				.getBlockPluginRepository();
+		this.linkPluginFacadeRepository = serviceFacade
+				.getLinkPluginRepository();
 	}
 
 	@Override
@@ -61,7 +67,7 @@ public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 			blockCtx.getOffset().setY(block.getLocation().getY());
 			blockCtx.setGraphics(gr);
 
-			IBlockPluginFacade pluginFacade = pluginFacadeRepository
+			IBlockPluginFacade pluginFacade = blockPluginFacadeRepository
 					.getFacade(block.getClass());
 			IRenderer<Block, IRenderContext> renderer = pluginFacade
 					.getRenderer();
@@ -69,16 +75,16 @@ public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 		}
 
 		gr.setColor(Color.black);
-		
-		final LinkRenderContext linkRenderCtx = new LinkRenderContext(appState, gr);
-		
-		
+
+		final LinkRenderContext linkRenderCtx = new LinkRenderContext(appState,
+				gr);
+
 		// TODO: draw more than 1 to 1 link (2013/05/05)
 		for (final Link link : diagram.getLinks()) {
-			
-			// TODO: get the link plugin facade from repository (2013/05/06)
-			IRenderer<Link, ILinkRenderContext> linkRenderer =
-					new LinkRenderer();
+
+			final ILinkPluginFacade linkPluginFacade = linkPluginFacadeRepository
+					.getFacade(link.getClass());
+			IRenderer<Link, ILinkRenderContext> linkRenderer = linkPluginFacade.getRenderer();
 			linkRenderer.draw(link, linkRenderCtx);
 		}
 	}

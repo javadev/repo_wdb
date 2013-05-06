@@ -11,25 +11,27 @@ import org.wdbuilder.web.base.ServletInput;
 
 @WebServlet("/edit-block-save")
 public class EditBlockSaveServlet extends DiagramServlet {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void do4Frame(ServletInput input) throws Exception {
 
-		final String diagramKey = BlockParameter.DiagramKey.getString(input); 
+		final String diagramKey = BlockParameter.DiagramKey.getString(input);
 		final String blockKey = BlockParameter.BlockKey.getString(input);
 		final Block persistedBlock = diagramHelper.findBlockByKey(blockKey);
-		if( null==persistedBlock ) {
+		if (null == persistedBlock) {
 			return;
 		}
-		
-		IBlockPluginFacade pluginFacade = pluginFacadeRepository
+
+		IBlockPluginFacade pluginFacade = serviceFacade
+				.getBlockPluginRepository()
 				.getFacade(persistedBlock.getClass());
 		Block block = pluginFacade.create(input);
-		
-		service.updateBlock(diagramKey, blockKey, block);
+
+		serviceFacade.getDiagramService().updateBlock(diagramKey, blockKey,
+				block);
 		printCanvasFrame(input, blockKey);
-		
+
 	}
 
 }

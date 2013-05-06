@@ -29,7 +29,7 @@ public class SelectedBlockInfoServlet extends DiagramHelperFormServlet {
 		writer.write(new SectionHeader("Block \"" + block.getName()
 				+ "\" Details"));
 
-		IBlockPluginFacade pluginFacade = pluginFacadeRepository.getFacade(block
+		IBlockPluginFacade pluginFacade = serviceFacade.getBlockPluginRepository().getFacade(block
 				.getClass());
 		if (null == pluginFacade) {
 			return;

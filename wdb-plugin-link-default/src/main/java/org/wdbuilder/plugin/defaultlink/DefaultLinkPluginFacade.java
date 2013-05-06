@@ -1,18 +1,21 @@
 package org.wdbuilder.plugin.defaultlink;
 
+import static org.apache.commons.lang.StringUtils.isEmpty;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
-import org.wdbuilder.plugin.IPluginFacade;
+import org.wdbuilder.plugin.ILinkPluginFacade;
+import org.wdbuilder.plugin.ILinkRenderContext;
+import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.validator.CompositeValidator;
 import org.wdbuilder.validator.IValidator;
+import org.wdbuilder.view.LinkRenderer;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-
-public class DefaultLinkPluginFacade implements IPluginFacade<Link> {
+public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 
 	@Override
 	public Class<?> getEntityClass() {
@@ -70,6 +73,11 @@ public class DefaultLinkPluginFacade implements IPluginFacade<Link> {
 	public UIExistingEntityFormFactory<Link> getEditFormFactory(
 			String diagramKey, Link entity) {
 		return new EditFormFactory(diagramKey, entity);
+	}
+
+	@Override
+	public IRenderer<Link, ILinkRenderContext> getRenderer() {
+		return new LinkRenderer();
 	}
 
 }
