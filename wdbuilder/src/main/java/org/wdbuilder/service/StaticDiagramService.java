@@ -242,7 +242,7 @@ class StaticDiagramService implements DiagramService {
 		final LinkSocket endSocket = new LinkSocket(endBlockKey,
 				LinkSocket.Direction.valueOf(endSocketDirection),
 				endSocketIndex);
-		beginSocket.setLineEnd(LineEnd.SOLID_ARROW);
+		endSocket.setLineEnd(LineEnd.SOLID_ARROW);
 
 		Link link = new Link();
 		link.setKey(UUID.randomUUID().toString());
