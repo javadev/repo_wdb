@@ -10,6 +10,8 @@ import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.ILinkRenderContext;
 import org.wdbuilder.plugin.IRenderer;
+import org.wdbuilder.view.line.end.ArrowLineEndRenderer;
+import org.wdbuilder.view.line.end.DefaultLineEndRenderer;
 
 import static org.wdbuilder.service.DiagramService.LINE_AREA;
 import static org.apache.commons.lang.StringUtils.isEmpty;
@@ -28,15 +30,15 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 		final Block block0 = renderCtx.getBlock(socket0.getBlockKey());
 		final Block block1 = renderCtx.getBlock(socket1.getBlockKey());
 
-		renderLine(link, renderCtx, 0);
-		renderLine(link, renderCtx, 1);
+		renderLineEnd(link, renderCtx, 0);
+		renderLineEnd(link, renderCtx, 1);
 		DivAnalog.render(gr, link, block0, block1);
 
 		final Point pivot = link.getPivot();
 
 		// TODO: implement the custom link end (default is the straight line)
 		// (2013/05/06)
-		renderArrow(link, renderCtx);
+		// renderArrow(link, renderCtx);
 
 		// For line mode render
 		if (!renderCtx.isBlockMode()) {
@@ -50,16 +52,35 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 		}
 	}
 
-	private void renderLine(Link link, ILinkRenderContext renderCtx, int index) {
+	private void renderLineEnd(Link link, ILinkRenderContext renderCtx,
+			int index) {
 		final LinkSocket s = link.getSockets().get(index);
 		final Point p = getLocation(link, renderCtx, index);
-		Point o = s.getOffset(p);
-		renderCtx.getGraphics().setColor(
-				link.getLineColor().getForegroundColor());
-		renderCtx.getGraphics()
-				.drawLine(p.getX(), p.getY(), o.getX(), o.getY());
+
+		LineEndRenderContext lineEndRenderCtx = new LineEndRenderContext();
+		lineEndRenderCtx.setGraphics(renderCtx.getGraphics());
+		lineEndRenderCtx.setColor(link.getLineColor().getForegroundColor());
+		lineEndRenderCtx.setDirection(s.getDirection());
+		lineEndRenderCtx.setBaseLocation(p);
+
+		// TODO: implement the mutable end locations:
+		ILineEndRenderer lineEndRenderer = 0 == index ? new DefaultLineEndRenderer()
+				: new ArrowLineEndRenderer();
+		lineEndRenderer.draw(lineEndRenderCtx);
+
+		/*
+		 * Point o = s.getOffset(p);
+		 * 
+		 * 
+		 * 
+		 * 
+		 * renderCtx.getGraphics().setColor(
+		 * link.getLineColor().getForegroundColor()); renderCtx.getGraphics()
+		 * .drawLine(p.getX(), p.getY(), o.getX(), o.getY());
+		 */
 	}
 
+	/*
 	private void renderArrow(Link link, ILinkRenderContext renderCtx) {
 		Point p = getLocation(link, renderCtx, 1);
 		final int[][] a = link.getSockets().get(1).getArrow(p);
@@ -67,6 +88,7 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 				link.getLineColor().getForegroundColor());
 		renderCtx.getGraphics().fillPolygon(a[0], a[1], 3);
 	}
+	*/
 
 	private Point getLocation(Link link, ILinkRenderContext renderCtx, int index) {
 		final LinkSocket socket = link.getSockets().get(index);
