@@ -21,10 +21,10 @@ public class DefaultLineEndRenderer implements ILineEndRenderer {
 			p1 = p0.addX(LINE_OFFSET);
 			break;
 		case TOP:
-			p1 = p0.addX(-LINE_OFFSET);
+			p1 = p0.addY(-LINE_OFFSET);
 			break;
 		case BOTTOM:
-			p1 = p0.addX(LINE_OFFSET);
+			p1 = p0.addY(LINE_OFFSET);
 			break;
 		default:
 			throw new IllegalArgumentException("Link socket direction is null");
