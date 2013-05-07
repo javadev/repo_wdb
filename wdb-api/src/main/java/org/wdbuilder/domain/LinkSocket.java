@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.service.DiagramService;
+import org.wdbuilder.view.line.end.ILineEnd;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -36,6 +37,7 @@ public class LinkSocket {
 	private Direction direction;
 	private int index;
 	private String blockKey;
+	private ILineEnd lineEnd;
 
 	public LinkSocket() {
 	}
@@ -58,6 +60,10 @@ public class LinkSocket {
 		this.blockKey = blockKey;
 	}	
 
+	public void setLineEnd(ILineEnd lineEnd) {
+		this.lineEnd = lineEnd;
+	}	
+
 	public final Point getLocation(Block b) {
 		return this.direction.getLocation(b, this.index);
 	}
@@ -70,6 +76,10 @@ public class LinkSocket {
 	@XmlAttribute
 	public int getIndex() {
 		return this.index;
+	}
+
+	public ILineEnd getLineEnd() {
+		return lineEnd;
 	}
 	
 	@XmlAttribute
