@@ -24,7 +24,7 @@ public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 
 	public enum Parameter implements IParameter {
 		LineColor("lineColor", "Line Color"), StartType("s0", "Line Start Type"), EndType(
-				"s0", "Line Start Type");
+				"s1", "Line End Type");
 
 		private final String name;
 		private final String label;
