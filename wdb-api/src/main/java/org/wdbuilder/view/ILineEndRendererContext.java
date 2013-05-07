@@ -10,10 +10,10 @@ interface ILineEndRendererContext {
 
   public abstract Graphics2D getGraphics();
 
-	public abstract Point getBaseLocation();
+	Point getBaseLocation();
 
-	public abstract Color getColor();
+	Color getColor();
 
-	public abstract LinkSocket.Direction getDirection();
+	LinkSocket.Direction getDirection();
 
 }
