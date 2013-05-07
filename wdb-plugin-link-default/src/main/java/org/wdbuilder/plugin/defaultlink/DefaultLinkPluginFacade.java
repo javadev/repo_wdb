@@ -139,6 +139,7 @@ public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 		LinkSocket endSocket = new LinkSocket();
 		endSocket.setLineEnd( LineEnd.valueOf(Parameter.EndType.getString(input)));
 		socketList.add(beginSocket);
+		result.setSockets(socketList);
 		
 		return result;
 	}
