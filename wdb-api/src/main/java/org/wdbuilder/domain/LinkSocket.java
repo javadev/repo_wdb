@@ -14,6 +14,7 @@ import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.service.DiagramService;
 import org.wdbuilder.view.line.end.ILineEnd;
+import org.wdbuilder.view.line.end.LineEnd;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -37,7 +38,7 @@ public class LinkSocket {
 	private Direction direction;
 	private int index;
 	private String blockKey;
-	private ILineEnd lineEnd;
+	private LineEnd lineEnd;
 
 	public LinkSocket() {
 	}
@@ -60,7 +61,7 @@ public class LinkSocket {
 		this.blockKey = blockKey;
 	}	
 
-	public void setLineEnd(ILineEnd lineEnd) {
+	public void setLineEnd(LineEnd lineEnd) {
 		this.lineEnd = lineEnd;
 	}	
 
@@ -78,7 +79,8 @@ public class LinkSocket {
 		return this.index;
 	}
 
-	public ILineEnd getLineEnd() {
+	@XmlAttribute
+	public LineEnd getLineEnd() {
 		return lineEnd;
 	}
 	
