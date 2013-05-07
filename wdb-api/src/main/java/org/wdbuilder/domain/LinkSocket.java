@@ -38,7 +38,8 @@ public class LinkSocket {
 	private Direction direction;
 	private int index;
 	private String blockKey;
-	private LineEnd lineEnd;
+	// TODO (2013/05/07) quick and dirty NPE fix
+	private LineEnd lineEnd = LineEnd.SIMPLE;
 
 	public LinkSocket() {
 	}
