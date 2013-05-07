@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.Link;
+import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.IParameter;
 import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.plugin.ILinkPluginFacade;
 import org.wdbuilder.plugin.ILinkRenderContext;
@@ -16,8 +18,48 @@ import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.validator.CompositeValidator;
 import org.wdbuilder.validator.IValidator;
 import org.wdbuilder.view.LinkRenderer;
+import org.wdbuilder.view.line.end.LineEnd;
 
 public class DefaultLinkPluginFacade implements ILinkPluginFacade {
+
+	public enum Parameter implements IParameter {
+		LineColor("lineColor", "Line Color"), StartType("s0", "Line Start Type"), EndType(
+				"s0", "Line Start Type");
+
+		private final String name;
+		private final String label;
+
+		Parameter(String name, String label) {
+			this.name = name;
+			this.label = label;
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+
+		@Override
+		public String getLabel() {
+			return label;
+		}
+
+		@Override
+		public String getString(InputAdapter input) {
+			return input.getString(this);
+		}
+
+		@Override
+		public int getInt(InputAdapter input) {
+			return input.getInt(this);
+		}
+
+		@Override
+		public boolean getBoolean(InputAdapter input) {
+			return input.getBoolean(this);
+		}
+
+	}
 
 	@Override
 	public Class<?> getEntityClass() {
@@ -86,8 +128,18 @@ public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 	public Link create(InputAdapter input) {
 		Link result = new Link();
 		result.setName(BlockParameter.Name.getString(input));
-		result.setLineColor(Link.LineColor.valueOf(BlockParameter.LineColor
+		result.setLineColor(Link.LineColor.valueOf(Parameter.LineColor
 				.getString(input)));
+		
+		// Create fake sockets: (TODO: not the best approach (2013/05/07))
+		List<LinkSocket> socketList = new ArrayList<LinkSocket>(2);
+		LinkSocket beginSocket = new LinkSocket();
+		beginSocket.setLineEnd( LineEnd.valueOf(Parameter.StartType.getString(input)));
+		socketList.add(beginSocket);
+		LinkSocket endSocket = new LinkSocket();
+		endSocket.setLineEnd( LineEnd.valueOf(Parameter.EndType.getString(input)));
+		socketList.add(beginSocket);
+		
 		return result;
 	}
 
