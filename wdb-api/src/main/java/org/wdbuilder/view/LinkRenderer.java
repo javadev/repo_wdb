@@ -10,8 +10,7 @@ import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.ILinkRenderContext;
 import org.wdbuilder.plugin.IRenderer;
-import org.wdbuilder.view.line.end.ArrowLineEndRenderer;
-import org.wdbuilder.view.line.end.DefaultLineEndRenderer;
+import org.wdbuilder.view.line.end.ILineEnd;
 
 import static org.wdbuilder.service.DiagramService.LINE_AREA;
 import static org.apache.commons.lang.StringUtils.isEmpty;
@@ -36,10 +35,6 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 
 		final Point pivot = link.getPivot();
 
-		// TODO: implement the custom link end (default is the straight line)
-		// (2013/05/06)
-		// renderArrow(link, renderCtx);
-
 		// For line mode render
 		if (!renderCtx.isBlockMode()) {
 			// Render "update link entry point"
@@ -62,33 +57,11 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 		lineEndRenderCtx.setColor(link.getLineColor().getForegroundColor());
 		lineEndRenderCtx.setDirection(s.getDirection());
 		lineEndRenderCtx.setBaseLocation(p);
-
-		// TODO: implement the mutable end locations:
-		ILineEndRenderer lineEndRenderer = 0 == index ? new DefaultLineEndRenderer()
-				: new ArrowLineEndRenderer();
-		lineEndRenderer.draw(lineEndRenderCtx);
-
-		/*
-		 * Point o = s.getOffset(p);
-		 * 
-		 * 
-		 * 
-		 * 
-		 * renderCtx.getGraphics().setColor(
-		 * link.getLineColor().getForegroundColor()); renderCtx.getGraphics()
-		 * .drawLine(p.getX(), p.getY(), o.getX(), o.getY());
-		 */
+		
+		ILineEnd lineEnd = s.getLineEnd();
+		ILineEndRenderer renderer = lineEnd.getRenderer();
+		renderer.draw(lineEndRenderCtx);
 	}
-
-	/*
-	private void renderArrow(Link link, ILinkRenderContext renderCtx) {
-		Point p = getLocation(link, renderCtx, 1);
-		final int[][] a = link.getSockets().get(1).getArrow(p);
-		renderCtx.getGraphics().setColor(
-				link.getLineColor().getForegroundColor());
-		renderCtx.getGraphics().fillPolygon(a[0], a[1], 3);
-	}
-	*/
 
 	private Point getLocation(Link link, ILinkRenderContext renderCtx, int index) {
 		final LinkSocket socket = link.getSockets().get(index);

@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.service.DiagramService;
+import org.wdbuilder.view.line.end.ILineEnd;
+import org.wdbuilder.view.line.end.LineEnd;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -36,6 +38,8 @@ public class LinkSocket {
 	private Direction direction;
 	private int index;
 	private String blockKey;
+	// TODO (2013/05/07) quick and dirty NPE fix
+	private LineEnd lineEnd = LineEnd.SIMPLE;
 
 	public LinkSocket() {
 	}
@@ -58,6 +62,10 @@ public class LinkSocket {
 		this.blockKey = blockKey;
 	}	
 
+	public void setLineEnd(LineEnd lineEnd) {
+		this.lineEnd = lineEnd;
+	}	
+
 	public final Point getLocation(Block b) {
 		return this.direction.getLocation(b, this.index);
 	}
@@ -70,6 +78,11 @@ public class LinkSocket {
 	@XmlAttribute
 	public int getIndex() {
 		return this.index;
+	}
+
+	@XmlAttribute
+	public LineEnd getLineEnd() {
+		return lineEnd;
 	}
 	
 	@XmlAttribute
