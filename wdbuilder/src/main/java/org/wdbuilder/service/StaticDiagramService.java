@@ -18,6 +18,7 @@ import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.ILinkPluginFacade;
 import org.wdbuilder.service.validator.DiagramValidator;
 import org.wdbuilder.utility.DiagramHelper;
+import org.wdbuilder.view.line.end.LineEnd;
 
 class StaticDiagramService implements DiagramService {
 
@@ -129,10 +130,11 @@ class StaticDiagramService implements DiagramService {
 			throw ex;
 		}
 	}
-	
+
 	private ILinkPluginFacade getLinkPluginFacade(final Link link) {
-		return serviceFacade.getLinkPluginRepository().getFacade( link.getClass());
-	}	
+		return serviceFacade.getLinkPluginRepository().getFacade(
+				link.getClass());
+	}
 
 	private IBlockPluginFacade getBlockPluginFacade(final Block block) {
 		return getBlockPluginFacade(block.getClass());
@@ -235,9 +237,12 @@ class StaticDiagramService implements DiagramService {
 		final LinkSocket beginSocket = new LinkSocket(beginBlockKey,
 				LinkSocket.Direction.valueOf(beginSocketDirection),
 				beginSocketIndex);
+		beginSocket.setLineEnd(LineEnd.SIMPLE);
+
 		final LinkSocket endSocket = new LinkSocket(endBlockKey,
 				LinkSocket.Direction.valueOf(endSocketDirection),
 				endSocketIndex);
+		beginSocket.setLineEnd(LineEnd.SOLID_ARROW);
 
 		Link link = new Link();
 		link.setKey(UUID.randomUUID().toString());
@@ -271,7 +276,7 @@ class StaticDiagramService implements DiagramService {
 		}
 		link.setPivot(new Point(x, y));
 	}
-	
+
 	@Override
 	public void updateLink(String diagramKey, String linkKey, Link link) {
 		final Diagram diagram = getDiagram(diagramKey);
@@ -287,15 +292,23 @@ class StaticDiagramService implements DiagramService {
 		}
 		link.setKey(linkKey);
 		link.setPivot(savedLink.getPivot());
-		link.setSockets( savedLink.getSockets() );
-		
+
+		// Update socket types: (TODO (2013/05/07) strange code)
+		int size = link.getSockets().size();
+		for (int i = 0; i < size; i++) {
+			savedLink.getSockets().get(i)
+					.setLineEnd(link.getSockets().get(i).getLineEnd());
+		}
+
+		link.setSockets(savedLink.getSockets());
+
 		ILinkPluginFacade pluginFacade = getLinkPluginFacade(link);
 		pluginFacade.getValidator().validate(diagram, link);
 
 		// TODO: doubtful code (2013/05/06)
 		diagram.getLinks().remove(savedLink);
 		diagram.getLinks().add(link);
-	}	
+	}
 
 	@Override
 	public void deleteLink(String diagramKey, String linkKey) {
