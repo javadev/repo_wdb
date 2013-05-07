@@ -93,10 +93,6 @@ public class LinkSocket {
 		return getDirection().getArea(getLocation(block));
 	}
 
-	public int[][] getArrow(Point p) {
-		return getDirection().getArrow(p);
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -188,14 +184,6 @@ public class LinkSocket {
 			}
 
 			@Override
-			int[][] getArrow(Point p) {
-				int px = p.getX();
-				int py = p.getY();
-				return new int[][] { new int[] { px, px - 7, px - 7 },
-						new int[] { py, py - 3, py + 4 }, };
-			}
-
-			@Override
 			public Point getLocation(Block b, int index) {
 				return new Point(b.getLocation().getX()
 						- b.getSize().getWidth() / 2, b.getLocation().getY()
@@ -213,14 +201,6 @@ public class LinkSocket {
 			Rectangle getArea(Point p) {
 				return new Rectangle(new Point(p.getX() - AREA_DIM.getWidth()
 						/ 2, p.getY()).toAWT(), AREA_DIM.toAWT());
-			}
-
-			@Override
-			int[][] getArrow(Point p) {
-				int px = p.getX();
-				int py = p.getY();
-				return new int[][] { new int[] { px, px - 3, px + 4 },
-						new int[] { py, py - 7, py - 7 }, };
 			}
 
 			@Override
@@ -245,14 +225,6 @@ public class LinkSocket {
 			}
 
 			@Override
-			int[][] getArrow(Point p) {
-				int px = p.getX();
-				int py = p.getY();
-				return new int[][] { new int[] { px, px + 7, px + 7 },
-						new int[] { py, py - 3, py + 4 }, };
-			}
-
-			@Override
 			public Point getLocation(Block b, int index) {
 				return new Point(b.getLocation().getX()
 						+ b.getSize().getWidth() / 2, b.getLocation().getY()
@@ -274,14 +246,6 @@ public class LinkSocket {
 			}
 
 			@Override
-			int[][] getArrow(Point p) {
-				int px = p.getX();
-				int py = p.getY();
-				return new int[][] { new int[] { px, px - 3, px + 4 },
-						new int[] { py, py + 7, py + 7 }, };
-			}
-
-			@Override
 			public Point getLocation(Block b, int index) {
 				return new Point(b.getLocation().getX() + index * M * 2, b
 						.getLocation().getY() + b.getSize().getHeight() / 2);
@@ -293,8 +257,6 @@ public class LinkSocket {
 		abstract Point getOffset(Point p);
 
 		abstract Rectangle getArea(Point p);
-
-		abstract int[][] getArrow(Point p);
 
 		public abstract Point getLocation(Block b, int index);
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wdbuilder.domain.Link;
+import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
@@ -17,9 +18,14 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 
 	@Override
 	public TwoColumnForm getForm() {
+		PredefinedSelect<Link.LineColor> lineColorSelect = new PredefinedSelect<Link.LineColor>(
+				Link.LineColor.values(), Link.LineColor.Black);
+
 		final TwoColumnForm form = new TwoColumnForm("edit-link-save")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
-				.addTextField(BlockParameter.Name, entity.getName());
+				.addTextField(BlockParameter.Name, entity.getName())
+				.addSelectField(BlockParameter.LineColor,
+						String.valueOf(entity.getLineColor()), lineColorSelect);
 		return form;
 	}
 
@@ -41,6 +47,7 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 	private static Iterable<IParameter> getParameters() {
 		List<IParameter> result = new ArrayList<IParameter>(2);
 		result.add(BlockParameter.Name);
+		result.add(BlockParameter.LineColor);
 		return result;
 	}
 
