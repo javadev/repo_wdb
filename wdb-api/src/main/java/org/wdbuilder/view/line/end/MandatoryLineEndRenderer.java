@@ -8,7 +8,9 @@ import org.wdbuilder.view.ILineEndRendererContext;
 
 import static org.wdbuilder.service.DiagramService.LINE_OFFSET;
 
-public class Mandatory1to1LineEndRenderer implements ILineEndRenderer {
+public abstract class MandatoryLineEndRenderer implements ILineEndRenderer {
+	
+	protected abstract void drawCrossingAngle( ILineEndRendererContext renderCtx );
 
 	@Override
 	public void draw(ILineEndRendererContext renderCtx) {
@@ -21,6 +23,7 @@ public class Mandatory1to1LineEndRenderer implements ILineEndRenderer {
 		gr.drawLine(base.getX(), base.getY(), p0.getX(), p0.getY());
 		gr.drawLine(across[0].getX(), across[0].getY(), across[1].getX(),
 				across[1].getY());
+		drawCrossingAngle(renderCtx);
 	}
 
 	private static Point getSmallLineStart(ILineEndRendererContext renderCtx) {
@@ -68,4 +71,43 @@ public class Mandatory1to1LineEndRenderer implements ILineEndRenderer {
 		}
 		return result;
 	}
+	
+	public static class One extends MandatoryLineEndRenderer {
+
+		@Override
+		protected void drawCrossingAngle(ILineEndRendererContext renderCtx) {
+			// Do nothing
+		}
+		
+	}
+	
+	private static final int[] STEPS = { -5, 5 };
+	
+	public static class Many extends MandatoryLineEndRenderer {
+
+		@Override
+		protected void drawCrossingAngle(ILineEndRendererContext renderCtx) {
+			Point b = renderCtx.getBaseLocation();
+			Point p = getOffset(renderCtx, 7);
+			Graphics2D gr = renderCtx.getGraphics();
+			switch (renderCtx.getDirection()) {
+			case LEFT:
+			case RIGHT:
+				for( int n : STEPS ) {
+					gr.drawLine(p.getX(), p.getY(), b.getX(), b.getY()+ n );					
+				}
+				break;
+			case TOP:
+			case BOTTOM:
+				for( int n : STEPS ) {
+					gr.drawLine(p.getX(), p.getY(), b.getX() + n, b.getY() );					
+				}
+				break;
+			default:
+				throw new IllegalArgumentException("Link socket direction is null");
+			}
+		}
+		
+	}
+	
 }
