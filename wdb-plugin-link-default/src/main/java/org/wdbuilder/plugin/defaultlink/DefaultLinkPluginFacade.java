@@ -18,12 +18,14 @@ import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.validator.CompositeValidator;
 import org.wdbuilder.validator.IValidator;
 import org.wdbuilder.view.LinkRenderer;
+import org.wdbuilder.view.line.LineStyle;
 import org.wdbuilder.view.line.end.LineEnd;
 
 public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 
 	public enum Parameter implements IParameter {
-		LineColor("lineColor", "Line Color"), StartType("s0", "Line Start Type"), EndType(
+		LineColor("lineColor", "Line Color"), LineStyle("lineStyle",
+				"Line Style"), StartType("s0", "Line Start Type"), EndType(
 				"s1", "Line End Type");
 
 		private final String name;
@@ -130,17 +132,20 @@ public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 		result.setName(BlockParameter.Name.getString(input));
 		result.setLineColor(Link.LineColor.valueOf(Parameter.LineColor
 				.getString(input)));
+		result.setLineStyle(LineStyle.valueOf(Parameter.LineStyle
+				.getString(input)));
 
 		// Create fake sockets: (TODO: not the best approach (2013/05/07))
 		List<LinkSocket> socketList = new ArrayList<LinkSocket>(2);
-		socketList.add( createLinkSocket(Parameter.StartType, input));
-		socketList.add( createLinkSocket(Parameter.EndType, input));
+		socketList.add(createLinkSocket(Parameter.StartType, input));
+		socketList.add(createLinkSocket(Parameter.EndType, input));
 		result.setSockets(socketList);
 
 		return result;
 	}
 
-	private static LinkSocket createLinkSocket( Parameter param, InputAdapter input ) {
+	private static LinkSocket createLinkSocket(Parameter param,
+			InputAdapter input) {
 		LinkSocket result = new LinkSocket();
 		result.setLineEnd(LineEnd.valueOf(param.getString(input)));
 		return result;
