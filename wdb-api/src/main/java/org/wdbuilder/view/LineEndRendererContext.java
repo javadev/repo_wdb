@@ -3,7 +3,7 @@ package org.wdbuilder.view;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 
-class LineEndRenderContext extends LineRendererContext implements
+class LineEndRenderContext extends LineRendererContextBase implements
 		ILineEndRendererContext {
 	private Point baseLocation;
 	private LinkSocket.Direction direction;
