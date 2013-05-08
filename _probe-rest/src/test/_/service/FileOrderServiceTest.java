@@ -120,7 +120,6 @@ public class FileOrderServiceTest {
 				});
 	}
 
-	@SuppressWarnings("deprecation")
 	private void assertOrder(String expectedId, 
 			String expectedConsumer, Order order,
 			ExpectedPosition expectedPosition) {
@@ -133,7 +132,7 @@ public class FileOrderServiceTest {
 			assertEquals(expectedPosition.getGoodId(n), position.getGoodId());
 			assertEquals(expectedPosition.getQuantity(n),
 					position.getQuantity());
-			assertEquals(expectedPosition.getPrice(n), position.getPrice() );
+			assertEquals(expectedPosition.getPrice(n), position.getPrice(), 0.001 );
 			n++;
 		}
 
