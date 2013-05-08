@@ -8,12 +8,13 @@ import java.util.Iterator;
 
 import org.junit.Test;
 import _.domain.Order;
+import _.domain.Position;
 
 import static org.junit.Assert.*;
 
 public class FileOrderServiceTest {
 
-  private IOrderService service = new FileOrderService();
+	private IOrderService service = new FileOrderService();
 
 	@Test
 	public void testGetOrderListForNull() {
@@ -117,7 +118,19 @@ public class FileOrderServiceTest {
 	private void assertOrder(String expectedId, Date expectedDate,
 			String expectedConsumer, Order order,
 			ExpectedPosition expectedPosition) {
-		// TODO Auto-generated method stub
+		assertEquals(expectedId, order.getId());
+		assertEquals(expectedDate, order.getDate());
+		assertEquals(expectedConsumer, order.getConsumer());
+		Collection<Position> positions = order.getPositions();
+		assertEquals(expectedPosition.getExpectedCount(), positions.size());
+		int n = 0;
+		for( Position position : positions ) {
+			assertEquals(expectedPosition.getGoodId(n), position.getGoodId());
+			assertEquals(expectedPosition.getQuantity(n), position.getQuantity());
+			assertEquals(expectedPosition.getPrice(n), position.getPrice());
+			n++;
+		}
+		
 
 	}
 
