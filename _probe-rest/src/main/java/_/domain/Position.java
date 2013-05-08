@@ -1,7 +1,6 @@
 package _.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
@@ -9,7 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 public class Position implements Serializable {
 	private String goodId;
 	private int quantity;
-	private BigDecimal price;
+	private double price;
 
 	@XmlAttribute
 	public String getGoodId() {
@@ -30,11 +29,11 @@ public class Position implements Serializable {
 	}
 
 	@XmlAttribute
-	public BigDecimal getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
