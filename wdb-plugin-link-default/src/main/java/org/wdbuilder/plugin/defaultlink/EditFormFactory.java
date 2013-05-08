@@ -22,30 +22,26 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 	@Override
 	public TwoColumnForm getForm() {
 		PredefinedSelect<Link.LineColor> lineColorSelect = new PredefinedSelect<Link.LineColor>(
-				Link.LineColor.values(), Link.LineColor.Black);
-
-		PredefinedSelect<LineEnd> beginTypeSelect = new PredefinedSelect<LineEnd>(
-				LineEnd.values(), LineEnd.SIMPLE);
-		PredefinedSelect<LineEnd> endTypeSelect = new PredefinedSelect<LineEnd>(
-				LineEnd.values(), LineEnd.SOLID_ARROW);
-
-		PredefinedSelect<LineStyle> lineStyleSelect = new PredefinedSelect<LineStyle>(
-				LineStyle.values(), LineStyle.SOLID);
+				Link.LineColor.values(), entity.getLineColor());
 
 		LineEnd begin = entity.getSockets().get(0).getLineEnd();
 		LineEnd end = entity.getSockets().get(1).getLineEnd();
 
+		PredefinedSelect<LineEnd> beginTypeSelect = new PredefinedSelect<LineEnd>(
+				LineEnd.values(), begin);
+		PredefinedSelect<LineEnd> endTypeSelect = new PredefinedSelect<LineEnd>(
+				LineEnd.values(), end);
+
+		PredefinedSelect<LineStyle> lineStyleSelect = new PredefinedSelect<LineStyle>(
+				LineStyle.values(), entity.getLineStyle());
+
 		final TwoColumnForm form = new TwoColumnForm("edit-link-save")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
 				.addTextField(BlockParameter.Name, entity.getName())
-				.addSelectField(Parameter.LineColor,
-						String.valueOf(entity.getLineColor()), lineColorSelect)
-				.addSelectField(Parameter.LineStyle,
-						String.valueOf(entity.getLineStyle()), lineStyleSelect)
-				.addSelectField(Parameter.StartType, String.valueOf(begin),
-						beginTypeSelect)
-				.addSelectField(Parameter.EndType, String.valueOf(end),
-						endTypeSelect);
+				.addSelectField(Parameter.LineColor, lineColorSelect)
+				.addSelectField(Parameter.LineStyle, lineStyleSelect)
+				.addSelectField(Parameter.StartType, beginTypeSelect)
+				.addSelectField(Parameter.EndType, endTypeSelect);
 		return form;
 	}
 
