@@ -1,10 +1,10 @@
 package org.wdbuilder.view.line.end;
 
+import org.wdbuilder.view.ILineEnd;
 import org.wdbuilder.view.ILineEndRendererContext;
 import org.wdbuilder.view.ILineRenderer;
-import org.wdbuilder.view.line.end.ILineEnd;
 
-public enum LineEnd implements ILineEnd {
+public enum LineEnd implements ILineEnd<ILineEndRendererContext> {
 	SIMPLE("simple") {
 		@Override
 		public ILineRenderer<ILineEndRendererContext> getRenderer() {
