@@ -18,101 +18,116 @@ public class FileOrderServiceTest {
 
 	@Test
 	public void testGetOrderListForNull() {
-		Collection<Order> collection = service.retrieveForConsumer(null);
-		assertNotNull(collection);
-		assertTrue(collection.isEmpty());
+
+		try {
+			Collection<Order> collection = service.retrieveForConsumer(null);
+			assertNotNull(collection);
+			assertTrue(collection.isEmpty());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 	}
 
 	@Test
 	public void testGetOrderListForAbsentConsumer() {
-		Collection<Order> collection = service.retrieveForConsumer("nobody");
-		assertNotNull(collection);
-		assertTrue(collection.isEmpty());
+		try {
+			Collection<Order> collection = service
+					.retrieveForConsumer("nobody");
+			assertNotNull(collection);
+			assertTrue(collection.isEmpty());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testGetOrderListForExistingConsumer() {
-		Collection<Order> collection = service.retrieveForConsumer("me");
-		assertNotNull(collection);
-		assertEquals(2, collection.size());
-		Iterator<Order> it = collection.iterator();
-		assertOrder("id-1", getDate("14/04/2013"), "me", it.next(),
-				new ExpectedPosition() {
+		try {
+			Collection<Order> collection = service.retrieveForConsumer("me");
+			assertNotNull(collection);
+			assertEquals(2, collection.size());
+			Iterator<Order> it = collection.iterator();
+			assertOrder("id-1", getDate("14/04/2013"), "me", it.next(),
+					new ExpectedPosition() {
 
-					@Override
-					public int getExpectedCount() {
-						return 2;
-					}
-
-					@Override
-					public String getGoodId(int num) {
-						switch (num) {
-						case 0:
-							return "BREAD";
-						case 1:
-							return "BUTTER";
-						}
-						return null;
-					}
-
-					@Override
-					public BigDecimal getPrice(int num) {
-						switch (num) {
-						case 0:
-							return new BigDecimal(4.0);
-						case 1:
-							return new BigDecimal(7.0);
-						}
-						return null;
-					}
-
-					@Override
-					public int getQuantity(int num) {
-						switch (num) {
-						case 0:
-							return 4;
-						case 1:
+						@Override
+						public int getExpectedCount() {
 							return 2;
 						}
-						return 0;
-					}
 
-				});
-		assertOrder("id-3", getDate("25/04/2013"), "me", it.next(),
-				new ExpectedPosition() {
-
-					@Override
-					public int getExpectedCount() {
-						return 1;
-					}
-
-					@Override
-					public String getGoodId(int num) {
-						switch (num) {
-						case 0:
-							return "BIKE";
+						@Override
+						public String getGoodId(int num) {
+							switch (num) {
+							case 0:
+								return "BREAD";
+							case 1:
+								return "BUTTER";
+							}
+							return null;
 						}
-						return null;
-					}
 
-					@Override
-					public BigDecimal getPrice(int num) {
-						switch (num) {
-						case 0:
-							return new BigDecimal(120.0);
+						@Override
+						public BigDecimal getPrice(int num) {
+							switch (num) {
+							case 0:
+								return new BigDecimal(4.0);
+							case 1:
+								return new BigDecimal(7.0);
+							}
+							return null;
 						}
-						return null;
-					}
 
-					@Override
-					public int getQuantity(int num) {
-						switch (num) {
-						case 0:
-							return 4;
+						@Override
+						public int getQuantity(int num) {
+							switch (num) {
+							case 0:
+								return 4;
+							case 1:
+								return 2;
+							}
+							return 0;
 						}
-						return 0;
-					}
-				});
+
+					});
+			assertOrder("id-3", getDate("25/04/2013"), "me", it.next(),
+					new ExpectedPosition() {
+
+						@Override
+						public int getExpectedCount() {
+							return 1;
+						}
+
+						@Override
+						public String getGoodId(int num) {
+							switch (num) {
+							case 0:
+								return "BIKE";
+							}
+							return null;
+						}
+
+						@Override
+						public BigDecimal getPrice(int num) {
+							switch (num) {
+							case 0:
+								return new BigDecimal(120.0);
+							}
+							return null;
+						}
+
+						@Override
+						public int getQuantity(int num) {
+							switch (num) {
+							case 0:
+								return 4;
+							}
+							return 0;
+						}
+					});
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	private void assertOrder(String expectedId, Date expectedDate,
@@ -124,13 +139,13 @@ public class FileOrderServiceTest {
 		Collection<Position> positions = order.getPositions();
 		assertEquals(expectedPosition.getExpectedCount(), positions.size());
 		int n = 0;
-		for( Position position : positions ) {
+		for (Position position : positions) {
 			assertEquals(expectedPosition.getGoodId(n), position.getGoodId());
-			assertEquals(expectedPosition.getQuantity(n), position.getQuantity());
+			assertEquals(expectedPosition.getQuantity(n),
+					position.getQuantity());
 			assertEquals(expectedPosition.getPrice(n), position.getPrice());
 			n++;
 		}
-		
 
 	}
 
