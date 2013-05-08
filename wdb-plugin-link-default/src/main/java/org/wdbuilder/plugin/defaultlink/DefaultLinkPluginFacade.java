@@ -42,7 +42,7 @@ public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 		}
 
 		@Override
-		public String getLabel() {
+		public String getDisplayName() {
 			return label;
 		}
 
