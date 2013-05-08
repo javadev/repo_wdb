@@ -75,7 +75,7 @@ public abstract class ArrowLineEndRenderer implements ILineEndRenderer {
 
 	private static int[] getY(ILineEndRendererContext renderCtx) {
 		Point base = renderCtx.getBaseLocation();
-		int y = base.getX();
+		int y = base.getY();
 		switch (renderCtx.getDirection()) {
 		case LEFT:
 		case RIGHT:
