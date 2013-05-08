@@ -10,6 +10,7 @@ import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.plugin.defaultlink.DefaultLinkPluginFacade.Parameter;
+import org.wdbuilder.view.line.LineStyle;
 import org.wdbuilder.view.line.end.LineEnd;
 
 class EditFormFactory extends UIExistingEntityFormFactory<Link> {
@@ -28,6 +29,9 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 		PredefinedSelect<LineEnd> endTypeSelect = new PredefinedSelect<LineEnd>(
 				LineEnd.values(), LineEnd.SOLID_ARROW);
 
+		PredefinedSelect<LineStyle> lineStyleSelect = new PredefinedSelect<LineStyle>(
+				LineStyle.values(), LineStyle.SOLID);
+
 		LineEnd begin = entity.getSockets().get(0).getLineEnd();
 		LineEnd end = entity.getSockets().get(1).getLineEnd();
 
@@ -36,6 +40,8 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 				.addTextField(BlockParameter.Name, entity.getName())
 				.addSelectField(Parameter.LineColor,
 						String.valueOf(entity.getLineColor()), lineColorSelect)
+				.addSelectField(Parameter.LineStyle,
+						String.valueOf(entity.getLineStyle()), lineStyleSelect)
 				.addSelectField(Parameter.StartType, String.valueOf(begin),
 						beginTypeSelect)
 				.addSelectField(Parameter.EndType, String.valueOf(end),
@@ -62,6 +68,7 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 		List<IParameter> result = new ArrayList<IParameter>(2);
 		result.add(BlockParameter.Name);
 		result.add(Parameter.LineColor);
+		result.add(Parameter.LineStyle);
 		result.add(Parameter.StartType);
 		result.add(Parameter.EndType);
 		return result;
