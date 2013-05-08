@@ -10,7 +10,7 @@ import static org.wdbuilder.service.DiagramService.LINE_OFFSET;
 
 public class Mandatory1to1LineEndRenderer implements ILineEndRenderer {
 
-  @Override
+	@Override
 	public void draw(ILineEndRendererContext renderCtx) {
 		Graphics2D gr = renderCtx.getGraphics();
 		gr.setColor(renderCtx.getColor());
@@ -50,17 +50,22 @@ public class Mandatory1to1LineEndRenderer implements ILineEndRenderer {
 		case LEFT:
 			result[0] = new Point( p.getX() - 7, p.getY() - 5 );
 			result[1] = new Point( p.getX() - 7, p.getY() + 5 );
+			break;
 		case RIGHT:
 			result[0] = new Point( p.getX() + 7, p.getY() - 5 );
 			result[1] = new Point( p.getX() + 7, p.getY() + 5 );
+			break;
 		case TOP:
 			result[0] = new Point( p.getX() - 5, p.getY() - 7 );
 			result[1] = new Point( p.getX() + 5, p.getY() - 7 );
+			break;
 		case BOTTOM:
 			result[0] = new Point( p.getX() - 5, p.getY() + 7 );
 			result[1] = new Point( p.getX() + 5, p.getY() + 7 );
+			break;
 		default:
 			throw new IllegalArgumentException("Link socket direction is null");
 		}
+		return result;
 	}
 }
