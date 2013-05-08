@@ -22,6 +22,12 @@ public enum LineEnd implements ILineEnd {
 			return new ArrowLineEndRenderer.Transparent();
 		}		
 	}, 	
+	MANDATORY_1_1( "mandatory 1..1" ) {
+		@Override
+		public ILineEndRenderer getRenderer() {
+			return new Mandatory1to1LineEndRenderer();
+		}		
+	}, 	
 	;
 	private final String displayName;
 	
