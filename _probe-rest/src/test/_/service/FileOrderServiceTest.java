@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -62,14 +61,14 @@ public class FileOrderServiceTest {
 					}
 
 					@Override
-					public BigDecimal getPrice(int num) {
+					public double getPrice(int num) {
 						switch (num) {
 						case 0:
-							return new BigDecimal(4.0);
+							return .67;
 						case 1:
-							return new BigDecimal(7.0);
+							return 7.0;
 						}
-						return null;
+						return 0;
 					}
 
 					@Override
@@ -102,12 +101,12 @@ public class FileOrderServiceTest {
 					}
 
 					@Override
-					public BigDecimal getPrice(int num) {
+					public double getPrice(int num) {
 						switch (num) {
 						case 0:
-							return new BigDecimal(120.0);
+							return 120.0;
 						}
-						return null;
+						return 0;
 					}
 
 					@Override
@@ -121,6 +120,7 @@ public class FileOrderServiceTest {
 				});
 	}
 
+	@SuppressWarnings("deprecation")
 	private void assertOrder(String expectedId, 
 			String expectedConsumer, Order order,
 			ExpectedPosition expectedPosition) {
@@ -133,7 +133,7 @@ public class FileOrderServiceTest {
 			assertEquals(expectedPosition.getGoodId(n), position.getGoodId());
 			assertEquals(expectedPosition.getQuantity(n),
 					position.getQuantity());
-			assertEquals(expectedPosition.getPrice(n), position.getPrice());
+			assertEquals(expectedPosition.getPrice(n), position.getPrice() );
 			n++;
 		}
 
@@ -144,7 +144,7 @@ public class FileOrderServiceTest {
 
 		String getGoodId(int num);
 
-		BigDecimal getPrice(int num);
+		double getPrice(int num);
 
 		int getQuantity(int num);
 	}
