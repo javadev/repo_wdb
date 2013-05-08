@@ -34,6 +34,18 @@ public enum LineEnd implements ILineEnd {
 			return new MandatoryLineEndRenderer.Many();
 		}		
 	},
+	OPTIONAL_1_1( "optional 1..1" ) {
+		@Override
+		public ILineEndRenderer getRenderer() {
+			return new OptionalLineEndRenderer.One();
+		}		
+	},
+	OPTIONAL_1_N( "optional 1..n" ) {
+		@Override
+		public ILineEndRenderer getRenderer() {
+			return new OptionalLineEndRenderer.Many();
+		}		
+	},	
 	;
 	private final String displayName;
 	
