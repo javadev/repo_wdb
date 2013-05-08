@@ -1,12 +1,9 @@
 package org.wdbuilder.view;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 
-interface ILineEndRendererContext extends ILineRenderContext {
+interface ILineEndRendererContext extends ILineRendererContext {
 
 	Point getBaseLocation();
 
