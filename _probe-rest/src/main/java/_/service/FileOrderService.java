@@ -1,19 +1,20 @@
 package _.service;
 
-import java.util.Collection;
-
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 
-import _.domain.Order;
-import _.domain.Position;
+import _.domain.OrderList;
 
 public class FileOrderService implements IOrderService {
-  
+	
 	private static final String FILE_NAME = "order-db.xml";
 
 	@Override
-	public Collection<Order> retrieveForConsumer(String consumer) throws Exception {
-		JAXBContext context = JAXBContext.newInstance(Order.class, Position.class);
+	public OrderList retrieveForConsumer(String consumer) throws Exception {
+		JAXBContext context = JAXBContext.newInstance(OrderList.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		
+		
 		
 		// TODO Auto-generated method stub
 		return null;
