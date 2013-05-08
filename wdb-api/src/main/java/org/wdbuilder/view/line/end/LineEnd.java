@@ -4,7 +4,7 @@ import org.wdbuilder.view.ILineEndRenderer;
 import org.wdbuilder.view.line.end.ILineEnd;
 
 public enum LineEnd implements ILineEnd {
-  SIMPLE( "simple" ) {
+	SIMPLE( "simple" ) {
 		@Override
 		public ILineEndRenderer getRenderer() {
 			return new DefaultLineEndRenderer();
@@ -13,9 +13,39 @@ public enum LineEnd implements ILineEnd {
 	SOLID_ARROW( "solid arrow" ) {
 		@Override
 		public ILineEndRenderer getRenderer() {
-			return new ArrowLineEndRenderer();
+			return new ArrowLineEndRenderer.Solid();
 		}		
 	}, 	
+	TRANSPARENT_ARROW( "transparent arrow" ) {
+		@Override
+		public ILineEndRenderer getRenderer() {
+			return new ArrowLineEndRenderer.Transparent();
+		}		
+	}, 	
+	MANDATORY_1_1( "mandatory 1..1" ) {
+		@Override
+		public ILineEndRenderer getRenderer() {
+			return new MandatoryLineEndRenderer.One();
+		}		
+	},
+	MANDATORY_1_N( "mandatory 1..n" ) {
+		@Override
+		public ILineEndRenderer getRenderer() {
+			return new MandatoryLineEndRenderer.Many();
+		}		
+	},
+	OPTIONAL_1_1( "optional 1..1" ) {
+		@Override
+		public ILineEndRenderer getRenderer() {
+			return new OptionalLineEndRenderer.One();
+		}		
+	},
+	OPTIONAL_1_N( "optional 1..n" ) {
+		@Override
+		public ILineEndRenderer getRenderer() {
+			return new OptionalLineEndRenderer.Many();
+		}		
+	},	
 	;
 	private final String displayName;
 	
