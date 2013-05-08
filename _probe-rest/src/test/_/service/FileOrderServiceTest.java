@@ -1,16 +1,17 @@
 package _.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 
 import org.junit.Test;
+
 import _.domain.Order;
 import _.domain.Position;
-
-import static org.junit.Assert.*;
 
 public class FileOrderServiceTest {
 
@@ -41,7 +42,7 @@ public class FileOrderServiceTest {
 		assertNotNull(collection);
 		assertEquals(2, collection.size());
 		Iterator<Order> it = collection.iterator();
-		assertOrder("id-1", getDate("14/04/2013"), "me", it.next(),
+		assertOrder("id-1", "me", it.next(),
 				new ExpectedPosition() {
 
 					@Override
@@ -83,7 +84,7 @@ public class FileOrderServiceTest {
 					}
 
 				});
-		assertOrder("id-3", getDate("25/04/2013"), "me", it.next(),
+		assertOrder("id-3", "me", it.next(),
 				new ExpectedPosition() {
 
 					@Override
@@ -120,11 +121,10 @@ public class FileOrderServiceTest {
 				});
 	}
 
-	private void assertOrder(String expectedId, Date expectedDate,
+	private void assertOrder(String expectedId, 
 			String expectedConsumer, Order order,
 			ExpectedPosition expectedPosition) {
 		assertEquals(expectedId, order.getId());
-		assertEquals(expectedDate, order.getDate());
 		assertEquals(expectedConsumer, order.getConsumer());
 		Collection<Position> positions = order.getPositions();
 		assertEquals(expectedPosition.getExpectedCount(), positions.size());
@@ -148,14 +148,4 @@ public class FileOrderServiceTest {
 
 		int getQuantity(int num);
 	}
-
-	private static final Date getDate(String str) {
-		try {
-			return new SimpleDateFormat("dd/MM/yyyy").parse(str);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
-	}
-
 }
