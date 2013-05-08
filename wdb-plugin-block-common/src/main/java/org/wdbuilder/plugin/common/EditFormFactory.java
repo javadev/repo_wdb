@@ -33,7 +33,7 @@ class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 				compatibleShapes, activeShape);
 
 		final PredefinedSelect<CommonBlock.Background> selectField = new PredefinedSelect<CommonBlock.Background>(
-				CommonBlock.Background.values(), CommonBlock.Background.Grey);
+				CommonBlock.Background.values(), commonBlock.getBackground() );
 
 		final TwoColumnForm form = new TwoColumnForm("edit-common-block-save")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
