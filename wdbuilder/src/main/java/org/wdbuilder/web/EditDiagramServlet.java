@@ -29,13 +29,12 @@ public class EditDiagramServlet extends DiagramHelperFormServlet {
 		String closeHandler = "closeDialog('properties')";
 
 		final PredefinedSelect<DiagramBackground> selectField = new PredefinedSelect<DiagramBackground>(
-				DiagramBackground.values(), DiagramBackground.White);
+				DiagramBackground.values(), diagram.getBackground());
 
 		final TwoColumnForm form = new TwoColumnForm("edit-diagram-save")
 				.addReadOnlyField(BlockParameter.DiagramKey, diagram.getKey())
 				.addTextField(BlockParameter.Name, diagram.getName())
-				.addSelectField(BlockParameter.Background,
-						String.valueOf(diagram.getBackground()), selectField)
+				.addSelectField(BlockParameter.Background, selectField)
 				.addFooter(submitHandler, closeHandler);
 		htmlWriter.write(form);
 	}
