@@ -18,6 +18,14 @@ public enum LineStyle implements ILineEnd<ILineRendererContext> {
 			return new DashedLineRenderer(5, 5);
 		}
 
+	},
+	DOTTED("dotted") {
+
+		@Override
+		public ILineRenderer<ILineRendererContext> getRenderer() {
+			return new DashedLineRenderer(7, 2);
+		}
+
 	};
 	private final String displayName;
 
