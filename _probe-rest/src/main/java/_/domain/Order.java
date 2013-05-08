@@ -5,11 +5,9 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 @SuppressWarnings("serial")
-@XmlRootElement
 @XmlSeeAlso(Position.class)
 public class Order implements Serializable {
 	private String id;
