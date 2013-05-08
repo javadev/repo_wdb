@@ -25,13 +25,13 @@ public enum LineEnd implements ILineEnd {
 	MANDATORY_1_1( "mandatory 1..1" ) {
 		@Override
 		public ILineEndRenderer getRenderer() {
-			return new Mandatory1to1LineEndRenderer();
+			return new MandatoryLineEndRenderer.One();
 		}		
 	},
 	MANDATORY_1_N( "mandatory 1..n" ) {
 		@Override
 		public ILineEndRenderer getRenderer() {
-			return new Mandatory1toNLineEndRenderer();
+			return new MandatoryLineEndRenderer.Many();
 		}		
 	},
 	;
