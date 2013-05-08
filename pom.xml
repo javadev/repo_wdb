@@ -4,22 +4,21 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wdbuilder</groupId>
 	<artifactId>wdb</artifactId>
-	<version>0.4a</version>
+	<version>${global.version}</version>
 	<packaging>pom</packaging>
 	<name>wdb</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<global.version>0.5b</global.version>
 	</properties>
 
 	<modules>
-		<module>wdb-api</module>
 		<module>wdb-jaxb-html</module>
+		<module>wdb-api</module>
 		<module>wdbuilder</module>
 		<module>wdb-plugin-block-common</module>
 		<module>wdb-plugin-block-icon</module>
 		<module>wdb-plugin-link-default</module>
 	</modules>
-
-
 </project>
