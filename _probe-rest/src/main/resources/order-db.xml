@@ -3,9 +3,11 @@
 <orderList>
     <orders id="id-1" consumer="me">
         <positions goodId="BREAD" price=".67" quantity="4" />
-        <positions/>
+        <positions goodId="BUTTER" price="7" quantity="2" />
     </orders>
     <orders id="" consumer="someone"/>
-    <orders id="" consumer="me"/>
+    <orders id="id-3" consumer="me">
+        <positions goodId="BIKE" price="120" quantity="4" />    
+    </orders>
 </orderList>
 
