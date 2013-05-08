@@ -20,7 +20,8 @@ public class FileOrderServiceTest {
 	public void testGetOrderListForNull() {
 
 		try {
-			Collection<Order> collection = service.retrieveForConsumer(null);
+			Collection<Order> collection = service.retrieveForConsumer(null)
+					.getOrders();
 			assertNotNull(collection);
 			assertTrue(collection.isEmpty());
 		} catch (Exception ex) {
@@ -33,7 +34,7 @@ public class FileOrderServiceTest {
 	public void testGetOrderListForAbsentConsumer() {
 		try {
 			Collection<Order> collection = service
-					.retrieveForConsumer("nobody");
+					.retrieveForConsumer("nobody").getOrders();
 			assertNotNull(collection);
 			assertTrue(collection.isEmpty());
 		} catch (Exception ex) {
@@ -44,7 +45,8 @@ public class FileOrderServiceTest {
 	@Test
 	public void testGetOrderListForExistingConsumer() {
 		try {
-			Collection<Order> collection = service.retrieveForConsumer("me");
+			Collection<Order> collection = service.retrieveForConsumer("me")
+					.getOrders();
 			assertNotNull(collection);
 			assertEquals(2, collection.size());
 			Iterator<Order> it = collection.iterator();
