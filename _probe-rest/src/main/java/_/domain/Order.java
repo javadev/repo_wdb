@@ -2,7 +2,6 @@ package _.domain;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -12,7 +11,6 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 public class Order implements Serializable {
 	private String id;
 	private String consumer;
-	private Date date;
 	private Collection<Position> positions;
 
 	@XmlAttribute
@@ -31,15 +29,6 @@ public class Order implements Serializable {
 
 	public void setConsumer(String consumer) {
 		this.consumer = consumer;
-	}
-
-	@XmlAttribute
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public Collection<Position> getPositions() {
