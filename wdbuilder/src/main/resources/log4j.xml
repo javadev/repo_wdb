@@ -26,7 +26,7 @@
   
   <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
     <param name="File" value="${catalina.base}/logs/wdb.log" />
-    <param name="MaxBackupIndex" value="5" />
+    <!-- <param name="MaxBackupIndex" value="5" /> -->
     <param name="Threshold" value="DEBUG" />
     <param name="DatePattern" value=".yyyy-MM-dd" />
     <layout class="org.apache.log4j.PatternLayout"> 
