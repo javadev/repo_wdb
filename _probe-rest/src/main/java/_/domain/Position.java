@@ -1,9 +1,11 @@
-package $.domain;
+package _.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Position {
-  private String goodId;
+@SuppressWarnings("serial")
+public class Position implements Serializable {
+	private String goodId;
 	private int quantity;
 	private BigDecimal price;
 
