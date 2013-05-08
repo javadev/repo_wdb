@@ -3,12 +3,15 @@ package _.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 @SuppressWarnings("serial")
 public class Position implements Serializable {
 	private String goodId;
 	private int quantity;
 	private BigDecimal price;
 
+	@XmlAttribute
 	public String getGoodId() {
 		return goodId;
 	}
@@ -17,6 +20,7 @@ public class Position implements Serializable {
 		this.goodId = goodId;
 	}
 
+	@XmlAttribute
 	public int getQuantity() {
 		return quantity;
 	}
@@ -25,6 +29,7 @@ public class Position implements Serializable {
 		this.quantity = quantity;
 	}
 
+	@XmlAttribute
 	public BigDecimal getPrice() {
 		return price;
 	}
