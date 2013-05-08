@@ -26,32 +26,24 @@ public abstract class ArrowLineEndRenderer implements ILineEndRenderer {
 	}
 
 	private static Point getSmallLineStart(ILineEndRendererContext renderCtx) {
-		Point base = renderCtx.getBaseLocation();
-		switch (renderCtx.getDirection()) {
-		case LEFT:
-			return base.addX(-LINE_OFFSET);
-		case RIGHT:
-			return base.addX(LINE_OFFSET);
-		case TOP:
-			return base.addY(-LINE_OFFSET);
-		case BOTTOM:
-			return base.addY(LINE_OFFSET);
-		default:
-			throw new IllegalArgumentException("Link socket direction is null");
-		}
+		return getOffset(renderCtx, LINE_OFFSET);
 	}
 
 	private static Point getSmallLineEnd(ILineEndRendererContext renderCtx) {
-		Point p0 = getSmallLineStart(renderCtx);
+		return getOffset(renderCtx, 7);
+	}
+
+	private static Point getOffset(ILineEndRendererContext renderCtx, int offset) {
+		Point p0 = renderCtx.getBaseLocation();
 		switch (renderCtx.getDirection()) {
 		case LEFT:
-			return p0.addX(7);
+			return p0.addX(-offset);
 		case RIGHT:
-			return p0.addX(-7);
+			return p0.addX(offset);
 		case TOP:
-			return p0.addY(-7);
+			return p0.addY(-offset);
 		case BOTTOM:
-			return p0.addY(7);
+			return p0.addY(offset);
 		default:
 			throw new IllegalArgumentException("Link socket direction is null");
 		}
@@ -95,13 +87,12 @@ public abstract class ArrowLineEndRenderer implements ILineEndRenderer {
 			gr.fillPolygon(x, y, 3);
 		}
 	}
-	
+
 	public static class Transparent extends ArrowLineEndRenderer {
 		@Override
 		protected void drawArrow(Graphics2D gr, int[] x, int[] y) {
 			gr.drawPolygon(x, y, 3);
 		}
 	}
-	
 
 }
