@@ -3,7 +3,7 @@ package org.wdbuilder.view;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class LineRendererContext implements ILineRendererContext {
+public class LineRendererContextBase implements ILineRendererContext {
 	
 	private Graphics2D graphics;
 	private Color color;
