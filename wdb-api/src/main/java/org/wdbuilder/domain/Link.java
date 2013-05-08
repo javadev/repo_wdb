@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.wdbuilder.domain.helper.Point;
+import org.wdbuilder.view.line.LineStyle;
 
 public class Link extends Entity {
 	private static final long serialVersionUID = 1L;
@@ -14,7 +15,9 @@ public class Link extends Entity {
 
 	private Point pivot;
 	
-	private LineColor lineColor;
+	private LineColor lineColor = LineColor.Black;
+	
+	private LineStyle lineStyle = LineStyle.SOLID;
 
 	public Point getPivot() {
 		return pivot;
@@ -42,6 +45,15 @@ public class Link extends Entity {
 
 	public void setLineColor(LineColor lineColor) {
 		this.lineColor = lineColor;
+	}
+
+	@XmlAttribute
+	public LineStyle getLineStyle() {
+		return lineStyle;
+	}
+
+	public void setLineStyle(LineStyle lineStyle) {
+		this.lineStyle = lineStyle;
 	}
 
 	public static enum LineColor implements IForegroundProvider,
