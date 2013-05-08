@@ -4,13 +4,20 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 @SuppressWarnings("serial")
+@XmlRootElement
+@XmlSeeAlso(Position.class)
 public class Order implements Serializable {
-  private String id;
+	private String id;
 	private String consumer;
 	private Date date;
 	private Collection<Position> positions;
 
+	@XmlAttribute
 	public String getId() {
 		return id;
 	}
@@ -19,6 +26,7 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
+	@XmlAttribute
 	public String getConsumer() {
 		return consumer;
 	}
@@ -27,6 +35,7 @@ public class Order implements Serializable {
 		this.consumer = consumer;
 	}
 
+	@XmlAttribute
 	public Date getDate() {
 		return date;
 	}
