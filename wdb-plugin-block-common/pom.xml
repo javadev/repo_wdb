@@ -1,43 +1,49 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.wdbuilder.plugin</groupId>
-  <artifactId>wdb-plugin-block-common</artifactId>
-  <version>0.1a</version>
-  <packaging>jar</packaging>
+    <parent>
+        <groupId>org.wdbuilder</groupId>
+        <artifactId>wdb</artifactId>
+        <version>${global.version}</version>
+        <relativePath>..</relativePath>
+    </parent>   
+    
+	<groupId>org.wdbuilder.plugin</groupId>
+	<artifactId>wdb-plugin-block-common</artifactId>
+	<packaging>jar</packaging>
 
-  <name>wdb-plugin-block-common</name>
-  <url>http://maven.apache.org</url>
+	<name>wdb-plugin-block-common</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  
-  	<build>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
 		<finalName>wdb-plugin-block-common</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 
-  <dependencies>
-        <dependency>
-            <groupId>org.wdbuilder</groupId>
-            <artifactId>wdb-jaxb-html</artifactId>
-            <version>0.2a</version>
-        </dependency>	
+	<dependencies>
+		<dependency>
+			<groupId>org.wdbuilder</groupId>
+			<artifactId>wdb-jaxb-html</artifactId>
+			<version>${global.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.wdbuilder</groupId>
 			<artifactId>wdb-api</artifactId>
-			<version>0.4a</version>
+			<version>${global.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -49,21 +55,16 @@
 			<artifactId>guava</artifactId>
 			<version>11.0.2</version>
 		</dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-        </dependency>		
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-		</dependency>  
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.2</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
