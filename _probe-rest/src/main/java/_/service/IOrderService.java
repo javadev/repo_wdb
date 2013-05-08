@@ -1,9 +1,7 @@
 package _.service;
 
-import java.util.Collection;
-
-import _.domain.Order;
+import _.domain.OrderList;
 
 public interface IOrderService {
-  Collection<Order> retrieveForConsumer(String consumer);
+  OrderList retrieveForConsumer(String consumer) throws Exception;
 }
