@@ -19,29 +19,30 @@ public class DivAnalog {
 
 	private final boolean horizontal;
 	private final Point[] line = new Point[3];
+	private final Link link;
 
 	public static void render(Graphics2D gr, Link link, Block beginBlock,
 			Block endBlock) {
 
 		Point begin = link.getSockets().get(0).getOffset(beginBlock);
 		Point end = link.getSockets().get(1).getOffset(endBlock);
-		Point pivot = link.getPivot();
 
 		final boolean hintHorizontal = link.getSockets().get(0).isHorizontal();
 
-		DivAnalog div1 = new DivAnalog(pivot, begin, hintHorizontal);
-		DivAnalog div2 = new DivAnalog(pivot, end, !hintHorizontal);
+		DivAnalog div1 = new DivAnalog(link, begin, hintHorizontal);
+		DivAnalog div2 = new DivAnalog(link, end, !hintHorizontal);
 		if (div1.intersectsWith(div2)) {
-			div1 = new DivAnalog(pivot, begin, !hintHorizontal);
-			div2 = new DivAnalog(pivot, end, hintHorizontal);
+			div1 = new DivAnalog(link, begin, !hintHorizontal);
+			div2 = new DivAnalog(link, end, hintHorizontal);
 		}
 		div1.render(gr);
 		div2.render(gr);
 	}
 
-	private DivAnalog(Point pivot, Point origin, boolean horizontal) {
+	private DivAnalog(Link link, Point origin, boolean horizontal) {
+		this.link = link;
 		this.horizontal = horizontal;
-		line[0] = pivot;
+		line[0] = link.getPivot();
 		line[2] = origin;
 		line[1] = getMiddle();
 	}
@@ -68,8 +69,16 @@ public class DivAnalog {
 		}
 	}
 
-	private static void drawLine(Graphics2D gr, Point p1, Point p2) {
-		gr.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+	private void drawLine(Graphics2D gr, Point p1, Point p2) {
+		LineRendererContext renderCtx = new LineRendererContext();
+		renderCtx.setGraphics(gr);
+		renderCtx.setColor(link.getLineColor().getForegroundColor());
+		renderCtx.setBegin(p1);
+		renderCtx.setEnd(p2);
+
+		ILineRenderer<ILineRendererContext> lineRenderer = link.getLineStyle()
+				.getRenderer();
+		lineRenderer.draw(renderCtx);
 	}
 
 	private boolean intersectsWith(DivAnalog another) {
@@ -81,8 +90,8 @@ public class DivAnalog {
 					this.getOrigin().getY());
 		}
 	}
-	
+
 	private static boolean isBetween(int m, int n1, int n2) {
 		return m >= min(n1, n2) && m <= max(n1, n2);
-	}	
+	}
 }
