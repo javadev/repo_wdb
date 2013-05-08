@@ -27,7 +27,13 @@ public enum LineEnd implements ILineEnd {
 		public ILineEndRenderer getRenderer() {
 			return new Mandatory1to1LineEndRenderer();
 		}		
-	}, 	
+	},
+	MANDATORY_1_N( "mandatory 1..n" ) {
+		@Override
+		public ILineEndRenderer getRenderer() {
+			return new Mandatory1toNLineEndRenderer();
+		}		
+	},
 	;
 	private final String displayName;
 	
