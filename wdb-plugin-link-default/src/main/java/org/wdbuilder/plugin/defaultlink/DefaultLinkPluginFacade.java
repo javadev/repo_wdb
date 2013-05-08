@@ -130,18 +130,19 @@ public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 		result.setName(BlockParameter.Name.getString(input));
 		result.setLineColor(Link.LineColor.valueOf(Parameter.LineColor
 				.getString(input)));
-		
+
 		// Create fake sockets: (TODO: not the best approach (2013/05/07))
 		List<LinkSocket> socketList = new ArrayList<LinkSocket>(2);
-		LinkSocket beginSocket = new LinkSocket();
-		beginSocket.setLineEnd( LineEnd.valueOf(Parameter.StartType.getString(input)));
-		socketList.add(beginSocket);
-		LinkSocket endSocket = new LinkSocket();
-		endSocket.setLineEnd( LineEnd.valueOf(Parameter.EndType.getString(input)));
-		socketList.add(beginSocket);
+		socketList.add( createLinkSocket(Parameter.StartType, input));
+		socketList.add( createLinkSocket(Parameter.EndType, input));
 		result.setSockets(socketList);
-		
+
 		return result;
 	}
 
+	private static LinkSocket createLinkSocket( Parameter param, InputAdapter input ) {
+		LinkSocket result = new LinkSocket();
+		result.setLineEnd(LineEnd.valueOf(param.getString(input)));
+		return result;
+	}
 }
