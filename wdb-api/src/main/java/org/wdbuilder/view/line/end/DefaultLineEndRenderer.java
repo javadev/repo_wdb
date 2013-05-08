@@ -3,12 +3,13 @@ package org.wdbuilder.view.line.end;
 import java.awt.Graphics2D;
 
 import org.wdbuilder.domain.helper.Point;
-import org.wdbuilder.view.ILineEndRenderer;
+import org.wdbuilder.view.ILineRenderer;
 import org.wdbuilder.view.ILineEndRendererContext;
 
 import static org.wdbuilder.service.DiagramService.LINE_OFFSET;
 
-public class DefaultLineEndRenderer implements ILineEndRenderer {
+public class DefaultLineEndRenderer implements
+		ILineRenderer<ILineEndRendererContext> {
 
 	@Override
 	public void draw(ILineEndRendererContext renderCtx) {

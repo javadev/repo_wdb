@@ -3,14 +3,15 @@ package org.wdbuilder.view.line.end;
 import java.awt.Graphics2D;
 
 import org.wdbuilder.domain.helper.Point;
-import org.wdbuilder.view.ILineEndRenderer;
+import org.wdbuilder.view.ILineRenderer;
 import org.wdbuilder.view.ILineEndRendererContext;
 
 import static org.wdbuilder.service.DiagramService.LINE_OFFSET;
 
-public abstract class OptionalLineEndRenderer implements ILineEndRenderer {
+public abstract class OptionalLineEndRenderer implements
+		ILineRenderer<ILineEndRendererContext> {
 
-  protected abstract void drawCrossingAngle(ILineEndRendererContext renderCtx);
+	protected abstract void drawCrossingAngle(ILineEndRendererContext renderCtx);
 
 	@Override
 	public void draw(ILineEndRendererContext renderCtx) {
@@ -23,9 +24,9 @@ public abstract class OptionalLineEndRenderer implements ILineEndRenderer {
 
 		gr.drawLine(b.getX(), b.getY(), p2.getX(), p2.getY());
 		gr.drawLine(p1.getX(), p1.getY(), p0.getX(), p0.getY());
-		
-		Point ul = getUpperLeft(renderCtx);		
-		gr.drawOval( ul.getX(), ul.getY(), 4, 4 );
+
+		Point ul = getUpperLeft(renderCtx);
+		gr.drawOval(ul.getX(), ul.getY(), 4, 4);
 		drawCrossingAngle(renderCtx);
 	}
 
@@ -44,7 +45,7 @@ public abstract class OptionalLineEndRenderer implements ILineEndRenderer {
 			throw new IllegalArgumentException("Link socket direction is null");
 		}
 	}
-	
+
 	private static Point getUpperLeft(ILineEndRendererContext renderCtx) {
 		Point p0 = renderCtx.getBaseLocation();
 		switch (renderCtx.getDirection()) {
@@ -60,7 +61,6 @@ public abstract class OptionalLineEndRenderer implements ILineEndRenderer {
 			throw new IllegalArgumentException("Link socket direction is null");
 		}
 	}
-	
 
 	public static class One extends OptionalLineEndRenderer {
 

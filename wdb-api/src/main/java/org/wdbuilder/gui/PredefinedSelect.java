@@ -14,28 +14,21 @@ public class PredefinedSelect<T extends DisplayNameAware> extends Select {
 		this.defaultValue = defaultValue;
 	}
 
-	public final Select create(String name, String valueRaw ) {
+	public final Select create(String name) {
 		final Select result = new Select();
 		result.setName(name);
 		result.setId(name);
-		final String value = getValueFrom(valueRaw);
 		for( final T item : this.values ) {
-			result.add(createOption(value, item));
+			result.add(createOption(item));
 		}
 		return result;
 	}
 
-	private Option createOption(final String value, final T item) {
-		String valueStr = String.valueOf(item);
-		final boolean selected = valueStr.equals(value);
+	private Option createOption(final T item) {
+		final boolean selected = item.equals(defaultValue);
 		final Option option = new Option(item.getDisplayName());
-		option.setValue( valueStr );
+		option.setValue( String.valueOf(item) );
 		option.setSelected(selected);
 		return option;
-	}
-
-	private String getValueFrom(String valueRaw) {
-		return null == valueRaw || valueRaw.trim().isEmpty() ? String.valueOf( this.defaultValue )
-		        : valueRaw;
 	}
 }

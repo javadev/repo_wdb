@@ -29,11 +29,11 @@ public class CreateDiagramServlet extends DiagramServiceServlet {
 
 		final TwoColumnForm form = new TwoColumnForm("create-diagram-save")
 				.addTextField(BlockParameter.Name, "")
-				.addTextField(BlockParameter.Width, 
-						String.valueOf( DiagramValidator.MIN_SIZE.getWidth()))
+				.addTextField(BlockParameter.Width,
+						String.valueOf(DiagramValidator.MIN_SIZE.getWidth()))
 				.addTextField(BlockParameter.Height,
 						String.valueOf(DiagramValidator.MIN_SIZE.getHeight()))
-				.addSelectField(BlockParameter.Background, "", selectField)
+				.addSelectField(BlockParameter.Background, selectField)
 				.addFooter("submitCreateCanvas()", "refreshDiagramList()");
 		new HtmlWriter(writer).write(form);
 	}

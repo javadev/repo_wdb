@@ -19,20 +19,25 @@ import org.wdbuilder.view.BlockRenderer;
 
 import com.google.common.io.Resources;
 
-class IconBlockRenderer extends BlockRenderer<IconBlock> {
-	
+class IconBlockRenderer extends BlockRenderer<Block> {
+
 	private static final Logger LOG = Logger.getLogger(IconBlockRenderer.class);
 
 	@Override
-	public void draw(IconBlock block, IRenderContext renderCtx) {
+	public void draw(Block blockRaw, IRenderContext renderCtx) {
+
+		if (!IconBlock.class.isInstance(blockRaw)) {
+			return;
+		}
+		IconBlock block = IconBlock.class.cast(blockRaw);
 
 		// Use additional image:
 		Image blockImage = null;
-		URL imageURL = Resources.getResource( block.getIcon().getPath());
+		URL imageURL = Resources.getResource(block.getIcon().getPath());
 		try {
 			blockImage = ImageIO.read(imageURL);
 		} catch (Exception ex) {
-			LOG.error("can't load image: " + imageURL, ex );
+			LOG.error("can't load image: " + imageURL, ex);
 			return;
 		}
 

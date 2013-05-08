@@ -59,7 +59,7 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 		lineEndRenderCtx.setBaseLocation(p);
 		
 		ILineEnd lineEnd = s.getLineEnd();
-		ILineEndRenderer renderer = lineEnd.getRenderer();
+		ILineRenderer<ILineEndRendererContext> renderer = lineEnd.getRenderer();
 		renderer.draw(lineEndRenderCtx);
 	}
 

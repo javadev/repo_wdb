@@ -3,12 +3,13 @@ package org.wdbuilder.view.line.end;
 import java.awt.Graphics2D;
 
 import org.wdbuilder.domain.helper.Point;
-import org.wdbuilder.view.ILineEndRenderer;
+import org.wdbuilder.view.ILineRenderer;
 import org.wdbuilder.view.ILineEndRendererContext;
 
 import static org.wdbuilder.service.DiagramService.LINE_OFFSET;
 
-public abstract class ArrowLineEndRenderer implements ILineEndRenderer {
+public abstract class ArrowLineEndRenderer implements
+		ILineRenderer<ILineEndRendererContext> {
 
 	protected abstract void drawArrow(Graphics2D gr, int[] x, int[] y);
 

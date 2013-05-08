@@ -27,12 +27,10 @@ class CreateFormFactory extends UINewBlockFormFactory {
 
 		final TwoColumnForm form = new TwoColumnForm("create-common-block-save")
 				.addTextField(BlockParameter.Name, "")
-				.addSelectField(Parameter.Shape, "", shapeSelectField)
+				.addSelectField(Parameter.Shape, shapeSelectField)
 				.addTextField(BlockParameter.Width, "70")
 				.addTextField(BlockParameter.Height, "40")
-				.addSelectField(Parameter.Background,
-						String.valueOf(CommonBlock.Background.Grey),
-						backgroundSelectField);
+				.addSelectField(Parameter.Background, backgroundSelectField);
 		return form;
 	}
 

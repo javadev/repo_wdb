@@ -32,7 +32,7 @@ public enum BlockParameter implements IParameter {
 	}
 	
 	@Override
-	public String getLabel() {
+	public String getDisplayName() {
 		return label;
 	}
 	

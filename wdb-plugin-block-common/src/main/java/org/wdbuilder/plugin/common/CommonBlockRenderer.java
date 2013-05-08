@@ -10,17 +10,22 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.IGradientBackgroundProvider;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.common.domain.CommonBlock;
 import org.wdbuilder.view.BlockRenderer;
 import org.wdbuilder.view.IBackgroundRenderer;
 
-class CommonBlockRenderer extends BlockRenderer<CommonBlock> {
+class CommonBlockRenderer extends BlockRenderer<Block> {
 
 	// Helper methods and values:
 	@Override
-	public void draw(CommonBlock block, IRenderContext renderCtx) {
+	public void draw(Block blockRaw, IRenderContext renderCtx) {
+		if( !CommonBlock.class.isInstance(blockRaw) ) {
+			return;
+		}
+		CommonBlock block = CommonBlock.class.cast(blockRaw);
 
 		// Use additional image:
 		final BufferedImage blockImage = new BufferedImage(block.getSize()

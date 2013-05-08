@@ -59,7 +59,8 @@ public class TwoColumnForm extends Form {
 	}
 
 	public TwoColumnForm addTextField(IParameter parameter, String value) {
-		return addField(parameter.getLabel(), createTextField(parameter, value));
+		return addField(parameter.getDisplayName(),
+				createTextField(parameter, value));
 	}
 
 	public TwoColumnForm addHiddenField(IParameter parameter, String value) {
@@ -68,16 +69,14 @@ public class TwoColumnForm extends Form {
 	}
 
 	public <T extends DisplayNameAware> TwoColumnForm addSelectField(
-			IParameter parameter, String defaultValue,
-			PredefinedSelect<T> select) {
-		return addField(parameter.getLabel(),
-				select.create(parameter.getName(), defaultValue));
+			IParameter parameter, PredefinedSelect<T> select) {
+		return addField(parameter.getDisplayName(),
+				select.create(parameter.getName()));
 	}
 
-	public TwoColumnForm addReadOnlyField(IParameter parameter,
-			String value) {
+	public TwoColumnForm addReadOnlyField(IParameter parameter, String value) {
 		Tr tr = new Tr();
-		tr.add(createLabelTd(parameter.getLabel()));
+		tr.add(createLabelTd(parameter.getDisplayName()));
 		Td td = new Td(CLASS);
 		Td.HAlign.left.set(td);
 

@@ -33,23 +33,20 @@ class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 				compatibleShapes, activeShape);
 
 		final PredefinedSelect<CommonBlock.Background> selectField = new PredefinedSelect<CommonBlock.Background>(
-				CommonBlock.Background.values(), CommonBlock.Background.Grey);
+				CommonBlock.Background.values(), commonBlock.getBackground() );
 
 		final TwoColumnForm form = new TwoColumnForm("edit-common-block-save")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
 				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
 				.addTextField(BlockParameter.Name, entity.getName())
-				.addSelectField(Parameter.Shape, String.valueOf(activeShape),
-						shapeSelectField)
+				.addSelectField(Parameter.Shape, shapeSelectField)
 
 				.addTextField(BlockParameter.Width,
 						String.valueOf(entity.getSize().getWidth()))
 				.addTextField(BlockParameter.Height,
 						String.valueOf(entity.getSize().getHeight()))
 
-				.addSelectField(Parameter.Background,
-						String.valueOf(commonBlock.getBackground()),
-						selectField);
+				.addSelectField(Parameter.Background, selectField);
 
 		return form;
 	}

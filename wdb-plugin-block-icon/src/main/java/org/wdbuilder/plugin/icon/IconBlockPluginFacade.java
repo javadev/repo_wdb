@@ -9,6 +9,7 @@ import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.plugin.IBlockPluginFacade;
+import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.plugin.icon.domain.IconBlock;
 import org.wdbuilder.validator.BlockValidator;
@@ -48,7 +49,7 @@ public class IconBlockPluginFacade implements IBlockPluginFacade {
 		}
 
 		@Override
-		public String getLabel() {
+		public String getDisplayName() {
 			return label;
 		}
 	}
@@ -59,7 +60,7 @@ public class IconBlockPluginFacade implements IBlockPluginFacade {
 	}
 
 	@Override
-	public IRenderer getRenderer() {
+	public IRenderer<Block,IRenderContext> getRenderer() {
 		return new IconBlockRenderer();
 	}
 

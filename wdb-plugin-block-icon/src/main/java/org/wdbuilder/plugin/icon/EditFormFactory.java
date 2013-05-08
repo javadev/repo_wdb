@@ -27,14 +27,13 @@ class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 		final IconBlock iconBlock = IconBlock.class.cast(entity);
 
 		final PredefinedSelect<Icon> iconSelectField = new PredefinedSelect<Icon>(
-				Icon.values(), Icon.Avatar);
+				Icon.values(), iconBlock.getIcon());
 
 		final TwoColumnForm form = new TwoColumnForm("edit-icon-block-save")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
 				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
 				.addTextField(BlockParameter.Name, entity.getName())
-				.addSelectField(Parameter.IconID,
-						String.valueOf(iconBlock.getIcon()), iconSelectField);
+				.addSelectField(Parameter.IconID, iconSelectField);
 
 		return form;
 	}
