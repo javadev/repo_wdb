@@ -8,7 +8,9 @@ import org.wdbuilder.view.ILineEndRendererContext;
 
 import static org.wdbuilder.service.DiagramService.LINE_OFFSET;
 
-public class ArrowLineEndRenderer implements ILineEndRenderer {
+public abstract class ArrowLineEndRenderer implements ILineEndRenderer {
+
+	protected abstract void drawArrow(Graphics2D gr, int[] x, int[] y);
 
 	@Override
 	public void draw(ILineEndRendererContext renderCtx) {
@@ -20,7 +22,7 @@ public class ArrowLineEndRenderer implements ILineEndRenderer {
 		int[] y = getY(renderCtx);
 
 		gr.drawLine(p0.getX(), p0.getY(), p1.getX(), p1.getY());
-		gr.fillPolygon(x, y, 3);
+		drawArrow(gr, x, y);
 	}
 
 	private static Point getSmallLineStart(ILineEndRendererContext renderCtx) {
@@ -86,5 +88,20 @@ public class ArrowLineEndRenderer implements ILineEndRenderer {
 			throw new IllegalArgumentException("Link socket direction is null");
 		}
 	}
+
+	public static class Solid extends ArrowLineEndRenderer {
+		@Override
+		protected void drawArrow(Graphics2D gr, int[] x, int[] y) {
+			gr.fillPolygon(x, y, 3);
+		}
+	}
+	
+	public static class Transparent extends ArrowLineEndRenderer {
+		@Override
+		protected void drawArrow(Graphics2D gr, int[] x, int[] y) {
+			gr.drawPolygon(x, y, 3);
+		}
+	}
+	
 
 }
