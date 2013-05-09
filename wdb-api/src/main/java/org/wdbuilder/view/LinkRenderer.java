@@ -1,5 +1,8 @@
 package org.wdbuilder.view;
 
+import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.wdbuilder.service.DiagramService.LINE_AREA;
+
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -10,10 +13,7 @@ import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.ILinkRenderContext;
 import org.wdbuilder.plugin.IRenderer;
-import org.wdbuilder.view.line.end.ILineEnd;
-
-import static org.wdbuilder.service.DiagramService.LINE_AREA;
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import org.wdbuilder.view.line.end.LineEnd;
 
 public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 
@@ -58,7 +58,7 @@ public class LinkRenderer implements IRenderer<Link, ILinkRenderContext> {
 		lineEndRenderCtx.setDirection(s.getDirection());
 		lineEndRenderCtx.setBaseLocation(p);
 		
-		ILineEnd lineEnd = s.getLineEnd();
+		LineEnd lineEnd = s.getLineEnd();
 		ILineRenderer<ILineEndRendererContext> renderer = lineEnd.getRenderer();
 		renderer.draw(lineEndRenderCtx);
 	}
