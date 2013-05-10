@@ -15,6 +15,23 @@
 			placement : 'bottom'
 		});
 	});
+	
+	function closeForm() {
+		$('#form').hide();
+		$('#form-buttons').hide();
+		$('#form-divider').hide();
+	}
+	
+    function closeDiagramList() {
+        $('.on-dl-full').hide();
+        $('.on-dl-small').show();
+    }
+    
+    function showDiagramList() {
+        $('.on-dl-full').show();
+        $('.on-dl-small').hide();
+    }   
+    
 </script>
 
 <style type="text/css">
@@ -53,7 +70,7 @@ div.header {
 		<tr>
 			<!-- Diagram list -->
 			<td valign="top">
-				<ul class="nav nav-list">
+				<ul class="nav nav-list on-dl-full">
 					<li class="active"><a href="#">Diagram 1</a></li>
 					<li><a href="#">Diagram name 2</a></li>
 					<li><a href="#">Diagram 3</a></li>
@@ -63,16 +80,21 @@ div.header {
 			</td>
 			<td valign="top">
 				<div class="btn-group btn-group-vertical">
-					<button class="btn btn-mini btn-success" data-toggle="tooltip"
+					<button class="btn btn-mini btn-success on-dl-full" data-toggle="tooltip"
 						title="New Diagram">
 						<i class="icon-white icon-calendar"></i>
 					</button>
-					<button class="btn btn-mini" title="Refresh Diagram List">
+					<button class="btn btn-mini on-dl-full" title="Refresh Diagram List">
 						<i class="icon-white icon-refresh"></i>
 					</button>
-					<button class="btn btn-mini" title="Hide List">
+					<button class="btn btn-mini on-dl-full" title="Hide List"
+					   onclick="closeDiagramList()">
 						<i class="icon-white icon-off"></i>
 					</button>
+                    <button class="btn btn-mini on-dl-small" title="Show List"
+                       onclick="showDiagramList()" style="display: none;">
+                        <i class="icon-white icon-list-alt"></i>
+                    </button>
 				</div>
 			</td>
 			<td class="divider">
@@ -114,9 +136,9 @@ div.header {
 					<tr>
 				</table>
 			</td>
-			<td class="divider"></td>
+			<td class="divider" id="form-divider"></td>
 			<td valign="top">
-				<form>
+				<form id="form">
 					<table>
 						<tr>
 							<td valign="top" align="left" colspan="3"><div
@@ -178,14 +200,15 @@ div.header {
 				</form>
 			</td>
 			<td valign="top">
-				<div class="btn-group btn-group-vertical">
+				<div class="btn-group btn-group-vertical" id="form-buttons">
 					<button class="btn btn-mini btn-success" title="Submit">
 						<i class="icon-white icon-ok"></i>
 					</button>
 					<button class="btn btn-mini" title="Reset Form">
 						<i class="icon-white icon-refresh"></i>
 					</button>
-					<button class="btn btn-mini" title="Close Form">
+					<button class="btn btn-mini" title="Close Form"
+					  onclick="closeForm()">
 						<i class="icon-white icon-off"></i>
 					</button>
 				</div>
