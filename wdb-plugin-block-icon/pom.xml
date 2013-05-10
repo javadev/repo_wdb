@@ -1,10 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
+    <parent>
+        <groupId>org.wdbuilder</groupId>
+        <artifactId>wdb</artifactId>
+        <version>${global.version}</version>
+        <relativePath>..</relativePath>
+    </parent>	
 
 	<groupId>org.wdbuilder.plugin</groupId>
 	<artifactId>wdb-plugin-block-icon</artifactId>
-	<version>0.1a</version>
 	<packaging>jar</packaging>
 
 	<name>wdb-plugin-block-icon</name>
@@ -32,12 +38,12 @@
 		<dependency>
 			<groupId>org.wdbuilder</groupId>
 			<artifactId>wdb-jaxb-html</artifactId>
-			<version>0.2a</version>
+			<version>${global.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wdbuilder</groupId>
 			<artifactId>wdb-api</artifactId>
-			<version>0.4a</version>
+			<version>${global.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -53,11 +59,6 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

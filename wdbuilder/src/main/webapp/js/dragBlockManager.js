@@ -1,6 +1,7 @@
 
 function BlockDrag() {
 	
+	var workspaceObject = null;
 	var dragObject = null;
 	var blockKey = "";
 	var diagramKey = "";
@@ -87,7 +88,6 @@ function BlockDrag() {
 		notifyObj.valid = currentHandler.validate(e);
 		dragObject.className = notifyObj.valid ? "" : "no-drag";
 		currentHandler.notifyMove(notifyObj);
-
 		return false;
 	};
 
@@ -106,22 +106,22 @@ function BlockDrag() {
 		notifyObj.center = currentHandler.getCenter(e);
 		notifyObj.smallMovement = currentHandler.isSmallMovement(e);
 
-		currentHandler.unbindFromMouse(notifyObj, dragObject);
-
+		currentHandler.unbindFromMouse(notifyObj);
+		if( workspaceObject && dragObject ) {
+			workspaceObject.removeChild( dragObject );
+		}
 		return false;
 	};
 	
 	this.mouseDown = function(e, parentKey, key, offsetX, offsetY) {
-		dragObject = document.getElementById("car");
-		if (!dragObject) {
+		// Create image moving object ("caret"):
+		workspaceObject = document.getElementById("workspace");
+		if( !workspaceObject ) {
 			return false;
 		}
-
-		/* TODO: doubtful code
-		if (!e) {
-			e = window.event;
-		}
-		*/
+		dragObject = document.createElement("div");
+		dragObject.setAttribute("id", "caret");
+		workspaceObject.appendChild(dragObject);
 		
 		currentHandler = this;
 		e = currentHandler.fixEvent(e);		
@@ -141,7 +141,7 @@ function BlockDrag() {
 
 		// Load the image content:
 		loadContent("moving-block?r=" + Math.random() + "&bkey=" + blockKey
-				+ "&dkey=" + diagramKey, "car");
+				+ "&dkey=" + diagramKey, "caret");
 		document.body.style.cursor = "move";
 
 		currentHandler.notifyDown(e);

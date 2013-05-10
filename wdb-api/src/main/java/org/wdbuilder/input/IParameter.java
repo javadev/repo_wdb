@@ -1,12 +1,11 @@
 package org.wdbuilder.input;
 
+import org.wdbuilder.domain.DisplayNameAware;
 
-public interface IParameter {
+
+public interface IParameter extends DisplayNameAware {
 	
 	public String getName();
-	
-	// TODO: pass the Locale there (2013/04/30)
-	public String getLabel();
 	
 	public String getString(InputAdapter input);
 
