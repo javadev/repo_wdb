@@ -4,10 +4,32 @@
 <meta charset="utf-8" />
 <title>_rest_bootstrap</title>
 <link rel="stylesheet" type="text/css"
-  href="bootstrap/css/bootstrap.css" />
+	href="bootstrap/css/bootstrap.css" />
+<script type="text/javascript" src="jQuery/jquery.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.dropdown-toggle').dropdown();
+	});
+</script>
+
+<style type="text/css">
+body {
+	font-size: 8pt;
+}
+
+input[type="text"] {
+	font-size: 8pt;
+}
+
+label {
+	font-weight: bold;
+	font-size: 8pt;
+}
+</style>
 </head>
-<body style="font-size: 8pt;">
+<body>
 	<table class="well">
 		<tr>
 			<!-- Diagram list -->
@@ -45,9 +67,10 @@
 									<i class="icon-white icon-retweet"></i>
 								</button>
 
-								<button title="New Custom Block" class="btn btn-mini">
-									<i class="icon-white icon-cog"></i>
-								</button>
+								<a title="New Custom Block" class="btn btn-mini" href="#myModal"
+									role="button" class="btn" data-toggle="modal"> <i
+									class="icon-white icon-cog"></i>
+								</a>
 								<button title="New Icon Block" class="btn btn-mini">
 									<i class="icon-white icon-picture"></i>
 								</button>
@@ -72,36 +95,68 @@
 					<tr>
 				</table>
 			</td>
-			<td valign="top">
-				<form>
-					<table>
-						<tr>
-							<td valign="top" colspan="2"><strong>Edit Common
-									Block</strong></td>
-							<td align="right" valign="top" rowspan="10">
-								<div class="btn-group btn-group-vertical">
-									<button class="btn btn-mini" title="Submit">
-										<i class="icon-white icon-ok"></i>
-									</button>
-
-									<button title="Reset" class="btn btn-mini">
-										<i class="icon-white icon-refresh"></i>
-									</button>
-
-									<button title="Delete" class="btn btn-mini">
-										<i class="icon-white icon-remove"></i>
-									</button>
-
-									<button title="Close" class="btn btn-mini">
-										<i class="icon-white icon-off"></i>
-									</button>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</form>
-			</td>
+			<td valign="top"></td>
 		</tr>
 	</table>
+
+	<!-- Modal -->
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">×</button>
+			<h5 id="myModalLabel">Edit Common Block</h5>
+		</div>
+		<div class="modal-body">
+			<form>
+				<table>
+					<tr>
+						<td valign="top" align="right"><label>ID:</label></td>
+						<td valign="top" align="left">blah-blah-blah</td>
+					</tr>
+					<tr>
+						<td valign="top" align="right"><label>Name:</label></td>
+						<td valign="top" align="left"><input type="text"
+							placeholder="enter name here" name="name" class="span3" /></td>
+					</tr>
+					<tr>
+						<td valign="top" align="right"><label>Width:</label></td>
+						<td valign="top" align="left"><input type="text" name="width"
+							class="span1" /></td>
+					</tr>
+					<tr>
+						<td valign="top" align="right"><label>Height:</label></td>
+						<td valign="top" align="left"><input type="text"
+							name="height" class="span1" /></td>
+					</tr>
+					<tr>
+						<td valign="top" align="right"><label>Background:</label></td>
+						<td valign="top" align="left">
+							<div class="dropdown" id="background">
+								<a class="dropdown-toggle btn btn-small" data-toggle="dropdown"
+									href="#">Gray&nbsp;&nbsp;&nbsp;<b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Grey</a></li>
+									<li><a href="#">Dark Green</a></li>
+									<li><a href="#">Green</a></li>
+									<li><a href="#">Navy Blue</a></li>
+									<li><a href="#">Blue</a></li>
+									<li><a href="#">Olive</a></li>
+									<li><a href="#">Brick</a></li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-small btn-primary">Submit</button>
+			<button class="btn btn-small">Reset Changes</button>
+			<button class="btn btn-small">Delete Block</button>
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		</div>
+	</div>
+
 </body>
 </html>
