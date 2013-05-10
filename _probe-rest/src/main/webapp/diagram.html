@@ -11,6 +11,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.dropdown-toggle').dropdown();
+		$('.btn').tooltip({
+			placement : 'bottom'
+		});
 	});
 </script>
 
@@ -31,19 +34,18 @@ label {
 }
 
 .divider {
-    background-color: white;
-    width: 0.3em;
+	background-color: white;
+	width: 0.3em;
 }
 
 div.header {
-    width: 100%;
-    font-weight: bold;
-    padding-left: 1em;
-    border-bottom: 1px solid #cccccc;
-    text-shadow: 0px 2px white;
-    color: #666666;
+	width: 100%;
+	font-weight: bold;
+	padding-left: 1em;
+	border-bottom: 1px solid #cccccc;
+	text-shadow: 0px 2px white;
+	color: #666666;
 }
-
 </style>
 </head>
 <body>
@@ -61,7 +63,8 @@ div.header {
 			</td>
 			<td valign="top">
 				<div class="btn-group btn-group-vertical">
-					<button class="btn btn-mini btn-success" title="New Diagram">
+					<button class="btn btn-mini btn-success" data-toggle="tooltip"
+						title="New Diagram">
 						<i class="icon-white icon-calendar"></i>
 					</button>
 					<button class="btn btn-mini" title="Refresh Diagram List">
@@ -111,14 +114,13 @@ div.header {
 					<tr>
 				</table>
 			</td>
-			<td class="divider">
-			</td>
+			<td class="divider"></td>
 			<td valign="top">
 				<form>
 					<table>
 						<tr>
-							<td valign="top" align="left" colspan="3"><div class="header">Create
-									Custom Block</div></td>
+							<td valign="top" align="left" colspan="3"><div
+									class="header">Create Custom Block</div></td>
 						</tr>
 						<tr>
 							<td valign="top" align="right"><label>ID:</label></td>
@@ -139,21 +141,21 @@ div.header {
 							<td valign="top" align="left"><input type="text"
 								name="height" class="span1" /></td>
 						</tr>
-                        <tr>
-                            <td valign="top" align="right"><label>Shape:</label></td>
-                            <td valign="top" align="left">
-                                <div class="dropdown" id="shape">
-                                    <a class="dropdown-toggle btn btn-small" data-toggle="dropdown"
-                                        href="#">Rectangle&nbsp;&nbsp;&nbsp;<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Rectangle</a></li>
-                                        <li><a href="#">Rounded Rectangle</a></li>
-                                        <li><a href="#">Oval</a></li>
-                                        <li><a href="#">Romb</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>						
+						<tr>
+							<td valign="top" align="right"><label>Shape:</label></td>
+							<td valign="top" align="left">
+								<div class="dropdown" id="shape">
+									<a class="dropdown-toggle btn btn-small" data-toggle="dropdown"
+										href="#">Rectangle&nbsp;&nbsp;&nbsp;<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Rectangle</a></li>
+										<li><a href="#">Rounded Rectangle</a></li>
+										<li><a href="#">Oval</a></li>
+										<li><a href="#">Romb</a></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
 						<tr>
 							<td valign="top" align="right"><label>Background:</label></td>
 							<td valign="top" align="left">
