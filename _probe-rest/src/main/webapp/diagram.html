@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>_rest_bootstrap</title>
+<link rel="stylesheet" type="text/css"
+  href="bootstrap/css/bootstrap.css" />
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+</head>
+<body style="font-size: 8pt;">
+	<table class="well">
+		<tr>
+			<!-- Diagram list -->
+			<td valign="top">
+				<ul class="nav nav-list">
+					<li class="nav-header">Diagrams:</li>
+					<li class="active"><a href="#">Diagram 1</a></li>
+					<li><a href="#">Diagram name 2</a></li>
+					<li><a href="#">Diagram 3</a></li>
+					<li><a href="#">Diagram 4</a></li>
+					<li><a href="#">Diagram 5</a></li>
+				</ul>
+			</td>
+			<td valign="top">
+				<div class="btn-group btn-group-vertical">
+					<button class="btn btn-mini" title="New Diagram">
+						<i class="icon-white icon-calendar"></i>
+					</button>
+					<button class="btn btn-mini" title="Refresh Diagram List">
+						<i class="icon-white icon-refresh"></i>
+					</button>
+					<button class="btn btn-mini" title="Hide List">
+						<i class="icon-white icon-off"></i>
+					</button>
+				</div>
+			</td>
+			<td valign="top">
+				<!-- Current diagram -->
+				<table>
+					<tr>
+						<td align="left"><strong>The Diagram Name</strong></td>
+						<td align="right" valign="top" rowspan="2">
+							<div class="btn-group btn-group-vertical">
+								<button class="btn btn-mini" title="Line Mode">
+									<i class="icon-white icon-retweet"></i>
+								</button>
+
+								<button title="New Custom Block" class="btn btn-mini">
+									<i class="icon-white icon-cog"></i>
+								</button>
+								<button title="New Icon Block" class="btn btn-mini">
+									<i class="icon-white icon-picture"></i>
+								</button>
+								<button title="Edit Diagram" class="btn btn-mini">
+									<i class="icon-white icon-edit"></i>
+								</button>
+								<button title="Export Diagram" class="btn btn-mini">
+									<i class="icon-white icon-download"></i>
+								</button>
+								<button title="Delete Diagram" class="btn btn-mini">
+									<i class="icon-white icon-remove"></i>
+								</button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="diagram"
+								style="background-color: white; width: 500px; height: 400px;"></div>
+
+						</td>
+					<tr>
+				</table>
+			</td>
+			<td valign="top">
+				<form>
+					<table>
+						<tr>
+							<td valign="top" colspan="2"><strong>Edit Common
+									Block</strong></td>
+							<td align="right" valign="top" rowspan="10">
+								<div class="btn-group btn-group-vertical">
+									<button class="btn btn-mini" title="Submit">
+										<i class="icon-white icon-ok"></i>
+									</button>
+
+									<button title="Reset" class="btn btn-mini">
+										<i class="icon-white icon-refresh"></i>
+									</button>
+
+									<button title="Delete" class="btn btn-mini">
+										<i class="icon-white icon-remove"></i>
+									</button>
+
+									<button title="Close" class="btn btn-mini">
+										<i class="icon-white icon-off"></i>
+									</button>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
