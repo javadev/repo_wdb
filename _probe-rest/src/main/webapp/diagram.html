@@ -27,6 +27,12 @@ label {
 	font-weight: bold;
 	font-size: 8pt;
 	margin-right: 1em;
+	margin-left: 1em;
+}
+
+.divider {
+    background-color: white;
+    width: 0.3em;
 }
 </style>
 </head>
@@ -57,6 +63,7 @@ label {
 					</button>
 				</div>
 			</td>
+			<td class="divider">
 			<td valign="top">
 				<!-- Current diagram -->
 				<table>
@@ -95,6 +102,8 @@ label {
 					<tr>
 				</table>
 			</td>
+			<td class="divider">
+			</td>
 			<td valign="top">
 				<form>
 					<table>
@@ -121,6 +130,21 @@ label {
 							<td valign="top" align="left"><input type="text"
 								name="height" class="span1" /></td>
 						</tr>
+                        <tr>
+                            <td valign="top" align="right"><label>Shape:</label></td>
+                            <td valign="top" align="left">
+                                <div class="dropdown" id="shape">
+                                    <a class="dropdown-toggle btn btn-small" data-toggle="dropdown"
+                                        href="#">Rectangle&nbsp;&nbsp;&nbsp;<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Rectangle</a></li>
+                                        <li><a href="#">Rounded Rectangle</a></li>
+                                        <li><a href="#">Oval</a></li>
+                                        <li><a href="#">Romb</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>						
 						<tr>
 							<td valign="top" align="right"><label>Background:</label></td>
 							<td valign="top" align="left">
