@@ -58,7 +58,16 @@ $(document).ready(function() {
     '</button></div>' +
         '</form>'
     });
-});	
+    
+    // TODO: how to avoid popover doubling?
+    
+    $('#area2').popover({
+        html: true,
+        placement : 'right',
+        content: 'Another popover'
+    });    
+}); 
+
 
 function setShape( value, displayValue ) {
 	$("#shape").attr("value", value );	
@@ -75,6 +84,8 @@ function setShape( value, displayValue ) {
 		<map name="mainMap">
 			<area id="area1" alt="i" href="#" shape="rect"
 				coords="120, 200, 270, 270" />
+            <area id="area2" alt="ii" href="#" shape="rect"
+                coords="600, 200, 700, 270" />
 		</map>
 	</div>
 </body>
