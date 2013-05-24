@@ -1,6 +1,92 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="utf-8" />
+<title>Image map &amp; popup dialog</title>
+<link rel="stylesheet" type="text/css"
+	href="bootstrap/css/bootstrap.css" />
+	
+<style type="text/css">
+body 
+td {
+font-size: 10pt;
+}
+</style>
+
+<script type="text/javascript" src="jQuery/jquery.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.dropdown-toggle').dropdown();	
+	
+    $('#area1').popover({
+    	html: true,
+        placement : 'right',
+        content: '<form>' +
+        '<input type="hidden" name="shape" id="shape" value="rectangle"/>' +
+        '<table>' + 
+        '<tr>' +
+        '<td align="right"><label>ID:</label></td><td>123456</td>' +
+        '</tr>' + 
+        '<tr>' +
+        '<td align="right"><label>Name:</label></td><td><input type="text" class="span2" name="name"/></td>' +
+        '<tr>' +
+        '<td valign="top" align="right"><label>Shape:</label></td>' +
+        '<td valign="top" align="left">' +
+            '<div class="dropdown">' + 
+                '<a id="shape-current" class="dropdown-toggle btn btn-mini" data-toggle="dropdown" ' +
+                    'href="#">Rectangle&nbsp;&nbsp;&nbsp;<b class="caret"></b></a> ' +
+                '<ul class="dropdown-menu"> ' +
+                 '   <li><a href="#" onclick="setShape(\'rectangle\',\'Rectangle\')">Rectangle</a></li> ' +
+                 '   <li><a href="#"  onclick="setShape(\'rounded_rectangle\',\'Rounded Rectangle\')">Rounded Rectangle</a></li> ' +
+                 '   <li><a href="#" onclick="setShape(\'oval\',\'Oval\')">Oval</a></li> ' +
+                 '   <li><a href="#" onclick="setShape(\'romb\',\'Romb\')">Romb</a></li> ' +
+                '</ul> ' +
+            '</div> ' +
+        '</td> ' + 
+    '</tr><tr><td>&nbsp;</td></tr>' +
+        '</table>' +
+        '<div class="btn-group">' +        
+        '<button class="btn btn-mini">' +
+        '<i class="icon-ok"></i> Submit' +
+    '</button>' +        
+    '<button class="btn btn-mini">' +
+    '<i class="icon-refresh"></i> Reset' +
+'</button>' +        
+        '<button class="btn btn-mini" onclick="$(\'#area1\').popover(\'hide\')">' +
+        '<i class="icon-off"></i> Close' +
+    '</button></div>' +
+        '</form>'
+    });
+    
+    // TODO: how to avoid popover doubling?
+    
+    $('#area2').popover({
+        html: true,
+        placement : 'right',
+        content: 'Another popover'
+    });    
+}); 
+
+
+function setShape( value, displayValue ) {
+	$("#shape").attr("value", value );	
+	$("#shape-current").html(displayValue + '&nbsp;&nbsp;&nbsp;<b class="caret"></b>');
+}
+</script>
+
+</head>
 <body>
-Hello restful web services!
+	<div class="container well">
+		Image map &amp; popup dialog <img class="img-rounded"
+			src="Water lilies.jpg" width="800" height="600" usemap="#mainMap" />
+
+		<map name="mainMap">
+			<area id="area1" alt="i" href="#" shape="rect"
+				coords="120, 200, 270, 270" />
+            <area id="area2" alt="ii" href="#" shape="rect"
+                coords="600, 200, 700, 270" />
+		</map>
+	</div>
 </body>
 </html>
