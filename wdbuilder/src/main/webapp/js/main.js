@@ -20,6 +20,8 @@ function refreshDiagramList() {
 	loadDiagramList(true);
 	cleanElement("canvasFrame");
 	cleanElement("properties");
+	
+	hideCaret();	
 }
 
 // Request diagram list from server
@@ -36,6 +38,23 @@ function cleanElement(id) {
 		elem.innerHTML = "";
 	}
 	;
+}
+
+// Set the caret:
+function setCaret( diagramKey, blockKey, left, top, width, height ) {	
+	var c = $('#caret');
+	c.show();
+	var o = $('#frameImage').offset();
+	o.left += left - 2;
+	o.top += top - 2;
+	c.width(width);
+	c.height(height);
+	c.offset(o);	
+}
+
+// Hide caret:
+function hideCaret() {
+	$('#caret').hide();
 }
 
 // Reset form to initial values (handler of "reset" link)
