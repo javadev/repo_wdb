@@ -22,6 +22,7 @@ import org.wdbuilder.gui.IUIActionId;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.Area;
+import org.wdbuilder.jaxbhtml.element.Img;
 import org.wdbuilder.jaxbhtml.element.Map;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.serialize.html.SectionHeader;
@@ -170,9 +171,12 @@ public class CanvasFrameWriter {
 			}
 		};
 		writer.write(header);
+		
+		Img img = new FrameServlet.Image(diagram, null, "frameImage", input
+				.getState().getSelectedBlockKey(), ID_IMAGE_MAP);
+		img.setOnMouseOver( "hideCaret()" );
 
-		writer.write(new FrameServlet.Image(diagram, null, "frameImage", input
-				.getState().getSelectedBlockKey(), ID_IMAGE_MAP));
+		writer.write(img);
 
 		final ImageMap map = state.isBlockMode() ? new ImageMapForBlock(state)
 				: new ImageMapForLine(state);
