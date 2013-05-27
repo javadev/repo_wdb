@@ -60,7 +60,7 @@ function loadByAJAX(url, acceptor) {
 }
 
 // Request some HTML content by XMLHttpRequest and show it in some screen element 
-function loadContent(url, containerId) {
+function loadContent(url, containerId, callback ) {
 	loadByAJAX(url, function(response) {
 		var elem = document.getElementById(containerId);
 		if (!elem) {
@@ -70,6 +70,8 @@ function loadContent(url, containerId) {
 		var len = response.length;
 		elem.style.display = ( 0==len ) ? "none" : "block";
 		document.body.style.cursor = "default";
+		
+		callback();
 	});
 }
 
