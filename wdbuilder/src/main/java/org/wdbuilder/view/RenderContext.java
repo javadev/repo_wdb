@@ -42,11 +42,6 @@ class RenderContext implements IRenderContext {
 	public Point getOffset() {
 		return offset;
 	}
-	
-	@Override
-	public boolean isSelected( Block block ) {
-		return block.getKey().equals(appState.getSelectedBlockKey());
-	}
 
 	@Override
 	public boolean isBlockMode() {
