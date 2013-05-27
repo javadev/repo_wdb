@@ -137,8 +137,8 @@ function BlockDrag() {
 		origin = currentHandler.getPosition(imageElem);
 
 		delta = {
-			x : e.pageX - offsetX - origin.x,
-			y : e.pageY - offsetY - origin.y
+			x : e.pageX - offsetX - origin.x - SELECT_FRAME_WIDTH,
+			y : e.pageY - offsetY - origin.y - SELECT_FRAME_WIDTH
 		};
 
 		// Reload the image with changed selection:
