@@ -21,9 +21,7 @@ public class CreateBlockSaveServlet extends DiagramServlet {
 		final IBlockPluginFacade pluginFacade = serviceFacade
 				.getBlockPluginRepository().getFacade(blockClass);
 		final Block block = pluginFacade.create(input);
-		final String blockKey = serviceFacade.getDiagramService().persistBlock(
-				diagramKey, block);
-
-		printCanvasFrame(input, blockKey);
+		serviceFacade.getDiagramService().persistBlock(diagramKey, block);
+		printCanvasFrame(input);
 	}
 }
