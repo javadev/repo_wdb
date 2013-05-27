@@ -60,6 +60,7 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 // Hide caret:
 function hideCaret() {
 	$('#caret').hide();
+	$('#caret').html('');
 }
 
 // Reset form to initial values (handler of "reset" link)
