@@ -217,13 +217,11 @@ ul.linkbutton {
 
 .selected {
     border: 2px solid #ff9933;
+    border-radius: 6px;
 }
 
 .cursor-icons {
 	padding: 2px;
     background-color: #ff9933;	
-}
-.no-round {
-	border-radius: 0;
 }
 
