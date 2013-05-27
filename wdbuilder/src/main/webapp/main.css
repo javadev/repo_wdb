@@ -206,7 +206,6 @@ ul.linkbutton {
 	position: absolute;
     cursor: default;
     background: transparent;
-    border: 2px solid #ff9933;
     text-align: right;
 }
 #caret div {
@@ -214,5 +213,9 @@ ul.linkbutton {
     font-size: 8pt;
     width: 100%;
     text-align: right;
+}
+
+.selected {
+    border: 2px solid #ff9933;
 }
 
