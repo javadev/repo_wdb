@@ -70,8 +70,9 @@ function loadContent(url, containerId, callback ) {
 		var len = response.length;
 		elem.style.display = ( 0==len ) ? "none" : "block";
 		document.body.style.cursor = "default";
-		
-		callback();
+		if( callback ) {
+			callback();
+		}
 	});
 }
 
