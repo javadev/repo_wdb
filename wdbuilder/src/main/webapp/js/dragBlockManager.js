@@ -107,9 +107,11 @@ function BlockDrag() {
 		notifyObj.smallMovement = currentHandler.isSmallMovement(e);
 
 		currentHandler.unbindFromMouse(notifyObj);
+		/*
 		if( workspaceObject && dragObject ) {
 			workspaceObject.removeChild( dragObject );
 		}
+		*/
 		return false;
 	};
 	
@@ -119,9 +121,12 @@ function BlockDrag() {
 		if( !workspaceObject ) {
 			return false;
 		}
+		dragObject = document.getElementById("caret");
+		/*
 		dragObject = document.createElement("div");
 		dragObject.setAttribute("id", "caret");
 		workspaceObject.appendChild(dragObject);
+		*/
 		
 		currentHandler = this;
 		e = currentHandler.fixEvent(e);		
