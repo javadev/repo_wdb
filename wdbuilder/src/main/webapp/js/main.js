@@ -53,12 +53,12 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 	c.offset(o);
 	
 	var deleteCall = "deleteBlock('" + diagramKey + "','" + blockKey + "');" +
-		"return false;";
+		"event.stopPropagation();return false;";
 	
 	// Assign some buttons for blocks:
 	var str = '<div class="btn-group btn-mini cursor-icons">';
 	str += '<a href="#" title="Edit"><i class="icon-white icon-edit"></i></a>';	
-	str += '<a href="#" title="Delete" onclick="' + deleteCall + '"><i class="icon-white icon-remove"></i></a>';
+	str += '<a href="#" title="Delete" onmousedown="' + deleteCall + '"><i class="icon-white icon-remove"></i></a>';
 	str += '&nbsp;&nbsp;</div>';
 	
 	c.html( str );
