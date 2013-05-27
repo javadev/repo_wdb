@@ -46,11 +46,19 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 	var c = $('#caret');
 	c.show();
 	var o = $('#frameImage').offset();
-	o.left += left - 2;
-	o.top += top - 2;
+	o.left += left - SELECT_FRAME_WIDTH;
+	o.top += top - SELECT_FRAME_WIDTH;
 	c.width(width);
 	c.height(height);
 	c.offset(o);
+	
+	// Assign some buttons for blocks:
+	var str = '<div class="btn-group btn-mini cursor-icons">';
+	str += '<a href="#" title="Edit"><i class="icon-white icon-edit"></i></a>';	
+	str += '<a href="#" title="Delete"><i class="icon-white icon-remove"></i></a>';
+	str += '&nbsp;&nbsp;</div>';
+	
+	c.html( str );
 	
 	c.bind( "mousedown", function(event) {
 		WDB.BlockDrag.mouseDown( event, diagramKey, blockKey, left, top );
