@@ -55,9 +55,12 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 	var deleteCall = "deleteBlock('" + diagramKey + "','" + blockKey + "');" +
 		"event.stopPropagation();return false;";
 	
+	var editCall = "openEditBlockDialog('" + diagramKey + "','" + blockKey + "');" +
+		"event.stopPropagation();return false;";	
+	
 	// Assign some buttons for blocks:
 	var str = '<div class="btn-group btn-mini cursor-icons">';
-	str += '<a href="#" title="Edit"><i class="icon-white icon-edit"></i></a>';	
+	str += '<a href="#" title="Edit" onmousedown="' + editCall + '"><i class="icon-white icon-edit"></i></a>';	
 	str += '<a href="#" title="Delete" onmousedown="' + deleteCall + '"><i class="icon-white icon-remove"></i></a>';
 	str += '&nbsp;&nbsp;</div>';
 	
@@ -208,14 +211,9 @@ function deleteCanvas( diagramKey) {
 }
 
 // Load current diagram content to main screen section
-function loadCanvas(diagramKey, blockKey) {
-	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey + "&bkey="
-			+ blockKey, "canvasFrame");
+function loadCanvas(diagramKey) {
+	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame");
 	cleanElement("properties");
-	if (blockKey && 0 != blockKey.length) {
-		loadContent("selected-block-info?r=" + Math.random() + "&bkey="
-				+ blockKey + "&dkey=" + diagramKey, "properties");
-	}
 	cleanElement("resizeFrame");
 }
 
