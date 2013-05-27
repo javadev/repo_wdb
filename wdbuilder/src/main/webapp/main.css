@@ -198,3 +198,21 @@ ul.linkbutton {
 	font-size: 8pt;	
 }
 
+/* Caret section */
+#frameImage {
+    cursor: default;
+}
+#caret {
+	position: absolute;
+    cursor: default;
+    background: transparent;
+    border: 2px solid #ff0000;
+    text-align: right;
+}
+#caret div {
+    font-weight: bold;
+    font-size: 8pt;
+    width: 100%;
+    text-align: right;
+}
+
