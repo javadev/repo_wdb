@@ -127,7 +127,7 @@ function submitEditCanvas() {
 		elem.style.display = "block";
 		document.body.style.cursor = "default";
 		refreshDiagramList();
-		loadCanvas(diagramKey, null);
+		loadCanvas(diagramKey);
 		cleanElement("properties");
 	});
 }
@@ -142,9 +142,11 @@ function callbackReloadBlock(response, diagramKey, blockKey) {
 	elem.innerHTML = response;
 	elem.style.display = "block";
 	document.body.style.cursor = "default";
+	/*
 	if (blockKey) {
 		loadCanvas(diagramKey, blockKey);
 	}
+	*/
 	cleanElement("properties");
 }
 
@@ -256,14 +258,14 @@ function deleteBlock(diagramKey, blockKey) {
 	loadContent("delete-block?r=" + Math.random() + "&bkey=" + blockKey
 			+ "&dkey=" + diagramKey, "canvasFrame");
 	cleanElement("properties");
-	loadCanvas(diagramKey, null);
+	loadCanvas(diagramKey);
 }
 
 // Switching between block/line mode of diagram editor
 function switchMode(diagramKey) {
 	loadContent("switch-mode?r=" + Math.random(), "canvasFrame");
 	cleanElement("properties");
-	loadCanvas(diagramKey, null);
+	loadCanvas(diagramKey);
 }
 
 //Open form for existing block data update in additional section
@@ -281,7 +283,7 @@ function deleteLink(diagramKey, linkKey) {
 	loadContent("delete-link?r=" + Math.random() + "&lkey=" + linkKey
 			+ "&dkey=" + diagramKey, "canvasFrame");
 	cleanElement("properties");
-	loadCanvas(diagramKey, null);
+	loadCanvas(diagramKey);
 };
 
 // recalculate coordinate in order to snap to grid
