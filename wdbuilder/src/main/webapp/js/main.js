@@ -56,6 +56,7 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 		WDB.BlockDrag.mouseDown( event, diagramKey, blockKey, left, top );
 		return false;
 	});
+	c.addClass( "selected" );
 }
 
 // Hide caret:
