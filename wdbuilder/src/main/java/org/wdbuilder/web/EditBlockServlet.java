@@ -42,7 +42,7 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 
 		String submitFunctionCall = formFactory.getSubmitCall();
 
-		String closeHandler = "loadCanvas(" + diagramId + "')";
+		String closeHandler = "loadCanvas(" + diagramId + ")";
 
 		htmlWriter.write(new SectionHeader(formFactory.getTitle()));
 
