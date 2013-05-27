@@ -206,7 +206,7 @@ ul.linkbutton {
 	position: absolute;
     cursor: default;
     background: transparent;
-    border: 2px solid #ff0000;
+    border: 2px solid #ff9933;
     text-align: right;
 }
 #caret div {
