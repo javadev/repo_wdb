@@ -166,6 +166,8 @@ function BlockDrag() {
 				top = (e.pageY - delta.y) + "px";
 				left = (e.pageX - delta.x) + "px";
 			}
+			
+			$(dragObject).addClass( "selected" );
 
 			startPos = {
 				x : e.pageX,
