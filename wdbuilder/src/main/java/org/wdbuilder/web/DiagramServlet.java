@@ -19,9 +19,8 @@ public class DiagramServlet extends FrameServlet {
 		printCanvasFrame(input, BlockParameter.BlockKey.getString(input));
 	}
 
-	protected void printCanvasFrame(ServletInput input, String selectedBlockKey)
+	protected void printCanvasFrame(ServletInput input)
 			throws JAXBException, IOException {
-		input.getState().setSelectedBlockKey(selectedBlockKey);
 		new CanvasFrameWriter(diagramHelper,
 				serviceFacade.getBlockPluginRepository())
 				.printCanvasFrame(input);
