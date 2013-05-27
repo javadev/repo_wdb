@@ -1,3 +1,4 @@
+
 function BlockDrag() {
 	
 	var workspaceObject = null;
@@ -90,7 +91,6 @@ function BlockDrag() {
 		} else {
 			$(dragObject).removeClass( "selected" ).addClass( "no-drag" );
 		}
-		
 		currentHandler.notifyMove(notifyObj);
 		return false;
 	};
@@ -146,9 +146,6 @@ function BlockDrag() {
 			y : e.pageY - offsetY - origin.y + SELECT_FRAME_WIDTH
 		};
 
-		// Reload the image with changed selection:
-		// loadCanvas(diagramKey, blockKey);
-
 		// Load the image content:
 		loadContent("moving-block?r=" + Math.random() + "&bkey=" + blockKey
 			+ "&dkey=" + diagramKey, "caret", function() {
@@ -186,7 +183,7 @@ function BlockDrag() {
 	});
 
 	this.registerUpListener(function(args) {
-		loadCanvas(args.diagram, args.block);
+		loadCanvas(args.diagram);
 	});
 };
 
