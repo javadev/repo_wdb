@@ -1,3 +1,4 @@
+
 function BlockDrag() {
 	
 	var workspaceObject = null;
@@ -137,16 +138,16 @@ function BlockDrag() {
 		origin = currentHandler.getPosition(imageElem);
 
 		delta = {
-			x : e.pageX - offsetX - origin.x - SELECT_FRAME_WIDTH,
-			y : e.pageY - offsetY - origin.y - SELECT_FRAME_WIDTH
+			x : e.pageX - offsetX - origin.x + SELECT_FRAME_WIDTH,
+			y : e.pageY - offsetY - origin.y + SELECT_FRAME_WIDTH
 		};
 
 		// Reload the image with changed selection:
-		loadCanvas(diagramKey, blockKey);
+		// loadCanvas(diagramKey, blockKey);
 
 		// Load the image content:
 		loadContent("moving-block?r=" + Math.random() + "&bkey=" + blockKey
-				+ "&dkey=" + diagramKey, "caret");
+			+ "&dkey=" + diagramKey, "caret");
 		document.body.style.cursor = "move";
 
 		currentHandler.notifyDown(e);
