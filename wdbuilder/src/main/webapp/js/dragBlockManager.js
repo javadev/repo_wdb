@@ -147,24 +147,25 @@ function BlockDrag() {
 
 		// Load the image content:
 		loadContent("moving-block?r=" + Math.random() + "&bkey=" + blockKey
-			+ "&dkey=" + diagramKey, "caret");
-		document.body.style.cursor = "move";
+			+ "&dkey=" + diagramKey, "caret", function() {
+			document.body.style.cursor = "move";
 
-		currentHandler.notifyDown(e);
-		currentHandler.setHandlers(currentHandler.mouseMove,
-				currentHandler.mouseUp, currentHandler);
-		
-		with (dragObject.style) {
-			display = "block";
-			position = "absolute";
-			top = (e.pageY - delta.y) + "px";
-			left = (e.pageX - delta.x) + "px";
-		}
+			currentHandler.notifyDown(e);
+			currentHandler.setHandlers(currentHandler.mouseMove,
+					currentHandler.mouseUp, currentHandler);
+			
+			with (dragObject.style) {
+				display = "block";
+				position = "absolute";
+				top = (e.pageY - delta.y) + "px";
+				left = (e.pageX - delta.x) + "px";
+			}
 
-		startPos = {
-			x : e.pageX,
-			y : e.pageY
-		};
+			startPos = {
+				x : e.pageX,
+				y : e.pageY
+			};			
+		});
 	};
 
 	this.registerUpListener(function(args) {
