@@ -54,6 +54,7 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 	
 	c.bind( "mousedown", function(event) {
 		WDB.BlockDrag.mouseDown( event, diagramKey, blockKey, left, top );
+		return false;
 	});
 }
 
