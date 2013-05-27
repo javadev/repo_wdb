@@ -1,3 +1,6 @@
+
+@IMPORT url("bootstrap/css/bootstrap.css");
+
 /* Common HTML styles */
 body {
 	background-color:white;
@@ -196,5 +199,29 @@ ul.linkbutton {
 #properties {
 	display: none;
 	font-size: 8pt;	
+}
+
+/* Caret section */
+#frameImage {
+    cursor: default;
+}
+#caret {
+	position: absolute;
+    cursor: default;
+    background: transparent;
+    text-align: right;
+}
+#caret div {
+    text-align: right;
+}
+
+.selected {
+    border: 2px solid #ff9933;
+    border-radius: 6px;
+}
+
+.cursor-icons {
+	padding: 2px;
+    background-color: #ff9933;	
 }
 

@@ -77,8 +77,7 @@ class CommonBlockRenderer extends BlockRenderer<Block> {
 		gr.fillRect(0, 0, size.width, size.height);
 		gr.setColor(Color.black);
 
-		final Rectangle rect = new Rectangle(MARGIN, MARGIN, size.width - 2
-				* MARGIN, size.height - 2 * MARGIN);
+		final Rectangle rect = new Rectangle(0, 0, size.width, size.height);
 		block.getShape().fill(gr, rect);
 
 		IBackgroundRenderer<IGradientBackgroundProvider> backgroundRenderer = 
@@ -86,15 +85,6 @@ class CommonBlockRenderer extends BlockRenderer<Block> {
 		backgroundRenderer.render(gr, block, block.getBackground());
 
 		drawText(gr, block);
-		if (!renderCtx.isBlockMode()) {
-			return;
-		}
-		if (!renderCtx.isSelected(block)) {
-			return;
-		}
-		gr.setColor(COLOR_SELECTION);
-		gr.drawRect(0, 0, size.width - 1, size.height - 1);
-		gr.drawRect(1, 1, size.width - 3, size.height - 3);
 	}
 
 }

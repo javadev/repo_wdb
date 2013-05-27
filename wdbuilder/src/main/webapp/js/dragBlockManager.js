@@ -86,7 +86,11 @@ function BlockDrag() {
 		}
 
 		notifyObj.valid = currentHandler.validate(e);
-		dragObject.className = notifyObj.valid ? "" : "no-drag";
+		if( notifyObj.valid ) {
+			$(dragObject).addClass( "selected" ).removeClass( "no-drag" );
+		} else {
+			$(dragObject).removeClass( "selected" ).addClass( "no-drag" );
+		}
 		currentHandler.notifyMove(notifyObj);
 		return false;
 	};
@@ -107,9 +111,12 @@ function BlockDrag() {
 		notifyObj.smallMovement = currentHandler.isSmallMovement(e);
 
 		currentHandler.unbindFromMouse(notifyObj);
+		hideCaret();
+		/*
 		if( workspaceObject && dragObject ) {
 			workspaceObject.removeChild( dragObject );
 		}
+		*/
 		return false;
 	};
 	
@@ -119,9 +126,12 @@ function BlockDrag() {
 		if( !workspaceObject ) {
 			return false;
 		}
+		dragObject = document.getElementById("caret");
+		/*
 		dragObject = document.createElement("div");
 		dragObject.setAttribute("id", "caret");
 		workspaceObject.appendChild(dragObject);
+		*/
 		
 		currentHandler = this;
 		e = currentHandler.fixEvent(e);		
@@ -132,33 +142,33 @@ function BlockDrag() {
 		origin = currentHandler.getPosition(imageElem);
 
 		delta = {
-			x : e.pageX - offsetX - origin.x,
-			y : e.pageY - offsetY - origin.y
+			x : e.pageX - offsetX - origin.x + SELECT_FRAME_WIDTH,
+			y : e.pageY - offsetY - origin.y + SELECT_FRAME_WIDTH
 		};
-
-		// Reload the image with changed selection:
-		loadCanvas(diagramKey, blockKey);
 
 		// Load the image content:
 		loadContent("moving-block?r=" + Math.random() + "&bkey=" + blockKey
-				+ "&dkey=" + diagramKey, "caret");
-		document.body.style.cursor = "move";
+			+ "&dkey=" + diagramKey, "caret", function() {
+			document.body.style.cursor = "move";
 
-		currentHandler.notifyDown(e);
-		currentHandler.setHandlers(currentHandler.mouseMove,
-				currentHandler.mouseUp, currentHandler);
-		
-		with (dragObject.style) {
-			display = "block";
-			position = "absolute";
-			top = (e.pageY - delta.y) + "px";
-			left = (e.pageX - delta.x) + "px";
-		}
+			currentHandler.notifyDown(e);
+			currentHandler.setHandlers(currentHandler.mouseMove,
+					currentHandler.mouseUp, currentHandler);
+			
+			with (dragObject.style) {
+				display = "block";
+				position = "absolute";
+				top = (e.pageY - delta.y) + "px";
+				left = (e.pageX - delta.x) + "px";
+			}
+			
+			$(dragObject).addClass( "selected" );
 
-		startPos = {
-			x : e.pageX,
-			y : e.pageY
-		};
+			startPos = {
+				x : e.pageX,
+				y : e.pageY
+			};			
+		});
 	};
 
 	this.registerUpListener(function(args) {
@@ -173,7 +183,7 @@ function BlockDrag() {
 	});
 
 	this.registerUpListener(function(args) {
-		loadCanvas(args.diagram, args.block);
+		loadCanvas(args.diagram);
 	});
 };
 

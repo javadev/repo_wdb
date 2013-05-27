@@ -166,7 +166,7 @@ function LineDraw() {
 	});
 
 	this.registerUpListener(function(args) {
-		loadCanvas(args.diagram, null);
+		loadCanvas(args.diagram);
 	});
 	
 };

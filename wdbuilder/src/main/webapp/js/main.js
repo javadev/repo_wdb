@@ -4,6 +4,7 @@
 
 // Constant: margin
 var MARGIN = 10;
+var SELECT_FRAME_WIDTH = 2;
 
 // body.oninit handler
 function init() {
@@ -15,11 +16,17 @@ function init() {
 	refreshDiagramList();
 }
 
+function hideProperties() {
+	cleanElement("properties");
+}
+
 // Reload diagram list and close active diagram
 function refreshDiagramList() {
 	loadDiagramList(true);
 	cleanElement("canvasFrame");
-	cleanElement("properties");
+	hideProperties();
+	
+	hideCaret();	
 }
 
 // Request diagram list from server
@@ -36,6 +43,44 @@ function cleanElement(id) {
 		elem.innerHTML = "";
 	}
 	;
+}
+
+// Set the caret:
+function setCaret( diagramKey, blockKey, left, top, width, height ) {	
+	var c = $('#caret');
+	c.show();
+	var o = $('#frameImage').offset();
+	o.left += left - SELECT_FRAME_WIDTH;
+	o.top += top - SELECT_FRAME_WIDTH;
+	c.width(width);
+	c.height(height);
+	c.offset(o);
+	
+	var deleteCall = "deleteBlock('" + diagramKey + "','" + blockKey + "');" +
+		"event.stopPropagation();return false;";
+	
+	var editCall = "openEditBlockDialog('" + diagramKey + "','" + blockKey + "');" +
+		"event.stopPropagation();return false;";	
+	
+	// Assign some buttons for blocks:
+	var str = '<div class="btn-group btn-mini cursor-icons">';
+	str += '<a href="#" title="Edit" onmousedown="' + editCall + '"><i class="icon-white icon-edit"></i></a>';	
+	str += '<a href="#" title="Delete" onmousedown="' + deleteCall + '"><i class="icon-white icon-remove"></i></a>';
+	str += '&nbsp;&nbsp;</div>';
+	
+	c.html( str );
+	
+	c.bind( "mousedown", function(event) {
+		WDB.BlockDrag.mouseDown( event, diagramKey, blockKey, left, top );
+		return false;
+	});
+	c.addClass( "selected" );
+}
+
+// Hide caret:
+function hideCaret() {
+	$('#caret').hide();
+	$('#caret').html('');
 }
 
 // Reset form to initial values (handler of "reset" link)
@@ -86,8 +131,8 @@ function submitEditCanvas() {
 		elem.style.display = "block";
 		document.body.style.cursor = "default";
 		refreshDiagramList();
-		loadCanvas(diagramKey, null);
-		cleanElement("properties");
+		loadCanvas(diagramKey);
+		hideProperties();
 	});
 }
 
@@ -101,10 +146,7 @@ function callbackReloadBlock(response, diagramKey, blockKey) {
 	elem.innerHTML = response;
 	elem.style.display = "block";
 	document.body.style.cursor = "default";
-	if (blockKey) {
-		loadCanvas(diagramKey, blockKey);
-	}
-	cleanElement("properties");
+	hideProperties();
 }
 
 //Submit data for new block creation
@@ -165,25 +207,20 @@ function deleteCanvas( diagramKey) {
 	loadContent("delete-diagram?r=" + Math.random() + "&dkey=" + diagramKey,
 			"canvasList");
 	loadDiagramList(true);
-	cleanElement("properties");
+	hideProperties();
 	cleanElement("canvasFrame");
 }
 
 // Load current diagram content to main screen section
-function loadCanvas(diagramKey, blockKey) {
-	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey + "&bkey="
-			+ blockKey, "canvasFrame");
-	cleanElement("properties");
-	if (blockKey && 0 != blockKey.length) {
-		loadContent("selected-block-info?r=" + Math.random() + "&bkey="
-				+ blockKey + "&dkey=" + diagramKey, "properties");
-	}
+function loadCanvas(diagramKey) {
+	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame");
+	hideProperties();
 	cleanElement("resizeFrame");
 }
 
 // Open diagram creation form in main screen section
 function openCreateCanvasDialog() {
-	cleanElement("properties");
+	hideProperties();
 	loadContent("create-diagram", "canvasFrame");
 }
 
@@ -219,15 +256,15 @@ function deleteBlock(diagramKey, blockKey) {
 	}
 	loadContent("delete-block?r=" + Math.random() + "&bkey=" + blockKey
 			+ "&dkey=" + diagramKey, "canvasFrame");
-	cleanElement("properties");
-	loadCanvas(diagramKey, null);
+	hideProperties();
+	loadCanvas(diagramKey);
 }
 
 // Switching between block/line mode of diagram editor
 function switchMode(diagramKey) {
 	loadContent("switch-mode?r=" + Math.random(), "canvasFrame");
-	cleanElement("properties");
-	loadCanvas(diagramKey, null);
+	hideProperties();
+	loadCanvas(diagramKey);
 }
 
 //Open form for existing block data update in additional section
@@ -244,8 +281,8 @@ function deleteLink(diagramKey, linkKey) {
 	;
 	loadContent("delete-link?r=" + Math.random() + "&lkey=" + linkKey
 			+ "&dkey=" + diagramKey, "canvasFrame");
-	cleanElement("properties");
-	loadCanvas(diagramKey, null);
+	hideProperties();
+	loadCanvas(diagramKey);
 };
 
 // recalculate coordinate in order to snap to grid

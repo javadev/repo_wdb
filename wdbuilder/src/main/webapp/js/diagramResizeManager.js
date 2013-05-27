@@ -105,7 +105,7 @@ function DiagramResize() {
 			loadContent(url, null);
 	});
 	this.registerUpListener(function(args) {
-		loadCanvas(args.diagram, args.block);
+		loadCanvas(args.diagram);
 	});
 };
 

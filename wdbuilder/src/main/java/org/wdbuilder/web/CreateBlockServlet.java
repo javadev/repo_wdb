@@ -41,7 +41,7 @@ public class CreateBlockServlet extends DiagramHelperFormServlet {
 
 		final String submitFunctionCall = formFactory.getSubmitCall();
 
-		String closeHandler = "loadCanvas(" + diagramId + ",null)";
+		String closeHandler = "loadCanvas(" + diagramId + ")";
 
 		final TwoColumnForm form = formFactory.getForm().addFooter(
 				submitFunctionCall, closeHandler);

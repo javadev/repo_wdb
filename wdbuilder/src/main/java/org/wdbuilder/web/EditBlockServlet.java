@@ -23,8 +23,6 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 	@Override
 	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
-		final String diagramId = "'" + diagramHelper.getDiagram().getKey()
-				+ "'";
 
 		// Get existing block data:
 		final Block block = diagramHelper
@@ -42,8 +40,7 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 
 		String submitFunctionCall = formFactory.getSubmitCall();
 
-		String closeHandler = "loadCanvas(" + diagramId + ",'" + block.getKey()
-				+ "')";
+		String closeHandler = "hideProperties()";
 
 		htmlWriter.write(new SectionHeader(formFactory.getTitle()));
 

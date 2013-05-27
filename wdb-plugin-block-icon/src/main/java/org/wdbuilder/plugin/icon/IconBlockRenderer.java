@@ -54,16 +54,9 @@ class IconBlockRenderer extends BlockRenderer<Block> {
 		int y = renderCtx.getOffset().getY() - size.height / 2;
 
 		// Copy the image:
-		gr.drawImage(blockImage, x + MARGIN, y + MARGIN, getImageObserver());
+		gr.drawImage(blockImage, x, y, getImageObserver());
 
 		drawText(gr, block, x, y);
-
-		if (renderCtx.isBlockMode() && renderCtx.isSelected(block)) {
-			gr.setColor(COLOR_SELECTION);
-
-			gr.drawRect(x, y, size.width - 1, size.height - 1);
-			gr.drawRect(x + 1, y + 1, size.width - 3, size.height - 3);
-		}
 
 		renderLinkSockets(block, renderCtx);
 	}

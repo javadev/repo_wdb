@@ -2,6 +2,9 @@
 <head>
 <link rel="stylesheet" type="text/css" href="main.css" />
 
+<script type="text/javascript" src="jQuery/jquery.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/WDB.js"></script>
 
@@ -11,6 +14,12 @@
 <script type="text/javascript" src="js/linkArrangeManager.js"></script>
 
 <script type="text/javascript" src="js/main.js"></script>
+
+<script type="text/javascript">
+$(document).ready( function(){
+	init();
+});
+</script>
 
 </head>
 <body onload="init()">
@@ -29,6 +38,9 @@
 					<div id="resizeFrame" style="display: none"></div>
 					<div id="arrangeLink1" style="display: none"></div>
 					<div id="arrangeLink2" style="display: none"></div>
+					
+                    			<div id="caret"></div>
+    					
 					<div id="targetDiv" style="display:none">
 						<img src="resources/target.png" width="12" height="12" alt="" title=""/>
 					</div>

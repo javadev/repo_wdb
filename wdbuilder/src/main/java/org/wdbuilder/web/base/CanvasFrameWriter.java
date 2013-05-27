@@ -22,6 +22,7 @@ import org.wdbuilder.gui.IUIActionId;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.Area;
+import org.wdbuilder.jaxbhtml.element.Img;
 import org.wdbuilder.jaxbhtml.element.Map;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.serialize.html.SectionHeader;
@@ -170,9 +171,12 @@ public class CanvasFrameWriter {
 			}
 		};
 		writer.write(header);
+		
+		Img img = new FrameServlet.Image(diagram, null, "frameImage", input
+				.getState().getSelectedBlockKey(), ID_IMAGE_MAP);
+		img.setOnMouseOver( "hideCaret()" );
 
-		writer.write(new FrameServlet.Image(diagram, null, "frameImage", input
-				.getState().getSelectedBlockKey(), ID_IMAGE_MAP));
+		writer.write(img);
 
 		final ImageMap map = state.isBlockMode() ? new ImageMapForBlock(state)
 				: new ImageMapForLine(state);
@@ -215,17 +219,43 @@ public class CanvasFrameWriter {
 					.getLocation().getX() - size.getWidth() / 2, entity
 					.getLocation().getY() - size.getHeight() / 2);
 
+			/*
 			String dragStartMethod = appState.getMode().getJsDragStart();
 
 			String onMouseDown = getOnMouseDownFunctionCall(dragStartMethod,
 					diagramHelper.getDiagram().getKey(), entity.getKey(),
 					topLeft);
+			*/
+			String onMouseOver = getJsOnMouseOver( topLeft, size,
+					diagramHelper.getDiagram().getKey(), entity.getKey() );
+			
 
 			final Area.Rect area = new Area.Rect(topLeft, size.toAWT());
-			area.setOnMouseDown(onMouseDown);
+			// area.setOnMouseDown(onMouseDown);
+			area.setOnMouseOver( onMouseOver );
 			area.setTitle(entity.getName());
 			area.setId("area-" + entity.getKey());
 			return area;
+		}
+
+		private String getJsOnMouseOver(java.awt.Point topLeft, Dimension size,
+				String diagramKey, String blockKey) {
+			StringBuilder result = new StringBuilder( 128 );
+			result.append( "setCaret('");
+			result.append( diagramKey );
+			result.append( "','" );
+			result.append( blockKey );
+			result.append( "'," );
+			result.append( topLeft.x );
+			result.append( "," );
+			result.append( topLeft.y );
+			result.append( "," );
+			result.append( size.getWidth() );
+			result.append( "," );
+			result.append( size.getHeight() );
+			result.append( ")");
+			
+			return result.toString();
 		}
 
 		private Area createResizeArea() {

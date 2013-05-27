@@ -15,6 +15,8 @@ public class HtmlElement implements IHtml {
 	
 	@XmlAttribute(name = "onclick")
 	private String onClick;
+	
+	private String onMouseOver;	
 
 	public HtmlElement() {
 		this(null);
@@ -38,5 +40,14 @@ public class HtmlElement implements IHtml {
 	
 	public void setOnClick( String onClick ) {
 		this.onClick = onClick;
+	}
+
+	@XmlAttribute(name = "onmouseover")	
+	public String getOnMouseOver() {
+		return onMouseOver;
+	}
+
+	public void setOnMouseOver(String onMouseOver) {
+		this.onMouseOver = onMouseOver;
 	}
 }
