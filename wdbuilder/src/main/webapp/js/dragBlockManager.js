@@ -1,4 +1,3 @@
-
 function BlockDrag() {
 	
 	var workspaceObject = null;
@@ -107,6 +106,7 @@ function BlockDrag() {
 		notifyObj.smallMovement = currentHandler.isSmallMovement(e);
 
 		currentHandler.unbindFromMouse(notifyObj);
+		hideCaret();
 		/*
 		if( workspaceObject && dragObject ) {
 			workspaceObject.removeChild( dragObject );
