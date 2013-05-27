@@ -4,6 +4,7 @@
 
 // Constant: margin
 var MARGIN = 10;
+var SELECT_FRAME_WIDTH = 2;
 
 // body.oninit handler
 function init() {
