@@ -22,8 +22,6 @@ public class CreateDiagramSaveServlet extends DiagramServiceServlet {
 				BlockParameter.Height.getInt(input),
 				BlockParameter.Background.getString(input));
 		this.diagramHelper = createDiagramHelper(key);
-		// Skip block selection:
-		input.getState().setSelectedBlockKey(null);
 		new CanvasFrameWriter(diagramHelper,
 				serviceFacade.getBlockPluginRepository())
 				.printCanvasFrame(input);
