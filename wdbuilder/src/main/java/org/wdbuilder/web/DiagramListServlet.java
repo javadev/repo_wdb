@@ -34,7 +34,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getResourceId() {
-			return "new_diagram";
+			return "icon-edit";
 		}
 
 		@Override
@@ -45,7 +45,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getResourceId() {
-			return "refresh";
+			return "icon-refresh";
 		}
 
 		@Override
@@ -62,7 +62,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getResourceId() {
-			return "left";
+			return "icon-off";
 		}
 
 		@Override
@@ -84,7 +84,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getResourceId() {
-			return "right";
+			return "icon-list-alt";
 		}
 
 		@Override
