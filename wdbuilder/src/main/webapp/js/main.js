@@ -16,11 +16,15 @@ function init() {
 	refreshDiagramList();
 }
 
+function hideProperties() {
+	cleanElement("properties");
+}
+
 // Reload diagram list and close active diagram
 function refreshDiagramList() {
 	loadDiagramList(true);
 	cleanElement("canvasFrame");
-	cleanElement("properties");
+	hideProperties();
 	
 	hideCaret();	
 }
@@ -128,7 +132,7 @@ function submitEditCanvas() {
 		document.body.style.cursor = "default";
 		refreshDiagramList();
 		loadCanvas(diagramKey);
-		cleanElement("properties");
+		hideProperties();
 	});
 }
 
@@ -142,12 +146,7 @@ function callbackReloadBlock(response, diagramKey, blockKey) {
 	elem.innerHTML = response;
 	elem.style.display = "block";
 	document.body.style.cursor = "default";
-	/*
-	if (blockKey) {
-		loadCanvas(diagramKey, blockKey);
-	}
-	*/
-	cleanElement("properties");
+	hideProperties();
 }
 
 //Submit data for new block creation
@@ -208,20 +207,20 @@ function deleteCanvas( diagramKey) {
 	loadContent("delete-diagram?r=" + Math.random() + "&dkey=" + diagramKey,
 			"canvasList");
 	loadDiagramList(true);
-	cleanElement("properties");
+	hideProperties();
 	cleanElement("canvasFrame");
 }
 
 // Load current diagram content to main screen section
 function loadCanvas(diagramKey) {
 	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame");
-	cleanElement("properties");
+	hideProperties();
 	cleanElement("resizeFrame");
 }
 
 // Open diagram creation form in main screen section
 function openCreateCanvasDialog() {
-	cleanElement("properties");
+	hideProperties();
 	loadContent("create-diagram", "canvasFrame");
 }
 
@@ -257,14 +256,14 @@ function deleteBlock(diagramKey, blockKey) {
 	}
 	loadContent("delete-block?r=" + Math.random() + "&bkey=" + blockKey
 			+ "&dkey=" + diagramKey, "canvasFrame");
-	cleanElement("properties");
+	hideProperties();
 	loadCanvas(diagramKey);
 }
 
 // Switching between block/line mode of diagram editor
 function switchMode(diagramKey) {
 	loadContent("switch-mode?r=" + Math.random(), "canvasFrame");
-	cleanElement("properties");
+	hideProperties();
 	loadCanvas(diagramKey);
 }
 
@@ -282,7 +281,7 @@ function deleteLink(diagramKey, linkKey) {
 	;
 	loadContent("delete-link?r=" + Math.random() + "&lkey=" + linkKey
 			+ "&dkey=" + diagramKey, "canvasFrame");
-	cleanElement("properties");
+	hideProperties();
 	loadCanvas(diagramKey);
 };
 
