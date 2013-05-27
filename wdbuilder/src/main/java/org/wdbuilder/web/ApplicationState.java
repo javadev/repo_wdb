@@ -32,7 +32,6 @@ public class ApplicationState {
 
 	private Mode mode = Mode.BLOCK;
 	private Diagram diagram;
-	private String selectedBlockKey = null;
 
 	public ApplicationState() {
 	}
@@ -51,14 +50,6 @@ public class ApplicationState {
 
 	public void setDiagram(Diagram diagram) {
 		this.diagram = diagram;
-	}
-
-	public String getSelectedBlockKey() {
-		return selectedBlockKey;
-	}
-
-	public void setSelectedBlockKey(String selectedBlockKey) {
-		this.selectedBlockKey = selectedBlockKey;
 	}
 
 	public boolean isBlockMode() {
