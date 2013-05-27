@@ -1,4 +1,3 @@
-
 function BlockDrag() {
 	
 	var workspaceObject = null;
@@ -92,7 +91,6 @@ function BlockDrag() {
 			$(dragObject).removeClass( "selected" ).addClass( "no-drag" );
 		}
 		
-		dragObject.className = notifyObj.valid ? "" : "no-drag";
 		currentHandler.notifyMove(notifyObj);
 		return false;
 	};
