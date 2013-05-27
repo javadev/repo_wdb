@@ -19,8 +19,6 @@ public interface IRenderContext {
 	
 	public Diagram getDiagram();
 	
-	public boolean isSelected(Block block);
-	
 	public Graphics2D getGraphics();
 	
 	public Collection<LinkSocket> getUsedLinkSockets(final Block block);
