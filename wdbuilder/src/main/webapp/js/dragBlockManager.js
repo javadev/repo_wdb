@@ -86,6 +86,12 @@ function BlockDrag() {
 		}
 
 		notifyObj.valid = currentHandler.validate(e);
+		if( notifyObj.valid ) {
+			$(dragObject).addClass( "selected" ).removeClass( "no-drag" );
+		} else {
+			$(dragObject).removeClass( "selected" ).addClass( "no-drag" );
+		}
+		
 		dragObject.className = notifyObj.valid ? "" : "no-drag";
 		currentHandler.notifyMove(notifyObj);
 		return false;
