@@ -49,7 +49,11 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 	o.top += top - 2;
 	c.width(width);
 	c.height(height);
-	c.offset(o);	
+	c.offset(o);
+	
+	c.bind( "mousedown", function(event) {
+		WDB.BlockDrag.mouseDown( event, diagramKey, blockKey, left, top );
+	});
 }
 
 // Hide caret:
