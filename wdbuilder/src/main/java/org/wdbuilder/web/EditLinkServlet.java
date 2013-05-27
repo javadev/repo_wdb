@@ -40,7 +40,7 @@ public class EditLinkServlet extends DiagramHelperFormServlet {
 
 		String submitFunctionCall = formFactory.getSubmitCall();
 
-		String closeHandler = "loadCanvas(" + diagramId + ",null)";
+		String closeHandler = "loadCanvas(" + diagramId + ")";
 
 		htmlWriter.write(new SectionHeader(formFactory.getTitle()));
 
