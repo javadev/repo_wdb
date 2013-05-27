@@ -7,9 +7,9 @@ import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.plugin.ILinkPluginFacade;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/edit-link-save")
 public class EditLinkSaveServlet extends DiagramServlet {
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void do4Frame(ServletInput input) throws Exception {
@@ -28,7 +28,7 @@ public class EditLinkSaveServlet extends DiagramServlet {
 
 		serviceFacade.getDiagramService().updateLink(diagramKey, linkKey,
 				link);
-		printCanvasFrame(input, null);
+		printCanvasFrame(input);
 
 	}
 
