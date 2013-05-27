@@ -7,11 +7,9 @@ import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.web.base.ServletInput;
 
-// TODO: set "/edit-block-save" here
-
+@SuppressWarnings("serial")
 @WebServlet("/edit-block-save")
 public class EditBlockSaveServlet extends DiagramServlet {
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void do4Frame(ServletInput input) throws Exception {
@@ -30,7 +28,7 @@ public class EditBlockSaveServlet extends DiagramServlet {
 
 		serviceFacade.getDiagramService().updateBlock(diagramKey, blockKey,
 				block);
-		printCanvasFrame(input, blockKey);
+		printCanvasFrame(input);
 
 	}
 
