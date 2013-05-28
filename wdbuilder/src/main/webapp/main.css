@@ -13,30 +13,10 @@ td {
 
 /* Screen section header */
 .header {
-	
-	/*
-	font-weight: bold;
-	text-shadow: -1px -1px 1px rgb( 51, 51, 51 );
-	color: white;
-    margin: 0;
-    font-size: 9pt;
-    height: 22px;
-    vertical-align: middle;
-    */
-
-	background-image: linear-gradient(to top, #666666, #cccccc);
-	
-}
-table.header {
-	padding:0;
-}
-td.header {
-	padding:0;
+	background-image: linear-gradient(to top, #666666, #cccccc);	
 }
 
 td.form {
-    padding-left: 1em;
-    padding-right: 1em;
     width: 50%;
     vertical-align: middle;
 }
