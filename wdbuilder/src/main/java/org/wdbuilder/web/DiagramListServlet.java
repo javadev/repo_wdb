@@ -80,7 +80,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
 		final boolean full = BlockParameter.Full.getBoolean(input);
-		final String activeKey = BlockParameter.DiagramKey.getString(input);
+		final String activeKey = input.getState().getDiagram().getKey();
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
