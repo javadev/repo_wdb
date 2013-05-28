@@ -5,8 +5,8 @@ import org.wdbuilder.domain.Diagram;
 public class ApplicationState {
 
 	public enum Mode {
-		LINE("mode-block", "Switch to block mode", "WDB.LineDraw.mouseDown"), BLOCK(
-				"mode-line", "Switch to line mode", "WDB.BlockDrag.mouseDown");
+		LINE("icon-book", "Switch to block mode", "WDB.LineDraw.mouseDown"), BLOCK(
+				"icon-pencil", "Switch to line mode", "WDB.BlockDrag.mouseDown");
 		private final String title;
 		private final String resourceId;
 		private final String jsDragStart;
