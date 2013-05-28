@@ -157,10 +157,11 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		private Li createItem(Diagram obj) {
 			final String key = obj.getKey();
 			final String onClick = "loadCanvas( '" + key + "')";
-			A a = new A();
+			A a = new A();			
 			a.setOnClick(onClick);
 			a.setText(obj.getName());
 			Li result = new Li();
+			result.setId("d" + key );
 			if ( key.equals(activeKey)) {
 				result.setClassName("active");
 			}
