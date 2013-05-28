@@ -93,7 +93,7 @@ public class CanvasFrameWriter {
 
 					@Override
 					public String getResourceId() {
-						return "export";
+						return "icon-breafcase";
 					}
 
 					@Override
@@ -113,7 +113,7 @@ public class CanvasFrameWriter {
 
 					@Override
 					public String getResourceId() {
-						return "delete";
+						return "icon-remove";
 					}
 
 					@Override
@@ -133,7 +133,7 @@ public class CanvasFrameWriter {
 
 					@Override
 					public String getResourceId() {
-						return "edit_diagram";
+						return "icon-edit";
 					}
 
 					@Override
