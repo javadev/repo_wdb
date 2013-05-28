@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>_rest_bootstrap</title>
+<link rel="stylesheet" type="text/css"
+    href="bootstrap/css/bootstrap.css" />
+<script type="text/javascript" src="jQuery/jquery.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.dropdown-toggle').dropdown();
+        $('.btn').tooltip({
+            placement : 'bottom'
+        });
+    });
+    
+    function closeForm() {
+        $('#form').hide();
+        $('#form-buttons').hide();
+        $('#form-divider').hide();
+    }
+    
+    function closeDiagramList() {
+        $('.on-dl-full').hide();
+        $('.on-dl-small').show();
+    }
+    
+    function showDiagramList() {
+        $('.on-dl-full').show();
+        $('.on-dl-small').hide();
+    }   
+    
+</script>
+
+<style type="text/css">
+body {
+    font-size: 8pt;
+}
+
+input[type="text"] {
+    font-size: 8pt;
+}
+
+label {
+    font-weight: bold;
+    font-size: 8pt;
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+.divider {
+    background-color: white;
+    width: 0.3em;
+}
+
+div.header {
+    width: 100%;
+    font-weight: bold;
+    padding-left: 1em;
+    border-bottom: 1px solid #cccccc;
+    text-shadow: 0px 2px white;
+    color: #666666;
+}
+</style>
+</head>
+<body>
+    <table class="well">
+        <tr>
+            <!-- Diagram list -->
+            <td valign="top">
+                <ul class="nav nav-list on-dl-full">
+                    <li class="active"><a href="#">Diagram 1</a></li>
+                    <li><a href="#">Diagram name 2</a></li>
+                    <li><a href="#">Diagram 3</a></li>
+                    <li><a href="#">Diagram 4</a></li>
+                    <li><a href="#">Diagram 5</a></li>
+                </ul>
+            </td>
+            <td valign="top">
+                <div class="btn-group btn-group-vertical">
+                    <button class="btn btn-mini btn-success on-dl-full" data-toggle="tooltip"
+                        title="New Diagram">
+                        <i class="icon-white icon-calendar"></i>
+                    </button>
+                    <button class="btn btn-mini on-dl-full" title="Refresh Diagram List">
+                        <i class="icon-white icon-refresh"></i>
+                    </button>
+                    <button class="btn btn-mini on-dl-full" title="Hide List"
+                       onclick="closeDiagramList()">
+                        <i class="icon-white icon-off"></i>
+                    </button>
+                    <button class="btn btn-mini on-dl-small" title="Show List"
+                       onclick="showDiagramList()" style="display: none;">
+                        <i class="icon-white icon-list-alt"></i>
+                    </button>
+                </div>
+            </td>
+            <td class="divider">
+            <td valign="top">
+                <!-- Current diagram -->
+                <table>
+                    <tr>
+                        <td align="left"><div class="header">The Diagram Name</div></td>
+                        <td align="right" valign="top" rowspan="2">
+                            <div class="btn-group btn-group-vertical">
+                                <button class="btn btn-mini" title="Line Mode">
+                                    <i class="icon-white icon-retweet"></i>
+                                </button>
+
+                                <a title="New Custom Block" class="btn btn-mini  btn-success">
+                                    <i class="icon-white icon-cog"></i>
+                                </a>
+                                <button title="New Icon Block" class="btn btn-mini btn-success">
+                                    <i class="icon-white icon-picture"></i>
+                                </button>
+                                <button title="Edit Diagram" class="btn btn-mini">
+                                    <i class="icon-white icon-edit"></i>
+                                </button>
+                                <button title="Export Diagram" class="btn btn-mini">
+                                    <i class="icon-white icon-download"></i>
+                                </button>
+                                <button title="Delete Diagram" class="btn btn-mini btn-danger">
+                                    <i class="icon-white icon-remove"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="diagram"
+                                style="background-color: white; width: 500px; height: 400px;"></div>
+
+                        </td>
+                    <tr>
+                </table>
+            </td>
+            <td class="divider" id="form-divider"></td>
+            <td valign="top">
+                <form id="form">
+                    <table>
+                        <tr>
+                            <td valign="top" align="left" colspan="3"><div
+                                    class="header">Create Custom Block</div></td>
+                        </tr>
+                        <tr>
+                            <td valign="top" align="right"><label>ID:</label></td>
+                            <td valign="top" align="left">blah-blah-blah</td>
+                        </tr>
+                        <tr>
+                            <td valign="top" align="right"><label>Name:</label></td>
+                            <td valign="top" align="left"><input type="text"
+                                placeholder="enter name here" name="name" class="span3" /></td>
+                        </tr>
+                        <tr>
+                            <td valign="top" align="right"><label>Width:</label></td>
+                            <td valign="top" align="left"><input type="text"
+                                name="width" class="span1" /></td>
+                        </tr>
+                        <tr>
+                            <td valign="top" align="right"><label>Height:</label></td>
+                            <td valign="top" align="left"><input type="text"
+                                name="height" class="span1" /></td>
+                        </tr>
+                        <tr>
+                            <td valign="top" align="right"><label>Shape:</label></td>
+                            <td valign="top" align="left">
+                                <div class="dropdown" id="shape">
+                                    <a class="dropdown-toggle btn btn-small" data-toggle="dropdown"
+                                        href="#">Rectangle&nbsp;&nbsp;&nbsp;<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Rectangle</a></li>
+                                        <li><a href="#">Rounded Rectangle</a></li>
+                                        <li><a href="#">Oval</a></li>
+                                        <li><a href="#">Romb</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" align="right"><label>Background:</label></td>
+                            <td valign="top" align="left">
+                                <div class="dropdown" id="background">
+                                    <a class="dropdown-toggle btn btn-small" data-toggle="dropdown"
+                                        href="#">Gray&nbsp;&nbsp;&nbsp;<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Grey</a></li>
+                                        <li><a href="#">Dark Green</a></li>
+                                        <li><a href="#">Green</a></li>
+                                        <li><a href="#">Navy Blue</a></li>
+                                        <li><a href="#">Blue</a></li>
+                                        <li><a href="#">Olive</a></li>
+                                        <li><a href="#">Brick</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+            <td valign="top">
+                <div class="btn-group btn-group-vertical" id="form-buttons">
+                    <button class="btn btn-mini btn-success" title="Submit">
+                        <i class="icon-white icon-ok"></i>
+                    </button>
+                    <button class="btn btn-mini" title="Reset Form">
+                        <i class="icon-white icon-refresh"></i>
+                    </button>
+                    <button class="btn btn-mini" title="Close Form"
+                      onclick="closeForm()">
+                        <i class="icon-white icon-off"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+</body>
+</html>

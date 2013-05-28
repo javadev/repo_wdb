@@ -1,16 +1,14 @@
 package org.wdbuilder.serialize.html;
 
-import java.awt.Dimension;
 import java.util.Collections;
 
 import javax.xml.bind.JAXBException;
 
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
-import org.wdbuilder.gui.IUIActionId;
 import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Div;
-import org.wdbuilder.jaxbhtml.element.Img;
+import org.wdbuilder.jaxbhtml.element.I;
 import org.wdbuilder.jaxbhtml.element.Table;
 import org.wdbuilder.jaxbhtml.element.Td;
 import org.wdbuilder.jaxbhtml.element.Tr;
@@ -20,8 +18,6 @@ public class SectionHeader extends Div {
 	private static final String CLASS = "header";
 	private static final String CLASS_ICON = "header-icon";
 	private static final String STYLE_FULL_WIDTH = "width:100%";
-
-	private static final Dimension ICON_SIZE = new Dimension(16, 16);
 
 	private final String title;
 
@@ -53,17 +49,13 @@ public class SectionHeader extends Div {
 	}
 
 	private static Td createTdIcon(IUIAction uiAction) {
-		Img img = new Img(CLASS_ICON);
-		img.setSize(ICON_SIZE);
-		img.setSrc(getImageURL(uiAction));
-		img.setTitle(uiAction.getTitle());
-
+		I i = new I();
+		i.setClassName( "icon-white " + uiAction.getResourceId() );
+		
 		Td result = new Td(CLASS_ICON);
 		A a = new A();
-		a.add(img);
-		if (IUIActionId.class.isInstance(uiAction)) {
-			img.setId(IUIActionId.class.cast(uiAction).getId());
-		}
+		a.setTitle( uiAction.getTitle() );
+		a.add(i);
 		if (IUIActionClick.class.isInstance(uiAction)) {
 			a.setOnClick(IUIActionClick.class.cast(uiAction)
 					.getOnClickHandler());

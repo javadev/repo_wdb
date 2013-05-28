@@ -10,9 +10,9 @@ import org.wdbuilder.view.ImageGenerator;
 import org.wdbuilder.web.base.DiagramHelperServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/image")
 public class ImageServlet extends DiagramHelperServlet {
-	private static final long serialVersionUID = 1L;
 
 	public static final String IMAGE_FORMAT = "png";
 
@@ -27,10 +27,6 @@ public class ImageServlet extends DiagramHelperServlet {
 		final String blockKey = BlockParameter.BlockKey.getString(input);
 
 		final boolean blockOnly = BlockParameter.BlockOnly.getBoolean(input);
-		if (blockOnly) {
-			appState.setSelectedBlockKey(blockKey);
-		}
-
 		byte[] imageData = getImageGenerator(blockOnly, appState).render(
 				blockKey);
 		input.getResponse().setContentLength(imageData.length);

@@ -112,11 +112,7 @@ function BlockDrag() {
 
 		currentHandler.unbindFromMouse(notifyObj);
 		hideCaret();
-		/*
-		if( workspaceObject && dragObject ) {
-			workspaceObject.removeChild( dragObject );
-		}
-		*/
+		
 		return false;
 	};
 	
@@ -127,11 +123,6 @@ function BlockDrag() {
 			return false;
 		}
 		dragObject = document.getElementById("caret");
-		/*
-		dragObject = document.createElement("div");
-		dragObject.setAttribute("id", "caret");
-		workspaceObject.appendChild(dragObject);
-		*/
 		
 		currentHandler = this;
 		e = currentHandler.fixEvent(e);		
@@ -169,6 +160,8 @@ function BlockDrag() {
 				y : e.pageY
 			};			
 		});
+		
+		e.stopPropagation();
 	};
 
 	this.registerUpListener(function(args) {

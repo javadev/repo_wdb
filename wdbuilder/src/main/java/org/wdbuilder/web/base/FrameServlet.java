@@ -27,29 +27,29 @@ public abstract class FrameServlet extends DiagramHelperServlet {
 	public static class Image extends Img {
 
 		public Image(Diagram diagram, Block block, String htmlElementId,
-				String selectedBlockId, String imageMapName)
-				throws JAXBException {
+				String imageMapName) throws JAXBException {
 
 			String map = null == imageMapName ? null : "#" + imageMapName;
 
 			Dimension size = null == block ? diagram.getSize() : block
 					.getSize();
 
-			setSrc(getUrl(diagram, block, selectedBlockId));
+			setSrc(getUrl(diagram, block));
 			setSize(size.toAWT());
 			setUseMap(map);
 			setId(htmlElementId);
 		}
 
-		private static String getUrl(Diagram diagram, Block block,
-				String selectedBlockId) {
+		private static String getUrl(Diagram diagram, Block block) {
 			StringBuilder url = new StringBuilder(128);
 			url.append("image?");
 			url.append(Utility.getURLPartToAvoidCaching());
 			addParameter(url, BlockParameter.DiagramKey.getName(),
 					diagram.getKey());
-			addParameter(url, BlockParameter.BlockKey.getName(),
-					(null == block ? selectedBlockId : block.getKey()));
+			if (null != block) {
+				addParameter(url, BlockParameter.BlockKey.getName(),
+						block.getKey());
+			}
 			addParameter(url, "blockOnly", (null != block));
 			return url.toString();
 		}

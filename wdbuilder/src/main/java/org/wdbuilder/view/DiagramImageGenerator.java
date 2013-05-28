@@ -24,7 +24,6 @@ public class DiagramImageGenerator extends ImageGenerator {
 		final BufferedImage image = new BufferedImage(diagram.getSize()
 				.getWidth(), diagram.getSize().getHeight(),
 				BufferedImage.TYPE_INT_ARGB);
-		appState.setSelectedBlockKey(blockKey);
 
 		final Graphics2D gr = getGraphics(image);
 

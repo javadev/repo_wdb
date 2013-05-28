@@ -93,7 +93,7 @@ public class CanvasFrameWriter {
 
 					@Override
 					public String getResourceId() {
-						return "export";
+						return "icon-briefcase";
 					}
 
 					@Override
@@ -113,7 +113,7 @@ public class CanvasFrameWriter {
 
 					@Override
 					public String getResourceId() {
-						return "delete";
+						return "icon-remove";
 					}
 
 					@Override
@@ -133,7 +133,7 @@ public class CanvasFrameWriter {
 
 					@Override
 					public String getResourceId() {
-						return "edit_diagram";
+						return "icon-edit";
 					}
 
 					@Override
@@ -172,8 +172,7 @@ public class CanvasFrameWriter {
 		};
 		writer.write(header);
 		
-		Img img = new FrameServlet.Image(diagram, null, "frameImage", input
-				.getState().getSelectedBlockKey(), ID_IMAGE_MAP);
+		Img img = new FrameServlet.Image(diagram, null, "frameImage", ID_IMAGE_MAP);
 		img.setOnMouseOver( "hideCaret()" );
 
 		writer.write(img);
@@ -264,12 +263,10 @@ public class CanvasFrameWriter {
 			final Point offset = new Point(diagram.getSize().getWidth()
 					- RESIZE_AREA.getWidth(), diagram.getSize().getHeight()
 					- RESIZE_AREA.getHeight());
-			final String selectedBlockKey = appState.getSelectedBlockKey();
 			final String onMouseDownCall = getOnMouseDownFunctionCall(
 					// "DiagramResize.start", diagram.getKey(),
 					"WDB.DiagramResize.mouseDown", diagram.getKey(),
-
-					selectedBlockKey, DiagramValidator.MIN_SIZE.getWidth(),
+					"(none)", DiagramValidator.MIN_SIZE.getWidth(),
 					DiagramValidator.MIN_SIZE.getHeight());
 
 			Area.Rect area = new Area.Rect(offset.toAWT(), RESIZE_AREA.toAWT());

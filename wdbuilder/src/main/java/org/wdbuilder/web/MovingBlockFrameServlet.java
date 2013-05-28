@@ -25,7 +25,7 @@ public class MovingBlockFrameServlet extends FrameServlet {
 		if (null == block) {
 			return;
 		}
-		FrameServlet.Image image = new FrameServlet.Image(diagramHelper.getDiagram(), block, "carImage", blockKey, null);
+		FrameServlet.Image image = new FrameServlet.Image(diagramHelper.getDiagram(), block, "carImage", null);
 		new HtmlWriter(input.getResponse().getWriter()).write(image);
 	}
 }

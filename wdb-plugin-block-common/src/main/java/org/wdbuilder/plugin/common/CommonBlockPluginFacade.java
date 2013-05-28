@@ -97,7 +97,7 @@ public class CommonBlockPluginFacade implements IBlockPluginFacade {
 
 			@Override
 			public String getResourceId() {
-				return "new-common-block";
+				return "icon-cog";
 			}
 
 			@Override

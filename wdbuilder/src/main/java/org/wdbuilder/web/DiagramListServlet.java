@@ -19,11 +19,11 @@ import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/diagram-list")
 public class DiagramListServlet extends DiagramServiceServlet {
-	private static final long serialVersionUID = 1L;
 
-	private static final String CLASS = "menu";
+	private static final String CLASS = "nav nav-list";
 
 	private static final IUIAction[] ICONS_FULL = { new IUIActionClick() {
 
@@ -34,7 +34,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getResourceId() {
-			return "new_diagram";
+			return "icon-calendar";
 		}
 
 		@Override
@@ -45,12 +45,11 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getResourceId() {
-			return "refresh";
+			return "icon-refresh";
 		}
 
 		@Override
 		public String getTitle() {
-			// TODO Auto-generated method stub
 			return "Refresh Diagram List";
 		}
 
@@ -62,7 +61,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getResourceId() {
-			return "left";
+			return "icon-off";
 		}
 
 		@Override
@@ -72,24 +71,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getOnClickHandler() {
-			return "loadDiagramList(false)";
-		}
-	} };
-	private static final IUIAction[] ICONS_CONDENSED = { new IUIActionClick() {
-
-		@Override
-		public String getTitle() {
-			return "Show Diagram List";
-		}
-
-		@Override
-		public String getResourceId() {
-			return "right";
-		}
-
-		@Override
-		public String getOnClickHandler() {
-			return "loadDiagramList(true)";
+			return "loadDiagramList(false, '')";
 		}
 	} };
 
@@ -97,21 +79,60 @@ public class DiagramListServlet extends DiagramServiceServlet {
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
 		final boolean full = BlockParameter.Full.getBoolean(input);
+		final String activeKey = getActiveDiagramKey(input);
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
 		final SectionHeader sectionHeader = new SectionHeader("") {
 			@Override
 			public Iterable<IUIAction> getIcons() {
-				IUIAction[] icons = full ? ICONS_FULL : ICONS_CONDENSED;
+				IUIAction[] icons = full ? ICONS_FULL : getIconsForCondensed(activeKey);
 				return Arrays.asList(icons);
 			}
 		};
 		htmlWriter.write(sectionHeader);
 
 		if (full) {
-			htmlWriter.write(new DiagramList());
+			htmlWriter.write(new DiagramList(activeKey));
 		}
+	}
+
+	private static String getActiveDiagramKey(ServletInput input) {
+		if( null==input ) {
+			return null;
+		}
+		ApplicationState state = input.getState();
+		if( null==state ) {
+			return null;
+		}
+		Diagram diagram = state.getDiagram();
+		if( null==diagram ) {
+			return null;
+		}
+		return diagram.getKey();
+	}
+
+	private static final IUIAction[] getIconsForCondensed(final String activeKey) {
+		IUIAction[] result = new IUIAction[1];
+		result[0] = new IUIActionClick() {
+
+			@Override
+			public String getTitle() {
+				return "Show Diagram List";
+			}
+
+			@Override
+			public String getResourceId() {
+				return "icon-list-alt";
+			}
+
+			@Override
+			public String getOnClickHandler() {
+				return "loadDiagramList(true, '" + activeKey + "')";
+			}
+		};
+		return result;
+
 	}
 
 	@Override
@@ -121,8 +142,11 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 	private class DiagramList extends Ul {
 
-		public DiagramList() throws JAXBException {
+		private final String activeKey;
+
+		public DiagramList(String activeKey) throws JAXBException {
 			super(CLASS);
+			this.activeKey = activeKey;
 			final Collection<Diagram> list = serviceFacade.getDiagramService()
 					.getDiagrams();
 			for (final Diagram obj : list) {
@@ -131,11 +155,16 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		}
 
 		private Li createItem(Diagram obj) {
-			final String onClick = "loadCanvas('" + obj.getKey() + "')";
-			A a = new A();
+			final String key = obj.getKey();
+			final String onClick = "loadCanvas( '" + key + "')";
+			A a = new A();			
 			a.setOnClick(onClick);
 			a.setText(obj.getName());
-			Li result = new Li(CLASS);
+			Li result = new Li();
+			result.setId("d" + key );
+			if ( key.equals(activeKey)) {
+				result.setClassName("active");
+			}
 			result.add(a);
 			return result;
 		}

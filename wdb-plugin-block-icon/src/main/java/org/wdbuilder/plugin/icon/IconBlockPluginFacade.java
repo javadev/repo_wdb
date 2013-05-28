@@ -87,7 +87,7 @@ public class IconBlockPluginFacade implements IBlockPluginFacade {
 
 			@Override
 			public String getResourceId() {
-				return "new-image-block";
+				return "icon-picture";
 			}
 
 			@Override
