@@ -213,6 +213,11 @@ function deleteCanvas( diagramKey) {
 
 // Load current diagram content to main screen section
 function loadCanvas(diagramKey) {
+	// Set the active item:
+	$('#canvasList').children().removeClass('active');
+	$('#d' + diagramKey).addClass( 'active' );
+	
+	
 	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame");
 	hideProperties();
 	cleanElement("resizeFrame");
