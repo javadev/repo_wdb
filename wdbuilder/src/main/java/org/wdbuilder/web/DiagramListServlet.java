@@ -80,7 +80,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
 		final boolean full = BlockParameter.Full.getBoolean(input);
-		final String activeKey = input.getState().getDiagram().getKey();
+		final String activeKey = getActiveDiagramKey(input);
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
@@ -96,6 +96,21 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		if (full) {
 			htmlWriter.write(new DiagramList(activeKey));
 		}
+	}
+
+	private static String getActiveDiagramKey(ServletInput input) {
+		if( null==input ) {
+			return null;
+		}
+		ApplicationState state = input.getState();
+		if( null==state ) {
+			return null;
+		}
+		Diagram diagram = state.getDiagram();
+		if( null==diagram ) {
+			return null;
+		}
+		return diagram.getKey();
 	}
 
 	private static final IUIAction[] getIconsForCondensed(final String activeKey) {
