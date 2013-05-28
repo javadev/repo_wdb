@@ -30,9 +30,12 @@ function refreshDiagramList() {
 }
 
 // Request diagram list from server
-function loadDiagramList(full) {
-	loadContent("diagram-list?r=" + Math.random() + "&full=" + full,
-			"canvasList");
+function loadDiagramList(full, key ) {
+	var url = "diagram-list?r=" + Math.random() + "&full=" + full;
+	if( key ) {
+		url += "&dkey=" + key;
+	}
+	loadContent( url, "canvasList");
 }
 
 // Hide screen section
