@@ -1,17 +1,14 @@
 package org.wdbuilder.serialize.html;
 
-import java.awt.Dimension;
 import java.util.Collections;
 
 import javax.xml.bind.JAXBException;
 
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
-import org.wdbuilder.gui.IUIActionId;
 import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Div;
 import org.wdbuilder.jaxbhtml.element.I;
-import org.wdbuilder.jaxbhtml.element.Img;
 import org.wdbuilder.jaxbhtml.element.Table;
 import org.wdbuilder.jaxbhtml.element.Td;
 import org.wdbuilder.jaxbhtml.element.Tr;
@@ -21,8 +18,6 @@ public class SectionHeader extends Div {
 	private static final String CLASS = "header";
 	private static final String CLASS_ICON = "header-icon";
 	private static final String STYLE_FULL_WIDTH = "width:100%";
-
-	private static final Dimension ICON_SIZE = new Dimension(16, 16);
 
 	private final String title;
 
