@@ -209,13 +209,14 @@ function deleteCanvas( diagramKey) {
 	}
 	loadContent("delete-diagram?r=" + Math.random() + "&dkey=" + diagramKey,
 			"canvasList");
-	loadDiagramList(true);
+	loadDiagramList(true, '');
 	hideProperties();
 	cleanElement("canvasFrame");
 }
 
 // Load current diagram content to main screen section
 function loadCanvas(diagramKey) {
+	loadDiagramList(true, diagramKey);
 	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame");
 	hideProperties();
 	cleanElement("resizeFrame");
