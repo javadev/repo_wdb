@@ -72,24 +72,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getOnClickHandler() {
-			return "loadDiagramList(false)";
-		}
-	} };
-	private static final IUIAction[] ICONS_CONDENSED = { new IUIActionClick() {
-
-		@Override
-		public String getTitle() {
-			return "Show Diagram List";
-		}
-
-		@Override
-		public String getResourceId() {
-			return "icon-list-alt";
-		}
-
-		@Override
-		public String getOnClickHandler() {
-			return "loadDiagramList(true)";
+			return "loadDiagramList(false, '')";
 		}
 	} };
 
@@ -104,15 +87,38 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		final SectionHeader sectionHeader = new SectionHeader("") {
 			@Override
 			public Iterable<IUIAction> getIcons() {
-				IUIAction[] icons = full ? ICONS_FULL : ICONS_CONDENSED;
+				IUIAction[] icons = full ? ICONS_FULL : getIconsForCondensed(activeKey);
 				return Arrays.asList(icons);
 			}
 		};
 		htmlWriter.write(sectionHeader);
 
 		if (full) {
-			htmlWriter.write(new DiagramList( activeKey ));
+			htmlWriter.write(new DiagramList(activeKey));
 		}
+	}
+
+	private static final IUIAction[] getIconsForCondensed(final String activeKey) {
+		IUIAction[] result = new IUIAction[1];
+		result[0] = new IUIActionClick() {
+
+			@Override
+			public String getTitle() {
+				return "Show Diagram List";
+			}
+
+			@Override
+			public String getResourceId() {
+				return "icon-list-alt";
+			}
+
+			@Override
+			public String getOnClickHandler() {
+				return "loadDiagramList(true, '" + activeKey + "')";
+			}
+		};
+		return result;
+
 	}
 
 	@Override
@@ -121,10 +127,10 @@ public class DiagramListServlet extends DiagramServiceServlet {
 	}
 
 	private class DiagramList extends Ul {
-		
+
 		private final String activeKey;
 
-		public DiagramList( String activeKey ) throws JAXBException {
+		public DiagramList(String activeKey) throws JAXBException {
 			super(CLASS);
 			this.activeKey = activeKey;
 			final Collection<Diagram> list = serviceFacade.getDiagramService()
@@ -140,8 +146,8 @@ public class DiagramListServlet extends DiagramServiceServlet {
 			a.setOnClick(onClick);
 			a.setText(obj.getName());
 			Li result = new Li();
-			if( !StringUtils.isEmpty(activeKey) ) {
-				result.setClassName( "active" );
+			if (!StringUtils.isEmpty(activeKey)) {
+				result.setClassName("active");
 			}
 			result.add(a);
 			return result;
