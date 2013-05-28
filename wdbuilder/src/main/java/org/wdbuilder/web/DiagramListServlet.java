@@ -7,7 +7,6 @@ import java.util.Collection;
 import javax.servlet.annotation.WebServlet;
 import javax.xml.bind.JAXBException;
 
-import org.apache.commons.lang.StringUtils;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
@@ -20,9 +19,9 @@ import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/diagram-list")
 public class DiagramListServlet extends DiagramServiceServlet {
-	private static final long serialVersionUID = 1L;
 
 	private static final String CLASS = "nav nav-list";
 
@@ -157,7 +156,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		private Li createItem(Diagram obj) {
 			final String key = obj.getKey();
-			final String onClick = "loadCanvas('" + key + "')";
+			final String onClick = "loadDiagramList( full, '" + key + "')";
 			A a = new A();
 			a.setOnClick(onClick);
 			a.setText(obj.getName());
