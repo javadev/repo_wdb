@@ -7,6 +7,7 @@ import java.util.Collection;
 import javax.servlet.annotation.WebServlet;
 import javax.xml.bind.JAXBException;
 
+import org.apache.commons.lang.StringUtils;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
@@ -23,7 +24,7 @@ import org.wdbuilder.web.base.ServletInput;
 public class DiagramListServlet extends DiagramServiceServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String CLASS = "menu";
+	private static final String CLASS = "nav nav-list";
 
 	private static final IUIAction[] ICONS_FULL = { new IUIActionClick() {
 
@@ -34,7 +35,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getResourceId() {
-			return "icon-edit";
+			return "icon-calendar";
 		}
 
 		@Override
@@ -50,7 +51,6 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getTitle() {
-			// TODO Auto-generated method stub
 			return "Refresh Diagram List";
 		}
 
@@ -97,6 +97,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
 		final boolean full = BlockParameter.Full.getBoolean(input);
+		final String activeKey = BlockParameter.DiagramKey.getString(input);
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
@@ -110,7 +111,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		htmlWriter.write(sectionHeader);
 
 		if (full) {
-			htmlWriter.write(new DiagramList());
+			htmlWriter.write(new DiagramList( activeKey ));
 		}
 	}
 
@@ -120,9 +121,12 @@ public class DiagramListServlet extends DiagramServiceServlet {
 	}
 
 	private class DiagramList extends Ul {
+		
+		private final String activeKey;
 
-		public DiagramList() throws JAXBException {
+		public DiagramList( String activeKey ) throws JAXBException {
 			super(CLASS);
+			this.activeKey = activeKey;
 			final Collection<Diagram> list = serviceFacade.getDiagramService()
 					.getDiagrams();
 			for (final Diagram obj : list) {
@@ -135,7 +139,10 @@ public class DiagramListServlet extends DiagramServiceServlet {
 			A a = new A();
 			a.setOnClick(onClick);
 			a.setText(obj.getName());
-			Li result = new Li(CLASS);
+			Li result = new Li();
+			if( !StringUtils.isEmpty(activeKey) ) {
+				result.setClassName( "active" );
+			}
 			result.add(a);
 			return result;
 		}
