@@ -11,17 +11,6 @@ td {
 	font-size: 8pt;	
 }
 
-/* Screen section header */
-.header {
-	background-image: linear-gradient(to top, #666666, #cccccc);	
-}
-
-td.form {
-    width: 50%;
-    vertical-align: middle;
-}
-
-
 /* Links at the bottom of form */
 .linkbutton {
 	margin-left: 1em;
