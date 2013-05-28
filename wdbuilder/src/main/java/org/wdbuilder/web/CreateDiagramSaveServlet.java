@@ -8,9 +8,9 @@ import org.wdbuilder.web.base.CanvasFrameWriter;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/create-diagram-save")
 public class CreateDiagramSaveServlet extends DiagramServiceServlet {
-	private static final long serialVersionUID = 1L;
 
 	private DiagramHelper diagramHelper = null;
 
@@ -22,6 +22,11 @@ public class CreateDiagramSaveServlet extends DiagramServiceServlet {
 				BlockParameter.Height.getInt(input),
 				BlockParameter.Background.getString(input));
 		this.diagramHelper = createDiagramHelper(key);
+
+		// Set the current diagram (TODO silly method):
+		input.getState().setDiagram(
+				serviceFacade.getDiagramService().getDiagram(key));
+
 		new CanvasFrameWriter(diagramHelper,
 				serviceFacade.getBlockPluginRepository())
 				.printCanvasFrame(input);
