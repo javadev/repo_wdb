@@ -30,12 +30,8 @@ function refreshDiagramList() {
 }
 
 // Request diagram list from server
-function loadDiagramList(full, key ) {
+function loadDiagramList(full) {	
 	var url = "diagram-list?r=" + Math.random() + "&full=" + full;
-	if( key ) {
-		url += "&dkey=" + key;
-		loadCanvas(key);
-	}
 	loadContent( url, "canvasList");
 }
 
