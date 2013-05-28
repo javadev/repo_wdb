@@ -93,7 +93,7 @@ public class CanvasFrameWriter {
 
 					@Override
 					public String getResourceId() {
-						return "icon-breafcase";
+						return "icon-briefcase";
 					}
 
 					@Override
