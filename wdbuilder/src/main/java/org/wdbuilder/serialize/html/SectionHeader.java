@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.jaxbhtml.element.A;
+import org.wdbuilder.jaxbhtml.element.Button;
 import org.wdbuilder.jaxbhtml.element.Div;
 import org.wdbuilder.jaxbhtml.element.I;
 
@@ -23,7 +24,7 @@ public class SectionHeader extends Div {
 		// TODO: how to add the title
 		
 		for (final IUIAction icon : getIcons()) {
-			div.add(createLink(icon));
+			div.add(createButton(icon));
 		}
 		add(div);
 	}
@@ -33,24 +34,24 @@ public class SectionHeader extends Div {
 		return Collections.emptyList();
 	}
 
-	private static A createLink(IUIAction uiAction) {
+	private static Button createButton(IUIAction uiAction) {
 		I i = new I();
 		i.setClassName( "icon-white " + uiAction.getResourceId() );
 		
-		A a = new A("btn btn-mini");
-		a.setTitle( uiAction.getTitle() );
-		a.add(i);
+		Button result = new Button();
+		result.setClassName("btn btn-small");
+		result.setTitle( uiAction.getTitle() );
+		result.add(i);
+		/* TODO: how to fix problem of export ?
 		if (IUIActionClick.class.isInstance(uiAction)) {
 			a.setOnClick(IUIActionClick.class.cast(uiAction)
 					.getOnClickHandler());
 		} else if (IUIActionURL.class.isInstance(uiAction)) {
 			a.setHref(IUIActionURL.class.cast(uiAction).getURL());
 		}
-		return a;
+		*/
+		result.setOnClick(IUIActionClick.class.cast(uiAction)
+				.getOnClickHandler());
+		return result;
 	}
-
-	public static String getImageURL(IUIAction uiAction) {
-		return "resources/" + uiAction.getResourceId() + ".gif";
-	}
-
 }
