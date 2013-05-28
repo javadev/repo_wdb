@@ -34,6 +34,7 @@ function loadDiagramList(full, key ) {
 	var url = "diagram-list?r=" + Math.random() + "&full=" + full;
 	if( key ) {
 		url += "&dkey=" + key;
+		loadCanvas(key);
 	}
 	loadContent( url, "canvasList");
 }
@@ -216,7 +217,6 @@ function deleteCanvas( diagramKey) {
 
 // Load current diagram content to main screen section
 function loadCanvas(diagramKey) {
-	loadDiagramList(true, diagramKey);
 	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame");
 	hideProperties();
 	cleanElement("resizeFrame");
