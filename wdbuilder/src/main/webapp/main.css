@@ -11,6 +11,12 @@ td {
 	font-size: 8pt;	
 }
 
+.title {
+	font-weight: bold;
+	font-size: 125%;
+	display: inline-block;
+}
+
 /* Links at the bottom of form */
 .linkbutton {
 	margin-left: 1em;
