@@ -3,105 +3,13 @@
 
 /* Common HTML styles */
 body {
+	font-family: Tahoma, Helvetica, sans serif;
 	font-size: 8pt;
 }
 
-table {
-	margin: 0;
-	padding: 0;	
-}
-tr {
-	margin: 0;
-	padding: 0;	
-}
 td {
-	margin: 0;
-	padding: 0;
 	font-size: 8pt;	
 }
-
-a {
-	text-decoration: none;
-	color: white;
-	font-size: 9pt;
-}
-a:visited {
-	color: white;
-}
-a:hover {	
-	color: #ff6600;
-	text-decoration: underline;
-}
-
-/* Screen section content */
-.section {
-	border: 1px #666666 solid;
-	margin: 0;
-	padding: 0;
-    background-color: #cccccc;
-    font-weight: bold; 
-    font-size: 8pt; 	
-}
-
-/* Screen section header */
-.header {
-	font-weight: bold;
-	text-shadow: -1px -1px 1px rgb( 51, 51, 51 );
-	color: white;
-	
-	background-image: linear-gradient(to top, #666666, #cccccc);
-	
-	/* background: url( resources/header-bg.png) top left repeat-x; */
-	margin: 0;
-	font-size: 9pt;
-	height: 22px;
-	vertical-align: middle;
-}
-table.header {
-	padding:0;
-}
-td.header {
-	padding:0;
-}
-
-td.header-icon {
-	margin: 0;
-	padding: 0;	
-	width: 22px;
-}
-img.header-icon {
-	border: 0;
-	width: 16px;
-	height: 16px;
-}
-
-/* List of active diagrams */
-ul.menu {
-	margin: 0;
-	padding-left: 1em;
-	padding-right: 0.5em;
-	list-style: none;
-	font-weight: bold;
-	background-color: #cccccc;
-	font-size: 9pt;
-}
-
-/* Object editor/viewer */
-.form {
-    background-color: #cccccc;
-    font-weight: bold; 
-    font-size: 8pt;  
-    margin: 0;
-    padding: 0; 
-}
-
-td.form {
-    padding-left: 1em;
-    padding-right: 1em;
-    width: 50%;
-    vertical-align: middle;
-}
-
 
 /* Links at the bottom of form */
 .linkbutton {
