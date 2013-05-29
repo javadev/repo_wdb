@@ -18,9 +18,10 @@ public class SectionHeader extends Div {
 		Div div = new Div( "btn-group" );
 
 		// TODO: not the best way
-		Span span = new Span();
-		span.setText(title);
-		add( span );
+		Div titleDiv = new Div();
+		titleDiv.setClassName("title");
+		titleDiv.setText(" " + title + " ");
+		add( titleDiv );
 		
 		for (final IUIAction icon : getIcons()) {
 			div.add(createButton(icon));
