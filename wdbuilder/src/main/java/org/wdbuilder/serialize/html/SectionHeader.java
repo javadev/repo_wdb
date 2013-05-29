@@ -35,7 +35,7 @@ public class SectionHeader extends Div {
 
 	private static A createButton(IUIAction uiAction) {
 		I i = new I();
-		i.setClassName( "icon-white " + uiAction.getResourceId() );
+		i.setClassName( uiAction.getResourceId() );
 		i.setText("");
 		
 		A result = new A();
