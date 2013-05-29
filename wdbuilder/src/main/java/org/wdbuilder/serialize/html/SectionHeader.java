@@ -20,7 +20,7 @@ public class SectionHeader extends Div {
 		// TODO: not the best way
 		Span span = new Span();
 		span.setText(title);
-		div.add( span );
+		add( span );
 		
 		for (final IUIAction icon : getIcons()) {
 			div.add(createButton(icon));
@@ -39,7 +39,7 @@ public class SectionHeader extends Div {
 		i.setText("");
 		
 		A result = new A();
-		result.setClassName("btn btn-small");
+		result.setClassName("btn btn-mini");
 		result.setTitle( uiAction.getTitle() );
 		result.add(i);
 		if (IUIActionClick.class.isInstance(uiAction)) {
