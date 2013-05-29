@@ -15,7 +15,7 @@ import org.wdbuilder.jaxbhtml.element.Tr;
 public class TwoColumnForm extends Form {
 
 	public static final String CLASS = "form";
-	public static final String CLASS_LINKBUTTON = "linkbutton";
+	public static final String CLASS_LINKBUTTON = "btn";
 	private static final String ID = "formId";
 
 	public static class LinkButton {
