@@ -35,7 +35,7 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 		PredefinedSelect<LineStyle> lineStyleSelect = new PredefinedSelect<LineStyle>(
 				LineStyle.values(), entity.getLineStyle());
 
-		final TwoColumnForm form = new TwoColumnForm("edit-link-save")
+		final TwoColumnForm form = new TwoColumnForm("edit-link-save", "Edit Link")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
 				.addTextField(BlockParameter.Name, entity.getName())
 				.addSelectField(Parameter.LineColor, lineColorSelect)
