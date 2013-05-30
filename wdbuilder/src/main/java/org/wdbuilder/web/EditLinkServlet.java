@@ -10,13 +10,12 @@ import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.ILinkPluginFacade;
-import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/edit-link")
 public class EditLinkServlet extends DiagramHelperFormServlet {
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
@@ -41,8 +40,6 @@ public class EditLinkServlet extends DiagramHelperFormServlet {
 		String submitFunctionCall = formFactory.getSubmitCall();
 
 		String closeHandler = "loadCanvas(" + diagramId + ")";
-
-		htmlWriter.write(new SectionHeader(formFactory.getTitle()));
 
 		final TwoColumnForm form = formFactory.getForm().addFooter(
 				submitFunctionCall, closeHandler);
