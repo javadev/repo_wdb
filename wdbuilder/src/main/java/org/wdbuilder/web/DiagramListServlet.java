@@ -83,18 +83,18 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
-		final SectionHeader sectionHeader = new SectionHeader("") {
+		if (full) {
+			htmlWriter.write(new DiagramList(activeKey));
+		}
+		
+		final SectionHeader sectionHeader = new SectionHeader() {
 			@Override
 			public Iterable<IUIAction> getIcons() {
 				IUIAction[] icons = full ? ICONS_FULL : getIconsForCondensed(activeKey);
 				return Arrays.asList(icons);
 			}
 		};
-		htmlWriter.write(sectionHeader);
-
-		if (full) {
-			htmlWriter.write(new DiagramList(activeKey));
-		}
+		htmlWriter.write(sectionHeader);		
 	}
 
 	private static String getActiveDiagramKey(ServletInput input) {
