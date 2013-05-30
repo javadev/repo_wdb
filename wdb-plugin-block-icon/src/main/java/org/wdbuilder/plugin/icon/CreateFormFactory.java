@@ -21,7 +21,7 @@ class CreateFormFactory extends UINewBlockFormFactory {
 
 		final PredefinedSelect<Icon> iconSelectField = new PredefinedSelect<Icon>(
 				Icon.values(), Icon.Avatar);
-		final TwoColumnForm form = new TwoColumnForm("create-icon-block-save")
+		final TwoColumnForm form = new TwoColumnForm("create-icon-block-save", "Create Icon Block")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
 				.addTextField(BlockParameter.Name, "")
 				.addSelectField(Parameter.IconID, iconSelectField);
