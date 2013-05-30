@@ -35,7 +35,7 @@ class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 		final PredefinedSelect<CommonBlock.Background> selectField = new PredefinedSelect<CommonBlock.Background>(
 				CommonBlock.Background.values(), commonBlock.getBackground() );
 
-		final TwoColumnForm form = new TwoColumnForm("edit-common-block-save")
+		final TwoColumnForm form = new TwoColumnForm("edit-common-block-save", "Edit Common Block")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
 				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
 				.addTextField(BlockParameter.Name, entity.getName())
