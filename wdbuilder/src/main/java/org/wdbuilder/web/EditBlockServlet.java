@@ -12,13 +12,12 @@ import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.Div;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.serialize.html.ConnectedLinkList;
-import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/edit-block")
 public class EditBlockServlet extends DiagramHelperFormServlet {
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
@@ -41,8 +40,6 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 		String submitFunctionCall = formFactory.getSubmitCall();
 
 		String closeHandler = "hideProperties()";
-
-		htmlWriter.write(new SectionHeader(formFactory.getTitle()));
 
 		final TwoColumnForm form = formFactory.getForm().addFooter(
 				submitFunctionCall, closeHandler);
