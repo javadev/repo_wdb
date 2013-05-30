@@ -12,7 +12,7 @@ import org.wdbuilder.jaxbhtml.element.I;
 
 public class SectionHeader extends Div {
 
-	public SectionHeader(String title) throws JAXBException {
+	public SectionHeader() throws JAXBException {
 		setClassName("btn-group btn-group-vertical");
 		
 		for (final IUIAction icon : getIcons()) {
