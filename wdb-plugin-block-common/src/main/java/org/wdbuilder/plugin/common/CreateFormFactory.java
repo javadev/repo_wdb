@@ -25,7 +25,7 @@ class CreateFormFactory extends UINewBlockFormFactory {
 		final PredefinedSelect<CommonBlock.Background> backgroundSelectField = new PredefinedSelect<CommonBlock.Background>(
 				CommonBlock.Background.values(), CommonBlock.Background.Grey);
 
-		final TwoColumnForm form = new TwoColumnForm("create-common-block-save")
+		final TwoColumnForm form = new TwoColumnForm("create-common-block-save", "Create Common Block" )
 				.addTextField(BlockParameter.Name, "")
 				.addSelectField(Parameter.Shape, shapeSelectField)
 				.addTextField(BlockParameter.Width, "70")
