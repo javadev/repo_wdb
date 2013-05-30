@@ -57,8 +57,18 @@ public class CanvasFrameWriter {
 		final Diagram diagram = diagramHelper.getDiagram();
 
 		final String diagramKey = "'" + diagram.getKey() + "'";
+		
+		Img img = new FrameServlet.Image(diagram, null, "frameImage", ID_IMAGE_MAP);
+		img.setOnMouseOver( "hideCaret()" );
 
-		SectionHeader header = new SectionHeader(diagram.getName()) {
+		writer.write(img);
+
+		final ImageMap map = state.isBlockMode() ? new ImageMapForBlock(state)
+				: new ImageMapForLine(state);
+
+		writer.write(map);
+		
+		SectionHeader header = new SectionHeader() {
 
 			@Override
 			public Iterable<IUIAction> getIcons() {
@@ -170,17 +180,7 @@ public class CanvasFrameWriter {
 				};
 			}
 		};
-		writer.write(header);
-		
-		Img img = new FrameServlet.Image(diagram, null, "frameImage", ID_IMAGE_MAP);
-		img.setOnMouseOver( "hideCaret()" );
-
-		writer.write(img);
-
-		final ImageMap map = state.isBlockMode() ? new ImageMapForBlock(state)
-				: new ImageMapForLine(state);
-
-		writer.write(map);
+		writer.write(header);		
 	}
 
 	private abstract class ImageMap extends Map {
