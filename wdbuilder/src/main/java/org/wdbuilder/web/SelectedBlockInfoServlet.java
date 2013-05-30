@@ -8,13 +8,12 @@ import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.IBlockPluginFacade;
-import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/selected-block-info")
 public class SelectedBlockInfoServlet extends DiagramHelperFormServlet {
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
@@ -25,9 +24,6 @@ public class SelectedBlockInfoServlet extends DiagramHelperFormServlet {
 		}
 		final HtmlWriter writer = new HtmlWriter(input.getResponse()
 				.getWriter());
-
-		writer.write(new SectionHeader("Block \"" + block.getName()
-				+ "\" Details"));
 
 		IBlockPluginFacade pluginFacade = serviceFacade.getBlockPluginRepository().getFacade(block
 				.getClass());
