@@ -21,7 +21,7 @@ class ViewFormFactory extends UIExistingEntityFormFactory<Block> {
 
 		final CommonBlock commonBlock = CommonBlock.class.cast(entity);
 
-		final TwoColumnForm form = new TwoColumnForm("none")
+		final TwoColumnForm form = new TwoColumnForm("none", "View Common Block Details")
 				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
 				.addReadOnlyField(BlockParameter.Name, entity.getName())
 				.addReadOnlyField(Parameter.Shape,
