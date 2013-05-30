@@ -7,7 +7,7 @@ drop sequence TEMP_BASE_SEQ;
 drop sequence TEMP_DERIVED_SEQ;
 
 create sequence TEMP_BASE_SEQ
-  start with 1
+	start with 1
 	nomaxvalue;
 
 create sequence TEMP_DERIVED_SEQ
@@ -21,7 +21,6 @@ drop table TEMP_BASE;
 
 create table TEMP_BASE (
 	base_id integer not null,
-	name varchar2(32) not null,
 	entry_count integer default 0,
 	constraint pk_base
 		primary key( base_id )
@@ -64,5 +63,16 @@ end TEMP_DERIVED_INS;
 /
 
 -- Prefill the tables:
--- insert into TEMP_BASE( )
+insert into TEMP_BASE( entry_count ) values( 2 );
+insert into TEMP_BASE( entry_count ) values( 1 );
+insert into TEMP_BASE( entry_count ) values( 3 );
+
+insert into TEMP_DERIVED( base_id, name ) values ( 1, 'item 1.1');
+insert into TEMP_DERIVED( base_id, name ) values ( 1, 'item 1.2');
+insert into TEMP_DERIVED( base_id, name ) values ( 2, 'item 2.1');
+insert into TEMP_DERIVED( base_id, name ) values ( 3, 'item 3.1');
+insert into TEMP_DERIVED( base_id, name ) values ( 3, 'item 3.2');
+insert into TEMP_DERIVED( base_id, name ) values ( 3, 'item 3.3');
+
+commit;
 
