@@ -10,13 +10,12 @@ import org.wdbuilder.gui.UINewBlockFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.IBlockPluginFacade;
-import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/create-block")
 public class CreateBlockServlet extends DiagramHelperFormServlet {
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
@@ -45,8 +44,6 @@ public class CreateBlockServlet extends DiagramHelperFormServlet {
 
 		final TwoColumnForm form = formFactory.getForm().addFooter(
 				submitFunctionCall, closeHandler);
-
-		new HtmlWriter(writer).write(new SectionHeader(formFactory.getTitle()));
 
 		new HtmlWriter(writer).write(form);
 	}
