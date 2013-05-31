@@ -13,6 +13,7 @@ import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.A;
+import org.wdbuilder.jaxbhtml.element.Div;
 import org.wdbuilder.jaxbhtml.element.Li;
 import org.wdbuilder.jaxbhtml.element.Ul;
 import org.wdbuilder.serialize.html.SectionHeader;
@@ -83,18 +84,21 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
-		final SectionHeader sectionHeader = new SectionHeader("") {
+		if (full) {
+			Div listContainer = new Div();
+			listContainer.add(new DiagramList(activeKey));
+			
+			htmlWriter.write( listContainer );
+		}
+		
+		final SectionHeader sectionHeader = new SectionHeader() {
 			@Override
 			public Iterable<IUIAction> getIcons() {
 				IUIAction[] icons = full ? ICONS_FULL : getIconsForCondensed(activeKey);
 				return Arrays.asList(icons);
 			}
 		};
-		htmlWriter.write(sectionHeader);
-
-		if (full) {
-			htmlWriter.write(new DiagramList(activeKey));
-		}
+		htmlWriter.write(sectionHeader);		
 	}
 
 	private static String getActiveDiagramKey(ServletInput input) {
