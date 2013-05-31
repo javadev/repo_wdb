@@ -24,6 +24,9 @@ import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.Area;
 import org.wdbuilder.jaxbhtml.element.Img;
 import org.wdbuilder.jaxbhtml.element.Map;
+import org.wdbuilder.jaxbhtml.element.Table;
+import org.wdbuilder.jaxbhtml.element.Td;
+import org.wdbuilder.jaxbhtml.element.Tr;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.serialize.html.IUIActionURL;
@@ -57,8 +60,37 @@ public class CanvasFrameWriter {
 		final Diagram diagram = diagramHelper.getDiagram();
 
 		final String diagramKey = "'" + diagram.getKey() + "'";
+		
+		Img img = new FrameServlet.Image(diagram, null, "frameImage", ID_IMAGE_MAP);
+		img.setOnMouseOver( "hideCaret()" );
+		
+		Tr tr = new Tr();
 
-		SectionHeader header = new SectionHeader(diagram.getName()) {
+		Td td = new Td();
+		td.add( img );
+
+		final ImageMap map = state.isBlockMode() ? new ImageMapForBlock(state)
+				: new ImageMapForLine(state);
+
+		td.add( map );
+		tr.add(td);
+		
+		SectionHeader header = createToolbar(state, diagram, diagramKey);
+		Td headerTd = new Td();
+		headerTd.setStyle("vertical-align:top");
+		headerTd.add(header);
+		tr.add(headerTd);
+		
+		Table table = new Table();
+		table.add( tr );
+		
+		writer.write( table );		
+	}
+
+	private SectionHeader createToolbar(final ApplicationState state,
+			final Diagram diagram, final String diagramKey)
+			throws JAXBException {
+		return new SectionHeader() {
 
 			@Override
 			public Iterable<IUIAction> getIcons() {
@@ -170,17 +202,6 @@ public class CanvasFrameWriter {
 				};
 			}
 		};
-		writer.write(header);
-		
-		Img img = new FrameServlet.Image(diagram, null, "frameImage", ID_IMAGE_MAP);
-		img.setOnMouseOver( "hideCaret()" );
-
-		writer.write(img);
-
-		final ImageMap map = state.isBlockMode() ? new ImageMapForBlock(state)
-				: new ImageMapForLine(state);
-
-		writer.write(map);
 	}
 
 	private abstract class ImageMap extends Map {
