@@ -129,7 +129,7 @@ public class TwoColumnForm extends Form {
 	private Td createFieldTd(IHtml... element) {
 		Td fieldTd = new Td(CLASS);
 		Td.HAlign.left.set(fieldTd);
-		Td.VAlign.middle.set(fieldTd);
+		Td.VAlign.top.set(fieldTd);
 		fieldTd.add(element);
 		return fieldTd;
 	}
@@ -137,7 +137,7 @@ public class TwoColumnForm extends Form {
 	private Td createLabelTd(String label) {
 		Td labelTd = new Td(CLASS);
 		Td.HAlign.right.set(labelTd);
-		Td.VAlign.middle.set(labelTd);
+		Td.VAlign.top.set(labelTd);
 		labelTd.setText(label + ":");
 		return labelTd;
 	}
