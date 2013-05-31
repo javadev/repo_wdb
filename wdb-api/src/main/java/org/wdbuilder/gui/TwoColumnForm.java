@@ -14,7 +14,8 @@ import org.wdbuilder.jaxbhtml.element.Tr;
 public class TwoColumnForm extends Form {
 
 	public static final String CLASS = "form";
-	public static final String CLASS_LINKBUTTON = "btn";
+	public static final String CLASS_LINKBUTTON = "btn btn-small";
+	public static final String CLASS_TITLE = "title";
 	private static final String ID = "formId";
 
 	public static class LinkButton {
@@ -28,9 +29,6 @@ public class TwoColumnForm extends Form {
 
 		private A toHtml() {
 			A result = new A(CLASS_LINKBUTTON);
-//			Span span = new Span();
-//			span.setText(title);
-//			result.add(span);
 			result.setText(title);
 			result.setOnClick(onClickHandler);
 			return result;
@@ -48,6 +46,7 @@ public class TwoColumnForm extends Form {
 		Td td = new Td();
 		td.setColSpan(2);
 		td.setText(title);
+		td.setClassName(CLASS_TITLE);
 		
 		Tr tr = new Tr();
 		tr.add(td);
@@ -130,6 +129,7 @@ public class TwoColumnForm extends Form {
 	private Td createFieldTd(IHtml... element) {
 		Td fieldTd = new Td(CLASS);
 		Td.HAlign.left.set(fieldTd);
+		Td.VAlign.middle.set(fieldTd);
 		fieldTd.add(element);
 		return fieldTd;
 	}
@@ -137,6 +137,7 @@ public class TwoColumnForm extends Form {
 	private Td createLabelTd(String label) {
 		Td labelTd = new Td(CLASS);
 		Td.HAlign.right.set(labelTd);
+		Td.VAlign.middle.set(labelTd);
 		labelTd.setText(label + ":");
 		return labelTd;
 	}
