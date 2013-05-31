@@ -90,6 +90,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		Tr tr = new Tr();
 		if (full) {
 			Td td = new Td();
+			td.setStyle("vertical-align:top" );
 			td.add(new DiagramList(activeKey));
 			tr.add( td );
 		}
