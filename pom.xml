@@ -10,7 +10,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<global.version>0.5b</global.version>
+		<global.version>0.6b</global.version>
 	</properties>
 
 	<modules>
