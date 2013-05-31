@@ -11,29 +11,17 @@ td {
 	font-size: 8pt;	
 }
 
-/* Links at the bottom of form */
-.linkbutton {
-	margin-left: 1em;
-    margin-right: 0;
-    vertical-align: top;
-    font-weight: bold;    
+input[type="text"] {
+	font-size: 8pt;
 }
 
-/* Link in the list (for instance, in list of links to delete)*/
-ul.linkbutton {
-	list-style: none;
+.btn {
+	font-size: 8pt;
 }
 
 /* Visual mark for block that can't be dropped */ 
 .no-drag {
 	border: 2px #cc0000 dashed;	
-}
-
-/* Information block */
-.info {
-	border:0;
-	font-weight: bold;
-	font-size: 8pt;	
 }
 
 /* Link line styles */

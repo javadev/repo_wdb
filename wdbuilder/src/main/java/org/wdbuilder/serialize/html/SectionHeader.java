@@ -9,23 +9,15 @@ import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Div;
 import org.wdbuilder.jaxbhtml.element.I;
-import org.wdbuilder.jaxbhtml.element.Span;
 
 public class SectionHeader extends Div {
 
-	public SectionHeader(String title) throws JAXBException {
-		
-		Div div = new Div( "btn-group" );
-
-		// TODO: not the best way
-		Span span = new Span();
-		span.setText(title);
-		add( span );
+	public SectionHeader() throws JAXBException {
+		setClassName("btn-group btn-group-vertical");
 		
 		for (final IUIAction icon : getIcons()) {
-			div.add(createButton(icon));
+			add(createButton(icon));
 		}
-		add(div);
 	}
 
 	// May be overridden

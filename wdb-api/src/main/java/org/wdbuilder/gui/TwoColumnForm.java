@@ -7,7 +7,6 @@ import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Form;
 import org.wdbuilder.jaxbhtml.element.Input;
 import org.wdbuilder.jaxbhtml.element.NoBr;
-import org.wdbuilder.jaxbhtml.element.Span;
 import org.wdbuilder.jaxbhtml.element.Table;
 import org.wdbuilder.jaxbhtml.element.Td;
 import org.wdbuilder.jaxbhtml.element.Tr;
@@ -15,7 +14,7 @@ import org.wdbuilder.jaxbhtml.element.Tr;
 public class TwoColumnForm extends Form {
 
 	public static final String CLASS = "form";
-	public static final String CLASS_LINKBUTTON = "linkbutton";
+	public static final String CLASS_LINKBUTTON = "btn";
 	private static final String ID = "formId";
 
 	public static class LinkButton {
@@ -29,9 +28,10 @@ public class TwoColumnForm extends Form {
 
 		private A toHtml() {
 			A result = new A(CLASS_LINKBUTTON);
-			Span span = new Span();
-			span.setText(title);
-			result.add(span);
+//			Span span = new Span();
+//			span.setText(title);
+//			result.add(span);
+			result.setText(title);
 			result.setOnClick(onClickHandler);
 			return result;
 		}
@@ -39,10 +39,19 @@ public class TwoColumnForm extends Form {
 
 	private final Table table;
 
-	public TwoColumnForm(String action) {
+	public TwoColumnForm(String action, String title ) {
 		super(CLASS);
 		setId(ID);
 		add(table = new Table(CLASS));
+
+		// Create the form title:
+		Td td = new Td();
+		td.setColSpan(2);
+		td.setText(title);
+		
+		Tr tr = new Tr();
+		tr.add(td);
+		table.add(tr);		
 	}
 
 	public TwoColumnForm addLinks(LinkButton[] links) {

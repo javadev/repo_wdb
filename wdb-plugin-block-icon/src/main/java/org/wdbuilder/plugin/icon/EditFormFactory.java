@@ -29,7 +29,7 @@ class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 		final PredefinedSelect<Icon> iconSelectField = new PredefinedSelect<Icon>(
 				Icon.values(), iconBlock.getIcon());
 
-		final TwoColumnForm form = new TwoColumnForm("edit-icon-block-save")
+		final TwoColumnForm form = new TwoColumnForm("edit-icon-block-save", "Edit Icon Block")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
 				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
 				.addTextField(BlockParameter.Name, entity.getName())

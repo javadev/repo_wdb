@@ -21,7 +21,7 @@ class ViewFormFactory extends UIExistingEntityFormFactory<Block> {
 
 		final IconBlock iconBlock = IconBlock.class.cast(entity);
 
-		final TwoColumnForm form = new TwoColumnForm("none")
+		final TwoColumnForm form = new TwoColumnForm("none", "View Icon Block Details")
 				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
 				.addReadOnlyField(BlockParameter.Name, entity.getName())
 				.addReadOnlyField(Parameter.IconID,

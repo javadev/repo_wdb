@@ -9,25 +9,22 @@ import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
-import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.service.validator.DiagramValidator;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@SuppressWarnings("serial")
 @WebServlet("/create-diagram")
 public class CreateDiagramServlet extends DiagramServiceServlet {
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
 
-		new HtmlWriter(writer).write(new SectionHeader("New Diagram"));
-
 		final PredefinedSelect<DiagramBackground> selectField = new PredefinedSelect<DiagramBackground>(
 				DiagramBackground.values(), DiagramBackground.White);
 
-		final TwoColumnForm form = new TwoColumnForm("create-diagram-save")
+		final TwoColumnForm form = new TwoColumnForm("create-diagram-save", "New Diagram")
 				.addTextField(BlockParameter.Name, "")
 				.addTextField(BlockParameter.Width,
 						String.valueOf(DiagramValidator.MIN_SIZE.getWidth()))
