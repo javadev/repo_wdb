@@ -98,8 +98,7 @@ function submitCreateCanvas() {
 	if (!formElem) {
 		return;
 	}
-	var params = "name=" + totalEncode(formElem.name.value) + "&width="
-			+ formElem.width.value + "&height=" + formElem.height.value
+	var params = "name=" + totalEncode(formElem.name.value) 
 			+ "&background=" + formElem.background.value;
 	submitForm("create-diagram-save", params, function(response) {
 		var elem = document.getElementById("canvasFrame");
@@ -214,7 +213,7 @@ function deleteCanvas( diagramKey) {
 // Load current diagram content to main screen section
 function loadCanvas(diagramKey) {
 	// Set the active item:
-	$('#canvasList').children().removeClass('active');
+	$('#canvasList .active').removeClass('active');
 	$('#d' + diagramKey).addClass( 'active' );
 	
 	
