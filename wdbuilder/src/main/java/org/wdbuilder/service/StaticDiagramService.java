@@ -60,11 +60,10 @@ class StaticDiagramService implements DiagramService {
 	}
 
 	@Override
-	public String persistDiagram(String name, int width, int height,
-			String backgroundKey) {
+	public String persistDiagram(String name, String backgroundKey) {
 		DiagramBackground background = DiagramBackground.valueOf(backgroundKey);
 		Diagram diagram = createDiagram(UUID.randomUUID().toString(), name,
-				width, height, background);
+				320, 240, background);
 		new DiagramValidator().validate(diagram, null);
 		return saveDiagram(diagram);
 	}
