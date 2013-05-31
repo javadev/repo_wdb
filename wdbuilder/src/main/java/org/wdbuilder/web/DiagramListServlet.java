@@ -14,6 +14,9 @@ import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Li;
+import org.wdbuilder.jaxbhtml.element.Table;
+import org.wdbuilder.jaxbhtml.element.Td;
+import org.wdbuilder.jaxbhtml.element.Tr;
 import org.wdbuilder.jaxbhtml.element.Ul;
 import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.web.base.DiagramServiceServlet;
@@ -82,9 +85,14 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		final String activeKey = getActiveDiagramKey(input);
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
-
+		
+		
+		Tr tr = new Tr();
 		if (full) {
-			htmlWriter.write(new DiagramList(activeKey));
+			Td td = new Td();
+			td.setStyle("vertical-align:top" );
+			td.add(new DiagramList(activeKey));
+			tr.add( td );
 		}
 		
 		final SectionHeader sectionHeader = new SectionHeader() {
@@ -94,7 +102,15 @@ public class DiagramListServlet extends DiagramServiceServlet {
 				return Arrays.asList(icons);
 			}
 		};
-		htmlWriter.write(sectionHeader);		
+		Td td = new Td();
+		td.setStyle( "vertical-align: top" );
+		td.add( sectionHeader );
+		tr.add( td );		
+		
+		// Prepare the nested table:
+		Table table = new Table();
+		table.add( tr );
+		htmlWriter.write( table );
 	}
 
 	private static String getActiveDiagramKey(ServletInput input) {
