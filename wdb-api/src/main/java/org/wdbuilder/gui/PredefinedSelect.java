@@ -1,10 +1,17 @@
 package org.wdbuilder.gui;
 
 import org.wdbuilder.domain.DisplayNameAware;
-import org.wdbuilder.jaxbhtml.element.Option;
-import org.wdbuilder.jaxbhtml.element.Select;
+import org.wdbuilder.jaxbhtml.element.A;
+import org.wdbuilder.jaxbhtml.element.B;
+import org.wdbuilder.jaxbhtml.element.Div;
+import org.wdbuilder.jaxbhtml.element.Input;
+import org.wdbuilder.jaxbhtml.element.Li;
+import org.wdbuilder.jaxbhtml.element.Span;
+import org.wdbuilder.jaxbhtml.element.Ul;
 
-public class PredefinedSelect<T extends DisplayNameAware> extends Select {
+public class PredefinedSelect<T extends DisplayNameAware> extends Div {
+	
+	private static final String HIDDEN_FIELD_ID_PREFIX = "ddf-";
   
 	private final T[] values;
 	private final T defaultValue;
@@ -13,22 +20,70 @@ public class PredefinedSelect<T extends DisplayNameAware> extends Select {
 		this.values = values;
 		this.defaultValue = defaultValue;
 	}
+	
 
-	public final Select create(String name) {
-		final Select result = new Select();
-		result.setName(name);
+	public final Div create(String name) {
+		final Div result = new Div( "bs-dropdown" );
 		result.setId(name);
+		
+		String valueStr = String.valueOf(defaultValue);
+		
+		// Add the hidden field:
+		final Input hiddenField = new Input.Hidden();
+		hiddenField.setName(name);
+		hiddenField.setValue( valueStr );
+		hiddenField.setId(HIDDEN_FIELD_ID_PREFIX + name );
+		result.add(hiddenField);
+		
+		final A button = new A( "dropdown-toggle btn btn-mini" );
+		button.setDataToggle("dropdown");
+		button.setHref("#");
+		
+		final Span text = new Span();
+		text.setText(valueStr + "  ");		
+		button.add( text );
+		
+		final B downArrow = new B( "caret");
+		downArrow.setText( " " );
+		button.add( downArrow );
+		
+		result.add( button );
+		
+		Ul ul = new Ul("dropdown-menu");
 		for( final T item : this.values ) {
-			result.add(createOption(item));
+			ul.add(createOption(item));
 		}
+		result.add( ul );
 		return result;
+
+/*		
+		<div class="dropdown" id="background">
+        <a class="dropdown-toggle btn btn-small" data-toggle="dropdown"
+            href="#">Gray&nbsp;&nbsp;&nbsp;<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Grey</a></li>
+            <li><a href="#">Dark Green</a></li>
+            <li><a href="#">Green</a></li>
+            <li><a href="#">Navy Blue</a></li>
+            <li><a href="#">Blue</a></li>
+            <li><a href="#">Olive</a></li>
+            <li><a href="#">Brick</a></li>
+        </ul>
+    </div>
+*/    
+		
 	}
 
-	private Option createOption(final T item) {
-		final boolean selected = item.equals(defaultValue);
-		final Option option = new Option(item.getDisplayName());
-		option.setValue( String.valueOf(item) );
-		option.setSelected(selected);
-		return option;
+	private Li createOption(final T item) {
+		final Li result = new Li();
+		A a = new A();
+		a.setText(String.valueOf(item));
+		a.setHref("#");
+		
+		// TODO Set on click: change hidden field value
+		
+		result.add(a);
+		
+		return result;
 	}
 }
