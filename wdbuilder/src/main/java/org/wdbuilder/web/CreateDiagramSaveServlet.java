@@ -18,8 +18,6 @@ public class CreateDiagramSaveServlet extends DiagramServiceServlet {
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final String key = serviceFacade.getDiagramService().persistDiagram(
 				BlockParameter.Name.getString(input),
-				BlockParameter.Width.getInt(input),
-				BlockParameter.Height.getInt(input),
 				BlockParameter.Background.getString(input));
 		this.diagramHelper = createDiagramHelper(key);
 

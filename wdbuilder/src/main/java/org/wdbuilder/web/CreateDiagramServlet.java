@@ -9,7 +9,6 @@ import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
-import org.wdbuilder.service.validator.DiagramValidator;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -26,10 +25,6 @@ public class CreateDiagramServlet extends DiagramServiceServlet {
 
 		final TwoColumnForm form = new TwoColumnForm("create-diagram-save", "New Diagram")
 				.addTextField(BlockParameter.Name, "")
-				.addTextField(BlockParameter.Width,
-						String.valueOf(DiagramValidator.MIN_SIZE.getWidth()))
-				.addTextField(BlockParameter.Height,
-						String.valueOf(DiagramValidator.MIN_SIZE.getHeight()))
 				.addSelectField(BlockParameter.Background, selectField)
 				.addFooter("submitCreateCanvas()", "refreshDiagramList()");
 		new HtmlWriter(writer).write(form);

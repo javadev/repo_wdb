@@ -20,19 +20,28 @@ function hideProperties() {
 	cleanElement("properties");
 }
 
+function initBootstrapControls() {
+	
+	// create the "styled" tooltips:
+	$('.btn').tooltip({
+		placement : 'bottom'
+	});	
+	$('.dropdown-toggle').dropdown();		
+}
+
 // Reload diagram list and close active diagram
 function refreshDiagramList() {
 	loadDiagramList(true);
-	cleanElement("canvasFrame");
+	cleanElement('canvasFrame');
 	hideProperties();
-	
 	hideCaret();	
+	
 }
 
 // Request diagram list from server
 function loadDiagramList(full) {	
 	var url = "diagram-list?r=" + Math.random() + "&full=" + full;
-	loadContent( url, "canvasList");
+	loadContent( url, "canvasList", function() { initBootstrapControls(); });
 }
 
 // Hide screen section
@@ -64,8 +73,8 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 	
 	// Assign some buttons for blocks:
 	var str = '<div class="btn-group btn-mini cursor-icons">';
-	str += '<a href="#" title="Edit" onmousedown="' + editCall + '"><i class="icon-white icon-edit"></i></a>';	
-	str += '<a href="#" title="Delete" onmousedown="' + deleteCall + '"><i class="icon-white icon-remove"></i></a>';
+	str += '<a href="#" class="inline-btn" title="Edit" onmousedown="' + editCall + '"><i class="icon-white icon-edit"></i></a>';	
+	str += '<a href="#" class="inline-btn" title="Delete" onmousedown="' + deleteCall + '"><i class="icon-white icon-remove"></i></a>';
 	str += '&nbsp;&nbsp;</div>';
 	
 	c.html( str );
@@ -75,6 +84,8 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 		return false;
 	});
 	c.addClass( "selected" );
+	
+	initBootstrapControls();
 }
 
 // Hide caret:
@@ -98,8 +109,7 @@ function submitCreateCanvas() {
 	if (!formElem) {
 		return;
 	}
-	var params = "name=" + totalEncode(formElem.name.value) + "&width="
-			+ formElem.width.value + "&height=" + formElem.height.value
+	var params = "name=" + totalEncode(formElem.name.value) 
 			+ "&background=" + formElem.background.value;
 	submitForm("create-diagram-save", params, function(response) {
 		var elem = document.getElementById("canvasFrame");
@@ -214,38 +224,48 @@ function deleteCanvas( diagramKey) {
 // Load current diagram content to main screen section
 function loadCanvas(diagramKey) {
 	// Set the active item:
-	$('#canvasList').children().removeClass('active');
+	$('#canvasList .active').removeClass('active');
 	$('#d' + diagramKey).addClass( 'active' );
 	
-	
-	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame");
+	cleanElement("resizeFrame");	
 	hideProperties();
-	cleanElement("resizeFrame");
+	
+	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame",
+			function() { initBootstrapControls(); }
+	);
 }
 
 // Open diagram creation form in main screen section
 function openCreateCanvasDialog() {
 	hideProperties();
-	loadContent("create-diagram", "canvasFrame");
+	loadContent("create-diagram", "canvasFrame", function() {
+		initBootstrapControls();
+	});
 }
 
 // Open updating diagram form in additional screen section
 function openEditDiagramDialog(diagramKey) {
 	loadContent("edit-diagram?r=" + Math.random() + "&dkey=" + diagramKey,
-			"properties");
+			"properties",  function() {
+				initBootstrapControls();
+			});
 }
 
 function openCreateBlockDialog(diagramKey, blockClass ) {
 	loadContent("create-block?r=" + Math.random() + "&dkey=" + diagramKey +
 			"&blockClass=" + blockClass,
-			"properties");
+			"properties", function() {
+				initBootstrapControls();
+			});
 }
 
 
 //Open form for existing block data update in additional section
 function openEditBlockDialog(diagramKey, blockKey) {
 	loadContent("edit-block?r=" + Math.random() + "&bkey=" + blockKey
-			+ "&dkey=" + diagramKey, "properties");
+			+ "&dkey=" + diagramKey, "properties" , function() {
+				initBootstrapControls();
+			});
 }
 
 // Hide screen section (handler to "close" link )
@@ -275,7 +295,9 @@ function switchMode(diagramKey) {
 //Open form for existing block data update in additional section
 function openEditLinkDialog(diagramKey, linkKey) {
 	loadContent("edit-link?r=" + Math.random() + "&lkey=" + linkKey
-			+ "&dkey=" + diagramKey, "properties");
+			+ "&dkey=" + diagramKey, "properties", function() {
+		initBootstrapControls();
+	});
 }
 
 // Remove link handler

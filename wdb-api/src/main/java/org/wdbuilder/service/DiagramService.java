@@ -23,8 +23,7 @@ public interface DiagramService {
 
 	void updateDiagramSize(String diagramKey, int width, int height);
 
-	String persistDiagram(String name, int width, int height,
-			String backgroundKey);
+	String persistDiagram(String name, String backgroundKey);
 
 	void updateDiagram(String diagramKey, String name, String backgroundKey);
 

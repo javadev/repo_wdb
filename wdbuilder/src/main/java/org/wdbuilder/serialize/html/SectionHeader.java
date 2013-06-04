@@ -31,8 +31,10 @@ public class SectionHeader extends Div {
 		i.setText("");
 		
 		A result = new A();
+		result.setDataToggle("tooltip");
 		result.setClassName("btn btn-mini");
 		result.setTitle( uiAction.getTitle() );
+		result.setDataOriginalTitle(uiAction.getTitle());
 		result.add(i);
 		if (IUIActionClick.class.isInstance(uiAction)) {
 			result.setOnClick(IUIActionClick.class.cast(uiAction)
