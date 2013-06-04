@@ -26,7 +26,9 @@ function initBootstrapControls() {
 	$('.btn').tooltip({
 		placement : 'bottom'
 	});	
-	$('.dropdown-toggle').dropdown();		
+	$('.dropdown-toggle').dropdown();	
+	
+	$('.alert').alert();
 }
 
 // Reload diagram list and close active diagram
@@ -320,4 +322,35 @@ function snapToGrid( n ) {
 		n += MARGIN;
 	}
 	return n;
+}
+
+//Error message header from HTTP response
+function showError(message) {
+	if( !message ) {
+		return;
+	}
+	var obj = document.getElementById("errorArea");
+	if (obj) {
+		obj.style.display = "block";
+		var str = "unknown error";
+		if( 0<message.length ) {			
+			// Select error message:
+			str = message.match( "javax.servlet.ServletException.*");
+			if( !str ) {
+				str = "unknown error";
+			} else {
+				str = new String(str).substr( 32 );
+			}
+		}
+		obj.innerHTML = str;
+	}
+}
+
+// Hide error area
+function clearError() {
+	var obj = document.getElementById("errorArea");
+	if (obj) {
+		obj.style.display = "none";
+		obj.innerHTML = "";
+	}
 }
