@@ -2,6 +2,7 @@ package org.wdbuilder.jaxbhtml.element;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.Collection;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -68,22 +69,24 @@ public class Area extends HtmlElement {
 					+ String.valueOf(topLeft.y + size.height));
 		}
 
-		public static class Poly extends Area {
-			public Poly(Iterable<Point> points) {
-				super("poly");
-				StringBuilder sb = new StringBuilder(128);
-				for (Point point : points) {
-					sb.append(point.x);
-					sb.append(',');
-					sb.append(point.y);
-					sb.append(',');
-				}
-				int len = sb.length();
-				if (0 < len) {
-					sb.replace(len - 1, len, "");
-				}
-				setCoords(sb.toString());
+	}
+	
+	public static class Poly extends Area {
+		public Poly(Collection<Point> points) {
+			super("poly");
+			StringBuilder sb = new StringBuilder(128);
+			for (Point point : points) {
+				sb.append(point.x);
+				sb.append(',');
+				sb.append(point.y);
+				sb.append(',');
 			}
+			int len = sb.length();
+			if (0 < len) {
+				sb.replace(len - 1, len, "");
+			}
+			setCoords(sb.toString());
 		}
 	}
+	
 }
