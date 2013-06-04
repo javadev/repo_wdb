@@ -26,7 +26,7 @@ function initBootstrapControls() {
 	$('.btn').tooltip({
 		placement : 'bottom'
 	});	
-	$('.bs-dropdown').dropdown();		
+	$('.dropdown-toggle').dropdown();		
 }
 
 // Reload diagram list and close active diagram
@@ -238,26 +238,34 @@ function loadCanvas(diagramKey) {
 // Open diagram creation form in main screen section
 function openCreateCanvasDialog() {
 	hideProperties();
-	loadContent("create-diagram", "canvasFrame");
+	loadContent("create-diagram", "canvasFrame", function() {
+		initBootstrapControls();
+	});
 }
 
 // Open updating diagram form in additional screen section
 function openEditDiagramDialog(diagramKey) {
 	loadContent("edit-diagram?r=" + Math.random() + "&dkey=" + diagramKey,
-			"properties");
+			"properties",  function() {
+				initBootstrapControls();
+			});
 }
 
 function openCreateBlockDialog(diagramKey, blockClass ) {
 	loadContent("create-block?r=" + Math.random() + "&dkey=" + diagramKey +
 			"&blockClass=" + blockClass,
-			"properties");
+			"properties", function() {
+				initBootstrapControls();
+			});
 }
 
 
 //Open form for existing block data update in additional section
 function openEditBlockDialog(diagramKey, blockKey) {
 	loadContent("edit-block?r=" + Math.random() + "&bkey=" + blockKey
-			+ "&dkey=" + diagramKey, "properties");
+			+ "&dkey=" + diagramKey, "properties" , function() {
+				initBootstrapControls();
+			});
 }
 
 // Hide screen section (handler to "close" link )
