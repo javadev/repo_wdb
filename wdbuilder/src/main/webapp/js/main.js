@@ -295,7 +295,9 @@ function switchMode(diagramKey) {
 //Open form for existing block data update in additional section
 function openEditLinkDialog(diagramKey, linkKey) {
 	loadContent("edit-link?r=" + Math.random() + "&lkey=" + linkKey
-			+ "&dkey=" + diagramKey, "properties");
+			+ "&dkey=" + diagramKey, "properties", function() {
+		initBootstrapControls();
+	});
 }
 
 // Remove link handler
