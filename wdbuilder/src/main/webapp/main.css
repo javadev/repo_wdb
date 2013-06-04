@@ -81,17 +81,6 @@ input[type="text"] {
 	background: transparent;
 }
 
-/* Section for showing error messages */
-#errorArea {
-	background-color: #ffcccc;
-	color: #ff0000;
-	font-weight: bold;
-	border: 2px #990000 solid;
-	margin: 1em;
-	padding: 1em;
-	display: none;
-}
-
 /* Main section: for showing canvas */
 #canvasFrame {
 	display: none;
