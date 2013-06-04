@@ -109,9 +109,9 @@ public class CanvasFrameWriter {
 					result.add(pluginFacade.getUIActionCreate(diagramKey));
 				}
 
-				result.add(createEditBlockIcon(diagramKey));
+				result.add(createEditDiagramIcon(diagramKey));
 				result.add(createExportIcon());
-				result.add(createDeleteBlockIcon(diagramKey));
+				result.add(createDeleteDiagramIcon(diagramKey));
 				return result;
 			}
 
@@ -135,7 +135,7 @@ public class CanvasFrameWriter {
 				};
 			}
 
-			private IUIActionClick createDeleteBlockIcon(final String diagramKey) {
+			private IUIActionClick createDeleteDiagramIcon(final String diagramKey) {
 				return new IUIActionClick() {
 
 					@Override
@@ -155,7 +155,7 @@ public class CanvasFrameWriter {
 				};
 			}
 
-			private IUIActionClick createEditBlockIcon(final String diagramKey) {
+			private IUIActionClick createEditDiagramIcon(final String diagramKey) {
 				return new IUIActionClick() {
 
 					@Override
