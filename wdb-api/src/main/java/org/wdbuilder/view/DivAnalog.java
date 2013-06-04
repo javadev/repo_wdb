@@ -38,6 +38,32 @@ public class DivAnalog {
 		div1.render(gr);
 		div2.render(gr);
 	}
+	
+	public static Point[] getLine( Link link, Block beginBlock,
+			Block endBlock) {
+		
+		Point begin = link.getSockets().get(0).getOffset(beginBlock);
+		Point end = link.getSockets().get(1).getOffset(endBlock);
+
+		final boolean hintHorizontal = link.getSockets().get(0).isHorizontal();
+
+		DivAnalog div1 = new DivAnalog(link, begin, hintHorizontal);
+		DivAnalog div2 = new DivAnalog(link, end, !hintHorizontal);
+		if (div1.intersectsWith(div2)) {
+			div1 = new DivAnalog(link, begin, !hintHorizontal);
+			div2 = new DivAnalog(link, end, hintHorizontal);
+		}
+		
+		Point[] result = new Point[6];
+		result[0] = div1.line[0];
+		result[1] = div1.line[1];
+		result[2] = div1.line[2];
+		result[3] = div2.line[0];
+		result[4] = div2.line[1];
+		result[5] = div2.line[2];
+		
+		return result;
+	}
 
 	private DivAnalog(Link link, Point origin, boolean horizontal) {
 		this.link = link;
