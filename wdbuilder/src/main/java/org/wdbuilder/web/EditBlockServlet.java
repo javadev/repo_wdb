@@ -11,7 +11,6 @@ import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.Div;
 import org.wdbuilder.plugin.IBlockPluginFacade;
-import org.wdbuilder.serialize.html.ConnectedLinkList;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -50,8 +49,6 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 		header.setText("Connected Links:");
 		htmlWriter.write(header);
 
-		htmlWriter.write(new ConnectedLinkList(diagramHelper.getDiagram(),
-				block));
 	}
 
 }
