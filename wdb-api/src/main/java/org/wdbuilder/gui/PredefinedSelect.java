@@ -65,7 +65,7 @@ public class PredefinedSelect<T extends DisplayNameAware> extends Div {
 
 		String javaScript = "$('#" + TEXT_ID_PREFIX + name + "').text('"
 				+ item.getDisplayName() + "  ');" + "$('#"
-				+ HIDDEN_FIELD_ID_PREFIX + name + "').value('"
+				+ HIDDEN_FIELD_ID_PREFIX + name + "').attr('value','"
 				+ String.valueOf(item) + "');";
 		a.setOnClick(javaScript);
 		
