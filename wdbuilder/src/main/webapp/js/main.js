@@ -72,8 +72,8 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 	
 	// Assign some buttons for blocks:
 	var str = '<div class="btn-group btn-mini cursor-icons">';
-	str += '<a href="#" title="Edit" onmousedown="' + editCall + '"><i class="icon-white icon-edit"></i></a>';	
-	str += '<a href="#" title="Delete" onmousedown="' + deleteCall + '"><i class="icon-white icon-remove"></i></a>';
+	str += '<a href="#" class="inline-btn" title="Edit" onmousedown="' + editCall + '"><i class="icon-white icon-edit"></i></a>';	
+	str += '<a href="#" class="inline-btn" title="Delete" onmousedown="' + deleteCall + '"><i class="icon-white icon-remove"></i></a>';
 	str += '&nbsp;&nbsp;</div>';
 	
 	c.html( str );
@@ -83,6 +83,8 @@ function setCaret( diagramKey, blockKey, left, top, width, height ) {
 		return false;
 	});
 	c.addClass( "selected" );
+	
+	initBootstrapControls();
 }
 
 // Hide caret:
