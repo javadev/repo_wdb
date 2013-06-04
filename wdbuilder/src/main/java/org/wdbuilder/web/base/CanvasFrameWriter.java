@@ -35,6 +35,7 @@ import org.wdbuilder.service.IPluginFacadeRepository;
 import org.wdbuilder.service.validator.DiagramValidator;
 import org.wdbuilder.utility.DiagramHelper;
 import org.wdbuilder.utility.Utility;
+import org.wdbuilder.view.DivAnalog;
 import org.wdbuilder.web.ApplicationState;
 
 public class CanvasFrameWriter {
@@ -60,31 +61,32 @@ public class CanvasFrameWriter {
 		final Diagram diagram = diagramHelper.getDiagram();
 
 		final String diagramKey = "'" + diagram.getKey() + "'";
-		
-		Img img = new FrameServlet.Image(diagram, null, "frameImage", ID_IMAGE_MAP);
-		img.setOnMouseOver( "hideCaret()" );
-		
+
+		Img img = new FrameServlet.Image(diagram, null, "frameImage",
+				ID_IMAGE_MAP);
+		img.setOnMouseOver("hideCaret()");
+
 		Tr tr = new Tr();
 
 		Td td = new Td();
-		td.add( img );
+		td.add(img);
 
 		final ImageMap map = state.isBlockMode() ? new ImageMapForBlock(state)
 				: new ImageMapForLine(state);
 
-		td.add( map );
+		td.add(map);
 		tr.add(td);
-		
+
 		SectionHeader header = createToolbar(state, diagram, diagramKey);
 		Td headerTd = new Td();
 		headerTd.setStyle("vertical-align:top");
 		headerTd.add(header);
 		tr.add(headerTd);
-		
+
 		Table table = new Table();
-		table.add( tr );
-		
-		writer.write( table );		
+		table.add(tr);
+
+		writer.write(table);
 	}
 
 	private SectionHeader createToolbar(final ApplicationState state,
@@ -135,7 +137,8 @@ public class CanvasFrameWriter {
 				};
 			}
 
-			private IUIActionClick createDeleteDiagramIcon(final String diagramKey) {
+			private IUIActionClick createDeleteDiagramIcon(
+					final String diagramKey) {
 				return new IUIActionClick() {
 
 					@Override
@@ -229,7 +232,57 @@ public class CanvasFrameWriter {
 					add(createBlockArea(block));
 				}
 			}
+
+			final Collection<Link> links = diagramHelper.getDiagram()
+					.getLinks();
+			if (null != links) {
+				for (final Link link : links) {
+					Area area = createLinkArea(link);
+					if (null != area) {
+						add(area);
+					}
+				}
+			}
+
+			/*
+			 * final LinkSocket socket0 = link.getSockets().get(0); final
+			 * LinkSocket socket1 = link.getSockets().get(1);
+			 * 
+			 * final Block block0 = renderCtx.getBlock(socket0.getBlockKey());
+			 * final Block block1 = renderCtx.getBlock(socket1.getBlockKey());
+			 * 
+			 * DivAnalog.render(gr, link, block0, block1);
+			 */
+
 			add(createResizeArea());
+		}
+
+		private Area createLinkArea(Link link) {
+			final LinkSocket socket0 = link.getSockets().get(0);
+			if (null == socket0) {
+				return null;
+			}
+			final LinkSocket socket1 = link.getSockets().get(1);
+			if (null == socket1) {
+				return null;
+			}
+
+			final Block block0 = diagramHelper.findBlockByKey(socket0
+					.getBlockKey());
+			if (null == block0) {
+				return null;
+			}
+			final Block block1 = diagramHelper.findBlockByKey(socket1
+					.getBlockKey());
+			if (null == block1) {
+				return null;
+			}
+			Point[] basePoints = DivAnalog.getLine(link, block0, block1);
+
+			// TODO: create coords for item:
+
+			// TODO: implement this for "poly":
+			return null;
 		}
 
 		private Area createBlockArea(Block entity) {
@@ -239,20 +292,12 @@ public class CanvasFrameWriter {
 					.getLocation().getX() - size.getWidth() / 2, entity
 					.getLocation().getY() - size.getHeight() / 2);
 
-			/*
-			String dragStartMethod = appState.getMode().getJsDragStart();
-
-			String onMouseDown = getOnMouseDownFunctionCall(dragStartMethod,
-					diagramHelper.getDiagram().getKey(), entity.getKey(),
-					topLeft);
-			*/
-			String onMouseOver = getJsOnMouseOver( topLeft, size,
-					diagramHelper.getDiagram().getKey(), entity.getKey() );
-			
+			String onMouseOver = getJsOnMouseOver(topLeft, size, diagramHelper
+					.getDiagram().getKey(), entity.getKey());
 
 			final Area.Rect area = new Area.Rect(topLeft, size.toAWT());
 			// area.setOnMouseDown(onMouseDown);
-			area.setOnMouseOver( onMouseOver );
+			area.setOnMouseOver(onMouseOver);
 			area.setTitle(entity.getName());
 			area.setId("area-" + entity.getKey());
 			return area;
@@ -260,21 +305,21 @@ public class CanvasFrameWriter {
 
 		private String getJsOnMouseOver(java.awt.Point topLeft, Dimension size,
 				String diagramKey, String blockKey) {
-			StringBuilder result = new StringBuilder( 128 );
-			result.append( "setCaret('");
-			result.append( diagramKey );
-			result.append( "','" );
-			result.append( blockKey );
-			result.append( "'," );
-			result.append( topLeft.x );
-			result.append( "," );
-			result.append( topLeft.y );
-			result.append( "," );
-			result.append( size.getWidth() );
-			result.append( "," );
-			result.append( size.getHeight() );
-			result.append( ")");
-			
+			StringBuilder result = new StringBuilder(128);
+			result.append("setCaret('");
+			result.append(diagramKey);
+			result.append("','");
+			result.append(blockKey);
+			result.append("',");
+			result.append(topLeft.x);
+			result.append(",");
+			result.append(topLeft.y);
+			result.append(",");
+			result.append(size.getWidth());
+			result.append(",");
+			result.append(size.getHeight());
+			result.append(")");
+
 			return result.toString();
 		}
 
@@ -286,8 +331,8 @@ public class CanvasFrameWriter {
 					- RESIZE_AREA.getHeight());
 			final String onMouseDownCall = getOnMouseDownFunctionCall(
 					// "DiagramResize.start", diagram.getKey(),
-					"WDB.DiagramResize.mouseDown", diagram.getKey(),
-					"(none)", DiagramValidator.MIN_SIZE.getWidth(),
+					"WDB.DiagramResize.mouseDown", diagram.getKey(), "(none)",
+					DiagramValidator.MIN_SIZE.getWidth(),
 					DiagramValidator.MIN_SIZE.getHeight());
 
 			Area.Rect area = new Area.Rect(offset.toAWT(), RESIZE_AREA.toAWT());
