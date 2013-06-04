@@ -20,19 +20,27 @@ function hideProperties() {
 	cleanElement("properties");
 }
 
+function initBootstrapControls() {
+	
+	// create the "styled" tooltips:
+	$('.btn').tooltip({
+		placement : 'bottom'
+	});	
+}
+
 // Reload diagram list and close active diagram
 function refreshDiagramList() {
 	loadDiagramList(true);
-	cleanElement("canvasFrame");
+	cleanElement('canvasFrame');
 	hideProperties();
-	
 	hideCaret();	
+	
 }
 
 // Request diagram list from server
 function loadDiagramList(full) {	
 	var url = "diagram-list?r=" + Math.random() + "&full=" + full;
-	loadContent( url, "canvasList");
+	loadContent( url, "canvasList", function() { initBootstrapControls(); });
 }
 
 // Hide screen section
@@ -216,10 +224,12 @@ function loadCanvas(diagramKey) {
 	$('#canvasList .active').removeClass('active');
 	$('#d' + diagramKey).addClass( 'active' );
 	
-	
-	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame");
+	cleanElement("resizeFrame");	
 	hideProperties();
-	cleanElement("resizeFrame");
+	
+	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame",
+			function() { initBootstrapControls(); }
+	);
 }
 
 // Open diagram creation form in main screen section
