@@ -17,6 +17,8 @@ public class HtmlElement implements IHtml {
 	private String title;
 	
 	private String dataToggle;
+	
+	private String dataOriginalTitle;
 
 	public HtmlElement() {
 		this(null);
@@ -87,5 +89,14 @@ public class HtmlElement implements IHtml {
 
 	public void setDataToggle(String dataToggle) {
 		this.dataToggle = dataToggle;
+	}
+
+	@XmlAttribute( name = "data-original-title" )
+	public String getDataOriginalTitle() {
+		return dataOriginalTitle;
+	}
+
+	public void setDataOriginalTitle(String dataOriginalTitle) {
+		this.dataOriginalTitle = dataOriginalTitle;
 	}
 }
