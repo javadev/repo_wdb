@@ -342,7 +342,10 @@ function showError(message) {
 				str = new String(str).substr( 32 );
 			}
 		}
+		str += '<a class="close" data-dismiss="alert" href="#">&times;</a>';
 		obj.innerHTML = str;
+		
+		$('.alert').alert();
 	}
 }
 
