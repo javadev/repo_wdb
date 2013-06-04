@@ -279,10 +279,23 @@ public class CanvasFrameWriter {
 			}
 			Point[] basePoints = DivAnalog.getLine(link, block0, block1);
 
-			// TODO: create coords for item:
-
-			// TODO: implement this for "poly":
-			return null;
+			final int offset = 2;
+			List<java.awt.Point> points = new ArrayList<java.awt.Point>(basePoints.length * 2);
+			for (Point point : basePoints) {
+				points.add(new java.awt.Point(point.getX() + offset, point.getY()
+						+ offset));
+			}
+			for (Point point : basePoints) {
+				points.add(new java.awt.Point(point.getX() - offset, point.getY()
+						- offset));
+			}
+			Area area = new Area.Poly(points);
+			area.setTitle( link.getName() );
+			area.setId( "link-" + link.getKey() );
+			String diagramKey = diagramHelper.getDiagram().getKey();
+			String linkKey = link.getKey();
+			area.setOnMouseOver( getJsOnMouseOverLink(diagramKey, linkKey));
+			return area;
 		}
 
 		private Area createBlockArea(Block entity) {
@@ -292,18 +305,27 @@ public class CanvasFrameWriter {
 					.getLocation().getX() - size.getWidth() / 2, entity
 					.getLocation().getY() - size.getHeight() / 2);
 
-			String onMouseOver = getJsOnMouseOver(topLeft, size, diagramHelper
+			String onMouseOver = getJsOnMouseOverBlock(topLeft, size, diagramHelper
 					.getDiagram().getKey(), entity.getKey());
 
 			final Area.Rect area = new Area.Rect(topLeft, size.toAWT());
-			// area.setOnMouseDown(onMouseDown);
 			area.setOnMouseOver(onMouseOver);
 			area.setTitle(entity.getName());
 			area.setId("area-" + entity.getKey());
 			return area;
 		}
+		
+		private String getJsOnMouseOverLink( String diagramKey, String linkKey) {
+			StringBuilder result = new StringBuilder(128);
+			result.append("setCaretLink( event, '");
+			result.append(diagramKey);
+			result.append("','");
+			result.append( linkKey );
+			result.append("')");
+			return result.toString();
+		}		
 
-		private String getJsOnMouseOver(java.awt.Point topLeft, Dimension size,
+		private String getJsOnMouseOverBlock(java.awt.Point topLeft, Dimension size,
 				String diagramKey, String blockKey) {
 			StringBuilder result = new StringBuilder(128);
 			result.append("setCaret('");
