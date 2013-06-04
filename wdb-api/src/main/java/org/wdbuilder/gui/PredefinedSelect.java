@@ -23,7 +23,7 @@ public class PredefinedSelect<T extends DisplayNameAware> extends Div {
 	
 
 	public final Div create(String name) {
-		final Div result = new Div( "bs-dropdown" );
+		final Div result = new Div( "dropdown" );
 		result.setId(name);
 		
 		String valueStr = String.valueOf(defaultValue);
@@ -55,22 +55,6 @@ public class PredefinedSelect<T extends DisplayNameAware> extends Div {
 		}
 		result.add( ul );
 		return result;
-
-/*		
-		<div class="dropdown" id="background">
-        <a class="dropdown-toggle btn btn-small" data-toggle="dropdown"
-            href="#">Gray&nbsp;&nbsp;&nbsp;<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            <li><a href="#">Grey</a></li>
-            <li><a href="#">Dark Green</a></li>
-            <li><a href="#">Green</a></li>
-            <li><a href="#">Navy Blue</a></li>
-            <li><a href="#">Blue</a></li>
-            <li><a href="#">Olive</a></li>
-            <li><a href="#">Brick</a></li>
-        </ul>
-    </div>
-*/    
 		
 	}
 
