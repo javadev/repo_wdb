@@ -26,6 +26,7 @@ function initBootstrapControls() {
 	$('.btn').tooltip({
 		placement : 'bottom'
 	});	
+	$('.bs-dropdown').dropdown();		
 }
 
 // Reload diagram list and close active diagram
