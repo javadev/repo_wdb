@@ -14,6 +14,7 @@ import org.wdbuilder.utility.DiagramHelper;
 import static org.wdbuilder.gui.TwoColumnForm.CLASS_LINKBUTTON;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
+@Deprecated
 public class ConnectedLinkList extends Ol {
 
 	private final DiagramHelper diagramHelper;

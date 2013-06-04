@@ -18,11 +18,15 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		init();
+        $('.btn').tooltip({
+            placement : 'right'
+        });		
 	});
 </script>
 
 </head>
 <body>
+    <div id="errorArea" class="alert"></div>
 	<table class="well">
 		<tbody>
 			<tr>
@@ -50,7 +54,5 @@
 		</tbody>
 	</table>
 
-	<!-- TODO: TEMPORARY PLACE! Should be substituted by bootstrap alert -->
-	<div id="errorArea"></div>
 </body>
 </html>
