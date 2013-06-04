@@ -96,6 +96,40 @@ function hideCaret() {
 	$('#caret').html('');
 }
 
+//Set the caret:
+function setCaretLink( e, diagramKey, linkKey) {	
+	var c = $('#caret');
+	c.show();
+	var o = $('#frameImage').offset();
+	
+	e = new MouseHandler().fixEvent( e );
+	
+	o.left = e.pageX - 16;
+	o.top = e.pageY - 8;
+	
+	c.width( 32 );
+	c.height( 16 );
+	c.offset(o);
+	
+	var deleteCall = "deleteLink('" + diagramKey + "','" + linkKey + "');" +
+		"event.stopPropagation();return false;";
+	
+	var editCall = "openEditLinkDialog('" + diagramKey + "','" + linkKey + "');" +
+		"event.stopPropagation();return false;";	
+	
+	// Assign some buttons for blocks:
+	var str = '<div class="btn-group btn-mini cursor-icons">';
+	str += '<a href="#" class="inline-btn" title="Edit Link" onmousedown="' + editCall + '"><i class="icon-white icon-edit"></i></a>';	
+	str += '<a href="#" class="inline-btn" title="Delete Link" onmousedown="' + deleteCall + '"><i class="icon-white icon-remove"></i></a>';
+	str += '&nbsp;&nbsp;</div>';
+	
+	c.html( str );
+	
+	c.addClass( "selected" );
+	
+	initBootstrapControls();
+}
+
 // Reset form to initial values (handler of "reset" link)
 function resetForm() {
 	var formElem = document.getElementById("formId");
