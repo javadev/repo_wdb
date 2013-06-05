@@ -6,6 +6,7 @@ import org.wdbuilder.jaxbhtml.IHtml;
 import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Form;
 import org.wdbuilder.jaxbhtml.element.Input;
+import org.wdbuilder.jaxbhtml.element.Label;
 import org.wdbuilder.jaxbhtml.element.NoBr;
 import org.wdbuilder.jaxbhtml.element.Table;
 import org.wdbuilder.jaxbhtml.element.Td;
@@ -134,11 +135,14 @@ public class TwoColumnForm extends Form {
 		return fieldTd;
 	}
 
-	private Td createLabelTd(String label) {
+	private Td createLabelTd(String text) {
 		Td labelTd = new Td(CLASS);
 		Td.HAlign.right.set(labelTd);
 		Td.VAlign.top.set(labelTd);
-		labelTd.setText(label + ":");
+		
+		Label label = new Label();
+		label.setText(text + " :" );
+		labelTd.add( label );
 		return labelTd;
 	}
 
