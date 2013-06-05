@@ -20,7 +20,9 @@ import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.gui.IUIActionId;
 import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.jaxbhtml.HtmlElement;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
+import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Area;
 import org.wdbuilder.jaxbhtml.element.Img;
 import org.wdbuilder.jaxbhtml.element.Map;
@@ -133,6 +135,15 @@ public class CanvasFrameWriter {
 					@Override
 					public String getURL() {
 						return prepareUrlForExport();
+					}
+
+					@Override
+					public void setActionToHTMLElement(HtmlElement element) {
+						if( !A.class.isInstance(element) ) {
+							return;
+						}
+						A a = A.class.cast(element);
+						a.setHref( getURL() );
 					}
 				};
 			}
@@ -496,6 +507,6 @@ public class CanvasFrameWriter {
 	}
 }
 
-interface IUIActionClickUI extends IUIActionClick, IUIActionId {
+abstract class IUIActionClickUI extends IUIActionClick implements IUIActionId {
 
 }
