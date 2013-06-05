@@ -141,7 +141,7 @@ public class TwoColumnForm extends Form {
 		Td.VAlign.top.set(labelTd);
 		
 		Label label = new Label();
-		label.setText(text + " :" );
+		label.setText(text + ": " );
 		labelTd.add( label );
 		return labelTd;
 	}
