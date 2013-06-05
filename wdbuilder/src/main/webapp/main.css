@@ -1,4 +1,3 @@
-
 @IMPORT url("bootstrap/css/bootstrap.css");
 
 /* Common HTML styles */
@@ -21,6 +20,10 @@ label {
 	font-size: 8pt;
 	font-weight: bold;
 	cursor: default;
+}
+
+div.dropdown {
+	margin: 0.5em;
 }
 
 .title {
