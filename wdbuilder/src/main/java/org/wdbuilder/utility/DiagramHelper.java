@@ -60,22 +60,6 @@ public class DiagramHelper {
 		return result;
 	}
 
-	public Collection<Link> getConnectedLinks(Block baseBlock) {
-		final String baseBlockKey = baseBlock.getKey();
-		final Predicate<Link> predicate = new Predicate<Link>() {
-			@Override
-			public boolean apply(@Nullable Link link) {
-				for (final LinkSocket socket : link.getSockets()) {
-					if (baseBlockKey.equals(socket.getBlockKey())) {
-						return true;
-					}
-				}
-				return false;
-			}
-		};
-		return Collections2.filter(diagram.getLinks(), predicate);
-	}
-
 	public Point getOffset(LinkSocket socket) {
 		Block block = findBlockByKey(socket.getBlockKey());
 		if (null == block) {
@@ -138,6 +122,22 @@ public class DiagramHelper {
 				return;
 			}
 		}
+	}
+	
+	private Collection<Link> getConnectedLinks(Block baseBlock) {
+		final String baseBlockKey = baseBlock.getKey();
+		final Predicate<Link> predicate = new Predicate<Link>() {
+			@Override
+			public boolean apply(@Nullable Link link) {
+				for (final LinkSocket socket : link.getSockets()) {
+					if (baseBlockKey.equals(socket.getBlockKey())) {
+						return true;
+					}
+				}
+				return false;
+			}
+		};
+		return Collections2.filter(diagram.getLinks(), predicate);
 	}
 
 	public final void calculatePivot(Link link) {
