@@ -20,7 +20,7 @@ public class HtmlWriter {
 				Map.class, Td.class, Tr.class, Table.class, Div.class,
 				Ul.class, Ol.class, Li.class, Span.class, A.class, Input.class,
 				Form.class, Select.class, Option.class, NoBr.class, I.class,
-				B.class, 
+				B.class, Label.class,
 				Button.class);
 	}
 
