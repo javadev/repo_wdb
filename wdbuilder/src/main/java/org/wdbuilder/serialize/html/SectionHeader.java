@@ -36,12 +36,15 @@ public class SectionHeader extends Div {
 		result.setTitle( uiAction.getTitle() );
 		result.setDataOriginalTitle(uiAction.getTitle());
 		result.add(i);
+		uiAction.setActionToHTMLElement(result);
+		/*
 		if (IUIActionClick.class.isInstance(uiAction)) {
 			result.setOnClick(IUIActionClick.class.cast(uiAction)
 					.getOnClickHandler());
 		} else if (IUIActionURL.class.isInstance(uiAction)) {
 			result.setHref(IUIActionURL.class.cast(uiAction).getURL());
 		}
+		*/
 		return result;
 	}
 }
