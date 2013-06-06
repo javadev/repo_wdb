@@ -255,16 +255,6 @@ public class CanvasFrameWriter {
 				}
 			}
 
-			/*
-			 * final LinkSocket socket0 = link.getSockets().get(0); final
-			 * LinkSocket socket1 = link.getSockets().get(1);
-			 * 
-			 * final Block block0 = renderCtx.getBlock(socket0.getBlockKey());
-			 * final Block block1 = renderCtx.getBlock(socket1.getBlockKey());
-			 * 
-			 * DivAnalog.render(gr, link, block0, block1);
-			 */
-
 			add(createResizeArea());
 		}
 
@@ -290,7 +280,7 @@ public class CanvasFrameWriter {
 			}
 			Point[] basePoints = DivAnalog.getLine(link, block0, block1);
 
-			final int offset = 2;
+			final int offset = 4;
 			List<java.awt.Point> points = new ArrayList<java.awt.Point>(basePoints.length * 2);
 			for (Point point : basePoints) {
 				points.add(new java.awt.Point(point.getX() + offset, point.getY()
