@@ -152,12 +152,6 @@ public class CommonBlockPluginFacade implements IBlockPluginFacade {
 	}
 
 	@Override
-	public UIExistingEntityFormFactory<Block> getViewFormFactory(
-			String diagramKey, Block block) {
-		return new ViewFormFactory(diagramKey, block);
-	}
-
-	@Override
 	public UIExistingEntityFormFactory<Block> getEditFormFactory(
 			String diagramKey, Block block) {
 		return new EditFormFactory(diagramKey, block);
