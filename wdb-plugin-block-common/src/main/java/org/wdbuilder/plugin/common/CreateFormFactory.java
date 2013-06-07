@@ -27,6 +27,7 @@ class CreateFormFactory extends UINewBlockFormFactory {
 
 		final TwoColumnForm form = new TwoColumnForm("create-common-block-save", "Create Common Block" )
 				.addHiddenField(BlockParameter.DiagramKey, this.diagramKey )
+				.addHiddenField(BlockParameter.BlockClass, CommonBlock.class.getCanonicalName() )
 				.addTextField(BlockParameter.Name, "")
 				.addSelectField(Parameter.Shape, shapeSelectField)
 				.addTextField(BlockParameter.Width, "70")
