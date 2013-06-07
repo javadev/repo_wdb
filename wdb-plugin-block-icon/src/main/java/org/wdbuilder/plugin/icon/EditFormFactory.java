@@ -36,7 +36,7 @@ class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 
 	@Override
 	public String getSubmitCall() {
-		return "submitEditBlock()'";
+		return "submitEditBlock()";
 	}
 
 	@Override
