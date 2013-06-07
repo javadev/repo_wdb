@@ -7,6 +7,7 @@ import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.plugin.icon.IconBlockPluginFacade.Parameter;
 import org.wdbuilder.plugin.icon.domain.IconBlock;
 
+@Deprecated
 class ViewFormFactory extends UIExistingEntityFormFactory<Block> {
 
 	ViewFormFactory(String diagramKey, Block block) {
