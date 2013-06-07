@@ -179,16 +179,12 @@ function submitCreateBlock(diagramKey, blockClass, fieldNames ) {
 
 function submitEditBlock(diagramKey, blockKey, fieldNames ) {
 	submitForm("edit-block-save", callbackReloadBlock);
-	
-	// Hide the moving block:
-	hideTemporaryObject( document.getElementById("car"));
+	$('#caret').hide();
 }
 
 function submitEditLink(diagramKey, linkKey, fieldNames ) {
 	submitForm("edit-link-save", callbackReloadBlock);
-	
-	// Hide the moving block:
-	hideTemporaryObject( document.getElementById("car"));	
+	$('#caret').hide();
 }
 
 // Drop diagram
