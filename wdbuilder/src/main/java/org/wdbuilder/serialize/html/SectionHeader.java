@@ -5,7 +5,6 @@ import java.util.Collections;
 import javax.xml.bind.JAXBException;
 
 import org.wdbuilder.gui.IUIAction;
-import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Div;
 import org.wdbuilder.jaxbhtml.element.I;
@@ -36,12 +35,7 @@ public class SectionHeader extends Div {
 		result.setTitle( uiAction.getTitle() );
 		result.setDataOriginalTitle(uiAction.getTitle());
 		result.add(i);
-		if (IUIActionClick.class.isInstance(uiAction)) {
-			result.setOnClick(IUIActionClick.class.cast(uiAction)
-					.getOnClickHandler());
-		} else if (IUIActionURL.class.isInstance(uiAction)) {
-			result.setHref(IUIActionURL.class.cast(uiAction).getURL());
-		}
+		uiAction.setActionToHTMLElement(result);
 		return result;
 	}
 }

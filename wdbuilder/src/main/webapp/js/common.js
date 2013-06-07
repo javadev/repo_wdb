@@ -76,42 +76,43 @@ function loadContent(url, containerId, callback ) {
 	});
 }
 
-// Simple form submission via XMLHttpRequest (POST method) (from Javascript.RU) 
-function submitForm( url, params, acceptor) {
+function submitForm( aUrl, anAcceptor) {
 	document.body.style.cursor = "wait";
-	var request = getXmlHttp();
-	if (request) {
-		request.onreadystatechange = function() {
-			if (4 == request.readyState) {
-				document.body.style.cursor = "default";
-				if (200 == request.status) {
-					clearError();
-					acceptor( request.responseText);
-				} else {
-					// Some error:
-					showError(request.responseText);
-				}
-			}
-		};
-		// Request without caching
-		request.open("POST", url, true);
-		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-		request.setRequestHeader("Content-length", params.length);
-		// request.setRequestHeader("connection", "close");
-		request.send(params);
-	}
+	var paramsStr = $('#formId').serialize();
+	$.ajax({
+		type: "POST",
+		dataType: "html",
+		url: aUrl,
+		data: paramsStr,
+		success : function( data ) {
+			document.body.style.cursor = "default";
+			anAcceptor( data );
+		},
+		error : function ( data ) {
+			document.body.style.cursor = "default";
+			showError(request.responseText);
+		}		
+	});
 }
 
-// Submit form and show HTML content from HTTP response from server in some screen element 
-function submitFormWithContentReturn( url, params, containerId) {
-	submitForm(url, params, function(response) {
-		var elem = document.getElementById(containerId);
-		if (!elem) {
-			return;
-		}
-		elem.innerHTML = response;
-		elem.style.display = "block";
-		document.body.style.cursor = "default";
-	});
+function submitFormWithContentReturn( url, containerId) {
+	document.body.style.cursor = "wait";
+	var paramsStr = $('#formId').serialize();
+	$.ajax({
+		type: "POST",
+		dataType: "html",
+		url: aUrl,
+		data: paramsStr,
+		success : function( data ) {
+			document.body.style.cursor = "default";
+			var elem = $('#' + containerId );
+			elem.show();
+			elem.html( data );
+		},
+		error : function ( data ) {
+			document.body.style.cursor = "default";
+			showError(request.responseText);
+		}		
+	});	
 }
 

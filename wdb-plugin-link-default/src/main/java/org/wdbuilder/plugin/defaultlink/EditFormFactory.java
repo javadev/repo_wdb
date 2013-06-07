@@ -1,14 +1,10 @@
 package org.wdbuilder.plugin.defaultlink;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.BlockParameter;
-import org.wdbuilder.input.IParameter;
 import org.wdbuilder.plugin.defaultlink.DefaultLinkPluginFacade.Parameter;
 import org.wdbuilder.view.line.LineStyle;
 import org.wdbuilder.view.line.end.LineEnd;
@@ -37,6 +33,7 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 
 		final TwoColumnForm form = new TwoColumnForm("edit-link-save", "Edit Link")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
+				.addHiddenField(BlockParameter.LinkKey, entity.getKey())
 				.addTextField(BlockParameter.Name, entity.getName())
 				.addSelectField(Parameter.LineColor, lineColorSelect)
 				.addSelectField(Parameter.LineStyle, lineStyleSelect)
@@ -48,10 +45,7 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 	@Override
 	public String getSubmitCall() {
 		StringBuilder sb = new StringBuilder(128).append("submitEditLink('")
-				.append(diagramKey).append("','").append(entity.getKey())
-				.append("',");
-		appendFieldNames(sb, getParameters());
-		sb.append(')');
+				.append(diagramKey).append("')");
 		return sb.toString();
 	}
 
@@ -59,15 +53,4 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 	public String getTitle() {
 		return "Edit Link";
 	}
-
-	private static Iterable<IParameter> getParameters() {
-		List<IParameter> result = new ArrayList<IParameter>(2);
-		result.add(BlockParameter.Name);
-		result.add(Parameter.LineColor);
-		result.add(Parameter.LineStyle);
-		result.add(Parameter.StartType);
-		result.add(Parameter.EndType);
-		return result;
-	}
-
 }

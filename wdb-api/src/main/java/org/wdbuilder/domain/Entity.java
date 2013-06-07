@@ -6,12 +6,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
+@SuppressWarnings("serial")
 public class Entity implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	private String key;
 	private String name;
-
+	
 	@XmlAttribute
 	public String getKey() {
 		return key;
@@ -29,9 +29,6 @@ public class Entity implements Serializable {
 	}
 
 	public void setName(String name) {
-		if (isEmpty(name)) {
-			throw new IllegalArgumentException("Name can't be empty");
-		}
 		this.name = name;
 	}
 
