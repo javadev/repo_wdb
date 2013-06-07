@@ -14,6 +14,8 @@ function init() {
 	WDB.LineDraw = new LineDraw();
 		
 	refreshDiagramList();
+	
+	$('.errorArea').hide();
 }
 
 function hideProperties() {
