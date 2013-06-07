@@ -141,105 +141,51 @@ function resetForm() {
 
 // Submit form data for diagram creation
 function submitCreateCanvas() {
-	var formElem = document.getElementById("formId");
-	if (!formElem) {
-		return;
-	}
-	var params = "name=" + totalEncode(formElem.name.value) 
-			+ "&background=" + formElem.background.value;
-	submitForm("create-diagram-save", params, function(response) {
-		var elem = document.getElementById("canvasFrame");
-		if (!elem) {
-			return;
-		}
-		elem.innerHTML = response;
-		elem.style.display = "block";
-		document.body.style.cursor = "default";
-		loadDiagramList(true);
+	submitForm( "create-diagram-save", function( response ) {
+		$('#canvasFrame').empty().append( response ).show();
+		loadDiagramList(true);	
 	});
 }
 
 // Submit form data for existing diagram updating
 function submitEditCanvas() {
+
+	// TODO replace by AJAX code
 	var formElem = document.getElementById("formId");
 	if (!formElem) {
 		return;
 	}
-	var diagramKey = formElem.dkey.value;
-	var params = "name=" + totalEncode(formElem.name.value) + "&dkey=" + diagramKey 
-			+ "&background=" + formElem.background.value;
-	submitForm("edit-diagram-save", params, function(response) {
-		var elem = document.getElementById("properties");
-		if (!elem) {
-			return;
-		}
-		elem.innerHTML = response;
-		elem.style.display = "block";
-		document.body.style.cursor = "default";
+	var diagramKey = formElem.dkey.value;	
+	
+	submitForm( "edit-diagram-save", function( response ) {
+		// $('#properties').empty().append( response ).show();
 		refreshDiagramList();
 		loadCanvas(diagramKey);
-		hideProperties();
+		hideProperties();	
 	});
 }
 
 // Callback function for block creation
 function callbackReloadBlock(response, diagramKey, blockKey) {
-	var elem = document.getElementById("canvasFrame");
-	if (!elem) {
-		return;
-	}
-	// Response contains newly created block id:
-	elem.innerHTML = response;
-	elem.style.display = "block";
+	$('#canvasFrame').empty().html( response ).show();
 	document.body.style.cursor = "default";
 	hideProperties();
 }
 
 //Submit data for new block creation
 function submitCreateBlock(diagramKey, blockClass, fieldNames ) {
-	
-	var formElem = document.getElementById("formId");
-	if (!formElem) {
-		return;
-	}
-	var params = "dkey=" + diagramKey + "&blockClass=" + blockClass;
-	for( var i=0; i<fieldNames.length; i++ ) {
-		params += "&" + fieldNames[i] + "=" + formElem[ fieldNames[i] ].value;
-	}
-	
-	var blockKey = null; // variable for callback function
-	submitForm("create-block-save", params, callbackReloadBlock);
+	submitForm("create-block-save", callbackReloadBlock);
 }
 
 function submitEditBlock(diagramKey, blockKey, fieldNames ) {
-	var formElem = document.getElementById("formId");
-	if (!formElem) {
-		return;
-	}
-	
-	var params = "dkey=" + diagramKey + "&bkey=" + blockKey;
-	for( var i=0; i<fieldNames.length; i++ ) {
-		params += "&" + fieldNames[i] + "=" + formElem[ fieldNames[i] ].value;
-	}
-	
-	submitForm("edit-block-save", params, callbackReloadBlock);
+	submitForm("edit-block-save", callbackReloadBlock);
 	
 	// Hide the moving block:
 	hideTemporaryObject( document.getElementById("car"));
 }
 
 function submitEditLink(diagramKey, linkKey, fieldNames ) {
-	var formElem = document.getElementById("formId");
-	if (!formElem) {
-		return;
-	}
-	
-	var params = "dkey=" + diagramKey + "&lkey=" + linkKey;
-	for( var i=0; i<fieldNames.length; i++ ) {
-		params += "&" + fieldNames[i] + "=" + formElem[ fieldNames[i] ].value;
-	}
-	
-	submitForm("edit-link-save", params, callbackReloadBlock);
+	submitForm("edit-link-save", callbackReloadBlock);
 	
 	// Hide the moving block:
 	hideTemporaryObject( document.getElementById("car"));	
