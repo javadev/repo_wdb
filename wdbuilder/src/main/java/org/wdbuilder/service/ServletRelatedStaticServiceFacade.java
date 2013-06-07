@@ -1,7 +1,7 @@
 package org.wdbuilder.service;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.servlet.ServletConfig;
@@ -62,7 +62,7 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 
 	private static Collection<IBlockPluginFacade> getBlockPlugins(
 			ServletConfig servletConfig) {
-		Set<IBlockPluginFacade> result = new HashSet<IBlockPluginFacade>(2);
+		Set<IBlockPluginFacade> result = new LinkedHashSet<IBlockPluginFacade>(2);
 
 		String contextParamStr = servletConfig.getServletContext()
 				.getInitParameter("block-plugins");
@@ -101,7 +101,7 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 
 	private static Collection<ILinkPluginFacade> getLinkPlugins(
 			ServletConfig servletConfig) {
-		Set<ILinkPluginFacade> result = new HashSet<ILinkPluginFacade>(2);
+		Set<ILinkPluginFacade> result = new LinkedHashSet<ILinkPluginFacade>(2);
 
 		String contextParamStr = servletConfig.getServletContext()
 				.getInitParameter("link-plugins");
