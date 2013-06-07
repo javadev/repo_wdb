@@ -149,18 +149,9 @@ function submitCreateCanvas() {
 
 // Submit form data for existing diagram updating
 function submitEditCanvas() {
-
-	// TODO replace by AJAX code
-	var formElem = document.getElementById("formId");
-	if (!formElem) {
-		return;
-	}
-	var diagramKey = formElem.dkey.value;	
-	
 	submitForm( "edit-diagram-save", function( response ) {
-		// $('#properties').empty().append( response ).show();
-		refreshDiagramList();
-		loadCanvas(diagramKey);
+		$('#canvasFrame').empty().append( response ).show();
+		loadDiagramList(true);
 		hideProperties();	
 	});
 }
