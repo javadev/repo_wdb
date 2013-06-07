@@ -1,19 +1,3 @@
-/**
- * 	common.js
- * 		set of function for support of uniform mouse event and XML requests processing
- * 	    (based on code, borrowed from site http://javascript.ru/ )
- * 
- *   	(tested on IE/Firefox/Chrome)
- */ 
-
-// Trim the string
-function trim(str){
-	return str.replace(/^ss*/, '').replace(/ss*$/, '');
-}
-// Encode trimmed string
-function totalEncode(str){
-	return escape(trim(str));
-}
 
 // Generalized XMLHttpRequest creation (from Javascript.RU)
 function getXmlHttp() {
@@ -78,7 +62,7 @@ function loadContent(url, containerId, callback ) {
 
 function submitForm( aUrl, anAcceptor) {
 	document.body.style.cursor = "wait";
-	var paramsStr = $('#formId').serialize();
+	var paramsStr = $('#formId').serialize();		
 	$.ajax({
 		type: "POST",
 		dataType: "html",
@@ -93,26 +77,5 @@ function submitForm( aUrl, anAcceptor) {
 			showError(request.responseText);
 		}		
 	});
-}
-
-function submitFormWithContentReturn( url, containerId) {
-	document.body.style.cursor = "wait";
-	var paramsStr = $('#formId').serialize();
-	$.ajax({
-		type: "POST",
-		dataType: "html",
-		url: aUrl,
-		data: paramsStr,
-		success : function( data ) {
-			document.body.style.cursor = "default";
-			var elem = $('#' + containerId );
-			elem.show();
-			elem.html( data );
-		},
-		error : function ( data ) {
-			document.body.style.cursor = "default";
-			showError(request.responseText);
-		}		
-	});	
 }
 
