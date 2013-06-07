@@ -166,7 +166,7 @@ function submitEditCanvas() {
 }
 
 // Callback function for block creation
-function callbackReloadBlock(response, diagramKey, blockKey) {
+function callbackReloadBlock(response) {
 	$('#canvasFrame').empty().html( response ).show();
 	document.body.style.cursor = "default";
 	hideProperties();
@@ -183,7 +183,9 @@ function submitEditBlock(diagramKey, blockKey, fieldNames ) {
 }
 
 function submitEditLink(diagramKey, linkKey, fieldNames ) {
-	submitForm("edit-link-save", callbackReloadBlock);
+	submitForm("edit-link-save", function() {
+		loadCanvas(diagramKey);
+	});
 	$('#caret').hide();
 }
 
