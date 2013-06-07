@@ -11,6 +11,7 @@ import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@Deprecated
 @SuppressWarnings("serial")
 @WebServlet("/selected-block-info")
 public class SelectedBlockInfoServlet extends DiagramHelperFormServlet {
