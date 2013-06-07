@@ -173,16 +173,16 @@ function callbackReloadBlock(response) {
 }
 
 //Submit data for new block creation
-function submitCreateBlock(diagramKey, blockClass, fieldNames ) {
+function submitCreateBlock() {
 	submitForm("create-block-save", callbackReloadBlock);
 }
 
-function submitEditBlock(diagramKey, blockKey, fieldNames ) {
+function submitEditBlock() {
 	submitForm("edit-block-save", callbackReloadBlock);
 	$('#caret').hide();
 }
 
-function submitEditLink(diagramKey, linkKey, fieldNames ) {
+function submitEditLink(diagramKey) {
 	submitForm("edit-link-save", function() {
 		loadCanvas(diagramKey);
 	});
