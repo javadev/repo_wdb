@@ -5,7 +5,8 @@ import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.validator.IValidator;
 
-public interface IEntityPluginFacade<T extends Entity> extends IPluginFacade<T> {
+public interface IEntityPluginFacade<T extends Entity> extends
+		IPluginFacade<T, IRenderContext> {
 
 	public Class<?> getEntityClass();
 
