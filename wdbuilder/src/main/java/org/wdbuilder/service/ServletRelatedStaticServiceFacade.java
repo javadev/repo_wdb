@@ -12,6 +12,8 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.ILinkPluginFacade;
+import org.wdbuilder.plugin.ILinkRenderContext;
+import org.wdbuilder.plugin.IRenderContext;
 
 // TODO this initialization should be substituted by some IoC in the future (2013/05/06)
 public class ServletRelatedStaticServiceFacade implements IServiceFacade {
@@ -33,14 +35,14 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 	}
 
 	private final DiagramService diagramService = new StaticDiagramService(this);
-	private final IPluginFacadeRepository<Block, IBlockPluginFacade> blockPluginRepository;
-	private final IPluginFacadeRepository<Link, ILinkPluginFacade> linkPluginRepository;
+	private final IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> blockPluginRepository;
+	private final IPluginFacadeRepository<Link, ILinkPluginFacade, ILinkRenderContext> linkPluginRepository;
 
 	private ServletRelatedStaticServiceFacade(ServletConfig servletConfig) {
 		LOG.info("initialization by " + servletConfig);
-		blockPluginRepository = new PluginFacadeRepository<Block, IBlockPluginFacade>(
+		blockPluginRepository = new PluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext>(
 				getBlockPlugins(servletConfig));
-		linkPluginRepository = new PluginFacadeRepository<Link, ILinkPluginFacade>(
+		linkPluginRepository = new PluginFacadeRepository<Link, ILinkPluginFacade, ILinkRenderContext>(
 				getLinkPlugins(servletConfig));
 		LOG.info("initialization: done");
 	}
@@ -51,31 +53,31 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 	}
 
 	@Override
-	public IPluginFacadeRepository<Block, IBlockPluginFacade> getBlockPluginRepository() {
+	public IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> getBlockPluginRepository() {
 		return blockPluginRepository;
 	}
 
 	@Override
-	public IPluginFacadeRepository<Link, ILinkPluginFacade> getLinkPluginRepository() {
+	public IPluginFacadeRepository<Link, ILinkPluginFacade, ILinkRenderContext> getLinkPluginRepository() {
 		return linkPluginRepository;
 	}
 
 	private static Collection<IBlockPluginFacade> getBlockPlugins(
 			ServletConfig servletConfig) {
-		Set<IBlockPluginFacade> result = new LinkedHashSet<IBlockPluginFacade>(2);
+		Set<IBlockPluginFacade> result = new LinkedHashSet<IBlockPluginFacade>(
+				2);
 
 		String contextParamStr = servletConfig.getServletContext()
 				.getInitParameter("block-plugins");
-		
+
 		// TODO: TEMPORARY SOLUTION!!!!!!!
-		contextParamStr = "org.wdbuilder.plugin.common.CommonBlockPluginFacade," +
-		  		"org.wdbuilder.plugin.icon.IconBlockPluginFacade";
-		
+		contextParamStr = "org.wdbuilder.plugin.common.CommonBlockPluginFacade,"
+				+ "org.wdbuilder.plugin.icon.IconBlockPluginFacade";
+
 		if (StringUtils.isEmpty(contextParamStr)) {
 			return result;
 		}
-		
-		
+
 		String[] pairs = contextParamStr.split(",");
 		for (final String str : pairs) {
 			Class<?> klass = getClass(str);
@@ -105,10 +107,10 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 
 		String contextParamStr = servletConfig.getServletContext()
 				.getInitParameter("link-plugins");
-		
+
 		// TODO: TEMPORARY SOLUTION!!!!!!!
 		contextParamStr = "org.wdbuilder.plugin.defaultlink.DefaultLinkPluginFacade";
-		
+
 		if (StringUtils.isEmpty(contextParamStr)) {
 			return result;
 		}
