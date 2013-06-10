@@ -30,6 +30,7 @@ import org.wdbuilder.jaxbhtml.element.Table;
 import org.wdbuilder.jaxbhtml.element.Td;
 import org.wdbuilder.jaxbhtml.element.Tr;
 import org.wdbuilder.plugin.IBlockPluginFacade;
+import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.serialize.html.SectionHeader;
 import org.wdbuilder.serialize.html.IUIActionURL;
 import org.wdbuilder.service.DiagramService;
@@ -45,11 +46,11 @@ public class CanvasFrameWriter {
 	private static final String ID_IMAGE_MAP = "diagramImageMap";
 
 	private final DiagramHelper diagramHelper;
-	private IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository;
+	private IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> pluginFacadeRepository;
 
 	public CanvasFrameWriter(
 			final DiagramHelper diagramHelper,
-			IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository) {
+			IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> pluginFacadeRepository) {
 		this.diagramHelper = diagramHelper;
 		this.pluginFacadeRepository = pluginFacadeRepository;
 	}
@@ -139,11 +140,11 @@ public class CanvasFrameWriter {
 
 					@Override
 					public void setActionToHTMLElement(HtmlElement element) {
-						if( !A.class.isInstance(element) ) {
+						if (!A.class.isInstance(element)) {
 							return;
 						}
 						A a = A.class.cast(element);
-						a.setHref( getURL() );
+						a.setHref(getURL());
 					}
 				};
 			}
@@ -281,21 +282,22 @@ public class CanvasFrameWriter {
 			Point[] basePoints = DivAnalog.getLine(link, block0, block1);
 
 			final int offset = 4;
-			List<java.awt.Point> points = new ArrayList<java.awt.Point>(basePoints.length * 2);
+			List<java.awt.Point> points = new ArrayList<java.awt.Point>(
+					basePoints.length * 2);
 			for (Point point : basePoints) {
-				points.add(new java.awt.Point(point.getX() + offset, point.getY()
-						+ offset));
+				points.add(new java.awt.Point(point.getX() + offset, point
+						.getY() + offset));
 			}
 			for (Point point : basePoints) {
-				points.add(new java.awt.Point(point.getX() - offset, point.getY()
-						- offset));
+				points.add(new java.awt.Point(point.getX() - offset, point
+						.getY() - offset));
 			}
 			Area area = new Area.Poly(points);
-			area.setTitle( link.getName() );
-			area.setId( "link-" + link.getKey() );
+			area.setTitle(link.getName());
+			area.setId("link-" + link.getKey());
 			String diagramKey = diagramHelper.getDiagram().getKey();
 			String linkKey = link.getKey();
-			area.setOnMouseOver( getJsOnMouseOverLink(diagramKey, linkKey));
+			area.setOnMouseOver(getJsOnMouseOverLink(diagramKey, linkKey));
 			return area;
 		}
 
@@ -306,8 +308,8 @@ public class CanvasFrameWriter {
 					.getLocation().getX() - size.getWidth() / 2, entity
 					.getLocation().getY() - size.getHeight() / 2);
 
-			String onMouseOver = getJsOnMouseOverBlock(topLeft, size, diagramHelper
-					.getDiagram().getKey(), entity.getKey());
+			String onMouseOver = getJsOnMouseOverBlock(topLeft, size,
+					diagramHelper.getDiagram().getKey(), entity.getKey());
 
 			final Area.Rect area = new Area.Rect(topLeft, size.toAWT());
 			area.setOnMouseOver(onMouseOver);
@@ -315,19 +317,19 @@ public class CanvasFrameWriter {
 			area.setId("area-" + entity.getKey());
 			return area;
 		}
-		
-		private String getJsOnMouseOverLink( String diagramKey, String linkKey) {
+
+		private String getJsOnMouseOverLink(String diagramKey, String linkKey) {
 			StringBuilder result = new StringBuilder(128);
 			result.append("setCaretLink( event, '");
 			result.append(diagramKey);
 			result.append("','");
-			result.append( linkKey );
+			result.append(linkKey);
 			result.append("')");
 			return result.toString();
-		}		
+		}
 
-		private String getJsOnMouseOverBlock(java.awt.Point topLeft, Dimension size,
-				String diagramKey, String blockKey) {
+		private String getJsOnMouseOverBlock(java.awt.Point topLeft,
+				Dimension size, String diagramKey, String blockKey) {
 			StringBuilder result = new StringBuilder(128);
 			result.append("setCaret('");
 			result.append(diagramKey);
