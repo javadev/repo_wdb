@@ -1,3 +1,4 @@
+@Deprecated
 package org.wdbuilder.domain;
 
 import java.awt.Color;
