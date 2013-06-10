@@ -5,11 +5,11 @@ import java.util.Collection;
 import org.wdbuilder.domain.Entity;
 import org.wdbuilder.plugin.IPluginFacade;
 
-public interface IPluginFacadeRepository<T extends Entity, S extends IPluginFacade<T>> {
+public interface IPluginFacadeRepository<T extends Entity, U extends IPluginFacade<T, S>, S> {
 
-	public Iterable<S> getPlugins();
+	public Iterable<U> getPlugins();
 
-	public S getFacade(Class<?> klass);
+	public U getFacade(Class<?> klass);
 
 	public Collection<Class<?>> getEntityClasses();
 }
