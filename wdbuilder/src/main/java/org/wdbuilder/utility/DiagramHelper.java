@@ -145,23 +145,15 @@ public class DiagramHelper {
 		// Every link should have at least 2 ends:
 		final LinkSocket socket0 = link.getSockets().get(0);
 		final LinkSocket socket1 = link.getSockets().get(1);
-
-		final String key0 = socket0.getBlockKey();
-		final String key1 = socket1.getBlockKey();
-
-		final Block begin = findBlockByKey(key0);
-		if (null == begin) {
+		
+		final Point beginP = getOffset(socket0);
+		final Point endP = getOffset(socket1);
+		if( null==beginP || null==endP ) {
 			return;
 		}
-		final Block end = findBlockByKey(key1);
-		if (null == end) {
-			return;
-		}
-		Point beginP = socket0.getOffset(begin);
-		Point endP = socket1.getOffset(end);
-
-		link.setPivot(new Point((beginP.getX() + endP.getX()) / 2, (beginP
-				.getY() + endP.getY()) / 2));
+		final int x = (beginP.getX() + endP.getX()) / 2;
+		final int y = (beginP.getY() + endP.getY()) / 2;		
+		link.setPivot(new Point(x,y));
 	}
 
 	public boolean hasLinkWithSameEnds(Link probeLink) {

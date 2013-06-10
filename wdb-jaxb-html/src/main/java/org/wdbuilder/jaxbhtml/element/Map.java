@@ -13,7 +13,6 @@ import org.wdbuilder.jaxbhtml.AHtmlContainer;
 @XmlRootElement(name = "map")
 public class Map extends AHtmlContainer<Area> {
 	
-	@XmlAttribute
 	private String name;
 
 	private Collection<Area> area = new ArrayList<Area>( 4 );
@@ -26,6 +25,11 @@ public class Map extends AHtmlContainer<Area> {
 	
 	public void setName( String name ) {
 		this.name = name;
+	}
+	
+	@XmlAttribute
+	public String getName() {
+		return this.name;
 	}
 	
 

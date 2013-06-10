@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-// TODO: check the text here (and think about some procedure of checking nested elements)
+@Deprecated
 public class SelectTest extends ElementTest {
 
 	@Test

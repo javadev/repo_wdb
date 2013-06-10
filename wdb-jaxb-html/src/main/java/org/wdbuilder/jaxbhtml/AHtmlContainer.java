@@ -17,7 +17,6 @@ public abstract class AHtmlContainer<T extends IHtml> extends HtmlElement {
 
 	public abstract Collection<T> getContent();
 
-	@XmlElement
 	private String span;
 
 	public final AHtmlContainer<T> add(Collection<T> content) {
@@ -43,7 +42,16 @@ public abstract class AHtmlContainer<T extends IHtml> extends HtmlElement {
 
 	public final AHtmlContainer<T> setText(String text) {
 		getContent().clear();
-		this.span = text;
+		this.setSpan(text);
 		return this;
+	}
+
+	@XmlElement
+	public String getSpan() {
+		return span;
+	}
+
+	public void setSpan(String span) {
+		this.span = span;
 	}
 }
