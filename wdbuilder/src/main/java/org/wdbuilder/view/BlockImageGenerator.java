@@ -15,11 +15,11 @@ import org.wdbuilder.web.ApplicationState;
 
 public class BlockImageGenerator extends ImageGenerator {
 
-	private final IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository;
+	private final IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> pluginFacadeRepository;
 
 	public BlockImageGenerator(
 			ApplicationState appState,
-			IPluginFacadeRepository<Block, IBlockPluginFacade> pluginFacadeRepository) {
+			IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> pluginFacadeRepository) {
 		super(appState);
 		this.pluginFacadeRepository = pluginFacadeRepository;
 	}
