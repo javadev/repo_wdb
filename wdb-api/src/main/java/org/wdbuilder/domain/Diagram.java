@@ -7,16 +7,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-
-/**
- * Diagram, that contains child elements (blocks)
- * 
- * @author o.pavloschuk
- * 
- */
-
 @XmlRootElement
-//@XmlSeeAlso({ CommonBlock.class, IconBlock.class, Block.class, Diagram.class, LinkSocket.class, Link.class })
 @XmlSeeAlso({ Block.class, Diagram.class, LinkSocket.class, Link.class })
 public class Diagram extends SizedEntity {
 	private static final long serialVersionUID = 1L;

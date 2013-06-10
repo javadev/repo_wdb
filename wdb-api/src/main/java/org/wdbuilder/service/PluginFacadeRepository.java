@@ -7,24 +7,24 @@ import java.util.Map;
 import org.wdbuilder.domain.Entity;
 import org.wdbuilder.plugin.IPluginFacade;
 
-public class PluginFacadeRepository<T extends Entity, S extends IPluginFacade<T>>
-		implements IPluginFacadeRepository<T, S> {
+public class PluginFacadeRepository<T extends Entity, U extends IPluginFacade<T,S>, S>
+		implements IPluginFacadeRepository<T, U, S> {
 
-	private final Map<Class<?>, S> plugins = new LinkedHashMap<Class<?>, S>(2);
+	private final Map<Class<?>, U> plugins = new LinkedHashMap<Class<?>, U>(2);
 
-	public PluginFacadeRepository(Collection<S> plugins) {
-		for (S plugin : plugins) {
+	public PluginFacadeRepository(Collection<U> plugins) {
+		for (U plugin : plugins) {
 			this.plugins.put(plugin.getEntityClass(), plugin);
 		}
 	}
 
 	@Override
-	public Iterable<S> getPlugins() {
+	public Iterable<U> getPlugins() {
 		return this.plugins.values();
 	}
 
 	@Override
-	public S getFacade(Class<?> klass) {
+	public U getFacade(Class<?> klass) {
 		return this.plugins.get(klass);
 	}
 

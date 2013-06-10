@@ -4,9 +4,7 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.gui.UINewBlockFormFactory;
 
-public interface IBlockPluginFacade extends IPluginFacade<Block> {
-
-	public IRenderer<Block,IRenderContext> getRenderer();
+public interface IBlockPluginFacade extends IEntityPluginFacade<Block, IRenderContext> {
 
 	public IUIActionClick getUIActionCreate(String diagramKey);
 
