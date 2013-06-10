@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.wdbuilder.jaxbhtml.HtmlElement;
 
-
+@Deprecated
 @XmlRootElement(name = "select")
 public class Select extends HtmlElement {
 
