@@ -28,8 +28,8 @@ import com.google.common.io.Resources;
 public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 
 	private final ApplicationState appState;
-	private final IPluginFacadeRepository<Block, IBlockPluginFacade> blockPluginFacadeRepository;
-	private final IPluginFacadeRepository<Link, ILinkPluginFacade> linkPluginFacadeRepository;
+	private final IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> blockPluginFacadeRepository;
+	private final IPluginFacadeRepository<Link, ILinkPluginFacade, ILinkRenderContext> linkPluginFacadeRepository;
 
 	public DiagramRenderer(ApplicationState appState,
 			IServiceFacade serviceFacade) {
@@ -84,7 +84,8 @@ public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 
 			final ILinkPluginFacade linkPluginFacade = linkPluginFacadeRepository
 					.getFacade(link.getClass());
-			IRenderer<Link, ILinkRenderContext> linkRenderer = linkPluginFacade.getRenderer();
+			IRenderer<Link, ILinkRenderContext> linkRenderer = linkPluginFacade
+					.getRenderer();
 			linkRenderer.draw(link, linkRenderCtx);
 		}
 	}
