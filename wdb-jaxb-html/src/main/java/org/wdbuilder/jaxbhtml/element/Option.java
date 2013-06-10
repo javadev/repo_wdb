@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.wdbuilder.jaxbhtml.HtmlContainedText;
 
 
+@Deprecated
 @XmlRootElement(name = "option")
 public class Option extends HtmlContainedText {
 	
