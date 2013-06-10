@@ -5,15 +5,15 @@ import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.validator.IValidator;
 
-public interface IEntityPluginFacade<T extends Entity> {
+public interface IEntityPluginFacade<T extends Entity> extends IPluginFacade<T> {
 
-  public Class<?> getEntityClass();
+	public Class<?> getEntityClass();
 
 	public IValidator<T> getValidator();
 
 	public UIExistingEntityFormFactory<T> getEditFormFactory(String diagramKey,
 			T entity);
-	
+
 	public T create(InputAdapter input);
 
 }
