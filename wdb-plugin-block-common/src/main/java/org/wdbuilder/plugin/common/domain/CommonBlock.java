@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.DisplayNameAware;
 import org.wdbuilder.domain.IForegroundProvider;
-import org.wdbuilder.domain.IGradientBackgroundProvider;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.service.DiagramService;
 
