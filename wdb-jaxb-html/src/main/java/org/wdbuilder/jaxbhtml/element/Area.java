@@ -12,17 +12,11 @@ import org.wdbuilder.jaxbhtml.HtmlElement;
 @XmlRootElement(name = "area")
 public class Area extends HtmlElement {
 
-	@XmlAttribute
 	private String shape;
-	@XmlAttribute
 	private String href;
-	@XmlAttribute
 	private String coords;
-	@XmlAttribute
 	private String alt;
-	@XmlAttribute
-	private String title;
-	@XmlAttribute(name = "onmousedown")
+	
 	private String onMouseDown;
 
 	private Area() {
@@ -31,11 +25,13 @@ public class Area extends HtmlElement {
 
 	private Area(String shape) {
 		super();
-		this.shape = shape;
+		this.setShape(shape);
 	}
 
+	@Override
 	public void setTitle(String title) {
-		this.title = this.alt = title;
+		super.setTitle(title);
+		this.alt = title;
 	}
 
 	public void setOnMouseDown(String onMouseDown) {
@@ -50,6 +46,35 @@ public class Area extends HtmlElement {
 
 	protected void setCoords(String coords) {
 		this.coords = coords;
+	}
+
+	@XmlAttribute
+	public String getShape() {
+		return shape;
+	}
+
+	public void setShape(String shape) {
+		this.shape = shape;
+	}
+	
+	@XmlAttribute
+	public String getHref() {
+		return this.href;
+	}
+	
+	@XmlAttribute
+	public String getCoords() {
+		return this.coords;
+	}
+	
+	@XmlAttribute
+	public String getAlt() {
+		return this.alt;
+	}
+	
+	@XmlAttribute(name = "onmousedown")
+	public String getOnMouseDown() {
+		return this.onMouseDown;
 	}
 
 	public static class Circle extends Area {
