@@ -304,6 +304,7 @@ function showError(message) {
 	if (obj) {
 		obj.style.display = "block";
 		var str = "unknown error";
+		message = message.responseText;
 		if( 0<message.length ) {			
 			// Select error message:
 			str = message.match( "javax.servlet.ServletException.*");
