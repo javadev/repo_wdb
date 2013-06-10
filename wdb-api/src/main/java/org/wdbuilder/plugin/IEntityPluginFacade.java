@@ -8,8 +8,6 @@ import org.wdbuilder.validator.IValidator;
 public interface IEntityPluginFacade<T extends Entity,S> extends
 		IPluginFacade<T,S> {
 
-	public Class<?> getEntityClass();
-
 	public IValidator<T> getValidator();
 
 	public UIExistingEntityFormFactory<T> getEditFormFactory(String diagramKey,
