@@ -1,43 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-
-<!-- TODO: move this file to src/main/resources -->
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-  <!--
-    Some notes on the conversion patterns:
-    %d is the date/time info
-    %t is the thread info
-    %p is the priority info
-    %c is the category info
-    %x is the nested diagnostic context info
-    %m is the message info
-    %n or \n is a new line
-  -->
+  <!-- Some notes on the conversion patterns: 
+	   %d is the date/time info 
+	   %t is the thread info 
+	   %p is the priority info 
+	   %c is the category info 
+	   %x is the nested diagnostic context info 
+	   %m is the message info 
+	   %n or \n is a new line -->
 
-  <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
-    <param name="Target" value="System.err" />
-    <param name="Threshold" value="DEBUG" />
-    <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern"
-        value="%d - %m%n" />
-    </layout>
-  </appender>
-  
-  <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File" value="${catalina.base}/logs/wdb.log" />
-    <!-- <param name="MaxBackupIndex" value="5" /> -->
-    <param name="Threshold" value="DEBUG" />
-    <param name="DatePattern" value=".yyyy-MM-dd" />
-    <layout class="org.apache.log4j.PatternLayout"> 
-      <param name="ConversionPattern"
-        value="%d - %m%n" />     
-    </layout>
-  </appender>  
-  
-  <root>
-    <level value="INFO" />
-    <appender-ref ref="CONSOLE" />
-    <appender-ref ref="FILE" />
-  </root>
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.err" />
+		<param name="Threshold" value="DEBUG" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/wdb.log" />
+		<!-- <param name="MaxBackupIndex" value="5" /> -->
+		<param name="Threshold" value="DEBUG" />
+		<param name="DatePattern" value=".yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d - %m%n" />
+		</layout>
+	</appender>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
 </log4j:configuration>
