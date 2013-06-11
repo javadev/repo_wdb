@@ -9,12 +9,6 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.helper.Point;
 
-/**
- * Behavior of line drawer based on &lt;div&gt; HTML element
- * 
- * @author o.pavloschuk
- * 
- */
 public class DivAnalog {
 
 	private final boolean horizontal;
@@ -22,45 +16,42 @@ public class DivAnalog {
 	private final Link link;
 
 	public static void render(Graphics2D gr, Link link, Block beginBlock,
-			Block endBlock) {
-
-		Point begin = link.getSockets().get(0).getOffset(beginBlock);
-		Point end = link.getSockets().get(1).getOffset(endBlock);
-
-		final boolean hintHorizontal = link.getSockets().get(0).isHorizontal();
-
-		DivAnalog div1 = new DivAnalog(link, begin, hintHorizontal);
-		DivAnalog div2 = new DivAnalog(link, end, !hintHorizontal);
-		if (div1.intersectsWith(div2)) {
-			div1 = new DivAnalog(link, begin, !hintHorizontal);
-			div2 = new DivAnalog(link, end, hintHorizontal);
+			Block endBlock) {		
+		final DivAnalog[] divs = getDivPair(link, beginBlock, endBlock);
+		for( final DivAnalog div : divs ) {
+			div.render(gr);
 		}
-		div1.render(gr);
-		div2.render(gr);
 	}
 	
 	public static Point[] getLine( Link link, Block beginBlock,
 			Block endBlock) {
+		final DivAnalog[] divs = getDivPair(link, beginBlock, endBlock);
+				
+		Point[] result = new Point[6];
+		int i = 0;
+		for( DivAnalog div : divs ) {
+			for( Point p : div.line ) {
+				result[i++] = p;
+			}
+		}
+		return result;
+	}
+	
+	private static final DivAnalog[] getDivPair(Link link, Block beginBlock,
+			Block endBlock) {
+		DivAnalog[] result = new DivAnalog[2];
 		
 		Point begin = link.getSockets().get(0).getOffset(beginBlock);
 		Point end = link.getSockets().get(1).getOffset(endBlock);
 
 		final boolean hintHorizontal = link.getSockets().get(0).isHorizontal();
 
-		DivAnalog div1 = new DivAnalog(link, begin, hintHorizontal);
-		DivAnalog div2 = new DivAnalog(link, end, !hintHorizontal);
-		if (div1.intersectsWith(div2)) {
-			div1 = new DivAnalog(link, begin, !hintHorizontal);
-			div2 = new DivAnalog(link, end, hintHorizontal);
+		result[0] = new DivAnalog(link, begin, hintHorizontal);
+		result[1] = new DivAnalog(link, end, !hintHorizontal);
+		if (result[0].intersectsWith(result[1])) {
+			result[0] = new DivAnalog(link, begin, !hintHorizontal);
+			result[1] = new DivAnalog(link, end, hintHorizontal);
 		}
-		
-		Point[] result = new Point[6];
-		result[0] = div1.line[0];
-		result[1] = div1.line[1];
-		result[2] = div1.line[2];
-		result[3] = div2.line[0];
-		result[4] = div2.line[1];
-		result[5] = div2.line[2];
 		
 		return result;
 	}
