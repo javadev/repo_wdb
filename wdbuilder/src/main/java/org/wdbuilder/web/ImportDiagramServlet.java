@@ -21,8 +21,7 @@ public class ImportDiagramServlet extends DiagramServiceServlet {
 		final TwoColumnForm form = new TwoColumnForm("import-diagram-save",
 				"Import Diagram").addFileField(BlockParameter.DiagramKey)
 				.addFooter("submitImportDiagram()", "refreshDiagramList()");
-		//form.setEncodeType("multipart/form-data");
-		form.setEncodeType("application/x-www-form-urlencoded; boundary=wdb");
+		form.setEncodeType("multipart/form-data; boundary=wdb");
 		
 		
 		new HtmlWriter(writer).write(form);
