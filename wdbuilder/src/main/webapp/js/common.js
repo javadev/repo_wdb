@@ -48,7 +48,7 @@ function submitFileForm( aUrl, anAcceptor) {
 	var paramsStr = $('#formId').serialize();		
 	$.ajax({
 		type: 'POST',
-		contentType: 'multipart/form-data',
+		contentType: 'multipart/form-data; boundary=wdb',
 		dataType: "html",
 		url: aUrl,
 		data: paramsStr,
