@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
@@ -30,19 +31,15 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 	protected void do4DiagramService(ServletInput input) throws Exception {
 
 		FileItemFactory fileItemFactory = new DiskFileItemFactory();
-		/*
-		 * ServletContext servletContext = this.getServletContext(); File
-		 * repository = File.class.cast(servletContext
-		 * .getAttribute("javx.servlet.context.tempdir"));
-		 */
 
 		ServletFileUpload uploadHandler = new ServletFileUpload(fileItemFactory);
-		FileItemIterator it = uploadHandler.getItemIterator(input.getRequest());
-		if (!it.hasNext()) {
+		
+		List<FileItem> files = uploadHandler.parseRequest(input.getRequest());
+		if ( null==files || files.isEmpty() ) {
 			throw new IllegalArgumentException("No file!");
 		}
-		FileItemStream fileItemStream = it.next();
-		InputStream fileStream = fileItemStream.openStream();
+		
+		InputStream fileStream = files.get(0).getInputStream();
 
 		ZipInputStream zipStream = new ZipInputStream(fileStream);
 		// TODO: for the single entry for a while (2013/06/12)
