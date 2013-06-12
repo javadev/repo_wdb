@@ -1,27 +1,24 @@
 package org.wdbuilder.web;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Part;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.wdbuilder.domain.Diagram;
+import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.utility.DiagramHelper;
 import org.wdbuilder.web.base.CanvasFrameWriter;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
+@MultipartConfig
 @SuppressWarnings("serial")
 @WebServlet("/import-diagram-save")
 public class ImportDiagramSaveServlet extends DiagramServiceServlet {
@@ -31,6 +28,7 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		
+		/*
 		// TODO: set the temp directory (2013/06/12)
 		FileItemFactory fileItemFactory = new DiskFileItemFactory( 8192, new File( "c:/temp" ) );
 
@@ -42,6 +40,10 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 		}
 		
 		InputStream fileStream = files.get(0).getInputStream();
+		*/
+		
+		Part part = input.getRequest().getPart( BlockParameter.DiagramKey.getName());
+		InputStream fileStream = part.getInputStream();
 
 		ZipInputStream zipStream = new ZipInputStream(fileStream);
 		// TODO: for the single entry for a while (2013/06/12)
