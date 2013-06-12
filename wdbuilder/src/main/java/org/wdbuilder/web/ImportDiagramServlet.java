@@ -14,13 +14,15 @@ import org.wdbuilder.web.base.ServletInput;
 @WebServlet("/import-diagram")
 public class ImportDiagramServlet extends DiagramServiceServlet {
 
-  @Override
+	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
 
 		final TwoColumnForm form = new TwoColumnForm("import-diagram-save",
 				"Import Diagram").addFileField(BlockParameter.DiagramKey)
 				.addFooter("submitImportDiagram()", "refreshDiagramList()");
+		form.setEncodeType("multipart/form-data");
+		
 		new HtmlWriter(writer).write(form);
 	}
 
