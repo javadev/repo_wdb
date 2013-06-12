@@ -216,6 +216,14 @@ function openCreateCanvasDialog() {
 	});
 }
 
+//Open diagram creation form in main screen section
+function openImportDiagramDialog() {
+	hideProperties();
+	loadContent("import-diagram", "canvasFrame", function() {
+		initBootstrapControls();
+	});
+}
+
 // Open updating diagram form in additional screen section
 function openEditDiagramDialog(diagramKey) {
 	loadContent("edit-diagram?r=" + Math.random() + "&dkey=" + diagramKey,
