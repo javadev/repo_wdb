@@ -1,5 +1,6 @@
 package org.wdbuilder.web;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,9 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-
-		FileItemFactory fileItemFactory = new DiskFileItemFactory();
+		
+		// TODO: set the temp directory (2013/06/12)
+		FileItemFactory fileItemFactory = new DiskFileItemFactory( 8192, new File( "c:/temp" ) );
 
 		ServletFileUpload uploadHandler = new ServletFileUpload(fileItemFactory);
 		
