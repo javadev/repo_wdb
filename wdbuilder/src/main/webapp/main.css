@@ -1,3 +1,4 @@
+
 @IMPORT url("bootstrap/css/bootstrap.css");
 
 /* Common HTML styles */
@@ -14,6 +15,25 @@ input[type="text"] {
 	font-size: 8pt;
 	margin: 0.5em;
 }
+
+input[type="file"] {
+    font-size: 8pt;
+    margin: 0.5em;
+
+  /* Copy-Paste from bootstrap styles: */
+  display: inline-block;
+  height: 20px;
+  padding: 4px 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #555555;
+  vertical-align: middle;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
 
 label {
 	margin: 0.5em;
