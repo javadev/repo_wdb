@@ -1,4 +1,3 @@
-
 // Request some HTML content by XMLHttpRequest and show it in some screen element 
 function loadContent(aUrl, aContainerId, callback ) {
 	$.ajax({
@@ -49,7 +48,7 @@ function submitFileForm( aUrl, anAcceptor) {
 	var paramsStr = $('#formId').serialize();		
 	$.ajax({
 		type: 'POST',
-		contextType: 'multipart/form-data',
+		contentType: 'multipart/form-data',
 		dataType: "html",
 		url: aUrl,
 		data: paramsStr,
