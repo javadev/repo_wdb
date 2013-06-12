@@ -149,6 +149,14 @@ function submitCreateCanvas() {
 	});
 }
 
+// Submit form data for diagram import
+function submitImportDiagram() {
+	submitForm( "import-diagram-save", function( response ) {
+		$('#canvasFrame').empty().append( response ).show();
+		loadDiagramList(true);	
+	});
+}
+
 // Submit form data for existing diagram updating
 function submitEditCanvas() {
 	submitForm( "edit-diagram-save", function( response ) {
