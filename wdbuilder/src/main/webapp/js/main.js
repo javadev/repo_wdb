@@ -151,7 +151,7 @@ function submitCreateCanvas() {
 
 // Submit form data for diagram import
 function submitImportDiagram() {
-	submitForm( "import-diagram-save", function( response ) {
+	submitFileForm( "import-diagram-save", function( response ) {
 		$('#canvasFrame').empty().append( response ).show();
 		loadDiagramList(true);	
 	});
