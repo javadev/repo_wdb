@@ -10,4 +10,5 @@ public interface IUIAction {
 	
 	public void setActionToHTMLElement( HtmlElement element );
 	
+	public String getClassName();
 }
