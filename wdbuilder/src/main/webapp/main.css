@@ -49,8 +49,10 @@ div.dropdown {
 .title {
 	font-size: 9pt;
 	font-weight: bold;
-    background-color: #cccccc;
-    margin-left: 1em;
+	color: white;
+	text-shadow: 0 -1px #666666;
+    background-color: #cccccc;    
+    padding-left: 1em;
 }
 
 .btn {
