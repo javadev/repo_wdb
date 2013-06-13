@@ -32,7 +32,7 @@ public class TwoColumnForm extends Form {
 		}
 
 		private A toHtml() {
-			String className = StringUtils.isEmpty(this.className) ? CLASS_LINKBUTTON
+			String className = !StringUtils.isEmpty(this.className) ? CLASS_LINKBUTTON
 					+ " " + this.className
 					: CLASS_LINKBUTTON;
 
