@@ -44,6 +44,12 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		public String getOnClickHandler() {
 			return "openCreateCanvasDialog()";
 		}
+		
+		@Override
+		public String getClassName() {
+			return "btn-success";
+		}
+		
 	}, new IUIActionClick() {
 
 		@Override
@@ -53,13 +59,19 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		@Override
 		public String getResourceId() {
-			return "icon-download";
+			return "icon-upload";
 		}
 
 		@Override
 		public String getOnClickHandler() {
 			return "openImportDiagramDialog()";
 		}
+		
+		@Override
+		public String getClassName() {
+			return "btn-success";
+		}
+		
 	}, new IUIActionClick() {
 
 		@Override

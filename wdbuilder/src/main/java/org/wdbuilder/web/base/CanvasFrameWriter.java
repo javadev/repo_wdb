@@ -130,7 +130,7 @@ public class CanvasFrameWriter {
 
 					@Override
 					public String getResourceId() {
-						return "icon-briefcase";
+						return "icon-download";
 					}
 
 					@Override
@@ -145,6 +145,11 @@ public class CanvasFrameWriter {
 						}
 						A a = A.class.cast(element);
 						a.setHref(getURL());
+					}
+					
+					@Override
+					public String getClassName() {
+						return "";
 					}
 				};
 			}
@@ -167,6 +172,11 @@ public class CanvasFrameWriter {
 					public String getOnClickHandler() {
 						return "deleteCanvas(" + diagramKey + ")";
 					}
+					
+					@Override
+					public String getClassName() {
+						return "btn-danger";
+					}					
 				};
 			}
 
@@ -350,6 +360,9 @@ public class CanvasFrameWriter {
 
 		private Area createResizeArea() {
 			final Diagram diagram = diagramHelper.getDiagram();
+			
+			int minWidth = new DiagramValidator(diagram).getMinWidth();
+			int minHeight = new DiagramValidator(diagram).getMinHeight();
 
 			final Point offset = new Point(diagram.getSize().getWidth()
 					- RESIZE_AREA.getWidth(), diagram.getSize().getHeight()
@@ -357,8 +370,7 @@ public class CanvasFrameWriter {
 			final String onMouseDownCall = getOnMouseDownFunctionCall(
 					// "DiagramResize.start", diagram.getKey(),
 					"WDB.DiagramResize.mouseDown", diagram.getKey(), "(none)",
-					DiagramValidator.MIN_SIZE.getWidth(),
-					DiagramValidator.MIN_SIZE.getHeight());
+					minWidth, minHeight );
 
 			Area.Rect area = new Area.Rect(offset.toAWT(), RESIZE_AREA.toAWT());
 			area.setOnMouseDown(onMouseDownCall);

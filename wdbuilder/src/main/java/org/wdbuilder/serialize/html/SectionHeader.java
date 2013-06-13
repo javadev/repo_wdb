@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.commons.lang.StringUtils;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Div;
@@ -26,16 +27,25 @@ public class SectionHeader extends Div {
 
 	private static A createButton(IUIAction uiAction) {
 		I i = new I();
-		i.setClassName( uiAction.getResourceId() );
+		String iconClassName = uiAction.getResourceId();
 		i.setText("");
 		
 		A result = new A();
 		result.setDataToggle("tooltip");
-		result.setClassName("btn btn-mini");
+		String className = "btn btn-small";
+		String extraClass = uiAction.getClassName();		
+		if( !StringUtils.isEmpty(extraClass) ) {
+			className += " " + extraClass;
+			iconClassName += " icon-white"; 
+		}		
+		result.setClassName( className );
+		i.setClassName( iconClassName );
+		
 		result.setTitle( uiAction.getTitle() );
 		result.setDataOriginalTitle(uiAction.getTitle());
 		result.add(i);
 		uiAction.setActionToHTMLElement(result);
+		
 		return result;
 	}
 }

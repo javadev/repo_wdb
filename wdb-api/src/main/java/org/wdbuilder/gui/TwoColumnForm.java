@@ -1,5 +1,6 @@
 package org.wdbuilder.gui;
 
+import org.apache.commons.lang.StringUtils;
 import org.wdbuilder.domain.DisplayNameAware;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.jaxbhtml.IHtml;
@@ -22,14 +23,20 @@ public class TwoColumnForm extends Form {
 	public static class LinkButton {
 		private final String title;
 		private final String onClickHandler;
+		private final String className;
 
-		public LinkButton(String title, String onClickHandler) {
+		public LinkButton(String title, String onClickHandler, String className) {
 			this.onClickHandler = onClickHandler;
 			this.title = title;
+			this.className = className;
 		}
 
 		private A toHtml() {
-			A result = new A(CLASS_LINKBUTTON);
+			String className = !StringUtils.isEmpty(this.className) ? CLASS_LINKBUTTON
+					+ " " + this.className
+					: CLASS_LINKBUTTON;
+
+			A result = new A( className );
 			result.setText(title);
 			result.setOnClick(onClickHandler);
 			return result;
@@ -38,7 +45,7 @@ public class TwoColumnForm extends Form {
 
 	private final Table table;
 
-	public TwoColumnForm(String action, String title ) {
+	public TwoColumnForm(String action, String title) {
 		super(CLASS);
 		setId(ID);
 		add(table = new Table(CLASS));
@@ -48,10 +55,10 @@ public class TwoColumnForm extends Form {
 		td.setColSpan(2);
 		td.setText(title);
 		td.setClassName(CLASS_TITLE);
-		
+
 		Tr tr = new Tr();
 		tr.add(td);
-		table.add(tr);		
+		table.add(tr);
 	}
 
 	public TwoColumnForm addLinks(LinkButton[] links) {
@@ -71,12 +78,10 @@ public class TwoColumnForm extends Form {
 		return addField(parameter.getDisplayName(),
 				createTextField(parameter, value));
 	}
-	
+
 	public TwoColumnForm addFileField(IParameter parameter) {
-		return addField(parameter.getDisplayName(),
-				createFileField(parameter));
+		return addField(parameter.getDisplayName(), createFileField(parameter));
 	}
-	
 
 	public TwoColumnForm addHiddenField(IParameter parameter, String value) {
 		add(createHiddenField(parameter, value));
@@ -105,9 +110,11 @@ public class TwoColumnForm extends Form {
 
 	public TwoColumnForm addFooter(String submitHandler, String closeHandler) {
 		addLinks(new TwoColumnForm.LinkButton[] {
-				new TwoColumnForm.LinkButton("Save", submitHandler),
-				new TwoColumnForm.LinkButton("Reset", "resetForm()"),
-				new TwoColumnForm.LinkButton("Close", closeHandler) });
+				new TwoColumnForm.LinkButton("Save", submitHandler,
+						"btn-success"),
+				new TwoColumnForm.LinkButton("Reset", "resetForm()",
+						"btn-warning"),
+				new TwoColumnForm.LinkButton("Close", closeHandler, "") });
 		return this;
 	}
 
@@ -125,12 +132,12 @@ public class TwoColumnForm extends Form {
 		input.setValue(value);
 		return input;
 	}
-	
+
 	private static Input.File createFileField(IParameter parameter) {
 		final Input.File input = new Input.File();
 		input.setName(parameter.getName());
 		return input;
-	}	
+	}
 
 	private TwoColumnForm addField(String label, IHtml... element) {
 		Tr tr = new Tr();
@@ -151,10 +158,10 @@ public class TwoColumnForm extends Form {
 		Td labelTd = new Td(CLASS);
 		Td.HAlign.right.set(labelTd);
 		Td.VAlign.top.set(labelTd);
-		
+
 		Label label = new Label();
-		label.setText(text + ": " );
-		labelTd.add( label );
+		label.setText(text + ": ");
+		labelTd.add(label);
 		return labelTd;
 	}
 

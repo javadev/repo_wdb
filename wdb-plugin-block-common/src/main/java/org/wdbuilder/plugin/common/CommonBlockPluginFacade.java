@@ -105,6 +105,11 @@ public class CommonBlockPluginFacade implements IBlockPluginFacade {
 				return "openCreateBlockDialog(" + diagramKey + ", '"
 						+ getEntityClass().getCanonicalName() + "' )";
 			}
+			
+			@Override
+			public String getClassName() {
+				return "btn-success";
+			}
 
 		};
 	}

@@ -51,7 +51,7 @@ class StaticDiagramService implements DiagramService {
 				.getSize().getHeight());
 		diagram.setSize(new Dimension(width, height));
 		try {
-			new DiagramValidator().validate(diagram, null);
+			new DiagramValidator( diagram ).validate(diagram, null);
 		} catch (IllegalArgumentException ex) {
 			// Restore old size:
 			diagram.setSize(oldSize);
@@ -64,7 +64,7 @@ class StaticDiagramService implements DiagramService {
 		DiagramBackground background = DiagramBackground.valueOf(backgroundKey);
 		Diagram diagram = createDiagram(UUID.randomUUID().toString(), name,
 				320, 240, background);
-		new DiagramValidator().validate(diagram, null);
+		new DiagramValidator( diagram ).validate(diagram, null);
 		return saveDiagram(diagram);
 	}
 
@@ -82,7 +82,7 @@ class StaticDiagramService implements DiagramService {
 		diagram.setBackground(background);
 
 		try {
-			new DiagramValidator().validate(diagram, null);
+			new DiagramValidator( diagram ).validate(diagram, null);
 		} catch (IllegalArgumentException ex) {
 			// Restore old values:
 			diagram.setName(oldName);
@@ -96,6 +96,11 @@ class StaticDiagramService implements DiagramService {
 	public void deleteDiagram(String key) {
 		diagrams.remove(key);
 	}
+	
+	@Override
+	public void importDiagram(Diagram diagram) {
+		diagrams.put( diagram.getKey(), diagram );
+	}	
 
 	// }}} DIAGRAM
 
@@ -348,4 +353,5 @@ class StaticDiagramService implements DiagramService {
 		result.setName(name);
 		result.setSize(new Dimension(width, height));
 	}
+
 }
