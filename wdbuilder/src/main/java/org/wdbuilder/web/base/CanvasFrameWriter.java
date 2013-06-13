@@ -172,6 +172,11 @@ public class CanvasFrameWriter {
 					public String getOnClickHandler() {
 						return "deleteCanvas(" + diagramKey + ")";
 					}
+					
+					@Override
+					public String getClassName() {
+						return "btn-danger";
+					}					
 				};
 			}
 
