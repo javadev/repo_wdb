@@ -101,7 +101,7 @@ public class DiagramValidator extends CompositeValidator<Diagram> {
 	public int getMinHeight() {
 		int result = MIN_SIZE.getHeight();
 		for (Block block : diagram.getBlocks()) {
-			int y = MARGIN + block.getLocation().getY()
+			int y = 2 * MARGIN + block.getLocation().getY()
 					+ block.getSize().getHeight() / 2;
 			if( y>result ) {
 				result = y;
@@ -114,7 +114,7 @@ public class DiagramValidator extends CompositeValidator<Diagram> {
 	public int getMinWidth() {
 		int result = MIN_SIZE.getWidth();
 		for (Block block : diagram.getBlocks()) {
-			int x = MARGIN + block.getLocation().getX()
+			int x = 2 * MARGIN + block.getLocation().getX()
 					+ block.getSize().getWidth() / 2;
 			if( x>result ) {
 				result = x;
