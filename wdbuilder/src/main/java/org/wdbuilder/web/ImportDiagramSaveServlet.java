@@ -50,6 +50,9 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 		Diagram diagram = Diagram.class.cast(obj);
 		serviceFacade.getDiagramService().importDiagram(diagram);
 		diagramHelper = new DiagramHelper(diagram);
+		
+		// Set the current diagram (TODO silly method):
+		input.getState().setDiagram(diagram);
 
 		new CanvasFrameWriter(diagramHelper,
 				serviceFacade.getBlockPluginRepository())
