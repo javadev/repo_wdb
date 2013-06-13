@@ -56,4 +56,11 @@ public class Input extends HtmlElement {
 			setType("hidden");
 		}
 	}
+	
+	public static class File extends Input {
+		public File() {
+			super();
+			setType("file");
+		}
+	}	
 }

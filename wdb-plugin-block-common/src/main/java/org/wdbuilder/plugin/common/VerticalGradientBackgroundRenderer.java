@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import org.wdbuilder.domain.SizedEntity;
-import org.wdbuilder.domain.IGradientBackgroundProvider;
+import org.wdbuilder.plugin.common.domain.IGradientBackgroundProvider;
 import org.wdbuilder.view.IBackgroundRenderer;
 
 public class VerticalGradientBackgroundRenderer implements IBackgroundRenderer<IGradientBackgroundProvider> {

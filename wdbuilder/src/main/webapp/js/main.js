@@ -149,6 +149,14 @@ function submitCreateCanvas() {
 	});
 }
 
+// Submit form data for diagram import
+function submitImportDiagram() {
+	submitFileForm( "import-diagram-save", function( response ) {
+		$('#canvasFrame').empty().append( response ).show();
+		loadDiagramList(true);	
+	});
+}
+
 // Submit form data for existing diagram updating
 function submitEditCanvas() {
 	submitForm( "edit-diagram-save", function( response ) {
@@ -212,6 +220,14 @@ function loadCanvas(diagramKey) {
 function openCreateCanvasDialog() {
 	hideProperties();
 	loadContent("create-diagram", "canvasFrame", function() {
+		initBootstrapControls();
+	});
+}
+
+//Open diagram creation form in main screen section
+function openImportDiagramDialog() {
+	hideProperties();
+	loadContent("import-diagram", "canvasFrame", function() {
 		initBootstrapControls();
 	});
 }
@@ -304,6 +320,7 @@ function showError(message) {
 	if (obj) {
 		obj.style.display = "block";
 		var str = "unknown error";
+		message = message.responseText;
 		if( 0<message.length ) {			
 			// Select error message:
 			str = message.match( "javax.servlet.ServletException.*");

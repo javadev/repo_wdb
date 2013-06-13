@@ -12,9 +12,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 public class Diagram extends SizedEntity {
 	private static final long serialVersionUID = 1L;
 
-	private Collection<Block> blocks;
+	private Collection<Block> blocks = new ArrayList<Block>(1);
 
-	private Collection<Link> links;
+	private Collection<Link> links = new ArrayList<Link>(1);
 
 	private DiagramBackground background;
 

@@ -71,6 +71,12 @@ public class TwoColumnForm extends Form {
 		return addField(parameter.getDisplayName(),
 				createTextField(parameter, value));
 	}
+	
+	public TwoColumnForm addFileField(IParameter parameter) {
+		return addField(parameter.getDisplayName(),
+				createFileField(parameter));
+	}
+	
 
 	public TwoColumnForm addHiddenField(IParameter parameter, String value) {
 		add(createHiddenField(parameter, value));
@@ -119,6 +125,12 @@ public class TwoColumnForm extends Form {
 		input.setValue(value);
 		return input;
 	}
+	
+	private static Input.File createFileField(IParameter parameter) {
+		final Input.File input = new Input.File();
+		input.setName(parameter.getName());
+		return input;
+	}	
 
 	private TwoColumnForm addField(String label, IHtml... element) {
 		Tr tr = new Tr();

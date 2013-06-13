@@ -24,6 +24,8 @@ public interface DiagramService {
 	void updateDiagramSize(String diagramKey, int width, int height);
 
 	String persistDiagram(String name, String backgroundKey);
+	
+	void importDiagram( Diagram diagram );
 
 	void updateDiagram(String diagramKey, String name, String backgroundKey);
 

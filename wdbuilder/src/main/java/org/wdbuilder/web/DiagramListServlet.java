@@ -47,6 +47,22 @@ public class DiagramListServlet extends DiagramServiceServlet {
 	}, new IUIActionClick() {
 
 		@Override
+		public String getTitle() {
+			return "Import Diagram";
+		}
+
+		@Override
+		public String getResourceId() {
+			return "icon-download";
+		}
+
+		@Override
+		public String getOnClickHandler() {
+			return "openImportDiagramDialog()";
+		}
+	}, new IUIActionClick() {
+
+		@Override
 		public String getResourceId() {
 			return "icon-refresh";
 		}

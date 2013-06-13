@@ -11,9 +11,9 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import org.wdbuilder.domain.Block;
-import org.wdbuilder.domain.IGradientBackgroundProvider;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.common.domain.CommonBlock;
+import org.wdbuilder.plugin.common.domain.IGradientBackgroundProvider;
 import org.wdbuilder.view.BlockRenderer;
 import org.wdbuilder.view.IBackgroundRenderer;
 

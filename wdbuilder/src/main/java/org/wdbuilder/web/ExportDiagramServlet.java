@@ -20,7 +20,7 @@ public class ExportDiagramServlet extends DiagramHelperServlet {
 	@Override
 	protected void do4DiagramHelper(ServletInput input) throws Exception {
 		
-		JAXBContext jaxbContext = JAXBContext.newInstance(getClassesForMarchaling());
+		JAXBContext jaxbContext = JAXBContext.newInstance(getClassesForMarshaling());
 		Marshaller marshaller = jaxbContext.createMarshaller();
 
 		ZipOutputStream zipStream = new ZipOutputStream(input.getResponse().getOutputStream());
@@ -38,7 +38,7 @@ public class ExportDiagramServlet extends DiagramHelperServlet {
 		return "application/zip";
 	}
 	
-	private Class<?>[] getClassesForMarchaling() {
+	private Class<?>[] getClassesForMarshaling() {
 		List<Class<?>> list = new ArrayList<Class<?>>(4);
 		list.addAll( serviceFacade.getBlockPluginRepository().getEntityClasses() );
 		list.addAll( serviceFacade.getLinkPluginRepository().getEntityClasses() );		
