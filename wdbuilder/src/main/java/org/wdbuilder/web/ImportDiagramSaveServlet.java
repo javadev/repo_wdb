@@ -18,31 +18,16 @@ import org.wdbuilder.web.base.CanvasFrameWriter;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 10, location = "c:/temp", maxRequestSize = 1024 * 1024 * 50)
 @SuppressWarnings("serial")
 @WebServlet("/import-diagram-save")
 public class ImportDiagramSaveServlet extends DiagramServiceServlet {
-
 	private DiagramHelper diagramHelper = null;
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		
-		/*
-		// TODO: set the temp directory (2013/06/12)
-		FileItemFactory fileItemFactory = new DiskFileItemFactory( 8192, new File( "c:/temp" ) );
-
-		ServletFileUpload uploadHandler = new ServletFileUpload(fileItemFactory);
-		
-		List<FileItem> files = uploadHandler.parseRequest(input.getRequest());
-		if ( null==files || files.isEmpty() ) {
-			throw new IllegalArgumentException("No file!");
-		}
-		
-		InputStream fileStream = files.get(0).getInputStream();
-		*/
-		
-		Part part = input.getRequest().getPart( BlockParameter.DiagramKey.getName());
+		Part part = input.getRequest().getPart(
+				BlockParameter.DiagramKey.getName());
 		InputStream fileStream = part.getInputStream();
 
 		ZipInputStream zipStream = new ZipInputStream(fileStream);
@@ -56,7 +41,6 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 
 		Object obj = unmarshaller.unmarshal(zipStream);
 
-		zipStream.closeEntry();
 		zipStream.close();
 
 		if (!Diagram.class.isInstance(obj)) {
