@@ -1,4 +1,3 @@
-
 // Request some HTML content by XMLHttpRequest and show it in some screen element 
 function loadContent(aUrl, aContainerId, callback ) {
 	$.ajax({
@@ -47,8 +46,6 @@ function submitForm( aUrl, anAcceptor) {
 function submitFileForm( aUrl, anAcceptor) {
 	document.body.style.cursor = "wait";
 	var formData = new FormData($('#formId')[0]);	
-	
-	alert( formData );
 	
 	$.ajax({
 		type: 'POST',
