@@ -10,4 +10,9 @@ public abstract class IUIActionClick implements IUIAction {
 	public void setActionToHTMLElement(HtmlElement element) {
 		element.setOnClick(getOnClickHandler());
 	}
+	
+	@Override
+	public String getClassName() {
+		return "";
+	}	
 }
