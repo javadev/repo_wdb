@@ -130,7 +130,7 @@ public class CanvasFrameWriter {
 
 					@Override
 					public String getResourceId() {
-						return "icon-briefcase";
+						return "icon-download";
 					}
 
 					@Override
@@ -145,6 +145,11 @@ public class CanvasFrameWriter {
 						}
 						A a = A.class.cast(element);
 						a.setHref(getURL());
+					}
+					
+					@Override
+					public String getClassName() {
+						return "";
 					}
 				};
 			}
