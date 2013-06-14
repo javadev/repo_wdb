@@ -41,6 +41,7 @@ import org.wdbuilder.utility.Utility;
 import org.wdbuilder.view.DivAnalog;
 import org.wdbuilder.web.ApplicationState;
 
+@Deprecated
 public class CanvasFrameWriter {
 
 	private static final String ID_IMAGE_MAP = "diagramImageMap";
