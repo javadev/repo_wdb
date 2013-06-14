@@ -33,11 +33,6 @@ class CreateFormFactory extends UINewBlockFormFactory {
 	}
 
 	@Override
-	public String getSubmitCall() {
-		return "submitCreateBlock()";
-	}
-
-	@Override
 	public String getTitle() {
 		return "Create Common Block";
 	}
