@@ -1,21 +1,13 @@
 package org.wdbuilder.serialize.html;
 
-import static org.wdbuilder.service.DiagramService.RESIZE_AREA;
-
-import java.awt.Rectangle;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.domain.Link;
-import org.wdbuilder.domain.LinkSocket;
-import org.wdbuilder.domain.helper.Dimension;
-import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.gui.IUIActionId;
@@ -23,22 +15,15 @@ import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.jaxbhtml.HtmlElement;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.A;
-import org.wdbuilder.jaxbhtml.element.Area;
 import org.wdbuilder.jaxbhtml.element.Img;
-import org.wdbuilder.jaxbhtml.element.Map;
 import org.wdbuilder.jaxbhtml.element.Table;
 import org.wdbuilder.jaxbhtml.element.Td;
 import org.wdbuilder.jaxbhtml.element.Tr;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderContext;
-import org.wdbuilder.serialize.html.SectionHeader;
-import org.wdbuilder.serialize.html.IUIActionURL;
-import org.wdbuilder.service.DiagramService;
 import org.wdbuilder.service.IPluginFacadeRepository;
-import org.wdbuilder.service.validator.DiagramValidator;
 import org.wdbuilder.utility.DiagramHelper;
 import org.wdbuilder.utility.Utility;
-import org.wdbuilder.view.DivAnalog;
 import org.wdbuilder.web.ApplicationState;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.FrameServlet;
@@ -46,7 +31,7 @@ import org.wdbuilder.web.base.ServletInput;
 
 public class DiagramImage {
 
-  private static final String ID_IMAGE_MAP = "diagramImageMap";
+	private static final String ID_IMAGE_MAP = "diagramImageMap";
 
 	private final DiagramHelper diagramHelper;
 	private IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> pluginFacadeRepository;
@@ -76,9 +61,8 @@ public class DiagramImage {
 
 		Td td = new Td();
 		td.add(img);
-
-		final ImageMap map = state.isBlockMode() ? new ImageMapForBlock(state)
-				: new ImageMapForLine(state);
+		
+		final DiagramImageMap map = DiagramImageMap.create(state);
 
 		td.add(map);
 		tr.add(td);
@@ -230,271 +214,6 @@ public class DiagramImage {
 				};
 			}
 		};
-	}
-
-	private abstract class ImageMap extends Map {
-
-		protected final ApplicationState appState;
-
-		public ImageMap(ApplicationState appState) {
-			super();
-			this.appState = appState;
-		}
-
-	}
-
-	private class ImageMapForBlock extends ImageMap {
-
-		public ImageMapForBlock(ApplicationState appState) {
-			super(appState);
-
-			setName(ID_IMAGE_MAP);
-			setId(ID_IMAGE_MAP);
-			final Collection<Block> blocks = diagramHelper.getDiagram()
-					.getBlocks();
-			if (null != blocks) {
-				for (final Block block : blocks) {
-					add(createBlockArea(block));
-				}
-			}
-
-			final Collection<Link> links = diagramHelper.getDiagram()
-					.getLinks();
-			if (null != links) {
-				for (final Link link : links) {
-					Area area = createLinkArea(link);
-					if (null != area) {
-						add(area);
-					}
-				}
-			}
-
-			add(createResizeArea());
-		}
-
-		private Area createLinkArea(Link link) {
-			final LinkSocket socket0 = link.getSockets().get(0);
-			if (null == socket0) {
-				return null;
-			}
-			final LinkSocket socket1 = link.getSockets().get(1);
-			if (null == socket1) {
-				return null;
-			}
-
-			final Block block0 = diagramHelper.findBlockByKey(socket0
-					.getBlockKey());
-			if (null == block0) {
-				return null;
-			}
-			final Block block1 = diagramHelper.findBlockByKey(socket1
-					.getBlockKey());
-			if (null == block1) {
-				return null;
-			}
-			Point[] basePoints = DivAnalog.getLine(link, block0, block1);
-
-			final int offset = 4;
-			List<java.awt.Point> points = new ArrayList<java.awt.Point>(
-					basePoints.length * 2);
-			for (Point point : basePoints) {
-				points.add(new java.awt.Point(point.getX() + offset, point
-						.getY() + offset));
-			}
-			for (Point point : basePoints) {
-				points.add(new java.awt.Point(point.getX() - offset, point
-						.getY() - offset));
-			}
-			Area area = new Area.Poly(points);
-			area.setTitle(link.getName());
-			area.setId("link-" + link.getKey());
-			String diagramKey = diagramHelper.getDiagram().getKey();
-			String linkKey = link.getKey();
-			area.setOnMouseOver(getJsOnMouseOverLink(diagramKey, linkKey));
-			return area;
-		}
-
-		private Area createBlockArea(Block entity) {
-			final Dimension size = entity.getSize();
-
-			final java.awt.Point topLeft = new java.awt.Point(entity
-					.getLocation().getX() - size.getWidth() / 2, entity
-					.getLocation().getY() - size.getHeight() / 2);
-
-			String onMouseOver = getJsOnMouseOverBlock(topLeft, size,
-					diagramHelper.getDiagram().getKey(), entity.getKey());
-
-			final Area.Rect area = new Area.Rect(topLeft, size.toAWT());
-			area.setOnMouseOver(onMouseOver);
-			area.setTitle(entity.getName());
-			area.setId("area-" + entity.getKey());
-			return area;
-		}
-
-		private String getJsOnMouseOverLink(String diagramKey, String linkKey) {
-			StringBuilder result = new StringBuilder(128);
-			result.append("setCaretLink( event, '");
-			result.append(diagramKey);
-			result.append("','");
-			result.append(linkKey);
-			result.append("')");
-			return result.toString();
-		}
-
-		private String getJsOnMouseOverBlock(java.awt.Point topLeft,
-				Dimension size, String diagramKey, String blockKey) {
-			StringBuilder result = new StringBuilder(128);
-			result.append("setCaret('");
-			result.append(diagramKey);
-			result.append("','");
-			result.append(blockKey);
-			result.append("',");
-			result.append(topLeft.x);
-			result.append(",");
-			result.append(topLeft.y);
-			result.append(",");
-			result.append(size.getWidth());
-			result.append(",");
-			result.append(size.getHeight());
-			result.append(")");
-
-			return result.toString();
-		}
-
-		private Area createResizeArea() {
-			final Diagram diagram = diagramHelper.getDiagram();
-			
-			int minWidth = new DiagramValidator(diagram).getMinWidth();
-			int minHeight = new DiagramValidator(diagram).getMinHeight();
-
-			final Point offset = new Point(diagram.getSize().getWidth()
-					- RESIZE_AREA.getWidth(), diagram.getSize().getHeight()
-					- RESIZE_AREA.getHeight());
-			final String onMouseDownCall = getOnMouseDownFunctionCall(
-					// "DiagramResize.start", diagram.getKey(),
-					"WDB.DiagramResize.mouseDown", diagram.getKey(), "(none)",
-					minWidth, minHeight );
-
-			Area.Rect area = new Area.Rect(offset.toAWT(), RESIZE_AREA.toAWT());
-			area.setOnMouseDown(onMouseDownCall);
-			area.setTitle("Resize Diagram");
-			return area;
-		}
-
-	}
-
-	private class ImageMapForLine extends ImageMap {
-
-		public ImageMapForLine(ApplicationState appState) {
-			super(appState);
-			setId(ID_IMAGE_MAP);
-			setName(ID_IMAGE_MAP);
-			final Collection<Block> blocks = diagramHelper.getDiagram()
-					.getBlocks();
-			if (null != blocks) {
-				for (final Block entity : blocks) {
-					createLinkSocketAreasForBlock(entity);
-				}
-			}
-			final Collection<Link> links = diagramHelper.getDiagram()
-					.getLinks();
-			if (null != links) {
-				for (final Link link : links) {
-					add(createLinkPivotArea(link));
-				}
-			}
-		}
-
-		private Area.Rect createLinkPivotArea(Link link) {
-			final Point pivot = link.getPivot();
-			final Point topLeft = new Point(pivot.getX()
-					- DiagramService.LINE_AREA.getWidth() / 2, pivot.getY()
-					- DiagramService.LINE_AREA.getHeight() / 2);
-
-			final Area.Rect area = new Area.Rect(topLeft.toAWT(),
-					DiagramService.LINE_AREA.toAWT());
-			area.setOnMouseDown(createOnMouseDownHandler(link));
-			area.setTitle(link.getKey());
-			return area;
-		}
-
-		private String createOnMouseDownHandler(Link link) {
-			final LinkSocket beginSocket = link.getSockets().get(0);
-			final LinkSocket endSocket = link.getSockets().get(1);
-
-			boolean isHorizontal = beginSocket.isHorizontal();
-
-			Point beginPoint = diagramHelper.getOffset(beginSocket);
-			Point endPoint = diagramHelper.getOffset(endSocket);
-
-			final String result = getOnMouseDownFunctionCall(
-					"WDB.LinkArrange.mouseDown", diagramHelper.getDiagram()
-							.getKey(), link.getKey(), beginPoint, endPoint,
-					isHorizontal);
-			return result;
-		}
-
-		private void createLinkSocketAreasForBlock(Block block) {
-			final Collection<LinkSocket> sockets = LinkSocket.getAvailable(
-					diagramHelper.getUsedLinkSockets(block), block);
-
-			// Add possible line start and end points
-			for (final LinkSocket socket : sockets) {
-				Rectangle rect = socket.getArea(block);
-
-				String dragStartMethod = appState.getMode().getJsDragStart();
-
-				String id = block.getKey() + ":"
-						+ String.valueOf(socket.getDirection()) + ":"
-						+ socket.getIndex();
-
-				String onMouseDown = getOnMouseDownFunctionCall(
-						dragStartMethod, diagramHelper.getDiagram().getKey(),
-						id, block.getLocation());
-
-				Area.Rect area = new Area.Rect(rect.getLocation(),
-						rect.getSize());
-				area.setOnMouseDown(onMouseDown);
-				area.setTitle(block.getName());
-				area.setId(id);
-				add(area);
-			}
-		}
-	}
-
-	private static String getOnMouseDownFunctionCall(String functionName,
-			Object... args) {
-		StringBuilder sb = new StringBuilder(64);
-		sb.append(functionName);
-		sb.append("(event");
-		if (null != args) {
-			for (final Object arg : args) {
-				sb.append(',');
-				if (null == arg) {
-					sb.append("''");
-				} else {
-					if (String.class.isInstance(arg)) {
-						sb.append('\'');
-						sb.append(arg);
-						sb.append('\'');
-					} else if (java.awt.Point.class.isInstance(arg)) {
-						java.awt.Point p = java.awt.Point.class.cast(arg);
-						sb.append(p.getX());
-						sb.append(',');
-						sb.append(p.getY());
-					} else if (Point.class.isInstance(arg)) {
-						Point p = Point.class.cast(arg);
-						sb.append(p.getX());
-						sb.append(',');
-						sb.append(p.getY());
-					} else {
-						sb.append(arg);
-					}
-				}
-			}
-		}
-		sb.append(")");
-		return sb.toString();
 	}
 
 	protected String prepareUrlForExport() {
