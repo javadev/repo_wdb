@@ -13,8 +13,8 @@ import javax.xml.bind.Unmarshaller;
 
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.serialize.html.DiagramImage;
 import org.wdbuilder.utility.DiagramHelper;
-import org.wdbuilder.web.base.CanvasFrameWriter;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -50,11 +50,11 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 		Diagram diagram = Diagram.class.cast(obj);
 		serviceFacade.getDiagramService().importDiagram(diagram);
 		diagramHelper = new DiagramHelper(diagram);
-		
+
 		// Set the current diagram (TODO silly method):
 		input.getState().setDiagram(diagram);
 
-		new CanvasFrameWriter(diagramHelper,
+		new DiagramImage(diagramHelper,
 				serviceFacade.getBlockPluginRepository())
 				.printCanvasFrame(input);
 	}
