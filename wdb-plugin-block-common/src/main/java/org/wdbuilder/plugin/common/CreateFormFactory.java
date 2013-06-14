@@ -21,20 +21,17 @@ class CreateFormFactory extends UINewBlockFormFactory {
 		final PredefinedSelect<CommonBlock.Background> backgroundSelectField = new PredefinedSelect<CommonBlock.Background>(
 				CommonBlock.Background.values(), CommonBlock.Background.Grey);
 
-		final TwoColumnForm form = new TwoColumnForm("create-common-block-save", "Create Common Block" )
-				.addHiddenField(BlockParameter.DiagramKey, this.diagramKey )
-				.addHiddenField(BlockParameter.BlockClass, CommonBlock.class.getCanonicalName() )
+		final TwoColumnForm form = new TwoColumnForm(
+				"create-common-block-save", getTitle())
+				.addHiddenField(BlockParameter.DiagramKey, this.diagramKey)
+				.addHiddenField(BlockParameter.BlockClass,
+						CommonBlock.class.getCanonicalName())
 				.addTextField(BlockParameter.Name, "")
 				.addSelectField(Parameter.Shape, shapeSelectField)
 				.addTextField(BlockParameter.Width, "70")
 				.addTextField(BlockParameter.Height, "40")
 				.addSelectField(Parameter.Background, backgroundSelectField);
 		return form;
-	}
-
-	@Override
-	public String getSubmitCall() {
-		return "submitCreateBlock()";
 	}
 
 	@Override

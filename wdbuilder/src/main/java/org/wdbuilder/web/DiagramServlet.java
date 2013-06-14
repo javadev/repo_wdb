@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.xml.bind.JAXBException;
 
-import org.wdbuilder.web.base.CanvasFrameWriter;
+import org.wdbuilder.serialize.html.DiagramImage;
 import org.wdbuilder.web.base.FrameServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -18,8 +18,9 @@ public class DiagramServlet extends FrameServlet {
 		printCanvasFrame(input);
 	}
 
-	protected void printCanvasFrame(ServletInput input) throws JAXBException, IOException {
-		new CanvasFrameWriter(diagramHelper,
+	protected void printCanvasFrame(ServletInput input) throws JAXBException,
+			IOException {
+		new DiagramImage(diagramHelper,
 				serviceFacade.getBlockPluginRepository())
 				.printCanvasFrame(input);
 	}
