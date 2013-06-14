@@ -8,4 +8,10 @@ public abstract class UINewBlockFormFactory extends UIEntityFormFactory {
 		super(diagramKey);
 		this.blockClass = blockClass;
 	}
+	
+
+	@Override
+	public String getSubmitCall() {
+		return "submitCreateBlock()";
+	}	
 }
