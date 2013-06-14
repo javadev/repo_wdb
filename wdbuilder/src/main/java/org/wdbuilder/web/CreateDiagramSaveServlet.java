@@ -3,8 +3,8 @@ package org.wdbuilder.web;
 import javax.servlet.annotation.WebServlet;
 
 import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.serialize.html.DiagramImage;
 import org.wdbuilder.utility.DiagramHelper;
-import org.wdbuilder.web.base.CanvasFrameWriter;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -25,7 +25,7 @@ public class CreateDiagramSaveServlet extends DiagramServiceServlet {
 		input.getState().setDiagram(
 				serviceFacade.getDiagramService().getDiagram(key));
 
-		new CanvasFrameWriter(diagramHelper,
+		new DiagramImage(diagramHelper,
 				serviceFacade.getBlockPluginRepository())
 				.printCanvasFrame(input);
 	}
