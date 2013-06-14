@@ -5,7 +5,6 @@ import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UINewBlockFormFactory;
 import org.wdbuilder.input.BlockParameter;
 import org.wdbuilder.plugin.icon.IconBlockPluginFacade.Parameter;
-import org.wdbuilder.plugin.icon.domain.IconBlock;
 
 class CreateFormFactory extends UINewBlockFormFactory {
 
@@ -20,7 +19,7 @@ class CreateFormFactory extends UINewBlockFormFactory {
 				Icon.values(), Icon.Avatar);
 		final TwoColumnForm form = new TwoColumnForm("create-icon-block-save", "Create Icon Block")
 				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
-				.addHiddenField(BlockParameter.BlockClass, IconBlock.class.getCanonicalName())
+				.addHiddenField(BlockParameter.BlockClass, blockClass.getCanonicalName())
 				.addTextField(BlockParameter.Name, "")
 				.addSelectField(Parameter.IconID, iconSelectField);
 		return form;
