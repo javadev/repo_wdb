@@ -3,7 +3,6 @@ package org.wdbuilder.view;
 import static org.wdbuilder.service.DiagramService.RESIZE_AREA;
 import static org.wdbuilder.util.ImageUtility.getImageObserver;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -59,13 +58,13 @@ public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 			}
 		}
 
+		final RenderContext blockCtx = new RenderContext(diagramRenderCtx,
+				appState);
+		blockCtx.setOpaque(true);
+		blockCtx.setGraphics(gr);
 		for (final Block block : diagram.getBlocks()) {
-			final RenderContext blockCtx = new RenderContext(diagramRenderCtx,
-					appState);
-			blockCtx.setOpaque(true);
 			blockCtx.getOffset().setX(block.getLocation().getX());
 			blockCtx.getOffset().setY(block.getLocation().getY());
-			blockCtx.setGraphics(gr);
 
 			IBlockPluginFacade pluginFacade = blockPluginFacadeRepository
 					.getFacade(block.getClass());
@@ -73,8 +72,6 @@ public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 					.getRenderer();
 			renderer.draw(block, blockCtx);
 		}
-
-		gr.setColor(Color.black);
 
 		final LinkRenderContext linkRenderCtx = new LinkRenderContext(appState,
 				gr);
