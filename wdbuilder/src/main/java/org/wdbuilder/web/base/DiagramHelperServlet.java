@@ -1,6 +1,6 @@
 package org.wdbuilder.web.base;
 
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.utility.DiagramHelper;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
@@ -19,7 +19,7 @@ public abstract class DiagramHelperServlet extends DiagramServiceServlet {
 			throw new IllegalArgumentException(
 					"Diagram service is not initialized");
 		}
-		final String key = BlockParameter.DiagramKey.getString(input);
+		final String key = InputParameter.DiagramKey.getString(input);
 		if (isEmpty(key)) {
 			throw new IllegalArgumentException("Diagram key is undefined");
 		}

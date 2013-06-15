@@ -2,7 +2,9 @@ package org.wdbuilder.web;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
+import static org.wdbuilder.input.InputParameter.Width;
+import static org.wdbuilder.input.InputParameter.Height;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -12,9 +14,7 @@ public class UpdateCanvasSizeServlet extends EmptyOutputServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		serviceFacade.getDiagramService().setSize(
-				BlockParameter.DiagramKey.getString(input),
-				BlockParameter.Width.getInt(input),
-				BlockParameter.Height.getInt(input));
+		serviceFacade.getDiagramService().setSize(DiagramKey.getString(input),
+				Width.getInt(input), Height.getInt(input));
 	}
 }

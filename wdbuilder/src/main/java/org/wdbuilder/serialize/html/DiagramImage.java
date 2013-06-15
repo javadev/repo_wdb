@@ -11,7 +11,7 @@ import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.gui.IUIActionId;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.jaxbhtml.HtmlElement;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.A;
@@ -222,7 +222,7 @@ public class DiagramImage {
 		sb.append(prepareNameForURL(diagramHelper.getDiagram().getName()));
 		sb.append(".zip?");
 		sb.append(Utility.getURLPartToAvoidCaching());
-		DiagramServiceServlet.addParameter(sb, BlockParameter.DiagramKey
+		DiagramServiceServlet.addParameter(sb, InputParameter.DiagramKey
 				.getName(), diagramHelper.getDiagram().getKey());
 		return sb.toString();
 	}

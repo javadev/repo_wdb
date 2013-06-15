@@ -2,7 +2,8 @@ package org.wdbuilder.web;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
+import static org.wdbuilder.input.InputParameter.LinkKey;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -13,7 +14,7 @@ public class DeleteLinkServlet extends EmptyOutputServlet {
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		serviceFacade.getDiagramService()
-				.getLinkService(BlockParameter.DiagramKey.getString(input))
-				.delete(BlockParameter.LinkKey.getString(input));
+				.getLinkService(DiagramKey.getString(input))
+				.delete(LinkKey.getString(input));
 	}
 }

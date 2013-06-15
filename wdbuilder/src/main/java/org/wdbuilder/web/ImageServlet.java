@@ -3,7 +3,8 @@ package org.wdbuilder.web;
 import javax.servlet.annotation.WebServlet;
 
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.BlockKey;
+import static org.wdbuilder.input.InputParameter.BlockOnly;
 import org.wdbuilder.view.BlockImageGenerator;
 import org.wdbuilder.view.DiagramImageGenerator;
 import org.wdbuilder.view.ImageGenerator;
@@ -24,9 +25,9 @@ public class ImageServlet extends DiagramHelperServlet {
 		appState.setDiagram(diagram);
 
 		// Check for block id:
-		final String blockKey = BlockParameter.BlockKey.getString(input);
+		final String blockKey = BlockKey.getString(input);
 
-		final boolean blockOnly = BlockParameter.BlockOnly.getBoolean(input);
+		final boolean blockOnly = BlockOnly.getBoolean(input);
 		byte[] imageData = getImageGenerator(blockOnly, appState).render(
 				blockKey);
 		input.getResponse().setContentLength(imageData.length);

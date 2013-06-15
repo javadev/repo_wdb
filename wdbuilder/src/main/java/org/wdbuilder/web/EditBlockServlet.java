@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.BlockKey;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
@@ -22,8 +22,8 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 		final PrintWriter writer = input.getResponse().getWriter();
 
 		// Get existing block data:
-		final Block block = diagramHelper
-				.findBlockByKey(BlockParameter.BlockKey.getString(input));
+		final Block block = diagramHelper.findBlockByKey(BlockKey
+				.getString(input));
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 

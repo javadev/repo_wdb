@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import org.wdbuilder.domain.DiagramBackground;
 import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
@@ -24,8 +24,8 @@ public class CreateDiagramServlet extends DiagramServiceServlet {
 				DiagramBackground.values(), DiagramBackground.White);
 
 		final TwoColumnForm form = new TwoColumnForm("create-diagram-save", "New Diagram")
-				.addTextField(BlockParameter.Name, "")
-				.addSelectField(BlockParameter.Background, selectField)
+				.addTextField(InputParameter.Name, "")
+				.addSelectField(InputParameter.Background, selectField)
 				.addFooter("submitCreateCanvas()", "refreshDiagramList()");
 		new HtmlWriter(writer).write(form);
 	}

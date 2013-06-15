@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import javax.servlet.annotation.WebServlet;
 
 import org.wdbuilder.gui.TwoColumnForm;
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
@@ -19,10 +19,10 @@ public class ImportDiagramServlet extends DiagramServiceServlet {
 		final PrintWriter writer = input.getResponse().getWriter();
 
 		final TwoColumnForm form = new TwoColumnForm("import-diagram-save",
-				"Import Diagram").addFileField(BlockParameter.DiagramKey)
-				.addFooter("submitImportDiagram()", "refreshDiagramList()");
+				"Import Diagram").addFileField(DiagramKey).addFooter(
+				"submitImportDiagram()", "refreshDiagramList()");
 		form.setEncodeType("multipart/form-data; boundary=--------------------6361092470262692186");
-		
+
 		new HtmlWriter(writer).write(form);
 	}
 

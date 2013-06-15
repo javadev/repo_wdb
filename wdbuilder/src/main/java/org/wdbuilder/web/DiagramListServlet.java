@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBException;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.Full;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Li;
@@ -109,7 +109,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
-		final boolean full = BlockParameter.Full.getBoolean(input);
+		final boolean full = Full.getBoolean(input);
 		final String activeKey = getActiveDiagramKey(input);
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);

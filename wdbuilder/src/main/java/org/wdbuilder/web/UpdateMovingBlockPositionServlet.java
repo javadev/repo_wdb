@@ -2,7 +2,10 @@ package org.wdbuilder.web;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
+import static org.wdbuilder.input.InputParameter.BlockKey;
+import static org.wdbuilder.input.InputParameter.X;
+import static org.wdbuilder.input.InputParameter.Y;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -14,9 +17,8 @@ public class UpdateMovingBlockPositionServlet extends EmptyOutputServlet {
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		serviceFacade
 				.getDiagramService()
-				.getBlockService(BlockParameter.DiagramKey.getString(input))
-				.setLocation(BlockParameter.BlockKey.getString(input),
-						BlockParameter.X.getInt(input),
-						BlockParameter.Y.getInt(input));
+				.getBlockService(DiagramKey.getString(input))
+				.setLocation(BlockKey.getString(input), X.getInt(input),
+						Y.getInt(input));
 	}
 }

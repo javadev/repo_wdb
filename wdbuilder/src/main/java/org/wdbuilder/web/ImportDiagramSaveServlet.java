@@ -12,7 +12,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
 import org.wdbuilder.serialize.html.DiagramImage;
 import org.wdbuilder.utility.DiagramHelper;
 import org.wdbuilder.web.base.DiagramServiceServlet;
@@ -26,8 +26,7 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		Part part = input.getRequest().getPart(
-				BlockParameter.DiagramKey.getName());
+		Part part = input.getRequest().getPart(DiagramKey.getName());
 		InputStream fileStream = part.getInputStream();
 
 		ZipInputStream zipStream = new ZipInputStream(fileStream);

@@ -2,7 +2,7 @@ package org.wdbuilder.web;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -12,7 +12,6 @@ public class DeleteDiagramServlet extends EmptyOutputServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		serviceFacade.getDiagramService().delete(
-				BlockParameter.DiagramKey.getString(input));
+		serviceFacade.getDiagramService().delete(DiagramKey.getString(input));
 	}
 }
