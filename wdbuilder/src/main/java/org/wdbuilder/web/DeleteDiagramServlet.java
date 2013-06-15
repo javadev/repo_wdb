@@ -12,7 +12,7 @@ public class DeleteDiagramServlet extends EmptyOutputServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		serviceFacade.getDiagramService().deleteDiagram(
+		serviceFacade.getDiagramService().delete(
 				BlockParameter.DiagramKey.getString(input));
 	}
 }

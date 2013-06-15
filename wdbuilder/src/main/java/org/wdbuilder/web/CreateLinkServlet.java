@@ -26,8 +26,11 @@ public class CreateLinkServlet extends EmptyOutputServlet {
 		if (null == end) {
 			return;
 		}
-		serviceFacade.getDiagramService().persistLink(diagramKey, begin.block,
-				begin.socket, begin.index, end.block, end.socket, end.index);
+		serviceFacade
+				.getDiagramService()
+				.getLinkService(diagramKey)
+				.persist(begin.block, begin.socket, begin.index, end.block,
+						end.socket, end.index);
 	}
 
 	private static SocketData getFrom(ServletInput input,

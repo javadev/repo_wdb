@@ -11,7 +11,7 @@ public class EditDiagramSaveServlet extends DiagramServlet {
 
 	@Override
 	protected void do4Frame(ServletInput input) throws Exception {
-		serviceFacade.getDiagramService().updateDiagram(
+		serviceFacade.getDiagramService().update(
 				BlockParameter.DiagramKey.getString(input),
 				BlockParameter.Name.getString(input),
 				BlockParameter.Background.getString(input));

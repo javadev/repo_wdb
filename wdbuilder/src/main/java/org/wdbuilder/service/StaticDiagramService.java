@@ -9,16 +9,10 @@ import java.util.UUID;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.DiagramBackground;
-import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.Link;
-import org.wdbuilder.domain.LinkSocket;
+import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.helper.Dimension;
-import org.wdbuilder.domain.helper.Point;
-import org.wdbuilder.plugin.IBlockPluginFacade;
-import org.wdbuilder.plugin.ILinkPluginFacade;
 import org.wdbuilder.service.validator.DiagramValidator;
-import org.wdbuilder.utility.DiagramHelper;
-import org.wdbuilder.view.line.end.LineEnd;
 
 class StaticDiagramService implements DiagramService {
 
@@ -29,21 +23,21 @@ class StaticDiagramService implements DiagramService {
 
 	StaticDiagramService(IServiceFacade serviceFacade) {
 		this.serviceFacade = serviceFacade;
-	}
+	}	
 
 	@Override
-	public Collection<Diagram> getDiagrams() {
+	public Collection<Diagram> retrieveList() {
 		return diagrams.values();
 	}
 
 	@Override
-	public Diagram getDiagram(String diagramKey) {
+	public Diagram get(String diagramKey) {
 		return diagrams.get(diagramKey);
 	}
 
 	@Override
-	public void updateDiagramSize(String diagramKey, int width, int height) {
-		final Diagram diagram = getDiagram(diagramKey);
+	public void setSize(String diagramKey, int width, int height) {
+		final Diagram diagram = get(diagramKey);
 		if (null == diagram) {
 			return;
 		}
@@ -60,7 +54,7 @@ class StaticDiagramService implements DiagramService {
 	}
 
 	@Override
-	public String persistDiagram(String name, String backgroundKey) {
+	public String persist(String name, String backgroundKey) {
 		DiagramBackground background = DiagramBackground.valueOf(backgroundKey);
 		Diagram diagram = createDiagram(UUID.randomUUID().toString(), name,
 				320, 240, background);
@@ -69,8 +63,8 @@ class StaticDiagramService implements DiagramService {
 	}
 
 	@Override
-	public void updateDiagram(String key, String name, String backgroundKey) {
-		Diagram diagram = getDiagram(key);
+	public void update(String key, String name, String backgroundKey) {
+		Diagram diagram = get(key);
 		if (null == diagram) {
 			return;
 		}
@@ -93,240 +87,26 @@ class StaticDiagramService implements DiagramService {
 	}
 
 	@Override
-	public void deleteDiagram(String key) {
+	public void delete(String key) {
 		diagrams.remove(key);
 	}
 	
 	@Override
-	public void importDiagram(Diagram diagram) {
+	public void upload(Diagram diagram) {
 		diagrams.put( diagram.getKey(), diagram );
 	}	
+	
+	@Override
+	public BlockService getBlockService( String diagramKey ) {
+		return new StaticBlockService( get( diagramKey ), serviceFacade );
+	}
+	
+	@Override
+	public LinkService getLinkService( String diagramKey ) {
+		return new StaticLinkService( get( diagramKey ), serviceFacade);
+	}
 
 	// }}} DIAGRAM
-
-	// BLOCK {{{
-	@Override
-	public void updateBlockPosition(String diagramKey, String blockKey,
-			int offsetX, int offsetY) {
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
-		final Block block = diagramHelper.findBlockByKey(blockKey);
-		if (null == block) {
-			// Nothing to update
-			return;
-		}
-
-		IBlockPluginFacade pluginFacade = getBlockPluginFacade(block);
-		// Save old values:
-		Point oldLocation = new Point(block.getLocation().getX(), block
-				.getLocation().getY());
-		block.setLocation(new Point(offsetX, offsetY));
-
-		try {
-			pluginFacade.getValidator().validate(diagram, block);
-		} catch (IllegalArgumentException ex) {
-			// Restore old location:
-			block.setLocation(oldLocation);
-
-			throw ex;
-		}
-	}
-
-	private ILinkPluginFacade getLinkPluginFacade(final Link link) {
-		return serviceFacade.getLinkPluginRepository().getFacade(
-				link.getClass());
-	}
-
-	private IBlockPluginFacade getBlockPluginFacade(final Block block) {
-		return getBlockPluginFacade(block.getClass());
-	}
-
-	private IBlockPluginFacade getBlockPluginFacade(final Class<?> klass) {
-		return serviceFacade.getBlockPluginRepository().getFacade(klass);
-	}
-
-	@Override
-	public void deleteBlock(String diagramKey, String blockKey) {
-		if (diagramKey.isEmpty() || blockKey.isEmpty()) {
-			return;
-		}
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		new DiagramHelper(diagram).removeBlockByKey(blockKey);
-	}
-
-	@Override
-	public String persistBlock(String diagramKey, Block block) {
-
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return null;
-		}
-
-		final int offsetX = diagram.getSize().getWidth() / 2;
-		final int offsetY = diagram.getSize().getHeight() / 2;
-
-		final String key = UUID.randomUUID().toString();
-		block.setKey(key);
-		block.setLocation(new Point(offsetX, offsetY));
-
-		IBlockPluginFacade pluginFacade = getBlockPluginFacade(block);
-		pluginFacade.getValidator().validate(diagram, block);
-
-		diagram.getBlocks().add(block);
-
-		return key;
-	}
-
-	@Override
-	public void updateBlock(String diagramKey, String blockKey, Block block) {
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-
-		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
-		final Block savedBlock = diagramHelper.findBlockByKey(blockKey);
-		if (null == savedBlock) {
-			// Nothing to update
-			return;
-		}
-		block.setKey(blockKey);
-		block.setLocation(savedBlock.getLocation());
-
-		IBlockPluginFacade pluginFacade = getBlockPluginFacade(block);
-		pluginFacade.getValidator().validate(diagram, block);
-
-		// TODO: doubtful code (2013/04/29)
-		diagram.getBlocks().remove(savedBlock);
-		diagram.getBlocks().add(block);
-	}
-
-	// }}} BLOCK
-
-	// LINK {{{
-	@Override
-	public void persistLink(String diagramKey, String beginBlockKey,
-			String beginSocketDirection, int beginSocketIndex,
-			String endBlockKey, String endSocketDirection, int endSocketIndex) {
-		if (diagramKey.isEmpty() || beginBlockKey.isEmpty()
-				|| beginSocketDirection.isEmpty() || endBlockKey.isEmpty()
-				|| endSocketDirection.isEmpty()) {
-			return;
-		}
-		if (beginBlockKey.equals(endBlockKey)
-				&& beginSocketDirection.equals(endSocketDirection)
-				&& beginSocketIndex == endSocketIndex) {
-			return;
-		}
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		DiagramHelper diagramHelper = new DiagramHelper(diagram);
-
-		final Block beginBlock = diagramHelper.findBlockByKey(beginBlockKey);
-		if (null == beginBlock) {
-			return;
-		}
-		final Block endBlock = diagramHelper.findBlockByKey(endBlockKey);
-		if (null == endBlock) {
-			return;
-		}
-		final LinkSocket beginSocket = new LinkSocket(beginBlockKey,
-				LinkSocket.Direction.valueOf(beginSocketDirection),
-				beginSocketIndex);
-		beginSocket.setLineEnd(LineEnd.SIMPLE);
-
-		final LinkSocket endSocket = new LinkSocket(endBlockKey,
-				LinkSocket.Direction.valueOf(endSocketDirection),
-				endSocketIndex);
-		endSocket.setLineEnd(LineEnd.SOLID_ARROW);
-
-		Link link = new Link();
-		link.setKey(UUID.randomUUID().toString());
-		link.setLineColor(Link.LineColor.Black);
-
-		link.setSockets(new ArrayList<LinkSocket>(2));
-		link.getSockets().add(beginSocket);
-		link.getSockets().add(endSocket);
-
-		diagramHelper.calculatePivot(link);
-
-		if (!diagramHelper.hasLinkWithSameEnds(link)) {
-			diagram.getLinks().add(link);
-		}
-	}
-
-	@Override
-	public void moveLinkPivot(String diagramKey, String linkKey, int x, int y) {
-
-		if (diagramKey.isEmpty() || linkKey.isEmpty()) {
-			return;
-		}
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
-		final Link link = diagramHelper.findLinkByKey(linkKey);
-		if (null == link) {
-			return;
-		}
-		link.setPivot(new Point(x, y));
-	}
-
-	@Override
-	public void updateLink(String diagramKey, String linkKey, Link link) {
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-
-		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
-		final Link savedLink = diagramHelper.findLinkByKey(linkKey);
-		if (null == savedLink) {
-			// Nothing to update
-			return;
-		}
-		link.setKey(linkKey);
-		link.setPivot(savedLink.getPivot());
-
-		// Update socket types: (TODO (2013/05/07) strange code)
-		int size = link.getSockets().size();
-		for (int i = 0; i < size; i++) {
-			savedLink.getSockets().get(i)
-					.setLineEnd(link.getSockets().get(i).getLineEnd());
-		}
-
-		link.setSockets(savedLink.getSockets());
-
-		ILinkPluginFacade pluginFacade = getLinkPluginFacade(link);
-		pluginFacade.getValidator().validate(diagram, link);
-
-		// TODO: doubtful code (2013/05/06)
-		diagram.getLinks().remove(savedLink);
-		diagram.getLinks().add(link);
-	}
-
-	@Override
-	public void deleteLink(String diagramKey, String linkKey) {
-		if (diagramKey.isEmpty() || linkKey.isEmpty()) {
-			return;
-		}
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		new DiagramHelper(diagram).removeLinkByKey(linkKey);
-	}
-
-	// }}} LINK
 
 	private static final Diagram createDiagram(String id, String name,
 			int width, int height, DiagramBackground background) {

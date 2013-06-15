@@ -12,8 +12,8 @@ public class DeleteBlockServlet extends EmptyOutputServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		serviceFacade.getDiagramService().deleteBlock(
-				BlockParameter.DiagramKey.getString(input),
-				BlockParameter.BlockKey.getString(input));
+		serviceFacade.getDiagramService()
+				.getBlockService(BlockParameter.DiagramKey.getString(input))
+				.delete(BlockParameter.BlockKey.getString(input));
 	}
 }

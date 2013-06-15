@@ -26,8 +26,8 @@ public class EditBlockSaveServlet extends DiagramServlet {
 				.getFacade(persistedBlock.getClass());
 		Block block = pluginFacade.create(input);
 
-		serviceFacade.getDiagramService().updateBlock(diagramKey, blockKey,
-				block);
+		serviceFacade.getDiagramService().getBlockService(diagramKey)
+				.update(blockKey, block);
 		printCanvasFrame(input);
 
 	}

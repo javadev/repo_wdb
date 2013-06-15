@@ -43,8 +43,7 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 	}
 
 	protected final DiagramHelper createDiagramHelper(final String key) {
-		return new DiagramHelper(serviceFacade.getDiagramService().getDiagram(
-				key));
+		return new DiagramHelper(serviceFacade.getDiagramService().get(key));
 	}
 
 	protected void flush(HttpServletResponse response) throws IOException {

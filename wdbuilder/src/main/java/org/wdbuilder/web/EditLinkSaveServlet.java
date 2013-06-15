@@ -22,12 +22,11 @@ public class EditLinkSaveServlet extends DiagramServlet {
 		}
 
 		ILinkPluginFacade pluginFacade = serviceFacade
-				.getLinkPluginRepository()
-				.getFacade(persistedLink.getClass());
+				.getLinkPluginRepository().getFacade(persistedLink.getClass());
 		Link link = pluginFacade.create(input);
 
-		serviceFacade.getDiagramService().updateLink(diagramKey, linkKey,
-				link);
+		serviceFacade.getDiagramService().getLinkService(diagramKey)
+				.update(linkKey, link);
 		printCanvasFrame(input);
 
 	}

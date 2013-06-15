@@ -16,14 +16,14 @@ public class CreateDiagramSaveServlet extends DiagramServiceServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		final String key = serviceFacade.getDiagramService().persistDiagram(
+		final String key = serviceFacade.getDiagramService().persist(
 				BlockParameter.Name.getString(input),
 				BlockParameter.Background.getString(input));
 		this.diagramHelper = createDiagramHelper(key);
 
 		// Set the current diagram (TODO silly method):
 		input.getState().setDiagram(
-				serviceFacade.getDiagramService().getDiagram(key));
+				serviceFacade.getDiagramService().get(key));
 
 		new DiagramImage(diagramHelper,
 				serviceFacade.getBlockPluginRepository())

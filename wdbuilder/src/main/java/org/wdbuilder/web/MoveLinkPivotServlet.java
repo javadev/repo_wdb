@@ -13,9 +13,11 @@ public class MoveLinkPivotServlet extends EmptyOutputServlet {
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 
-		serviceFacade.getDiagramService().moveLinkPivot(
-				BlockParameter.DiagramKey.getString(input),
-				BlockParameter.LinkKey.getString(input),
-				BlockParameter.X.getInt(input), BlockParameter.Y.getInt(input));
+		serviceFacade
+				.getDiagramService()
+				.getLinkService(BlockParameter.DiagramKey.getString(input))
+				.setPivot(BlockParameter.LinkKey.getString(input),
+						BlockParameter.X.getInt(input),
+						BlockParameter.Y.getInt(input));
 	}
 }

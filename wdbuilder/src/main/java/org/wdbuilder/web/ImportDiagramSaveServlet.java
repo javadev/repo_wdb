@@ -48,7 +48,7 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 			throw new IllegalArgumentException("Invalid file");
 		}
 		Diagram diagram = Diagram.class.cast(obj);
-		serviceFacade.getDiagramService().importDiagram(diagram);
+		serviceFacade.getDiagramService().upload(diagram);
 		diagramHelper = new DiagramHelper(diagram);
 
 		// Set the current diagram (TODO silly method):
