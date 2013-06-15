@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.service.DiagramService;
-import org.wdbuilder.view.line.end.ILineEnd;
 import org.wdbuilder.view.line.end.LineEnd;
 
 import com.google.common.base.Predicate;

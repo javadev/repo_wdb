@@ -7,7 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import org.apache.commons.lang.StringUtils;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UINewBlockFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
+import static org.wdbuilder.input.InputParameter.BlockClass;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
@@ -21,10 +22,10 @@ public class CreateBlockServlet extends DiagramHelperFormServlet {
 	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
 
-		final String str = BlockParameter.DiagramKey.getString(input);
+		final String str = DiagramKey.getString(input);
 		final String diagramId = "'" + str + "'";
 
-		final String blockClassStr = BlockParameter.BlockClass.getString(input);
+		final String blockClassStr = BlockClass.getString(input);
 		if (StringUtils.isEmpty(blockClassStr)) {
 			return;
 		}

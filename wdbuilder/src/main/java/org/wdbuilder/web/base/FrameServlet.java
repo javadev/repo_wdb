@@ -5,7 +5,7 @@ import javax.xml.bind.JAXBException;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.helper.Dimension;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.jaxbhtml.element.Img;
 import org.wdbuilder.utility.Utility;
 
@@ -44,10 +44,10 @@ public abstract class FrameServlet extends DiagramHelperServlet {
 			StringBuilder url = new StringBuilder(128);
 			url.append("image?");
 			url.append(Utility.getURLPartToAvoidCaching());
-			addParameter(url, BlockParameter.DiagramKey.getName(),
+			addParameter(url, InputParameter.DiagramKey.getName(),
 					diagram.getKey());
 			if (null != block) {
-				addParameter(url, BlockParameter.BlockKey.getName(),
+				addParameter(url, InputParameter.BlockKey.getName(),
 						block.getKey());
 			}
 			addParameter(url, "blockOnly", (null != block));

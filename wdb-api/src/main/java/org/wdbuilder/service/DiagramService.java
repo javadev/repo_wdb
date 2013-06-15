@@ -2,9 +2,7 @@ package org.wdbuilder.service;
 
 import java.util.Collection;
 
-import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.helper.Dimension;
 
 public interface DiagramService {
@@ -15,21 +13,25 @@ public interface DiagramService {
 
 	public static final Dimension RESIZE_AREA = new Dimension(11, 11);
 
-	// Diagram list - start point
-	Collection<Diagram> getDiagrams();
+	Collection<Diagram> retrieveList();
 
-	// Diagram related:
-	Diagram getDiagram(String diagramKey);
+	Diagram get(String diagramKey);
 
-	void updateDiagramSize(String diagramKey, int width, int height);
+	void setSize(String diagramKey, int width, int height);
 
-	String persistDiagram(String name, String backgroundKey);
+	String persist(String name, String backgroundKey);
 	
-	void importDiagram( Diagram diagram );
+	void upload( Diagram diagram );
 
-	void updateDiagram(String diagramKey, String name, String backgroundKey);
+	void update(String diagramKey, String name, String backgroundKey);
 
-	void deleteDiagram(String diagramKey);
+	void delete(String diagramKey);
+	
+	BlockService getBlockService( String diagramKey );
+	
+	LinkService getLinkService( String diagramKey );
+	
+	/*
 
 	// Block related:
 	void updateBlockPosition(String diagramKey, String blockKey, int offsetX,
@@ -51,5 +53,7 @@ public interface DiagramService {
 	void updateLink(String diagramKey, String linkKey, Link link);
 
 	void deleteLink(String diagramKey, String linkKey);
+	
+	*/
 
 }

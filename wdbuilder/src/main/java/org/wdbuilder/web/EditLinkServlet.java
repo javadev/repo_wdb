@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.LinkKey;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.ILinkPluginFacade;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
@@ -24,8 +24,7 @@ public class EditLinkServlet extends DiagramHelperFormServlet {
 				+ "'";
 
 		// Get existing block data:
-		final Link link = diagramHelper
-				.findLinkByKey(BlockParameter.LinkKey.getString(input));
+		final Link link = diagramHelper.findLinkByKey(LinkKey.getString(input));
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 

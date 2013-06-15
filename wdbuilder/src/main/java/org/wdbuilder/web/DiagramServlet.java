@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.xml.bind.JAXBException;
 
+import org.wdbuilder.domain.Diagram;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
 import org.wdbuilder.serialize.html.DiagramImage;
 import org.wdbuilder.web.base.FrameServlet;
 import org.wdbuilder.web.base.ServletInput;
@@ -14,7 +16,10 @@ public class DiagramServlet extends FrameServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void do4Frame(ServletInput input) throws Exception {
+	protected void do4Frame(ServletInput input) throws Exception {		
+		String diagramKey  = DiagramKey.getString(input);
+		Diagram diagram = serviceFacade.getDiagramService().get(diagramKey);
+		input.getState().setDiagram(diagram);		
 		printCanvasFrame(input);
 	}
 

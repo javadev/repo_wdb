@@ -50,12 +50,7 @@ function loadDiagramList(full) {
 
 // Hide screen section
 function cleanElement(id) {
-	var elem = document.getElementById(id);
-	if (elem) {
-		elem.style.display = "none";
-		elem.innerHTML = "";
-	}
-	;
+	$('#' + id ).empty().hide();
 }
 
 // Set the caret:
@@ -210,6 +205,7 @@ function loadCanvas(diagramKey) {
 	
 	cleanElement("resizeFrame");	
 	hideProperties();
+	cleanElement("canvasFrame");
 	
 	loadContent("diagram?r=" + Math.random() + "&dkey=" + diagramKey, "canvasFrame",
 			function() { initBootstrapControls(); }

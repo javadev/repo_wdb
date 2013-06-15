@@ -5,7 +5,7 @@ import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.gui.UINewBlockFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.plugin.IBlockPluginFacade;
@@ -71,7 +71,7 @@ public class IconBlockPluginFacade implements IBlockPluginFacade {
 		final Icon icon = Icon.valueOf(iconIdStr);
 		Dimension size = icon.getSize();
 		result.setSize(size);
-		result.setName(BlockParameter.Name.getString(input));
+		result.setName(InputParameter.Name.getString(input));
 		result.setIcon(icon);
 		return result;
 	}

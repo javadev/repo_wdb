@@ -1,8 +1,6 @@
 package org.wdbuilder.input;
 
-
-// TODO: rename it into "simple" Parameter (2013/04/30)
-public enum BlockParameter implements IParameter {
+public enum InputParameter implements IParameter {
 	DiagramKey("dkey", "Diagram Key"), 
 	BlockKey("bkey", "Block Key"), 
 	LinkKey("lkey", "Link Key"),
@@ -21,7 +19,7 @@ public enum BlockParameter implements IParameter {
 	private final String name;
 	private final String label;
 
-	BlockParameter(String name, String label) {
+	InputParameter(String name, String label) {
 		this.name = name;
 		this.label = label;
 	}

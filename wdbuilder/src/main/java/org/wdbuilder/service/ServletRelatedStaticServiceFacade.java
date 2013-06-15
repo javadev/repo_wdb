@@ -1,357 +1,152 @@
 package org.wdbuilder.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+import javax.servlet.ServletConfig;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.wdbuilder.domain.Block;
-import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.domain.DiagramBackground;
-import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.Link;
-import org.wdbuilder.domain.LinkSocket;
-import org.wdbuilder.domain.helper.Dimension;
-import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.ILinkPluginFacade;
-import org.wdbuilder.service.validator.DiagramValidator;
-import org.wdbuilder.utility.DiagramHelper;
-import org.wdbuilder.view.line.end.LineEnd;
+import org.wdbuilder.plugin.ILinkRenderContext;
+import org.wdbuilder.plugin.IRenderContext;
 
-class StaticDiagramService implements DiagramService {
+// TODO this initialization should be substituted by some IoC in the future (2013/05/06)
+public class ServletRelatedStaticServiceFacade implements IServiceFacade {
+	private static final Logger LOG = Logger
+			.getLogger(ServletRelatedStaticServiceFacade.class);
 
-	private final Map<String, Diagram> diagrams = new LinkedHashMap<String, Diagram>(
-			2);
+	public static IServiceFacade instance = null;
 
-	private final IServiceFacade serviceFacade;
+	public static IServiceFacade getInstance(ServletConfig servletConfig) {
+		if (null == instance) {
+			synchronized (ServletRelatedStaticServiceFacade.class) {
+				if (null == instance) {
+					instance = new ServletRelatedStaticServiceFacade(
+							servletConfig);
+				}
+			}
+		}
+		return instance;
+	}
 
-	StaticDiagramService(IServiceFacade serviceFacade) {
-		this.serviceFacade = serviceFacade;
+	private final DiagramService diagramService = new StaticDiagramService(this);
+	private final IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> blockPluginRepository;
+	private final IPluginFacadeRepository<Link, ILinkPluginFacade, ILinkRenderContext> linkPluginRepository;
+
+	private ServletRelatedStaticServiceFacade(ServletConfig servletConfig) {
+		LOG.info("initialization by " + servletConfig);
+		blockPluginRepository = new PluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext>(
+				getBlockPlugins(servletConfig));
+		linkPluginRepository = new PluginFacadeRepository<Link, ILinkPluginFacade, ILinkRenderContext>(
+				getLinkPlugins(servletConfig));
+		LOG.info("initialization: done");
 	}
 
 	@Override
-	public Collection<Diagram> getDiagrams() {
-		return diagrams.values();
+	public DiagramService getDiagramService() {
+		return diagramService;
 	}
 
 	@Override
-	public Diagram getDiagram(String diagramKey) {
-		return diagrams.get(diagramKey);
+	public IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> getBlockPluginRepository() {
+		return blockPluginRepository;
 	}
 
 	@Override
-	public void updateDiagramSize(String diagramKey, int width, int height) {
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		Dimension oldSize = new Dimension(diagram.getSize().getWidth(), diagram
-				.getSize().getHeight());
-		diagram.setSize(new Dimension(width, height));
-		try {
-			new DiagramValidator().validate(diagram, null);
-		} catch (IllegalArgumentException ex) {
-			// Restore old size:
-			diagram.setSize(oldSize);
-			throw ex;
-		}
+	public IPluginFacadeRepository<Link, ILinkPluginFacade, ILinkRenderContext> getLinkPluginRepository() {
+		return linkPluginRepository;
 	}
 
-	@Override
-	public String persistDiagram(String name, String backgroundKey) {
-		DiagramBackground background = DiagramBackground.valueOf(backgroundKey);
-		Diagram diagram = createDiagram(UUID.randomUUID().toString(), name,
-				320, 240, background);
-		new DiagramValidator().validate(diagram, null);
-		return saveDiagram(diagram);
-	}
+	private static Collection<IBlockPluginFacade> getBlockPlugins(
+			ServletConfig servletConfig) {
+		Set<IBlockPluginFacade> result = new LinkedHashSet<IBlockPluginFacade>(
+				2);
 
-	@Override
-	public void updateDiagram(String key, String name, String backgroundKey) {
-		Diagram diagram = getDiagram(key);
-		if (null == diagram) {
-			return;
-		}
-		String oldName = diagram.getName();
-		diagram.setName(name);
-		DiagramBackground oldBackground = diagram.getBackground();
-		final DiagramBackground background = DiagramBackground
-				.valueOf(backgroundKey);
-		diagram.setBackground(background);
+		String contextParamStr = servletConfig.getServletContext()
+				.getInitParameter("block-plugins");
 
-		try {
-			new DiagramValidator().validate(diagram, null);
-		} catch (IllegalArgumentException ex) {
-			// Restore old values:
-			diagram.setName(oldName);
-			diagram.setBackground(oldBackground);
+		// TODO: TEMPORARY SOLUTION!!!!!!!
+		contextParamStr = "org.wdbuilder.plugin.common.CommonBlockPluginFacade,"
+				+ "org.wdbuilder.plugin.icon.IconBlockPluginFacade";
 
-			throw ex;
-		}
-	}
-
-	@Override
-	public void deleteDiagram(String key) {
-		diagrams.remove(key);
-	}
-	
-	@Override
-	public void importDiagram(Diagram diagram) {
-		diagrams.put( diagram.getKey(), diagram );
-	}	
-
-	// }}} DIAGRAM
-
-	// BLOCK {{{
-	@Override
-	public void updateBlockPosition(String diagramKey, String blockKey,
-			int offsetX, int offsetY) {
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
-		final Block block = diagramHelper.findBlockByKey(blockKey);
-		if (null == block) {
-			// Nothing to update
-			return;
+		if (StringUtils.isEmpty(contextParamStr)) {
+			return result;
 		}
 
-		IBlockPluginFacade pluginFacade = getBlockPluginFacade(block);
-		// Save old values:
-		Point oldLocation = new Point(block.getLocation().getX(), block
-				.getLocation().getY());
-		block.setLocation(new Point(offsetX, offsetY));
+		String[] pairs = contextParamStr.split(",");
+		for (final String str : pairs) {
+			Class<?> klass = getClass(str);
+			if (null != klass) {
+				try {
+					Object obj = klass.newInstance();
+					if (IBlockPluginFacade.class.isInstance(obj)) {
+						IBlockPluginFacade facade = IBlockPluginFacade.class
+								.cast(obj);
+						result.add(facade);
 
-		try {
-			pluginFacade.getValidator().validate(diagram, block);
-		} catch (IllegalArgumentException ex) {
-			// Restore old location:
-			block.setLocation(oldLocation);
-
-			throw ex;
-		}
-	}
-
-	private ILinkPluginFacade getLinkPluginFacade(final Link link) {
-		return serviceFacade.getLinkPluginRepository().getFacade(
-				link.getClass());
-	}
-
-	private IBlockPluginFacade getBlockPluginFacade(final Block block) {
-		return getBlockPluginFacade(block.getClass());
-	}
-
-	private IBlockPluginFacade getBlockPluginFacade(final Class<?> klass) {
-		return serviceFacade.getBlockPluginRepository().getFacade(klass);
-	}
-
-	@Override
-	public void deleteBlock(String diagramKey, String blockKey) {
-		if (diagramKey.isEmpty() || blockKey.isEmpty()) {
-			return;
-		}
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		new DiagramHelper(diagram).removeBlockByKey(blockKey);
-	}
-
-	@Override
-	public String persistBlock(String diagramKey, Block block) {
-
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return null;
+						LOG.info("plugin " + klass.getName() + " ("
+								+ facade.getEntityClass().getName() + ") - OK");
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 
-		final int offsetX = diagram.getSize().getWidth() / 2;
-		final int offsetY = diagram.getSize().getHeight() / 2;
-
-		final String key = UUID.randomUUID().toString();
-		block.setKey(key);
-		block.setLocation(new Point(offsetX, offsetY));
-
-		IBlockPluginFacade pluginFacade = getBlockPluginFacade(block);
-		pluginFacade.getValidator().validate(diagram, block);
-
-		diagram.getBlocks().add(block);
-
-		return key;
-	}
-
-	@Override
-	public void updateBlock(String diagramKey, String blockKey, Block block) {
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-
-		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
-		final Block savedBlock = diagramHelper.findBlockByKey(blockKey);
-		if (null == savedBlock) {
-			// Nothing to update
-			return;
-		}
-		block.setKey(blockKey);
-		block.setLocation(savedBlock.getLocation());
-
-		IBlockPluginFacade pluginFacade = getBlockPluginFacade(block);
-		pluginFacade.getValidator().validate(diagram, block);
-
-		// TODO: doubtful code (2013/04/29)
-		diagram.getBlocks().remove(savedBlock);
-		diagram.getBlocks().add(block);
-	}
-
-	// }}} BLOCK
-
-	// LINK {{{
-	@Override
-	public void persistLink(String diagramKey, String beginBlockKey,
-			String beginSocketDirection, int beginSocketIndex,
-			String endBlockKey, String endSocketDirection, int endSocketIndex) {
-		if (diagramKey.isEmpty() || beginBlockKey.isEmpty()
-				|| beginSocketDirection.isEmpty() || endBlockKey.isEmpty()
-				|| endSocketDirection.isEmpty()) {
-			return;
-		}
-		if (beginBlockKey.equals(endBlockKey)
-				&& beginSocketDirection.equals(endSocketDirection)
-				&& beginSocketIndex == endSocketIndex) {
-			return;
-		}
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		DiagramHelper diagramHelper = new DiagramHelper(diagram);
-
-		final Block beginBlock = diagramHelper.findBlockByKey(beginBlockKey);
-		if (null == beginBlock) {
-			return;
-		}
-		final Block endBlock = diagramHelper.findBlockByKey(endBlockKey);
-		if (null == endBlock) {
-			return;
-		}
-		final LinkSocket beginSocket = new LinkSocket(beginBlockKey,
-				LinkSocket.Direction.valueOf(beginSocketDirection),
-				beginSocketIndex);
-		beginSocket.setLineEnd(LineEnd.SIMPLE);
-
-		final LinkSocket endSocket = new LinkSocket(endBlockKey,
-				LinkSocket.Direction.valueOf(endSocketDirection),
-				endSocketIndex);
-		endSocket.setLineEnd(LineEnd.SOLID_ARROW);
-
-		Link link = new Link();
-		link.setKey(UUID.randomUUID().toString());
-		link.setLineColor(Link.LineColor.Black);
-
-		link.setSockets(new ArrayList<LinkSocket>(2));
-		link.getSockets().add(beginSocket);
-		link.getSockets().add(endSocket);
-
-		diagramHelper.calculatePivot(link);
-
-		if (!diagramHelper.hasLinkWithSameEnds(link)) {
-			diagram.getLinks().add(link);
-		}
-	}
-
-	@Override
-	public void moveLinkPivot(String diagramKey, String linkKey, int x, int y) {
-
-		if (diagramKey.isEmpty() || linkKey.isEmpty()) {
-			return;
-		}
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
-		final Link link = diagramHelper.findLinkByKey(linkKey);
-		if (null == link) {
-			return;
-		}
-		link.setPivot(new Point(x, y));
-	}
-
-	@Override
-	public void updateLink(String diagramKey, String linkKey, Link link) {
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-
-		final DiagramHelper diagramHelper = new DiagramHelper(diagram);
-		final Link savedLink = diagramHelper.findLinkByKey(linkKey);
-		if (null == savedLink) {
-			// Nothing to update
-			return;
-		}
-		link.setKey(linkKey);
-		link.setPivot(savedLink.getPivot());
-
-		// Update socket types: (TODO (2013/05/07) strange code)
-		int size = link.getSockets().size();
-		for (int i = 0; i < size; i++) {
-			savedLink.getSockets().get(i)
-					.setLineEnd(link.getSockets().get(i).getLineEnd());
-		}
-
-		link.setSockets(savedLink.getSockets());
-
-		ILinkPluginFacade pluginFacade = getLinkPluginFacade(link);
-		pluginFacade.getValidator().validate(diagram, link);
-
-		// TODO: doubtful code (2013/05/06)
-		diagram.getLinks().remove(savedLink);
-		diagram.getLinks().add(link);
-	}
-
-	@Override
-	public void deleteLink(String diagramKey, String linkKey) {
-		if (diagramKey.isEmpty() || linkKey.isEmpty()) {
-			return;
-		}
-		final Diagram diagram = getDiagram(diagramKey);
-		if (null == diagram) {
-			return;
-		}
-		new DiagramHelper(diagram).removeLinkByKey(linkKey);
-	}
-
-	// }}} LINK
-
-	private static final Diagram createDiagram(String id, String name,
-			int width, int height, DiagramBackground background) {
-		Diagram result = new Diagram();
-		fillEntity(result, id, name, width, height);
-		result.setBlocks(new ArrayList<Block>(2));
-		result.setLinks(new ArrayList<Link>(2));
-		result.setBackground(background);
 		return result;
 	}
 
-	private final String saveDiagram(Diagram diagram) {
-		if (null == diagram) {
-			return null;
+	private static Collection<ILinkPluginFacade> getLinkPlugins(
+			ServletConfig servletConfig) {
+		Set<ILinkPluginFacade> result = new LinkedHashSet<ILinkPluginFacade>(2);
+
+		String contextParamStr = servletConfig.getServletContext()
+				.getInitParameter("link-plugins");
+
+		// TODO: TEMPORARY SOLUTION!!!!!!!
+		contextParamStr = "org.wdbuilder.plugin.defaultlink.DefaultLinkPluginFacade";
+
+		if (StringUtils.isEmpty(contextParamStr)) {
+			return result;
 		}
-		String key = diagram.getKey();
-		diagrams.put(key, diagram);
-		return key;
+		String[] pairs = contextParamStr.split(",");
+		for (final String str : pairs) {
+			Class<?> klass = getClass(str);
+			if (null != klass) {
+				try {
+					Object obj = klass.newInstance();
+					if (ILinkPluginFacade.class.isInstance(obj)) {
+						ILinkPluginFacade facade = ILinkPluginFacade.class
+								.cast(obj);
+						result.add(facade);
+
+						LOG.info("plugin " + klass.getName() + " ("
+								+ facade.getEntityClass().getName() + ") - OK");
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+
+		return result;
 	}
 
-	private static final void fillEntity(SizedEntity result, String id,
-			String name, int width, int height) {
-		result.setKey(id);
-		result.setName(name);
-		result.setSize(new Dimension(width, height));
+	private static Class<?> getClass(String str) {
+		try {
+			// TODO: doubtful code (2013/04/28)
+			Class<?> result = Class.forName(str.trim());
+			return result;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 }

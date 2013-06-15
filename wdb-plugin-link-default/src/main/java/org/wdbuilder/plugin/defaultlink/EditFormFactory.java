@@ -4,7 +4,7 @@ import org.wdbuilder.domain.Link;
 import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.plugin.defaultlink.DefaultLinkPluginFacade.Parameter;
 import org.wdbuilder.view.line.LineStyle;
 import org.wdbuilder.view.line.end.LineEnd;
@@ -32,9 +32,9 @@ class EditFormFactory extends UIExistingEntityFormFactory<Link> {
 				LineStyle.values(), entity.getLineStyle());
 
 		final TwoColumnForm form = new TwoColumnForm("edit-link-save", "Edit Link")
-				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
-				.addHiddenField(BlockParameter.LinkKey, entity.getKey())
-				.addTextField(BlockParameter.Name, entity.getName())
+				.addHiddenField(InputParameter.DiagramKey, diagramKey)
+				.addHiddenField(InputParameter.LinkKey, entity.getKey())
+				.addTextField(InputParameter.Name, entity.getName())
 				.addSelectField(Parameter.LineColor, lineColorSelect)
 				.addSelectField(Parameter.LineStyle, lineStyleSelect)
 				.addSelectField(Parameter.StartType, beginTypeSelect)

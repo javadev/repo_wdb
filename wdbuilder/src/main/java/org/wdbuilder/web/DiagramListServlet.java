@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBException;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.Full;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.jaxbhtml.element.A;
 import org.wdbuilder.jaxbhtml.element.Li;
@@ -44,12 +44,12 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		public String getOnClickHandler() {
 			return "openCreateCanvasDialog()";
 		}
-		
+
 		@Override
 		public String getClassName() {
 			return "btn-success";
 		}
-		
+
 	}, new IUIActionClick() {
 
 		@Override
@@ -66,12 +66,12 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		public String getOnClickHandler() {
 			return "openImportDiagramDialog()";
 		}
-		
+
 		@Override
 		public String getClassName() {
 			return "btn-success";
 		}
-		
+
 	}, new IUIActionClick() {
 
 		@Override
@@ -109,48 +109,48 @@ public class DiagramListServlet extends DiagramServiceServlet {
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final PrintWriter writer = input.getResponse().getWriter();
-		final boolean full = BlockParameter.Full.getBoolean(input);
+		final boolean full = Full.getBoolean(input);
 		final String activeKey = getActiveDiagramKey(input);
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
-		
-		
+
 		Tr tr = new Tr();
 		if (full) {
 			Td td = new Td();
-			td.setStyle("vertical-align:top" );
+			td.setStyle("vertical-align:top");
 			td.add(new DiagramList(activeKey));
-			tr.add( td );
+			tr.add(td);
 		}
-		
+
 		final SectionHeader sectionHeader = new SectionHeader() {
 			@Override
 			public Iterable<IUIAction> getIcons() {
-				IUIAction[] icons = full ? ICONS_FULL : getIconsForCondensed(activeKey);
+				IUIAction[] icons = full ? ICONS_FULL
+						: getIconsForCondensed(activeKey);
 				return Arrays.asList(icons);
 			}
 		};
 		Td td = new Td();
-		td.setStyle( "vertical-align: top" );
-		td.add( sectionHeader );
-		tr.add( td );		
-		
+		td.setStyle("vertical-align: top");
+		td.add(sectionHeader);
+		tr.add(td);
+
 		// Prepare the nested table:
 		Table table = new Table();
-		table.add( tr );
-		htmlWriter.write( table );
+		table.add(tr);
+		htmlWriter.write(table);
 	}
 
 	private static String getActiveDiagramKey(ServletInput input) {
-		if( null==input ) {
+		if (null == input) {
 			return null;
 		}
 		ApplicationState state = input.getState();
-		if( null==state ) {
+		if (null == state) {
 			return null;
 		}
 		Diagram diagram = state.getDiagram();
-		if( null==diagram ) {
+		if (null == diagram) {
 			return null;
 		}
 		return diagram.getKey();
@@ -192,7 +192,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 			super(CLASS);
 			this.activeKey = activeKey;
 			final Collection<Diagram> list = serviceFacade.getDiagramService()
-					.getDiagrams();
+					.retrieveList();
 			for (final Diagram obj : list) {
 				add(createItem(obj));
 			}
@@ -201,12 +201,12 @@ public class DiagramListServlet extends DiagramServiceServlet {
 		private Li createItem(Diagram obj) {
 			final String key = obj.getKey();
 			final String onClick = "loadCanvas( '" + key + "')";
-			A a = new A();			
+			A a = new A();
 			a.setOnClick(onClick);
 			a.setText(obj.getName());
 			Li result = new Li();
-			result.setId("d" + key );
-			if ( key.equals(activeKey)) {
+			result.setId("d" + key);
+			if (key.equals(activeKey)) {
 				result.setClassName("active");
 			}
 			result.add(a);

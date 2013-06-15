@@ -6,7 +6,9 @@ import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.DiagramBackground;
 import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
+import static org.wdbuilder.input.InputParameter.Name;
+import static org.wdbuilder.input.InputParameter.Background;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
 import org.wdbuilder.web.base.ServletInput;
@@ -28,10 +30,10 @@ public class EditDiagramServlet extends DiagramHelperFormServlet {
 		final PredefinedSelect<DiagramBackground> selectField = new PredefinedSelect<DiagramBackground>(
 				DiagramBackground.values(), diagram.getBackground());
 
-		final TwoColumnForm form = new TwoColumnForm("edit-diagram-save", "Edit Diagram")
-				.addReadOnlyField(BlockParameter.DiagramKey, diagram.getKey())
-				.addTextField(BlockParameter.Name, diagram.getName())
-				.addSelectField(BlockParameter.Background, selectField)
+		final TwoColumnForm form = new TwoColumnForm("edit-diagram-save",
+				"Edit Diagram").addReadOnlyField(DiagramKey, diagram.getKey())
+				.addTextField(Name, diagram.getName())
+				.addSelectField(Background, selectField)
 				.addFooter(submitHandler, closeHandler);
 		htmlWriter.write(form);
 	}

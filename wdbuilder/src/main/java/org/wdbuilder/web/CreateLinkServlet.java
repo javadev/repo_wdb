@@ -2,7 +2,7 @@ package org.wdbuilder.web;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -14,24 +14,27 @@ public class CreateLinkServlet extends EmptyOutputServlet {
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
-		final String diagramKey = BlockParameter.DiagramKey.getString(input);
+		final String diagramKey = InputParameter.DiagramKey.getString(input);
 		if (isEmpty(diagramKey)) {
 			return;
 		}
-		final SocketData begin = getFrom(input, BlockParameter.BeginSocketKey);
+		final SocketData begin = getFrom(input, InputParameter.BeginSocketKey);
 		if (null == begin) {
 			return;
 		}
-		final SocketData end = getFrom(input, BlockParameter.EndSocketKey);
+		final SocketData end = getFrom(input, InputParameter.EndSocketKey);
 		if (null == end) {
 			return;
 		}
-		serviceFacade.getDiagramService().persistLink(diagramKey, begin.block,
-				begin.socket, begin.index, end.block, end.socket, end.index);
+		serviceFacade
+				.getDiagramService()
+				.getLinkService(diagramKey)
+				.persist(begin.block, begin.socket, begin.index, end.block,
+						end.socket, end.index);
 	}
 
 	private static SocketData getFrom(ServletInput input,
-			BlockParameter parameter) {
+			InputParameter parameter) {
 		final String str = parameter.getString(input);
 		if (isEmpty(str)) {
 			return null;

@@ -2,7 +2,10 @@ package org.wdbuilder.web;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.wdbuilder.input.BlockParameter;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
+import static org.wdbuilder.input.InputParameter.LinkKey;
+import static org.wdbuilder.input.InputParameter.X;
+import static org.wdbuilder.input.InputParameter.Y;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -13,9 +16,10 @@ public class MoveLinkPivotServlet extends EmptyOutputServlet {
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 
-		serviceFacade.getDiagramService().moveLinkPivot(
-				BlockParameter.DiagramKey.getString(input),
-				BlockParameter.LinkKey.getString(input),
-				BlockParameter.X.getInt(input), BlockParameter.Y.getInt(input));
+		serviceFacade
+				.getDiagramService()
+				.getLinkService(DiagramKey.getString(input))
+				.setPivot(LinkKey.getString(input), X.getInt(input),
+						Y.getInt(input));
 	}
 }

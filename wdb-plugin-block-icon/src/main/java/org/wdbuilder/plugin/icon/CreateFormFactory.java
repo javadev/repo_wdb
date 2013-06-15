@@ -3,7 +3,7 @@ package org.wdbuilder.plugin.icon;
 import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UINewBlockFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.plugin.icon.IconBlockPluginFacade.Parameter;
 
 class CreateFormFactory extends UINewBlockFormFactory {
@@ -19,10 +19,10 @@ class CreateFormFactory extends UINewBlockFormFactory {
 				Icon.values(), Icon.Avatar);
 		final TwoColumnForm form = new TwoColumnForm("create-icon-block-save",
 				getTitle())
-				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
-				.addHiddenField(BlockParameter.BlockClass,
+				.addHiddenField(InputParameter.DiagramKey, diagramKey)
+				.addHiddenField(InputParameter.BlockClass,
 						blockClass.getCanonicalName())
-				.addTextField(BlockParameter.Name, "")
+				.addTextField(InputParameter.Name, "")
 				.addSelectField(Parameter.IconID, iconSelectField);
 		return form;
 	}
