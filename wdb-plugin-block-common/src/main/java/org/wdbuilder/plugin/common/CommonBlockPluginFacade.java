@@ -9,7 +9,7 @@ import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.gui.IUIActionClick;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
 import org.wdbuilder.gui.UINewBlockFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.plugin.IBlockPluginFacade;
@@ -76,10 +76,10 @@ public class CommonBlockPluginFacade implements IBlockPluginFacade {
 	@Override
 	public Block create(InputAdapter input) {
 		final CommonBlock result = new CommonBlock();
-		Dimension size = new Dimension(BlockParameter.Width.getInt(input),
-				BlockParameter.Height.getInt(input));
+		Dimension size = new Dimension(InputParameter.Width.getInt(input),
+				InputParameter.Height.getInt(input));
 		result.setSize(size);
-		result.setName(BlockParameter.Name.getString(input));
+		result.setName(InputParameter.Name.getString(input));
 		result.setBackground(Background.valueOf(Parameter.Background
 				.getString(input)));
 		result.setShape(Shape.valueOf(Parameter.Shape.getString(input)));

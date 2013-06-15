@@ -4,7 +4,7 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.plugin.icon.IconBlockPluginFacade.Parameter;
 import org.wdbuilder.plugin.icon.domain.IconBlock;
 
@@ -26,9 +26,9 @@ class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 				Icon.values(), iconBlock.getIcon());
 
 		final TwoColumnForm form = new TwoColumnForm("edit-icon-block-save", "Edit Icon Block")
-				.addHiddenField(BlockParameter.DiagramKey, diagramKey)
-				.addReadOnlyField(BlockParameter.BlockKey, entity.getKey())
-				.addTextField(BlockParameter.Name, entity.getName())
+				.addHiddenField(InputParameter.DiagramKey, diagramKey)
+				.addReadOnlyField(InputParameter.BlockKey, entity.getKey())
+				.addTextField(InputParameter.Name, entity.getName())
 				.addSelectField(Parameter.IconID, iconSelectField);
 
 		return form;

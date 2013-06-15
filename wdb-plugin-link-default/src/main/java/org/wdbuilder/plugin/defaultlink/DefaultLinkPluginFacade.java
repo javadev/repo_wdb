@@ -9,7 +9,7 @@ import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.input.IParameter;
 import org.wdbuilder.input.InputAdapter;
 import org.wdbuilder.plugin.ILinkPluginFacade;
@@ -129,7 +129,7 @@ public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 	@Override
 	public Link create(InputAdapter input) {
 		Link result = new Link();
-		result.setName(BlockParameter.Name.getString(input));
+		result.setName(InputParameter.Name.getString(input));
 		result.setLineColor(Link.LineColor.valueOf(Parameter.LineColor
 				.getString(input)));
 		result.setLineStyle(LineStyle.valueOf(Parameter.LineStyle

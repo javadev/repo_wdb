@@ -3,7 +3,7 @@ package org.wdbuilder.plugin.common;
 import org.wdbuilder.gui.PredefinedSelect;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UINewBlockFormFactory;
-import org.wdbuilder.input.BlockParameter;
+import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.plugin.common.CommonBlockPluginFacade.Parameter;
 import org.wdbuilder.plugin.common.domain.CommonBlock;
 
@@ -23,13 +23,13 @@ class CreateFormFactory extends UINewBlockFormFactory {
 
 		final TwoColumnForm form = new TwoColumnForm(
 				"create-common-block-save", getTitle())
-				.addHiddenField(BlockParameter.DiagramKey, this.diagramKey)
-				.addHiddenField(BlockParameter.BlockClass,
+				.addHiddenField(InputParameter.DiagramKey, this.diagramKey)
+				.addHiddenField(InputParameter.BlockClass,
 						CommonBlock.class.getCanonicalName())
-				.addTextField(BlockParameter.Name, "")
+				.addTextField(InputParameter.Name, "")
 				.addSelectField(Parameter.Shape, shapeSelectField)
-				.addTextField(BlockParameter.Width, "70")
-				.addTextField(BlockParameter.Height, "40")
+				.addTextField(InputParameter.Width, "70")
+				.addTextField(InputParameter.Height, "40")
 				.addSelectField(Parameter.Background, backgroundSelectField);
 		return form;
 	}
