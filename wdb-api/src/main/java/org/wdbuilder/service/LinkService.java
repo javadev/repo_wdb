@@ -2,6 +2,7 @@ package org.wdbuilder.service;
 
 import org.wdbuilder.domain.Link;
 
+@Deprecated
 public interface LinkService {
 	void persist(String beginBlockKey, String beginSocketDirection,
 			int beginSocketIndex, String endBlockKey,
