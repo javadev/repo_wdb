@@ -19,7 +19,7 @@ public class MoveLinkPivotServlet extends EmptyOutputServlet {
 		serviceFacade
 				.getDiagramService()
 				.getLinkService(DiagramKey.getString(input))
-				.setPivot(LinkKey.getString(input), X.getInt(input),
+				.setPosition(LinkKey.getString(input), X.getInt(input),
 						Y.getInt(input));
 	}
 }
