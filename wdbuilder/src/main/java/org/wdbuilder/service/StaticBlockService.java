@@ -8,7 +8,7 @@ import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 
 class StaticBlockService extends StaticDiagramRelatedService implements
-		BlockService {
+		EntityServiceBase<Block> {
 
 	StaticBlockService(Diagram diagram, IServiceFacade serviceFacade) {
 		super(diagram, serviceFacade);
@@ -42,7 +42,7 @@ class StaticBlockService extends StaticDiagramRelatedService implements
 	}
 
 	@Override
-	public void setLocation(String blockKey, int x, int y) {
+	public void setPosition(String blockKey, int x, int y) {
 		final Block block = diagramHelper.findBlockByKey(blockKey);
 		if (null == block) {
 			// Nothing to update
