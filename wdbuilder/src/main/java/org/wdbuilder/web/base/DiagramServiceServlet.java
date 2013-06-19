@@ -2,6 +2,7 @@ package org.wdbuilder.web.base;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 
 	public static final String CONTENT_TYPE_XML = "text/xml;charset=UTF-8";
 
+	@Inject
 	protected IServiceFacade serviceFacade;
 
 	protected abstract void do4DiagramService(ServletInput input)
@@ -41,10 +43,11 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 			throw new ServletException(ex);
 		}
 	}
+	
 
 	protected final DiagramHelper createDiagramHelper(final String key) {
 		return new DiagramHelper(serviceFacade.getDiagramService().get(key));
-	}
+	}	
 
 	protected void flush(HttpServletResponse response) throws IOException {
 		response.flushBuffer();
