@@ -97,12 +97,12 @@ class StaticDiagramService implements DiagramService {
 	}	
 	
 	@Override
-	public BlockService getBlockService( String diagramKey ) {
+	public EntityServiceBase<Block> getBlockService( String diagramKey ) {
 		return new StaticBlockService( get( diagramKey ), serviceFacade );
 	}
 	
 	@Override
-	public LinkService getLinkService( String diagramKey ) {
+	public EntityServiceBase<Link> getLinkService( String diagramKey ) {
 		return new StaticLinkService( get( diagramKey ), serviceFacade);
 	}
 

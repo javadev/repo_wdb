@@ -1,8 +1,16 @@
 package org.wdbuilder.web;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 import javax.servlet.annotation.WebServlet;
 
+import org.wdbuilder.domain.Block;
+import org.wdbuilder.domain.Link;
+import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.input.InputParameter;
+import org.wdbuilder.utility.DiagramHelper;
+import org.wdbuilder.view.line.end.LineEnd;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -26,11 +34,13 @@ public class CreateLinkServlet extends EmptyOutputServlet {
 		if (null == end) {
 			return;
 		}
-		serviceFacade
-				.getDiagramService()
-				.getLinkService(diagramKey)
-				.persist(begin.block, begin.socket, begin.index, end.block,
-						end.socket, end.index);
+		
+		Link link = createLink( new DiagramHelper( input.getState().getDiagram() ),
+				begin, end );
+		if( null==link ) {
+			return;
+		}
+		serviceFacade.getDiagramService().getLinkService(diagramKey).persist(link);
 	}
 
 	private static SocketData getFrom(ServletInput input,
@@ -55,5 +65,38 @@ public class CreateLinkServlet extends EmptyOutputServlet {
 		public String block;
 		public int index;
 	}
+	
+	private Link createLink( DiagramHelper diagramHelper, SocketData begin,
+			SocketData end ) {
+		final Block beginBlock = diagramHelper.findBlockByKey(begin.block);
+		if (null == beginBlock) {
+			return null;
+		}
+		final Block endBlock = diagramHelper.findBlockByKey(end.block);
+		if (null == endBlock) {
+			return null;
+		}
+		final LinkSocket beginSocket = new LinkSocket(begin.block,
+				LinkSocket.Direction.valueOf(begin.socket),
+				begin.index);
+		beginSocket.setLineEnd(LineEnd.SIMPLE);
+
+		final LinkSocket endSocket = new LinkSocket(end.block,
+				LinkSocket.Direction.valueOf(end.socket),
+				end.index);
+		endSocket.setLineEnd(LineEnd.SOLID_ARROW);
+
+		Link link = new Link();
+		link.setKey(UUID.randomUUID().toString());
+		link.setLineColor(Link.LineColor.Black);
+
+		link.setSockets(new ArrayList<LinkSocket>(2));
+		link.getSockets().add(beginSocket);
+		link.getSockets().add(endSocket);
+
+		diagramHelper.calculatePivot(link);
+		return link;
+	}
+
 
 }

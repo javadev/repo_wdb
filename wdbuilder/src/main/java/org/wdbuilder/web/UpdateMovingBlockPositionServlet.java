@@ -18,7 +18,7 @@ public class UpdateMovingBlockPositionServlet extends EmptyOutputServlet {
 		serviceFacade
 				.getDiagramService()
 				.getBlockService(DiagramKey.getString(input))
-				.setLocation(BlockKey.getString(input), X.getInt(input),
+				.setPosition(BlockKey.getString(input), X.getInt(input),
 						Y.getInt(input));
 	}
 }

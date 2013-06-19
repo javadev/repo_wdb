@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-    <parent>
-        <groupId>org.wdbuilder</groupId>
-        <artifactId>wdb</artifactId>
-        <version>${global.version}</version>
-        <relativePath>..</relativePath>
-    </parent>   
-    	
+
+	<parent>
+		<groupId>org.wdbuilder</groupId>
+		<artifactId>wdb</artifactId>
+		<version>${global.version}</version>
+		<relativePath>..</relativePath>
+	</parent>
+
 	<groupId>org.wdbuilder</groupId>
 	<artifactId>wdbuilder</artifactId>
 	<packaging>war</packaging>
@@ -33,11 +33,11 @@
 	</build>
 
 	<dependencies>
-        <dependency>
-            <groupId>org.wdbuilder</groupId>
-            <artifactId>wdb-jaxb-html</artifactId>
-            <version>${global.version}</version>
-        </dependency>	
+		<dependency>
+			<groupId>org.wdbuilder</groupId>
+			<artifactId>wdb-jaxb-html</artifactId>
+			<version>${global.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.wdbuilder</groupId>
 			<artifactId>wdb-api</artifactId>
@@ -52,12 +52,17 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>11.0.2</version>
-		</dependency>      		
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-        </dependency>		
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+            <version>1</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
