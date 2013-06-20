@@ -3,18 +3,14 @@ package org.wdbuilder.serialize.html;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.jaxbhtml.element.Map;
-import org.wdbuilder.utility.DiagramHelper;
 import org.wdbuilder.web.ApplicationState;
 
 abstract class DiagramImageMap extends Map {
 
   private static final String ID_IMAGE_MAP = "diagramImageMap";
 
-	protected final DiagramHelper diagramHelper;
-
-	protected DiagramImageMap(Diagram diagram) {
+	protected DiagramImageMap() {
 		super();
-		this.diagramHelper = new DiagramHelper(diagram);
 		setName(ID_IMAGE_MAP);
 		setId(ID_IMAGE_MAP);
 	}

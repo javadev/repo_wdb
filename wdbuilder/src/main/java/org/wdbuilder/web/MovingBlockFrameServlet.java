@@ -20,7 +20,7 @@ public class MovingBlockFrameServlet extends FrameServlet {
 		if (isEmpty(blockKey)) {
 			return;
 		}
-		final Block block = diagramHelper.findBlockByKey(blockKey);
+		final Block block = diagramHelper.getDiagram().getBlock(blockKey);
 		if (null == block) {
 			return;
 		}

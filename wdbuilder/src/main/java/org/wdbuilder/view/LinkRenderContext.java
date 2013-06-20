@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.plugin.ILinkRenderContext;
-import org.wdbuilder.utility.DiagramHelper;
+import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.web.ApplicationState;
 
 class LinkRenderContext implements ILinkRenderContext {
@@ -27,7 +27,7 @@ class LinkRenderContext implements ILinkRenderContext {
 
 	@Override
 	public Block getBlock(String key) {
-		return this.diagramHelper.findBlockByKey(key);
+		return diagramHelper.getDiagram().getBlock(key);
 	}
 
 	@Override

@@ -4,11 +4,13 @@ import java.util.UUID;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
+import org.wdbuilder.domain.Link;
+import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 
 class StaticBlockService extends StaticDiagramRelatedService implements
-  	EntityServiceBase<Block> {
+		EntityServiceBase<Block> {
 
 	StaticBlockService(Diagram diagram, IServiceFacade serviceFacade) {
 		super(diagram, serviceFacade);
@@ -19,12 +21,27 @@ class StaticBlockService extends StaticDiagramRelatedService implements
 		if (blockKey.isEmpty()) {
 			return;
 		}
-		diagramHelper.removeBlockByKey(blockKey);
+		removeByKey(blockKey, diagram.getBlocks());
+		
+		// Remove all related links:
+		for( Link link : diagram.getLinks() ) {
+			if( isBlockRelated( link, blockKey ) ) {
+				diagram.getLinks().remove(link);
+			}
+		}
+	}
+
+	private static boolean isBlockRelated(Link link, String blockKey) {
+		for( LinkSocket socket : link.getSockets() ) {
+			if( blockKey.equals(socket.getBlockKey())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public String persist(Block block) {
-		final Diagram diagram = diagramHelper.getDiagram();
 		final int offsetX = diagram.getSize().getWidth() / 2;
 		final int offsetY = diagram.getSize().getHeight() / 2;
 
@@ -43,7 +60,7 @@ class StaticBlockService extends StaticDiagramRelatedService implements
 
 	@Override
 	public void setPosition(String blockKey, int x, int y) {
-		final Block block = diagramHelper.findBlockByKey(blockKey);
+		final Block block = findByKey(blockKey, diagram.getBlocks());
 		if (null == block) {
 			// Nothing to update
 			return;
@@ -55,7 +72,7 @@ class StaticBlockService extends StaticDiagramRelatedService implements
 
 		try {
 			getBlockPluginFacade(block.getClass()).getValidator().validate(
-					diagramHelper.getDiagram(), block);
+					diagram, block);
 		} catch (IllegalArgumentException ex) {
 			// Restore old location:
 			block.setLocation(oldLocation);
@@ -67,8 +84,7 @@ class StaticBlockService extends StaticDiagramRelatedService implements
 
 	@Override
 	public void update(String blockKey, Block block) {
-		final Diagram diagram = diagramHelper.getDiagram();
-		final Block savedBlock = diagramHelper.findBlockByKey(blockKey);
+		final Block savedBlock = findByKey(blockKey, diagram.getBlocks());
 		if (null == savedBlock) {
 			// Nothing to update
 			return;

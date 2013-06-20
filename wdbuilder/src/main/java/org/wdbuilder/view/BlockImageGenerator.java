@@ -1,5 +1,7 @@
 package org.wdbuilder.view;
 
+import static org.wdbuilder.util.ImageUtility.getGraphics;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -9,8 +11,6 @@ import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.IRenderer;
 import org.wdbuilder.service.IPluginFacadeRepository;
-import org.wdbuilder.utility.DiagramHelper;
-import static org.wdbuilder.util.ImageUtility.getGraphics;
 import org.wdbuilder.web.ApplicationState;
 
 public class BlockImageGenerator extends ImageGenerator {
@@ -26,7 +26,7 @@ public class BlockImageGenerator extends ImageGenerator {
 
 	@Override
 	protected BufferedImage generateImage(String blockKey, Diagram diagram) {
-		final Block block = new DiagramHelper(diagram).findBlockByKey(blockKey);
+		final Block block = diagram.getBlock(blockKey);
 		if (null == block) {
 			return null;
 		}
