@@ -21,13 +21,14 @@ import org.wdbuilder.jaxbhtml.element.Td;
 import org.wdbuilder.jaxbhtml.element.Tr;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderContext;
+import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.service.IPluginFacadeRepository;
-import org.wdbuilder.utility.DiagramHelper;
-import org.wdbuilder.utility.Utility;
 import org.wdbuilder.web.ApplicationState;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.FrameServlet;
 import org.wdbuilder.web.base.ServletInput;
+
+import static org.wdbuilder.web.base.FrameServlet.getURLPartToAvoidCaching;
 
 public class DiagramImage {
 
@@ -61,7 +62,7 @@ public class DiagramImage {
 
 		Td td = new Td();
 		td.add(img);
-		
+
 		final DiagramImageMap map = DiagramImageMap.create(state);
 
 		td.add(map);
@@ -133,7 +134,7 @@ public class DiagramImage {
 						A a = A.class.cast(element);
 						a.setHref(getURL());
 					}
-					
+
 					@Override
 					public String getClassName() {
 						return "";
@@ -159,11 +160,11 @@ public class DiagramImage {
 					public String getOnClickHandler() {
 						return "deleteCanvas(" + diagramKey + ")";
 					}
-					
+
 					@Override
 					public String getClassName() {
 						return "btn-danger";
-					}					
+					}
 				};
 			}
 
@@ -217,11 +218,10 @@ public class DiagramImage {
 	}
 
 	protected String prepareUrlForExport() {
-		StringBuilder sb = new StringBuilder(256);
-		sb.append("exported/");
-		sb.append(prepareNameForURL(diagramHelper.getDiagram().getName()));
-		sb.append(".zip?");
-		sb.append(Utility.getURLPartToAvoidCaching());
+		StringBuilder sb = new StringBuilder(256)
+				.append("exported/")
+				.append(prepareNameForURL(diagramHelper.getDiagram().getName()))
+				.append(".zip?").append(getURLPartToAvoidCaching());
 		DiagramServiceServlet.addParameter(sb, InputParameter.DiagramKey
 				.getName(), diagramHelper.getDiagram().getKey());
 		return sb.toString();
@@ -236,4 +236,3 @@ public class DiagramImage {
 abstract class IUIActionClickUI extends IUIActionClick implements IUIActionId {
 
 }
-
