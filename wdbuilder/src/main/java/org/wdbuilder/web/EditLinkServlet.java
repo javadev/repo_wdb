@@ -24,7 +24,7 @@ public class EditLinkServlet extends DiagramHelperFormServlet {
 				+ "'";
 
 		// Get existing block data:
-		final Link link = diagramHelper.findLinkByKey(LinkKey.getString(input));
+		final Link link = diagramHelper.getDiagram().getLink(LinkKey.getString(input));
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
