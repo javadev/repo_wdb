@@ -18,19 +18,20 @@ import org.wdbuilder.view.DivAnalog;
 
 public class BlockDiagramImageMap extends DiagramImageMap {
 
-  protected BlockDiagramImageMap(Diagram diagram) {
-		super( diagram );
-		
-		final Collection<Block> blocks = diagramHelper.getDiagram()
-				.getBlocks();
+	private final Diagram diagram;
+
+	protected BlockDiagramImageMap(Diagram diagram) {
+		super();
+		this.diagram = diagram;
+
+		final Collection<Block> blocks = diagram.getBlocks();
 		if (null != blocks) {
 			for (final Block block : blocks) {
 				add(createBlockArea(block));
 			}
 		}
 
-		final Collection<Link> links = diagramHelper.getDiagram()
-				.getLinks();
+		final Collection<Link> links = diagram.getLinks();
 		if (null != links) {
 			for (final Link link : links) {
 				Area area = createLinkArea(link);
@@ -40,9 +41,9 @@ public class BlockDiagramImageMap extends DiagramImageMap {
 			}
 		}
 
-		add(createResizeArea());		
+		add(createResizeArea());
 	}
-	
+
 	private Area createLinkArea(Link link) {
 		final LinkSocket socket0 = link.getSockets().get(0);
 		if (null == socket0) {
@@ -53,13 +54,11 @@ public class BlockDiagramImageMap extends DiagramImageMap {
 			return null;
 		}
 
-		final Block block0 = diagramHelper.findBlockByKey(socket0
-				.getBlockKey());
+		final Block block0 = getBlockByKey(socket0.getBlockKey());
 		if (null == block0) {
 			return null;
 		}
-		final Block block1 = diagramHelper.findBlockByKey(socket1
-				.getBlockKey());
+		final Block block1 = getBlockByKey(socket1.getBlockKey());
 		if (null == block1) {
 			return null;
 		}
@@ -69,17 +68,17 @@ public class BlockDiagramImageMap extends DiagramImageMap {
 		List<java.awt.Point> points = new ArrayList<java.awt.Point>(
 				basePoints.length * 2);
 		for (Point point : basePoints) {
-			points.add(new java.awt.Point(point.getX() + offset, point
-					.getY() + offset));
+			points.add(new java.awt.Point(point.getX() + offset, point.getY()
+					+ offset));
 		}
 		for (Point point : basePoints) {
-			points.add(new java.awt.Point(point.getX() - offset, point
-					.getY() - offset));
+			points.add(new java.awt.Point(point.getX() - offset, point.getY()
+					- offset));
 		}
 		Area area = new Area.Poly(points);
 		area.setTitle(link.getName());
 		area.setId("link-" + link.getKey());
-		String diagramKey = diagramHelper.getDiagram().getKey();
+		String diagramKey = diagram.getKey();
 		String linkKey = link.getKey();
 		area.setOnMouseOver(getJsOnMouseOverLink(diagramKey, linkKey));
 		return area;
@@ -88,12 +87,12 @@ public class BlockDiagramImageMap extends DiagramImageMap {
 	private Area createBlockArea(Block entity) {
 		final Dimension size = entity.getSize();
 
-		final java.awt.Point topLeft = new java.awt.Point(entity
-				.getLocation().getX() - size.getWidth() / 2, entity
-				.getLocation().getY() - size.getHeight() / 2);
+		final java.awt.Point topLeft = new java.awt.Point(entity.getLocation()
+				.getX() - size.getWidth() / 2, entity.getLocation().getY()
+				- size.getHeight() / 2);
 
 		String onMouseOver = getJsOnMouseOverBlock(topLeft, size,
-				diagramHelper.getDiagram().getKey(), entity.getKey());
+				diagram.getKey(), entity.getKey());
 
 		final Area.Rect area = new Area.Rect(topLeft, size.toAWT());
 		area.setOnMouseOver(onMouseOver);
@@ -133,8 +132,7 @@ public class BlockDiagramImageMap extends DiagramImageMap {
 	}
 
 	private Area createResizeArea() {
-		final Diagram diagram = diagramHelper.getDiagram();
-		
+
 		int minWidth = new DiagramValidator(diagram).getMinWidth();
 		int minHeight = new DiagramValidator(diagram).getMinHeight();
 
@@ -144,13 +142,22 @@ public class BlockDiagramImageMap extends DiagramImageMap {
 		final String onMouseDownCall = getOnMouseDownFunctionCall(
 				// "DiagramResize.start", diagram.getKey(),
 				"WDB.DiagramResize.mouseDown", diagram.getKey(), "(none)",
-				minWidth, minHeight );
+				minWidth, minHeight);
 
 		Area.Rect area = new Area.Rect(offset.toAWT(), RESIZE_AREA.toAWT());
 		area.setOnMouseDown(onMouseDownCall);
 		area.setTitle("Resize Diagram");
 		return area;
 	}
-	
+
+	// TODO: move it into the diagram class (2013/06/20)
+	private Block getBlockByKey(String key) {
+		for (Block block : diagram.getBlocks()) {
+			if (key.equals(block.getKey())) {
+				return block;
+			}
+		}
+		return null;
+	}
 
 }
