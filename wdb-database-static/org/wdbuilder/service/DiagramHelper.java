@@ -1,23 +1,14 @@
 package org.wdbuilder.service;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.domain.Entity;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 
-/**
- * Helper diagram related methods that does not correspond with data storing and
- * serializing
- * 
- * @author o.pavloschuk
- * 
- */
 public class DiagramHelper {
 	private final Diagram diagram;
 
@@ -54,30 +45,13 @@ public class DiagramHelper {
 	}
 
 	public Point getOffset(LinkSocket socket) {
-		Block block = findBlockByKey(socket.getBlockKey());
+		Block block = diagram.getBlock(socket.getBlockKey());
 		if (null == block) {
 			return null;
 		}
 		return socket.getOffset(socket.getLocation(block));
 	}
-
-	public Block findBlockByKey(String key) {
-		return findByKey(key, diagram.getBlocks());
-	}
-
-	public Link findLinkByKey(String key) {
-		return findByKey(key, diagram.getLinks());
-	}
-
-	private static <T extends Entity> T findByKey(String key, Collection<T> list) {
-		for (final T obj : list) {
-			if (obj.getKey().equals(key)) {
-				return obj;
-			}
-		}
-		return null;
-	}
-
+	
 	public final void calculatePivot(Link link) {
 
 		// Every link should have at least 2 ends:
@@ -94,14 +68,4 @@ public class DiagramHelper {
 		link.setPivot(new Point(x,y));
 	}
 
-	public boolean hasLinkWithSameEnds(Link probeLink) {
-		for (Link link : diagram.getLinks()) {
-			if (link.getSockets().get(0).equals(probeLink.getSockets().get(0))
-					&& link.getSockets().get(1)
-							.equals(probeLink.getSockets().get(1))) {
-				return true;
-			}
-		}
-		return false;
-	}
 }
