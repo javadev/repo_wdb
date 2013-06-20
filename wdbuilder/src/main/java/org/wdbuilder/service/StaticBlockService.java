@@ -7,6 +7,7 @@ import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 
+@Deprecated
 class StaticBlockService extends StaticDiagramRelatedService implements
 		EntityServiceBase<Block> {
 
