@@ -22,8 +22,8 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 		final PrintWriter writer = input.getResponse().getWriter();
 
 		// Get existing block data:
-		final Block block = diagramHelper.findBlockByKey(BlockKey
-				.getString(input));
+		final Block block = diagramHelper.getDiagram().getBlock(
+				BlockKey.getString(input));
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
