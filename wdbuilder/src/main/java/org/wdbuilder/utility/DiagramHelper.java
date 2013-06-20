@@ -25,6 +25,7 @@ import com.google.common.collect.Collections2;
  * @author o.pavloschuk
  * 
  */
+@Deprecated
 public class DiagramHelper {
 	private final Diagram diagram;
 
