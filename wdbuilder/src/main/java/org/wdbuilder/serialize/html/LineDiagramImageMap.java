@@ -9,23 +9,26 @@ import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.jaxbhtml.element.Area;
+import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.service.DiagramService;
 
 public class LineDiagramImageMap extends DiagramImageMap {
 
   private final String jsDragStartMethod;
 
+    private final DiagramHelper diagramHelper;
+  
 	protected LineDiagramImageMap(Diagram diagram, String jsDragStartMethod) {
-		super(diagram);
 		this.jsDragStartMethod = jsDragStartMethod;
+		this.diagramHelper = new DiagramHelper( diagram );
 
-		final Collection<Block> blocks = diagramHelper.getDiagram().getBlocks();
+		final Collection<Block> blocks = diagram.getBlocks();
 		if (null != blocks) {
 			for (final Block entity : blocks) {
 				createLinkSocketAreasForBlock(entity);
 			}
 		}
-		final Collection<Link> links = diagramHelper.getDiagram().getLinks();
+		final Collection<Link> links = diagram.getLinks();
 		if (null != links) {
 			for (final Link link : links) {
 				add(createLinkPivotArea(link));
