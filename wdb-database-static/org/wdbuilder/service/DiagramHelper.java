@@ -1,12 +1,8 @@
 package org.wdbuilder.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import javax.annotation.Nullable;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
@@ -14,9 +10,6 @@ import org.wdbuilder.domain.Entity;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 
 /**
  * Helper diagram related methods that does not correspond with data storing and
@@ -26,7 +19,7 @@ import com.google.common.collect.Collections2;
  * 
  */
 public class DiagramHelper {
-  private final Diagram diagram;
+	private final Diagram diagram;
 
 	public DiagramHelper(Diagram diagram) {
 		if (null == diagram) {
@@ -83,61 +76,6 @@ public class DiagramHelper {
 			}
 		}
 		return null;
-	}
-
-	public void removeBlockByKey(String key) {
-		// Remove all corresponding links:
-		final Block block = findBlockByKey(key);
-		if (null == block) {
-			return;
-		}
-		final Collection<Link> connectedLinks = getConnectedLinks(block);
-		final Set<String> connectedLinkKeys = new HashSet<String>(
-				connectedLinks.size());
-		for (final Link link : connectedLinks) {
-			connectedLinkKeys.add(link.getKey());
-		}
-
-		List<Link> newList = new ArrayList<Link>(diagram.getLinks().size());
-		for (final Link link : diagram.getLinks()) {
-			if (!connectedLinkKeys.contains(link.getKey())) {
-				newList.add(link);
-			}
-		}
-		diagram.getLinks().clear();
-		diagram.getLinks().addAll(newList);
-
-		removeByKey(key, diagram.getBlocks());
-	}
-
-	public void removeLinkByKey(String key) {
-		removeByKey(key, diagram.getLinks());
-	}
-
-	private static <T extends Entity> void removeByKey(String key,
-			Collection<T> list) {
-		for (final T obj : list) {
-			if (obj.getKey().equals(key)) {
-				list.remove(obj);
-				return;
-			}
-		}
-	}
-	
-	private Collection<Link> getConnectedLinks(Block baseBlock) {
-		final String baseBlockKey = baseBlock.getKey();
-		final Predicate<Link> predicate = new Predicate<Link>() {
-			@Override
-			public boolean apply(@Nullable Link link) {
-				for (final LinkSocket socket : link.getSockets()) {
-					if (baseBlockKey.equals(socket.getBlockKey())) {
-						return true;
-					}
-				}
-				return false;
-			}
-		};
-		return Collections2.filter(diagram.getLinks(), predicate);
 	}
 
 	public final void calculatePivot(Link link) {
