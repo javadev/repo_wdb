@@ -43,6 +43,11 @@
 			<artifactId>wdb-api</artifactId>
 			<version>${global.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.wdbuilder</groupId>
+            <artifactId>wdb-database-static</artifactId>
+            <version>${global.version}</version>
+        </dependency>		
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
