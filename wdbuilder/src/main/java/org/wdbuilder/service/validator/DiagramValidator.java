@@ -9,6 +9,7 @@ import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.validator.CompositeValidator;
 import org.wdbuilder.validator.IValidator;
 
+@Deprecated
 public class DiagramValidator extends CompositeValidator<Diagram> {
 
 	private static final int MIN_NAME_LENGTH = 3;
