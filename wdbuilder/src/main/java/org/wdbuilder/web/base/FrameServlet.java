@@ -1,5 +1,7 @@
 package org.wdbuilder.web.base;
 
+import java.util.Random;
+
 import javax.xml.bind.JAXBException;
 
 import org.wdbuilder.domain.Block;
@@ -7,10 +9,11 @@ import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.jaxbhtml.element.Img;
-import org.wdbuilder.utility.Utility;
 
 public abstract class FrameServlet extends DiagramHelperServlet {
 	private static final long serialVersionUID = 1L;
+
+	private static final Random random = new Random(System.currentTimeMillis());
 
 	protected abstract void do4Frame(ServletInput input) throws Exception;
 
@@ -42,8 +45,7 @@ public abstract class FrameServlet extends DiagramHelperServlet {
 
 		private static String getUrl(Diagram diagram, Block block) {
 			StringBuilder url = new StringBuilder(128);
-			url.append("image?");
-			url.append(Utility.getURLPartToAvoidCaching());
+			url.append("image?").append(getURLPartToAvoidCaching());
 			addParameter(url, InputParameter.DiagramKey.getName(),
 					diagram.getKey());
 			if (null != block) {
@@ -54,6 +56,10 @@ public abstract class FrameServlet extends DiagramHelperServlet {
 			return url.toString();
 		}
 
+	}
+
+	public static String getURLPartToAvoidCaching() {
+		return "r=" + random.nextGaussian();
 	}
 
 }

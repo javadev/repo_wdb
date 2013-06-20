@@ -1,11 +1,9 @@
 package org.wdbuilder.service;
 
 import org.wdbuilder.domain.Diagram;
-import org.wdbuilder.utility.DiagramHelper;
 
-@Deprecated
 class StaticDiagramRelatedService {
-	protected final DiagramHelper diagramHelper;
+  protected final DiagramHelper diagramHelper;
 	protected final IServiceFacade serviceFacade;
 
 	StaticDiagramRelatedService(Diagram diagram, IServiceFacade serviceFacade) {

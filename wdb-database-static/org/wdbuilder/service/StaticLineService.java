@@ -7,9 +7,8 @@ import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.ILinkPluginFacade;
 
-@Deprecated
 class StaticLinkService extends StaticDiagramRelatedService implements
-		EntityServiceBase<Link> {
+  	EntityServiceBase<Link> {
 
 	StaticLinkService(Diagram diagram, IServiceFacade serviceFacade) {
 		super(diagram, serviceFacade);

@@ -17,6 +17,7 @@
 	<modules>
 		<module>wdb-jaxb-html</module>
 		<module>wdb-api</module>
+		<module>wdb-database-static</module>
 		<module>wdbuilder</module>
 		<module>wdb-plugin-block-common</module>
 		<module>wdb-plugin-block-icon</module>

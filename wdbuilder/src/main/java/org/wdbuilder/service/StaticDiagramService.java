@@ -14,6 +14,7 @@ import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.service.validator.DiagramValidator;
 
+@Deprecated
 class StaticDiagramService implements DiagramService {
 
 	private final Map<String, Diagram> diagrams = new LinkedHashMap<String, Diagram>(
