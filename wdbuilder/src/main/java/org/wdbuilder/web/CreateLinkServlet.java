@@ -6,10 +6,11 @@ import java.util.UUID;
 import javax.servlet.annotation.WebServlet;
 
 import org.wdbuilder.domain.Block;
+import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.input.InputParameter;
-import org.wdbuilder.utility.DiagramHelper;
+import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.view.line.end.LineEnd;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
@@ -34,13 +35,13 @@ public class CreateLinkServlet extends EmptyOutputServlet {
 		if (null == end) {
 			return;
 		}
-		
-		Link link = createLink( new DiagramHelper( input.getState().getDiagram() ),
-				begin, end );
-		if( null==link ) {
+
+		Link link = createLink(input.getState().getDiagram(), begin, end);
+		if (null == link) {
 			return;
 		}
-		serviceFacade.getDiagramService().getLinkService(diagramKey).persist(link);
+		serviceFacade.getDiagramService().getLinkService(diagramKey)
+				.persist(link);
 	}
 
 	private static SocketData getFrom(ServletInput input,
@@ -65,25 +66,22 @@ public class CreateLinkServlet extends EmptyOutputServlet {
 		public String block;
 		public int index;
 	}
-	
-	private Link createLink( DiagramHelper diagramHelper, SocketData begin,
-			SocketData end ) {
-		final Block beginBlock = diagramHelper.findBlockByKey(begin.block);
+
+	private Link createLink(Diagram diagram, SocketData begin, SocketData end) {
+		final Block beginBlock = diagram.getBlock(begin.block);
 		if (null == beginBlock) {
 			return null;
 		}
-		final Block endBlock = diagramHelper.findBlockByKey(end.block);
+		final Block endBlock = diagram.getBlock(end.block);
 		if (null == endBlock) {
 			return null;
 		}
 		final LinkSocket beginSocket = new LinkSocket(begin.block,
-				LinkSocket.Direction.valueOf(begin.socket),
-				begin.index);
+				LinkSocket.Direction.valueOf(begin.socket), begin.index);
 		beginSocket.setLineEnd(LineEnd.SIMPLE);
 
 		final LinkSocket endSocket = new LinkSocket(end.block,
-				LinkSocket.Direction.valueOf(end.socket),
-				end.index);
+				LinkSocket.Direction.valueOf(end.socket), end.index);
 		endSocket.setLineEnd(LineEnd.SOLID_ARROW);
 
 		Link link = new Link();
@@ -94,9 +92,8 @@ public class CreateLinkServlet extends EmptyOutputServlet {
 		link.getSockets().add(beginSocket);
 		link.getSockets().add(endSocket);
 
-		diagramHelper.calculatePivot(link);
+		new DiagramHelper(diagram).calculatePivot(link);
 		return link;
 	}
-
 
 }
