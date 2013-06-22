@@ -1,7 +1,7 @@
 package org.wdbuilder.web.base;
 
 import org.wdbuilder.input.InputParameter;
-import org.wdbuilder.utility.DiagramHelper;
+import org.wdbuilder.service.DiagramHelper;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
 

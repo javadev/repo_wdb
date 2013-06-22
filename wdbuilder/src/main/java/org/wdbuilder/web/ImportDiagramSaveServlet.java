@@ -14,7 +14,7 @@ import javax.xml.bind.Unmarshaller;
 import org.wdbuilder.domain.Diagram;
 import static org.wdbuilder.input.InputParameter.DiagramKey;
 import org.wdbuilder.serialize.html.DiagramImage;
-import org.wdbuilder.utility.DiagramHelper;
+import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 

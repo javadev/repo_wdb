@@ -8,7 +8,7 @@ import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IRenderContext;
-import org.wdbuilder.utility.DiagramHelper;
+import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.web.ApplicationState;
 
 class RenderContext implements IRenderContext {

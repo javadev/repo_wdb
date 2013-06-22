@@ -14,14 +14,14 @@ import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.service.validator.DiagramValidator;
 
-class StaticDiagramService implements DiagramService {
+public class StaticDiagramService implements DiagramService {
 
   private final Map<String, Diagram> diagrams = new LinkedHashMap<String, Diagram>(
 			2);
 
 	private final IServiceFacade serviceFacade;
 
-	StaticDiagramService(IServiceFacade serviceFacade) {
+	public StaticDiagramService(IServiceFacade serviceFacade) {
 		this.serviceFacade = serviceFacade;
 	}	
 

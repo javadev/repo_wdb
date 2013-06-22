@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.wdbuilder.service.IServiceFacade;
 import org.wdbuilder.service.ServletRelatedStaticServiceFacade;
-import org.wdbuilder.utility.DiagramHelper;
+import org.wdbuilder.service.DiagramHelper;
 
 public abstract class DiagramServiceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
