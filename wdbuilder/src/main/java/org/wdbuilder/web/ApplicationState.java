@@ -5,16 +5,14 @@ import org.wdbuilder.domain.Diagram;
 public class ApplicationState {
 
 	public enum Mode {
-		LINE("icon-book", "Switch to block mode", "WDB.LineDraw.mouseDown"), BLOCK(
-				"icon-pencil", "Switch to line mode", "WDB.BlockDrag.mouseDown");
+		LINE("icon-book", "Switch to block mode"), BLOCK("icon-pencil",
+				"Switch to line mode");
 		private final String title;
 		private final String resourceId;
-		private final String jsDragStart;
 
-		private Mode(String resourceId, String title, String jsDragStart) {
+		private Mode(String resourceId, String title) {
 			this.resourceId = resourceId;
 			this.title = title;
-			this.jsDragStart = jsDragStart;
 		}
 
 		public String getResourceId() {
@@ -25,9 +23,6 @@ public class ApplicationState {
 			return title;
 		}
 
-		public String getJsDragStart() {
-			return jsDragStart;
-		}
 	}
 
 	private Mode mode = Mode.BLOCK;

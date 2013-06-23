@@ -10,7 +10,6 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.DiagramBackground;
 import org.wdbuilder.domain.Link;
-import org.wdbuilder.domain.SizedEntity;
 import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.service.validator.DiagramValidator;
 
@@ -106,12 +105,12 @@ public class StaticDiagramService implements DiagramService {
 		return new StaticLinkService( get( diagramKey ), serviceFacade);
 	}
 
-	// }}} DIAGRAM
-
 	private static final Diagram createDiagram(String id, String name,
 			int width, int height, DiagramBackground background) {
 		Diagram result = new Diagram();
-		fillEntity(result, id, name, width, height);
+		result.setKey(id);
+		result.setName(name);
+		result.setSize(new Dimension(width, height));		
 		result.setBlocks(new ArrayList<Block>(2));
 		result.setLinks(new ArrayList<Link>(2));
 		result.setBackground(background);
@@ -125,13 +124,6 @@ public class StaticDiagramService implements DiagramService {
 		String key = diagram.getKey();
 		diagrams.put(key, diagram);
 		return key;
-	}
-
-	private static final void fillEntity(SizedEntity result, String id,
-			String name, int width, int height) {
-		result.setKey(id);
-		result.setName(name);
-		result.setSize(new Dimension(width, height));
 	}
 
 }

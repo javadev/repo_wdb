@@ -9,7 +9,7 @@ import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 
-class StaticBlockService extends StaticDiagramRelatedService implements
+class StaticBlockService extends StaticDiagramRelatedService<Block> implements
 		EntityServiceBase<Block> {
 
 	StaticBlockService(Diagram diagram, IServiceFacade serviceFacade) {
@@ -22,45 +22,27 @@ class StaticBlockService extends StaticDiagramRelatedService implements
 			return;
 		}
 		removeByKey(blockKey, diagram.getBlocks());
-		
+
 		// Remove all related links:
-		for( Link link : diagram.getLinks() ) {
-			if( isBlockRelated( link, blockKey ) ) {
+		for (Link link : diagram.getLinks()) {
+			if (isBlockRelated(link, blockKey)) {
 				diagram.getLinks().remove(link);
 			}
 		}
 	}
 
-	private static boolean isBlockRelated(Link link, String blockKey) {
-		for( LinkSocket socket : link.getSockets() ) {
-			if( blockKey.equals(socket.getBlockKey())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	@Override
 	public String persist(Block block) {
-		final int offsetX = diagram.getSize().getWidth() / 2;
-		final int offsetY = diagram.getSize().getHeight() / 2;
-
-		final String key = UUID.randomUUID().toString();
-		block.setKey(key);
-		block.setLocation(new Point(offsetX, offsetY));
-
-		getBlockPluginFacade(block.getClass()).getValidator().validate(diagram,
-				block);
-
+		block.setKey(UUID.randomUUID().toString());
+		block.setLocation(getCenterOfDiagram());
+		validate(block);
 		diagram.getBlocks().add(block);
-
-		return key;
-
+		return block.getKey();
 	}
 
 	@Override
 	public void setPosition(String blockKey, int x, int y) {
-		final Block block = findByKey(blockKey, diagram.getBlocks());
+		final Block block = diagram.getBlock(blockKey);
 		if (null == block) {
 			// Nothing to update
 			return;
@@ -71,8 +53,7 @@ class StaticBlockService extends StaticDiagramRelatedService implements
 		block.setLocation(new Point(x, y));
 
 		try {
-			getBlockPluginFacade(block.getClass()).getValidator().validate(
-					diagram, block);
+			validate(block);
 		} catch (IllegalArgumentException ex) {
 			// Restore old location:
 			block.setLocation(oldLocation);
@@ -84,7 +65,7 @@ class StaticBlockService extends StaticDiagramRelatedService implements
 
 	@Override
 	public void update(String blockKey, Block block) {
-		final Block savedBlock = findByKey(blockKey, diagram.getBlocks());
+		final Block savedBlock = diagram.getBlock(blockKey);
 		if (null == savedBlock) {
 			// Nothing to update
 			return;
@@ -92,16 +73,37 @@ class StaticBlockService extends StaticDiagramRelatedService implements
 		block.setKey(blockKey);
 		block.setLocation(savedBlock.getLocation());
 
-		getBlockPluginFacade(block.getClass()).getValidator().validate(diagram,
-				block);
+		validate(block);
 
 		// TODO: doubtful code (2013/04/29)
 		diagram.getBlocks().remove(savedBlock);
 		diagram.getBlocks().add(block);
 	}
+	
+	@Override
+	protected void validate(Block block) {
+		getBlockPluginFacade(block).getValidator().validate(diagram, block);
+	}	
 
-	private IBlockPluginFacade getBlockPluginFacade(final Class<?> klass) {
-		return serviceFacade.getBlockPluginRepository().getFacade(klass);
+	private IBlockPluginFacade getBlockPluginFacade(Block block) {
+		return serviceFacade.getBlockPluginRepository().getFacade(
+				block.getClass());
+	}
+
+	private Point getCenterOfDiagram() {
+		final int offsetX = diagram.getSize().getWidth() / 2;
+		final int offsetY = diagram.getSize().getHeight() / 2;
+		final Point location = new Point(offsetX, offsetY);
+		return location;
+	}
+
+	private static boolean isBlockRelated(Link link, String blockKey) {
+		for (LinkSocket socket : link.getSockets()) {
+			if (blockKey.equals(socket.getBlockKey())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
