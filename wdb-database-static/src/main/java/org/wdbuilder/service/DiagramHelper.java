@@ -7,7 +7,6 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
-import org.wdbuilder.domain.helper.Point;
 
 public class DiagramHelper {
 	private final Diagram diagram;
@@ -44,6 +43,7 @@ public class DiagramHelper {
 		return result;
 	}
 
+	/*
 	public Point getOffset(LinkSocket socket) {
 		Block block = diagram.getBlock(socket.getBlockKey());
 		if (null == block) {
@@ -67,5 +67,6 @@ public class DiagramHelper {
 		final int y = (beginP.getY() + endP.getY()) / 2;		
 		link.setPivot(new Point(x,y));
 	}
+	*/
 
 }

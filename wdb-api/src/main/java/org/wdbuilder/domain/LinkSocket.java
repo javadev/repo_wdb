@@ -56,14 +56,14 @@ public class LinkSocket {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-	
+
 	public void setBlockKey(String blockKey) {
 		this.blockKey = blockKey;
-	}	
+	}
 
 	public void setLineEnd(LineEnd lineEnd) {
 		this.lineEnd = lineEnd;
-	}	
+	}
 
 	public final Point getLocation(Block b) {
 		return this.direction.getLocation(b, this.index);
@@ -83,7 +83,7 @@ public class LinkSocket {
 	public LineEnd getLineEnd() {
 		return lineEnd;
 	}
-	
+
 	@XmlAttribute
 	public String getBlockKey() {
 		return blockKey;
@@ -136,6 +136,10 @@ public class LinkSocket {
 		if (index != other.index)
 			return false;
 		return true;
+	}
+
+	public Point getLocation(Diagram diagram) {
+		return getOffset(diagram.getBlock(getBlockKey()));
 	}
 
 	// TODO (2013/05/05) extract better method

@@ -1,5 +1,7 @@
 package org.wdbuilder.web;
 
+import static org.apache.commons.lang.StringUtils.isEmpty;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -10,12 +12,9 @@ import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.input.InputParameter;
-import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.view.line.end.LineEnd;
 import org.wdbuilder.web.base.EmptyOutputServlet;
 import org.wdbuilder.web.base.ServletInput;
-
-import static org.apache.commons.lang.StringUtils.isEmpty;
 
 @WebServlet("/create-link")
 public class CreateLinkServlet extends EmptyOutputServlet {
@@ -92,7 +91,7 @@ public class CreateLinkServlet extends EmptyOutputServlet {
 		link.getSockets().add(beginSocket);
 		link.getSockets().add(endSocket);
 
-		new DiagramHelper(diagram).calculatePivot(link);
+		link.calculatePivot(diagram);
 		return link;
 	}
 

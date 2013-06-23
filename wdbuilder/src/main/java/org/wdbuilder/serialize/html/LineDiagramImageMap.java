@@ -2,6 +2,7 @@ package org.wdbuilder.serialize.html;
 
 import java.awt.Rectangle;
 import java.util.Collection;
+import java.util.Set;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
@@ -14,13 +15,13 @@ import org.wdbuilder.service.DiagramService;
 
 public class LineDiagramImageMap extends DiagramImageMap {
 
-  private final String jsDragStartMethod;
+	private final String jsDragStartMethod;
 
-    private final DiagramHelper diagramHelper;
-  
+	private final Diagram diagram;
+
 	protected LineDiagramImageMap(Diagram diagram, String jsDragStartMethod) {
 		this.jsDragStartMethod = jsDragStartMethod;
-		this.diagramHelper = new DiagramHelper( diagram );
+		this.diagram = diagram;
 
 		final Collection<Block> blocks = diagram.getBlocks();
 		if (null != blocks) {
@@ -55,19 +56,20 @@ public class LineDiagramImageMap extends DiagramImageMap {
 
 		boolean isHorizontal = beginSocket.isHorizontal();
 
-		Point beginPoint = diagramHelper.getOffset(beginSocket);
-		Point endPoint = diagramHelper.getOffset(endSocket);
+		Point beginPoint = beginSocket.getLocation(diagram);
+		Point endPoint = endSocket.getLocation(diagram);
 
 		final String result = getOnMouseDownFunctionCall(
-				"WDB.LinkArrange.mouseDown", diagramHelper.getDiagram()
-						.getKey(), link.getKey(), beginPoint, endPoint,
-				isHorizontal);
+				"WDB.LinkArrange.mouseDown", diagram.getKey(), link.getKey(),
+				beginPoint, endPoint, isHorizontal);
 		return result;
 	}
 
 	private void createLinkSocketAreasForBlock(Block block) {
+		Set<LinkSocket> usedSockets = new DiagramHelper(diagram)
+				.getUsedLinkSockets(block);
 		final Collection<LinkSocket> sockets = LinkSocket.getAvailable(
-				diagramHelper.getUsedLinkSockets(block), block);
+				usedSockets, block);
 
 		// Add possible line start and end points
 		for (final LinkSocket socket : sockets) {
@@ -78,8 +80,7 @@ public class LineDiagramImageMap extends DiagramImageMap {
 					+ socket.getIndex();
 
 			String onMouseDown = getOnMouseDownFunctionCall(jsDragStartMethod,
-					diagramHelper.getDiagram().getKey(), id,
-					block.getLocation());
+					diagram.getKey(), id, block.getLocation());
 
 			Area.Rect area = new Area.Rect(rect.getLocation(), rect.getSize());
 			area.setOnMouseDown(onMouseDown);
