@@ -10,7 +10,6 @@ import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.jaxbhtml.element.Area;
-import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.service.DiagramService;
 
 public class LineDiagramImageMap extends DiagramImageMap {
@@ -66,8 +65,7 @@ public class LineDiagramImageMap extends DiagramImageMap {
 	}
 
 	private void createLinkSocketAreasForBlock(Block block) {
-		Set<LinkSocket> usedSockets = new DiagramHelper(diagram)
-				.getUsedLinkSockets(block);
+		Set<LinkSocket> usedSockets = block.getUsedLinkSockets(diagram);
 		final Collection<LinkSocket> sockets = LinkSocket.getAvailable(
 				usedSockets, block);
 

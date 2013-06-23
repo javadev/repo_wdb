@@ -1,5 +1,8 @@
 package org.wdbuilder.web.base;
 
+import static org.wdbuilder.input.InputParameter.BlockKey;
+import static org.wdbuilder.input.InputParameter.DiagramKey;
+
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -8,9 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.wdbuilder.domain.Block;
+import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.service.IServiceFacade;
 import org.wdbuilder.service.ServletRelatedStaticServiceFacade;
-import org.wdbuilder.service.DiagramHelper;
 
 public abstract class DiagramServiceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -45,8 +49,8 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 	}
 	
 
-	protected final DiagramHelper createDiagramHelper(final String key) {
-		return new DiagramHelper(serviceFacade.getDiagramService().get(key));
+	protected final Diagram getDiagram(final String key) {
+		return serviceFacade.getDiagramService().get(key);
 	}	
 
 	protected void flush(HttpServletResponse response) throws IOException {
@@ -60,4 +64,16 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 		sb.append('=');
 		sb.append(value);
 	}
+	
+	protected Diagram getDiagram(ServletInput input) {
+		return getDiagram(DiagramKey.getString(input));
+	}
+
+	protected Block getBlock(ServletInput input) {
+		Diagram diagram = getDiagram(input);
+		if (null == diagram) {
+			return null;
+		}
+		return diagram.getBlock(BlockKey.getString(input));
+	}	
 }

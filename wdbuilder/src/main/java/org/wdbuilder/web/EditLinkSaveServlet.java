@@ -17,7 +17,7 @@ public class EditLinkSaveServlet extends DiagramServlet {
 
 		final String diagramKey = DiagramKey.getString(input);
 		final String linkKey = LinkKey.getString(input);
-		final Link persistedLink = diagramHelper.getDiagram().getLink(linkKey);
+		final Link persistedLink = getDiagram(input).getLink(linkKey);
 		if (null == persistedLink) {
 			return;
 		}

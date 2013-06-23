@@ -14,7 +14,6 @@ import javax.xml.bind.Unmarshaller;
 import org.wdbuilder.domain.Diagram;
 import static org.wdbuilder.input.InputParameter.DiagramKey;
 import org.wdbuilder.serialize.html.DiagramImage;
-import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -22,7 +21,6 @@ import org.wdbuilder.web.base.ServletInput;
 @SuppressWarnings("serial")
 @WebServlet("/import-diagram-save")
 public class ImportDiagramSaveServlet extends DiagramServiceServlet {
-	private DiagramHelper diagramHelper = null;
 
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
@@ -48,12 +46,11 @@ public class ImportDiagramSaveServlet extends DiagramServiceServlet {
 		}
 		Diagram diagram = Diagram.class.cast(obj);
 		serviceFacade.getDiagramService().upload(diagram);
-		diagramHelper = new DiagramHelper(diagram);
 
 		// Set the current diagram (TODO silly method):
 		input.getState().setDiagram(diagram);
 
-		new DiagramImage(diagramHelper,
+		new DiagramImage(diagram,
 				serviceFacade.getBlockPluginRepository())
 				.printCanvasFrame(input);
 	}

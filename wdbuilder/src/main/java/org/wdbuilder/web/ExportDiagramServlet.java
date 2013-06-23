@@ -26,7 +26,7 @@ public class ExportDiagramServlet extends DiagramHelperServlet {
 		ZipOutputStream zipStream = new ZipOutputStream(input.getResponse().getOutputStream());
 		zipStream.putNextEntry(new ZipEntry("diagram.xml"));
 
-		marshaller.marshal(diagramHelper.getDiagram(), zipStream);
+		marshaller.marshal(getDiagram(input), zipStream);
 
 		zipStream.closeEntry();
 

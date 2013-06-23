@@ -1,5 +1,7 @@
 package org.wdbuilder.web;
 
+import static org.wdbuilder.input.InputParameter.DiagramKey;
+
 import java.io.PrintWriter;
 
 import javax.servlet.annotation.WebServlet;
@@ -7,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.gui.TwoColumnForm;
 import org.wdbuilder.gui.UIExistingEntityFormFactory;
-import static org.wdbuilder.input.InputParameter.BlockKey;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.web.base.DiagramHelperFormServlet;
@@ -22,8 +23,7 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 		final PrintWriter writer = input.getResponse().getWriter();
 
 		// Get existing block data:
-		final Block block = diagramHelper.getDiagram().getBlock(
-				BlockKey.getString(input));
+		final Block block = getBlock(input);
 
 		final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
@@ -33,7 +33,7 @@ public class EditBlockServlet extends DiagramHelperFormServlet {
 			return;
 		}
 		final UIExistingEntityFormFactory<Block> formFactory = pluginFacade
-				.getEditFormFactory(diagramHelper.getDiagram().getKey(), block);
+				.getEditFormFactory(DiagramKey.getString(input), block);
 
 		String submitFunctionCall = formFactory.getSubmitCall();
 

@@ -8,7 +8,6 @@ import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IRenderContext;
-import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.web.ApplicationState;
 
 class RenderContext implements IRenderContext {
@@ -71,6 +70,6 @@ class RenderContext implements IRenderContext {
 
 	@Override
 	public Collection<LinkSocket> getUsedLinkSockets(Block block) {
-		return new DiagramHelper(getDiagram()).getUsedLinkSockets(block);
+		return block.getUsedLinkSockets( appState.getDiagram());
 	}
 }

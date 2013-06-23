@@ -21,7 +21,6 @@ import org.wdbuilder.jaxbhtml.element.Td;
 import org.wdbuilder.jaxbhtml.element.Tr;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderContext;
-import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.service.IPluginFacadeRepository;
 import org.wdbuilder.web.ApplicationState;
 import org.wdbuilder.web.base.DiagramServiceServlet;
@@ -34,13 +33,13 @@ public class DiagramImage {
 
 	private static final String ID_IMAGE_MAP = "diagramImageMap";
 
-	private final DiagramHelper diagramHelper;
+	private final Diagram diagram;
 	private IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> pluginFacadeRepository;
 
 	public DiagramImage(
-			final DiagramHelper diagramHelper,
+			final Diagram diagram,
 			IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> pluginFacadeRepository) {
-		this.diagramHelper = diagramHelper;
+		this.diagram = diagram;
 		this.pluginFacadeRepository = pluginFacadeRepository;
 	}
 
@@ -49,8 +48,6 @@ public class DiagramImage {
 		final ApplicationState state = input.getState();
 		final HtmlWriter writer = new HtmlWriter(input.getResponse()
 				.getWriter());
-
-		final Diagram diagram = diagramHelper.getDiagram();
 
 		final String diagramKey = "'" + diagram.getKey() + "'";
 
@@ -218,12 +215,11 @@ public class DiagramImage {
 	}
 
 	protected String prepareUrlForExport() {
-		StringBuilder sb = new StringBuilder(256)
-				.append("exported/")
-				.append(prepareNameForURL(diagramHelper.getDiagram().getName()))
-				.append(".zip?").append(getURLPartToAvoidCaching());
-		DiagramServiceServlet.addParameter(sb, InputParameter.DiagramKey
-				.getName(), diagramHelper.getDiagram().getKey());
+		StringBuilder sb = new StringBuilder(256).append("exported/")
+				.append(prepareNameForURL(diagram.getName())).append(".zip?")
+				.append(getURLPartToAvoidCaching());
+		DiagramServiceServlet.addParameter(sb,
+				InputParameter.DiagramKey.getName(), diagram.getKey());
 		return sb.toString();
 	}
 

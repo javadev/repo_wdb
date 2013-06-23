@@ -1,5 +1,8 @@
 package org.wdbuilder.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.wdbuilder.domain.helper.Point;
 
 public abstract class Block extends SizedEntity {
@@ -20,5 +23,19 @@ public abstract class Block extends SizedEntity {
 		}
 		this.location = location;
 	}
+	
+	public Set<LinkSocket> getUsedLinkSockets(final Diagram diagram) {
+
+		final Set<LinkSocket> result = new HashSet<LinkSocket>(4);
+		for (final Link link : diagram.getLinks()) {
+			for (LinkSocket socket : link.getSockets()) {
+				if (getKey().equals(socket.getBlockKey())) {
+					result.add(socket);
+				}
+			}
+		}
+
+		return result;
+	}	
 
 }
