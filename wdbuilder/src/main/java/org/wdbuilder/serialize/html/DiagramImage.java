@@ -1,5 +1,7 @@
 package org.wdbuilder.serialize.html;
 
+import static org.wdbuilder.web.base.FrameServlet.getURLPartToAvoidCaching;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,6 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
-import org.wdbuilder.gui.IUIActionId;
 import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.jaxbhtml.HtmlElement;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
@@ -26,8 +27,6 @@ import org.wdbuilder.web.ApplicationState;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.FrameServlet;
 import org.wdbuilder.web.base.ServletInput;
-
-import static org.wdbuilder.web.base.FrameServlet.getURLPartToAvoidCaching;
 
 public class DiagramImage {
 
@@ -188,7 +187,7 @@ public class DiagramImage {
 			private IUIActionClick createSwitchModeIcon(
 					final String diagramKey, final ApplicationState.Mode mode) {
 
-				return new IUIActionClickUI() {
+				return new IUIActionClick() {
 
 					@Override
 					public String getTitle() {
@@ -198,11 +197,6 @@ public class DiagramImage {
 					@Override
 					public String getResourceId() {
 						return mode.getResourceId();
-					}
-
-					@Override
-					public String getId() {
-						return "switchModeImg";
 					}
 
 					@Override
@@ -229,6 +223,3 @@ public class DiagramImage {
 	}
 }
 
-abstract class IUIActionClickUI extends IUIActionClick implements IUIActionId {
-
-}
