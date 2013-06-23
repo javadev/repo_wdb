@@ -10,6 +10,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.domain.Link;
@@ -25,6 +26,8 @@ import org.wdbuilder.web.ApplicationState;
 import com.google.common.io.Resources;
 
 public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
+
+	private static final Logger LOG = Logger.getLogger(DiagramRenderer.class);
 
 	private final ApplicationState appState;
 	private final IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> blockPluginFacadeRepository;
@@ -50,7 +53,7 @@ public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 
 		if (appState.isBlockMode()) {
 			// Load "resize corner":
-			Image resizeCornerImage = loadResizeCornerImage(appState);
+			Image resizeCornerImage = loadImageResource("images/resize-corner.png");
 			if (null != resizeCornerImage) {
 				int x = diagram.getSize().getWidth() - RESIZE_AREA.getWidth();
 				int y = diagram.getSize().getHeight() - RESIZE_AREA.getHeight();
@@ -87,13 +90,12 @@ public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 		}
 	}
 
-	private static Image loadResizeCornerImage(ApplicationState appState) {
+	private static Image loadImageResource(String resourceURI) {
 		try {
-			URL imageURL = Resources.getResource("images/resize-corner.png");
-			Image result = ImageIO.read(imageURL);
-			return result;
+			URL imageURL = Resources.getResource(resourceURI);
+			return ImageIO.read(imageURL);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			LOG.error("Can't load image resource: " + resourceURI, ex);
 			return null;
 		}
 	}
