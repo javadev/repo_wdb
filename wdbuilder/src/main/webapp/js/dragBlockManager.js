@@ -176,7 +176,7 @@ function BlockDrag() {
 	});
 
 	this.registerUpListener(function(args) {
-		loadCanvas(args.diagram);
+		loadDiagram(args.diagram);
 	});
 };
 

@@ -23,7 +23,6 @@ public class CreateBlockServlet extends DiagramHelperFormServlet {
 		final PrintWriter writer = input.getResponse().getWriter();
 
 		final String str = DiagramKey.getString(input);
-		final String diagramId = "'" + str + "'";
 
 		final String blockClassStr = BlockClass.getString(input);
 		if (StringUtils.isEmpty(blockClassStr)) {
@@ -41,7 +40,7 @@ public class CreateBlockServlet extends DiagramHelperFormServlet {
 
 		final String submitFunctionCall = formFactory.getSubmitCall();
 
-		String closeHandler = "loadCanvas(" + diagramId + ")";
+		String closeHandler = "loadDiagram('" + str + "')";
 
 		final TwoColumnForm form = formFactory.getForm().addFooter(
 				submitFunctionCall, closeHandler);

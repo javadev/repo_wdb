@@ -38,7 +38,7 @@ public class EditLinkServlet extends DiagramHelperFormServlet {
 
 		String submitFunctionCall = formFactory.getSubmitCall();
 
-		String closeHandler = "loadCanvas('" + diagramKey + "')";
+		String closeHandler = "loadDiagram('" + diagramKey + "')";
 
 		final TwoColumnForm form = formFactory.getForm().addFooter(
 				submitFunctionCall, closeHandler);
