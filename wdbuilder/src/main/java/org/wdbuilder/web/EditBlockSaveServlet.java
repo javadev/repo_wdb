@@ -17,7 +17,7 @@ public class EditBlockSaveServlet extends DiagramServlet {
 
 		final String diagramKey = DiagramKey.getString(input);
 		final String blockKey = BlockKey.getString(input);
-		final Block persistedBlock = diagramHelper.getDiagram().getBlock(blockKey);
+		final Block persistedBlock = getBlock(input);
 		if (null == persistedBlock) {
 			return;
 		}

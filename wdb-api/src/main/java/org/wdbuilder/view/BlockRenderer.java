@@ -13,12 +13,7 @@ import org.wdbuilder.plugin.IRenderer;
 
 public abstract class BlockRenderer<T extends Block> implements
 		IRenderer<T, IRenderContext> {
-
-	// protected static final int MARGIN = 3;
-
 	protected static final Font FONT = new Font(Font.SANS_SERIF, Font.BOLD, 12);
-
-	// protected static final Color COLOR_SELECTION = new Color(0x00ff9933);
 
 	protected static void renderLinkSockets(Block block,
 			IRenderContext renderCtx) {

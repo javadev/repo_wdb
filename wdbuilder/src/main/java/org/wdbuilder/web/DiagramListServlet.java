@@ -200,7 +200,7 @@ public class DiagramListServlet extends DiagramServiceServlet {
 
 		private Li createItem(Diagram obj) {
 			final String key = obj.getKey();
-			final String onClick = "loadCanvas( '" + key + "')";
+			final String onClick = "loadDiagram( '" + key + "')";
 			A a = new A();
 			a.setOnClick(onClick);
 			a.setText(obj.getName());

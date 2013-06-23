@@ -180,7 +180,7 @@ function submitEditBlock() {
 
 function submitEditLink(diagramKey) {
 	submitForm("edit-link-save", function() {
-		loadCanvas(diagramKey);
+		loadDiagram(diagramKey);
 	});
 	$('#caret').hide();
 }
@@ -198,7 +198,7 @@ function deleteCanvas( diagramKey) {
 }
 
 // Load current diagram content to main screen section
-function loadCanvas(diagramKey) {
+function loadDiagram(diagramKey) {
 	// Set the active item:
 	$('#canvasList .active').removeClass('active');
 	$('#d' + diagramKey).addClass( 'active' );
@@ -267,14 +267,14 @@ function deleteBlock(diagramKey, blockKey) {
 	loadContent("delete-block?r=" + Math.random() + "&bkey=" + blockKey
 			+ "&dkey=" + diagramKey, "canvasFrame");
 	hideProperties();
-	loadCanvas(diagramKey);
+	loadDiagram(diagramKey);
 }
 
 // Switching between block/line mode of diagram editor
 function switchMode(diagramKey) {
 	loadContent("switch-mode?r=" + Math.random(), "canvasFrame");
 	hideProperties();
-	loadCanvas(diagramKey);
+	loadDiagram(diagramKey);
 }
 
 //Open form for existing block data update in additional section
@@ -294,7 +294,7 @@ function deleteLink(diagramKey, linkKey) {
 	loadContent("delete-link?r=" + Math.random() + "&lkey=" + linkKey
 			+ "&dkey=" + diagramKey, "canvasFrame");
 	hideProperties();
-	loadCanvas(diagramKey);
+	loadDiagram(diagramKey);
 };
 
 // recalculate coordinate in order to snap to grid

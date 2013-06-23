@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 import org.wdbuilder.domain.Block;
+import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.plugin.icon.domain.IconBlock;
 import org.wdbuilder.view.BlockRenderer;
@@ -48,10 +49,9 @@ class IconBlockRenderer extends BlockRenderer<Block> {
 					.getInstance(AlphaComposite.SRC, 0.5f));
 		}
 
-		// TODO (2012/06/03) move it to the higher level
-		java.awt.Dimension size = block.getSize().toAWT();
-		int x = renderCtx.getOffset().getX() - size.width / 2;
-		int y = renderCtx.getOffset().getY() - size.height / 2;
+		Point p = block.getTopLeft();
+		int x = p.getX();
+		int y = p.getY();
 
 		// Copy the image:
 		gr.drawImage(blockImage, x, y, getImageObserver());

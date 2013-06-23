@@ -18,12 +18,8 @@ import org.wdbuilder.view.line.end.LineEnd;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-/**
- * Predefined places for connection with links
- * 
- * @author o.pavloschuk
- * 
- */
+import static org.apache.commons.lang.StringUtils.isEmpty;
+
 public class LinkSocket {
 
 	private static final Dimension AREA_DIM = DiagramService.LINE_AREA;
@@ -37,7 +33,6 @@ public class LinkSocket {
 	private Direction direction;
 	private int index;
 	private String blockKey;
-	// TODO (2013/05/07) quick and dirty NPE fix
 	private LineEnd lineEnd = LineEnd.SIMPLE;
 
 	public LinkSocket() {
@@ -50,20 +45,27 @@ public class LinkSocket {
 	}
 
 	public void setDirection(Direction direction) {
+		if (null == direction) {
+			throw new IllegalArgumentException(
+					"Link socket direction can't be null");
+		}
 		this.direction = direction;
 	}
 
 	public void setIndex(int index) {
 		this.index = index;
 	}
-	
+
 	public void setBlockKey(String blockKey) {
+		if (isEmpty(blockKey)) {
+			throw new IllegalArgumentException("Block key can't be empty");
+		}
 		this.blockKey = blockKey;
-	}	
+	}
 
 	public void setLineEnd(LineEnd lineEnd) {
 		this.lineEnd = lineEnd;
-	}	
+	}
 
 	public final Point getLocation(Block b) {
 		return this.direction.getLocation(b, this.index);
@@ -83,7 +85,7 @@ public class LinkSocket {
 	public LineEnd getLineEnd() {
 		return lineEnd;
 	}
-	
+
 	@XmlAttribute
 	public String getBlockKey() {
 		return blockKey;
@@ -138,18 +140,20 @@ public class LinkSocket {
 		return true;
 	}
 
-	// TODO (2013/05/05) extract better method
+	public Point getLocation(Diagram diagram) {
+		return getOffset(diagram.getBlock(getBlockKey()));
+	}
+
 	public static Collection<LinkSocket> getAvailable(
 			final Collection<LinkSocket> forbiden, Block b) {
 		String blockKey = b.getKey();
 		final List<LinkSocket> values = new ArrayList<LinkSocket>(4);
 
-		final int maxY = b.getMaxLinkSocketNumY();
-		addLinkSocketsForDirections(blockKey, DIRECTION_HORIZONTAL, maxY,
-				values);
+		addLinkSocketsForDirections(blockKey, DIRECTION_HORIZONTAL,
+				b.getMaxLinkSocketNumY(), values);
 
-		final int maxX = b.getMaxLinkSocketNumX();
-		addLinkSocketsForDirections(blockKey, DIRECTION_VERTICAL, maxX, values);
+		addLinkSocketsForDirections(blockKey, DIRECTION_VERTICAL,
+				b.getMaxLinkSocketNumX(), values);
 
 		final Predicate<LinkSocket> predicate = new Predicate<LinkSocket>() {
 			@Override

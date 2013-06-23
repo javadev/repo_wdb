@@ -70,10 +70,6 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 		String contextParamStr = servletConfig.getServletContext()
 				.getInitParameter("block-plugins");
 
-		// TODO: TEMPORARY SOLUTION!!!!!!!
-		contextParamStr = "org.wdbuilder.plugin.common.CommonBlockPluginFacade,"
-				+ "org.wdbuilder.plugin.icon.IconBlockPluginFacade";
-
 		if (StringUtils.isEmpty(contextParamStr)) {
 			return result;
 		}
@@ -93,7 +89,7 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 								+ facade.getEntityClass().getName() + ") - OK");
 					}
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					LOG.error( "Error loading block plugins", ex);
 				}
 			}
 		}
@@ -107,9 +103,6 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 
 		String contextParamStr = servletConfig.getServletContext()
 				.getInitParameter("link-plugins");
-
-		// TODO: TEMPORARY SOLUTION!!!!!!!
-		contextParamStr = "org.wdbuilder.plugin.defaultlink.DefaultLinkPluginFacade";
 
 		if (StringUtils.isEmpty(contextParamStr)) {
 			return result;
@@ -129,7 +122,7 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 								+ facade.getEntityClass().getName() + ") - OK");
 					}
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					LOG.error("Error loading link plugins", ex);
 				}
 			}
 		}
@@ -142,8 +135,8 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 			// TODO: doubtful code (2013/04/28)
 			Class<?> result = Class.forName(str.trim());
 			return result;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException ex) {
+			LOG.error("Can't get class for name: " + str , ex);
 			return null;
 		}
 

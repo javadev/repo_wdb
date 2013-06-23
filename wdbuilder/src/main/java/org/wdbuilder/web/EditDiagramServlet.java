@@ -19,7 +19,7 @@ public class EditDiagramServlet extends DiagramHelperFormServlet {
 
 	@Override
 	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
-		final Diagram diagram = diagramHelper.getDiagram();
+		final Diagram diagram = getDiagram(input);
 
 		final HtmlWriter htmlWriter = new HtmlWriter(input.getResponse()
 				.getWriter());

@@ -14,9 +14,9 @@ public class Link extends Entity {
 	private List<LinkSocket> sockets;
 
 	private Point pivot;
-	
+
 	private LineColor lineColor = LineColor.Black;
-	
+
 	private LineStyle lineStyle = LineStyle.SOLID;
 
 	public Point getPivot() {
@@ -54,6 +54,17 @@ public class Link extends Entity {
 
 	public void setLineStyle(LineStyle lineStyle) {
 		this.lineStyle = lineStyle;
+	}
+
+	public void calculatePivot(Diagram diagram) {
+		final LinkSocket socket0 = getSockets().get(0);
+		final LinkSocket socket1 = getSockets().get(1);
+
+		final Point beginP = socket0.getLocation(diagram);
+		final Point endP = socket1.getLocation(diagram);
+		final int x = (beginP.getX() + endP.getX()) / 2;
+		final int y = (beginP.getY() + endP.getY()) / 2;
+		setPivot(new Point(x, y));
 	}
 
 	public static enum LineColor implements IForegroundProvider,

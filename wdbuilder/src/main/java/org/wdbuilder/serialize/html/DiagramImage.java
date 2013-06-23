@@ -1,5 +1,7 @@
 package org.wdbuilder.serialize.html;
 
+import static org.wdbuilder.web.base.FrameServlet.getURLPartToAvoidCaching;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,6 @@ import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.gui.IUIAction;
 import org.wdbuilder.gui.IUIActionClick;
-import org.wdbuilder.gui.IUIActionId;
 import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.jaxbhtml.HtmlElement;
 import org.wdbuilder.jaxbhtml.HtmlWriter;
@@ -21,26 +22,23 @@ import org.wdbuilder.jaxbhtml.element.Td;
 import org.wdbuilder.jaxbhtml.element.Tr;
 import org.wdbuilder.plugin.IBlockPluginFacade;
 import org.wdbuilder.plugin.IRenderContext;
-import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.service.IPluginFacadeRepository;
 import org.wdbuilder.web.ApplicationState;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.FrameServlet;
 import org.wdbuilder.web.base.ServletInput;
 
-import static org.wdbuilder.web.base.FrameServlet.getURLPartToAvoidCaching;
-
 public class DiagramImage {
 
 	private static final String ID_IMAGE_MAP = "diagramImageMap";
 
-	private final DiagramHelper diagramHelper;
+	private final Diagram diagram;
 	private IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> pluginFacadeRepository;
 
 	public DiagramImage(
-			final DiagramHelper diagramHelper,
+			final Diagram diagram,
 			IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> pluginFacadeRepository) {
-		this.diagramHelper = diagramHelper;
+		this.diagram = diagram;
 		this.pluginFacadeRepository = pluginFacadeRepository;
 	}
 
@@ -49,8 +47,6 @@ public class DiagramImage {
 		final ApplicationState state = input.getState();
 		final HtmlWriter writer = new HtmlWriter(input.getResponse()
 				.getWriter());
-
-		final Diagram diagram = diagramHelper.getDiagram();
 
 		final String diagramKey = "'" + diagram.getKey() + "'";
 
@@ -191,7 +187,7 @@ public class DiagramImage {
 			private IUIActionClick createSwitchModeIcon(
 					final String diagramKey, final ApplicationState.Mode mode) {
 
-				return new IUIActionClickUI() {
+				return new IUIActionClick() {
 
 					@Override
 					public String getTitle() {
@@ -204,11 +200,6 @@ public class DiagramImage {
 					}
 
 					@Override
-					public String getId() {
-						return "switchModeImg";
-					}
-
-					@Override
 					public String getOnClickHandler() {
 						return "switchMode(" + diagramKey + ")";
 					}
@@ -218,12 +209,11 @@ public class DiagramImage {
 	}
 
 	protected String prepareUrlForExport() {
-		StringBuilder sb = new StringBuilder(256)
-				.append("exported/")
-				.append(prepareNameForURL(diagramHelper.getDiagram().getName()))
-				.append(".zip?").append(getURLPartToAvoidCaching());
-		DiagramServiceServlet.addParameter(sb, InputParameter.DiagramKey
-				.getName(), diagramHelper.getDiagram().getKey());
+		StringBuilder sb = new StringBuilder(256).append("exported/")
+				.append(prepareNameForURL(diagram.getName())).append(".zip?")
+				.append(getURLPartToAvoidCaching());
+		DiagramServiceServlet.addParameter(sb,
+				InputParameter.DiagramKey.getName(), diagram.getKey());
 		return sb.toString();
 	}
 
@@ -233,6 +223,3 @@ public class DiagramImage {
 	}
 }
 
-abstract class IUIActionClickUI extends IUIActionClick implements IUIActionId {
-
-}

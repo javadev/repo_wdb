@@ -2,9 +2,9 @@ package org.wdbuilder.web;
 
 import javax.servlet.annotation.WebServlet;
 
+import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.serialize.html.DiagramImage;
-import org.wdbuilder.utility.DiagramHelper;
 import org.wdbuilder.web.base.DiagramServiceServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -12,21 +12,18 @@ import org.wdbuilder.web.base.ServletInput;
 @WebServlet("/create-diagram-save")
 public class CreateDiagramSaveServlet extends DiagramServiceServlet {
 
-	private DiagramHelper diagramHelper = null;
-
 	@Override
 	protected void do4DiagramService(ServletInput input) throws Exception {
 		final String key = serviceFacade.getDiagramService().persist(
 				InputParameter.Name.getString(input),
 				InputParameter.Background.getString(input));
-		this.diagramHelper = createDiagramHelper(key);
+
+		Diagram diagram = getDiagram(key);
 
 		// Set the current diagram (TODO silly method):
-		input.getState().setDiagram(
-				serviceFacade.getDiagramService().get(key));
+		input.getState().setDiagram(diagram);
 
-		new DiagramImage(diagramHelper,
-				serviceFacade.getBlockPluginRepository())
+		new DiagramImage(diagram, serviceFacade.getBlockPluginRepository())
 				.printCanvasFrame(input);
 	}
 

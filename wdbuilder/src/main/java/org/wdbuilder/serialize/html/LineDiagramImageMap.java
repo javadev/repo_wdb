@@ -2,6 +2,7 @@ package org.wdbuilder.serialize.html;
 
 import java.awt.Rectangle;
 import java.util.Collection;
+import java.util.Set;
 
 import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
@@ -9,34 +10,16 @@ import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.jaxbhtml.element.Area;
-import org.wdbuilder.service.DiagramHelper;
 import org.wdbuilder.service.DiagramService;
 
 public class LineDiagramImageMap extends DiagramImageMap {
 
-  private final String jsDragStartMethod;
-
-    private final DiagramHelper diagramHelper;
-  
-	protected LineDiagramImageMap(Diagram diagram, String jsDragStartMethod) {
-		this.jsDragStartMethod = jsDragStartMethod;
-		this.diagramHelper = new DiagramHelper( diagram );
-
-		final Collection<Block> blocks = diagram.getBlocks();
-		if (null != blocks) {
-			for (final Block entity : blocks) {
-				createLinkSocketAreasForBlock(entity);
-			}
-		}
-		final Collection<Link> links = diagram.getLinks();
-		if (null != links) {
-			for (final Link link : links) {
-				add(createLinkPivotArea(link));
-			}
-		}
+	protected LineDiagramImageMap(Diagram diagram) {
+		super(diagram);
 	}
 
-	private Area.Rect createLinkPivotArea(Link link) {
+	@Override
+	protected void addForLink(Link link) {
 		final Point pivot = link.getPivot();
 		final Point topLeft = new Point(pivot.getX()
 				- DiagramService.LINE_AREA.getWidth() / 2, pivot.getY()
@@ -46,7 +29,8 @@ public class LineDiagramImageMap extends DiagramImageMap {
 				DiagramService.LINE_AREA.toAWT());
 		area.setOnMouseDown(createOnMouseDownHandler(link));
 		area.setTitle(link.getKey());
-		return area;
+		
+        add(area);
 	}
 
 	private String createOnMouseDownHandler(Link link) {
@@ -55,19 +39,20 @@ public class LineDiagramImageMap extends DiagramImageMap {
 
 		boolean isHorizontal = beginSocket.isHorizontal();
 
-		Point beginPoint = diagramHelper.getOffset(beginSocket);
-		Point endPoint = diagramHelper.getOffset(endSocket);
+		Point beginPoint = beginSocket.getLocation(diagram);
+		Point endPoint = endSocket.getLocation(diagram);
 
 		final String result = getOnMouseDownFunctionCall(
-				"WDB.LinkArrange.mouseDown", diagramHelper.getDiagram()
-						.getKey(), link.getKey(), beginPoint, endPoint,
-				isHorizontal);
+				"WDB.LinkArrange.mouseDown", diagram.getKey(), link.getKey(),
+				beginPoint, endPoint, isHorizontal);
 		return result;
 	}
 
-	private void createLinkSocketAreasForBlock(Block block) {
+	@Override
+	protected void addForBlock(Block block) {
+		Set<LinkSocket> usedSockets = block.getUsedLinkSockets(diagram);
 		final Collection<LinkSocket> sockets = LinkSocket.getAvailable(
-				diagramHelper.getUsedLinkSockets(block), block);
+				usedSockets, block);
 
 		// Add possible line start and end points
 		for (final LinkSocket socket : sockets) {
@@ -77,8 +62,8 @@ public class LineDiagramImageMap extends DiagramImageMap {
 					+ String.valueOf(socket.getDirection()) + ":"
 					+ socket.getIndex();
 
-			String onMouseDown = getOnMouseDownFunctionCall(jsDragStartMethod,
-					diagramHelper.getDiagram().getKey(), id,
+			String onMouseDown = getOnMouseDownFunctionCall(
+					"WDB.LineDraw.mouseDown", diagram.getKey(), id,
 					block.getLocation());
 
 			Area.Rect area = new Area.Rect(rect.getLocation(), rect.getSize());
@@ -88,5 +73,4 @@ public class LineDiagramImageMap extends DiagramImageMap {
 			add(area);
 		}
 	}
-
 }

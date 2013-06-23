@@ -19,7 +19,7 @@ public class ImageServlet extends DiagramHelperServlet {
 
 	@Override
 	public void do4DiagramHelper(ServletInput input) throws Exception {
-		final Diagram diagram = diagramHelper.getDiagram();
+		final Diagram diagram = getDiagram(input);
 
 		ApplicationState appState = input.getState();
 		appState.setDiagram(diagram);
