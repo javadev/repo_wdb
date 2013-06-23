@@ -6,7 +6,6 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
-// TODO: create package util and move this file there (2013/05/03)
 public abstract class ImageUtility {
 
   public static Graphics2D getGraphics(BufferedImage image) {

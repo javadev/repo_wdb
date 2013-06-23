@@ -1,5 +1,6 @@
 package org.wdbuilder.input;
 
+import static org.apache.commons.lang.StringUtils.isNumeric;
 
 public abstract class InputAdapter {
 	protected abstract String getParameter(String name);
@@ -9,12 +10,18 @@ public abstract class InputAdapter {
 	}
 
 	public int getInt(IParameter parameter) {
-		// TODO: check for number here (2013/04/29)
-		return Integer.valueOf(getString(parameter));
+		final String str = getString(parameter);
+		if (!isNumeric(str)) {
+			return 0; // default value
+		}
+		return Integer.valueOf(str);
 	}
 
 	public boolean getBoolean(IParameter parameter) {
-		// TODO: check for boolean here (2013/04/29)
-		return Boolean.valueOf(getString(parameter));
+		final String str = getString(parameter);
+		if (!"true".equals(str) && !"false".equals(str)) {
+			return false;
+		}
+		return Boolean.valueOf(str);
 	}
 }

@@ -1,7 +1,5 @@
 package org.wdbuilder.web;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -9,7 +7,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
-import org.wdbuilder.domain.Diagram;
 import org.wdbuilder.web.base.DiagramHelperServlet;
 import org.wdbuilder.web.base.ServletInput;
 
@@ -36,17 +33,6 @@ public class ExportDiagramServlet extends DiagramHelperServlet {
 	@Override
 	protected String getContentType() {
 		return "application/zip";
-	}
-	
-	private Class<?>[] getClassesForMarshaling() {
-		List<Class<?>> list = new ArrayList<Class<?>>(4);
-		list.addAll( serviceFacade.getBlockPluginRepository().getEntityClasses() );
-		list.addAll( serviceFacade.getLinkPluginRepository().getEntityClasses() );		
-		list.add(Diagram.class);
-		
-		Class<?>[] result = new Class<?>[list.size()];
-		return list.toArray(result);
-		
 	}
 
 }

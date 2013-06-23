@@ -70,10 +70,6 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 		String contextParamStr = servletConfig.getServletContext()
 				.getInitParameter("block-plugins");
 
-		// TODO: TEMPORARY SOLUTION!!!!!!!
-		contextParamStr = "org.wdbuilder.plugin.common.CommonBlockPluginFacade,"
-				+ "org.wdbuilder.plugin.icon.IconBlockPluginFacade";
-
 		if (StringUtils.isEmpty(contextParamStr)) {
 			return result;
 		}
@@ -107,9 +103,6 @@ public class ServletRelatedStaticServiceFacade implements IServiceFacade {
 
 		String contextParamStr = servletConfig.getServletContext()
 				.getInitParameter("link-plugins");
-
-		// TODO: TEMPORARY SOLUTION!!!!!!!
-		contextParamStr = "org.wdbuilder.plugin.defaultlink.DefaultLinkPluginFacade";
 
 		if (StringUtils.isEmpty(contextParamStr)) {
 			return result;

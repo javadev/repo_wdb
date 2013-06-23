@@ -4,6 +4,8 @@ import static org.wdbuilder.input.InputParameter.BlockKey;
 import static org.wdbuilder.input.InputParameter.DiagramKey;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -75,5 +77,16 @@ public abstract class DiagramServiceServlet extends HttpServlet {
 			return null;
 		}
 		return diagram.getBlock(BlockKey.getString(input));
-	}	
+	}
+	
+	protected Class<?>[] getClassesForMarshaling() {
+		List<Class<?>> list = new ArrayList<Class<?>>(4);
+		list.addAll(serviceFacade.getBlockPluginRepository().getEntityClasses());
+		list.addAll(serviceFacade.getLinkPluginRepository().getEntityClasses());
+		list.add(Diagram.class);
+
+		Class<?>[] result = new Class<?>[list.size()];
+		return list.toArray(result);
+
+	}
 }

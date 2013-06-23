@@ -3,6 +3,7 @@ package org.wdbuilder.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.wdbuilder.domain.helper.Dimension;
 import org.wdbuilder.domain.helper.Point;
 
 public abstract class Block extends SizedEntity {
@@ -36,6 +37,13 @@ public abstract class Block extends SizedEntity {
 		}
 
 		return result;
-	}	
+	}
+	
+	public Point getTopLeft() {
+		Dimension size = getSize();
+		int x = getLocation().getX() - size.getWidth() / 2;
+		int y = getLocation().getY() - size.getHeight() / 2;		
+		return new Point( x, y );
+	}
 
 }
