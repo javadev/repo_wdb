@@ -14,29 +14,12 @@ import org.wdbuilder.service.DiagramService;
 
 public class LineDiagramImageMap extends DiagramImageMap {
 
-	private final String jsDragStartMethod;
-
-	private final Diagram diagram;
-
-	protected LineDiagramImageMap(Diagram diagram, String jsDragStartMethod) {
-		this.jsDragStartMethod = jsDragStartMethod;
-		this.diagram = diagram;
-
-		final Collection<Block> blocks = diagram.getBlocks();
-		if (null != blocks) {
-			for (final Block entity : blocks) {
-				createLinkSocketAreasForBlock(entity);
-			}
-		}
-		final Collection<Link> links = diagram.getLinks();
-		if (null != links) {
-			for (final Link link : links) {
-				add(createLinkPivotArea(link));
-			}
-		}
+	protected LineDiagramImageMap(Diagram diagram) {
+		super(diagram);
 	}
 
-	private Area.Rect createLinkPivotArea(Link link) {
+	@Override
+	protected void addForLink(Link link) {
 		final Point pivot = link.getPivot();
 		final Point topLeft = new Point(pivot.getX()
 				- DiagramService.LINE_AREA.getWidth() / 2, pivot.getY()
@@ -46,7 +29,8 @@ public class LineDiagramImageMap extends DiagramImageMap {
 				DiagramService.LINE_AREA.toAWT());
 		area.setOnMouseDown(createOnMouseDownHandler(link));
 		area.setTitle(link.getKey());
-		return area;
+		
+        add(area);
 	}
 
 	private String createOnMouseDownHandler(Link link) {
@@ -64,7 +48,8 @@ public class LineDiagramImageMap extends DiagramImageMap {
 		return result;
 	}
 
-	private void createLinkSocketAreasForBlock(Block block) {
+	@Override
+	protected void addForBlock(Block block) {
 		Set<LinkSocket> usedSockets = block.getUsedLinkSockets(diagram);
 		final Collection<LinkSocket> sockets = LinkSocket.getAvailable(
 				usedSockets, block);
@@ -77,8 +62,9 @@ public class LineDiagramImageMap extends DiagramImageMap {
 					+ String.valueOf(socket.getDirection()) + ":"
 					+ socket.getIndex();
 
-			String onMouseDown = getOnMouseDownFunctionCall(jsDragStartMethod,
-					diagram.getKey(), id, block.getLocation());
+			String onMouseDown = getOnMouseDownFunctionCall(
+					"WDB.LineDraw.mouseDown", diagram.getKey(), id,
+					block.getLocation());
 
 			Area.Rect area = new Area.Rect(rect.getLocation(), rect.getSize());
 			area.setOnMouseDown(onMouseDown);
@@ -87,5 +73,4 @@ public class LineDiagramImageMap extends DiagramImageMap {
 			add(area);
 		}
 	}
-
 }

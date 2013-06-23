@@ -1,28 +1,56 @@
 package org.wdbuilder.serialize.html;
 
+import java.util.Collection;
+
+import org.wdbuilder.domain.Block;
 import org.wdbuilder.domain.Diagram;
+import org.wdbuilder.domain.Link;
 import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.jaxbhtml.element.Map;
 import org.wdbuilder.web.ApplicationState;
 
 abstract class DiagramImageMap extends Map {
 
-  private static final String ID_IMAGE_MAP = "diagramImageMap";
+	private static final String ID_IMAGE_MAP = "diagramImageMap";
 
-	protected DiagramImageMap() {
+	protected final Diagram diagram;
+
+	protected abstract void addForBlock(Block block);
+
+	protected abstract void addForLink(Link link);
+
+	protected DiagramImageMap(Diagram diagram) {
 		super();
+		this.diagram = diagram;
 		setName(ID_IMAGE_MAP);
 		setId(ID_IMAGE_MAP);
+
+		final Collection<Block> blocks = diagram.getBlocks();
+		if (null != blocks) {
+			for (final Block block : blocks) {
+				if (null != block) {
+					addForBlock(block);
+				}
+			}
+		}
+		final Collection<Link> links = diagram.getLinks();
+		if (null != links) {
+			for (final Link link : links) {
+				if (null != link) {
+					addForLink(link);
+				}
+			}
+		}
+
 	}
 
 	static DiagramImageMap create(ApplicationState appState) {
-		Diagram diagram = appState.getDiagram();
+		final Diagram diagram = appState.getDiagram();
 		switch (appState.getMode()) {
 		case BLOCK:
 			return new BlockDiagramImageMap(diagram);
 		case LINE:
-			return new LineDiagramImageMap(diagram, appState.getMode()
-					.getJsDragStart());
+			return new LineDiagramImageMap(diagram);
 		}
 		return null;
 	}

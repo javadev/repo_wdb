@@ -18,12 +18,8 @@ import org.wdbuilder.view.line.end.LineEnd;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
-/**
- * Predefined places for connection with links
- * 
- * @author o.pavloschuk
- * 
- */
+import static org.apache.commons.lang.StringUtils.isEmpty;
+
 public class LinkSocket {
 
 	private static final Dimension AREA_DIM = DiagramService.LINE_AREA;
@@ -50,6 +46,9 @@ public class LinkSocket {
 	}
 
 	public void setDirection(Direction direction) {
+		if( null==direction ) {
+			throw new IllegalArgumentException("Link socket direction can't be null");
+		}
 		this.direction = direction;
 	}
 
@@ -58,6 +57,9 @@ public class LinkSocket {
 	}
 
 	public void setBlockKey(String blockKey) {
+		if( isEmpty(blockKey) ) {
+			throw new IllegalArgumentException("Block key can't be empty");
+		}
 		this.blockKey = blockKey;
 	}
 
