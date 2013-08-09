@@ -49,9 +49,13 @@ class IconBlockRenderer extends BlockRenderer<Block> {
 					.getInstance(AlphaComposite.SRC, 0.5f));
 		}
 
-		Point p = block.getTopLeft();
-		int x = p.getX();
-		int y = p.getY();
+		int x = 0;
+		int y = 0;
+		if (renderCtx.isOpaque()) {
+			Point p = block.getTopLeft();
+			x = p.getX();
+			y = p.getY();
+		}
 
 		// Copy the image:
 		gr.drawImage(blockImage, x, y, getImageObserver());
