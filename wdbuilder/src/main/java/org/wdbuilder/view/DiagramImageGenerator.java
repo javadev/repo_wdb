@@ -28,7 +28,7 @@ public class DiagramImageGenerator extends ImageGenerator {
 		final Graphics2D gr = getGraphics(image);
 
 		final RenderContext renderCtx = new RenderContext();
-		renderCtx.setOpaque(false);
+		renderCtx.setOpaque(true);
 		renderCtx.setGraphics(gr);
 
 		new DiagramRenderer(appState, serviceFacade).draw(diagram, renderCtx);
