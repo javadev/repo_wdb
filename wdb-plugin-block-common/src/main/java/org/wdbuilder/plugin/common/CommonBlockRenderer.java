@@ -38,7 +38,7 @@ class CommonBlockRenderer extends BlockRenderer<Block> {
 		
 		Graphics2D gr = renderCtx.getGraphics();
 
-		if (!renderCtx.isOpaque()) {
+		if (!renderCtx.isFullDiagram()) {
 			gr.setComposite(AlphaComposite
 					.getInstance(AlphaComposite.SRC, 0.5f));
 		}

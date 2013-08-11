@@ -63,7 +63,7 @@ public class DiagramRenderer implements IRenderer<Diagram, IRenderContext> {
 
 		final RenderContext blockCtx = new RenderContext(diagramRenderCtx,
 				appState);
-		blockCtx.setOpaque(true);
+		blockCtx.setMovingBlock(true);
 		blockCtx.setGraphics(gr);
 		for (final Block block : diagram.getBlocks()) {
 			blockCtx.getOffset().setX(block.getLocation().getX());

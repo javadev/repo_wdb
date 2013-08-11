@@ -40,7 +40,7 @@ public class BlockImageGenerator extends ImageGenerator {
 		int offsetY = block.getSize().getHeight() / 2;
 
 		final RenderContext renderCtx = new RenderContext();
-		renderCtx.setOpaque(false);
+		renderCtx.setMovingBlock(false);
 		renderCtx.getOffset().setX(offsetX);
 		renderCtx.getOffset().setY(offsetY);
 		renderCtx.setAppState(appState);

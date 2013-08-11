@@ -44,14 +44,14 @@ class IconBlockRenderer extends BlockRenderer<Block> {
 
 		Graphics2D gr = renderCtx.getGraphics();
 
-		if (!renderCtx.isOpaque()) {
+		if (!renderCtx.isFullDiagram()) {
 			gr.setComposite(AlphaComposite
 					.getInstance(AlphaComposite.SRC, 0.5f));
 		}
 
 		int x = 0;
 		int y = 0;
-		if (renderCtx.isOpaque()) {
+		if (renderCtx.isFullDiagram()) {
 			Point p = block.getTopLeft();
 			x = p.getX();
 			y = p.getY();

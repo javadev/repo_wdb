@@ -11,7 +11,7 @@ import org.wdbuilder.plugin.IRenderContext;
 import org.wdbuilder.web.ApplicationState;
 
 class RenderContext implements IRenderContext {
-	private boolean opaque;
+	private boolean isFullDiagram;
 	private ApplicationState appState;
 	private final Point offset = new Point(0, 0);
 	private Graphics2D graphics;
@@ -24,7 +24,7 @@ class RenderContext implements IRenderContext {
 		this.appState = appState;
 		this.offset.setX(src.getOffset().getX());
 		this.offset.setY(src.getOffset().getY());
-		this.opaque = src.isOpaque();
+		this.isFullDiagram = src.isFullDiagram();
 	}
 	
 	@Override
@@ -33,8 +33,8 @@ class RenderContext implements IRenderContext {
 	}	
 
 	@Override
-	public boolean isOpaque() {
-		return opaque;
+	public boolean isFullDiagram() {
+		return isFullDiagram;
 	}
 	
 	@Override
@@ -52,8 +52,8 @@ class RenderContext implements IRenderContext {
 		return appState.getDiagram();
 	}
 
-	void setOpaque(boolean opaque) {
-		this.opaque = opaque;
+	void setMovingBlock(boolean opaque) {
+		this.isFullDiagram = opaque;
 	}
 
 	ApplicationState getAppState() {

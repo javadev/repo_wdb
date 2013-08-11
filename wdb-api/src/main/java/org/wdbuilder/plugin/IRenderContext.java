@@ -11,7 +11,7 @@ import org.wdbuilder.domain.helper.Point;
 // TODO: extract IBlockRenderContext and base for ILinkRenderContext (2013/05/06)
 public interface IRenderContext {
 
-	public boolean isOpaque();
+	public boolean isFullDiagram();
 
 	public boolean isBlockMode();
 
