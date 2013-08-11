@@ -45,12 +45,15 @@ public abstract class FrameServlet extends DiagramHelperServlet {
 
 		private static String getUrl(Diagram diagram, Block block) {
 			StringBuilder url = new StringBuilder(128);
-			url.append("image?").append(getURLPartToAvoidCaching());
+			url.append("image?x=x");
 			addParameter(url, InputParameter.DiagramKey.getName(),
 					diagram.getKey());
 			if (null != block) {
 				addParameter(url, InputParameter.BlockKey.getName(),
 						block.getKey());
+			} else {
+				url.append( '&' );
+				url.append(getURLPartToAvoidCaching());				
 			}
 			addParameter(url, "blockOnly", (null != block));
 			return url.toString();
