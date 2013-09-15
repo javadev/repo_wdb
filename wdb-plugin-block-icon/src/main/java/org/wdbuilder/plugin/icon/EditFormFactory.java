@@ -10,38 +10,38 @@ import org.wdbuilder.plugin.icon.domain.IconBlock;
 
 class EditFormFactory extends UIExistingEntityFormFactory<Block> {
 
-	EditFormFactory(String diagramKey, Block block) {
-		super(diagramKey, block);
-	}
+    EditFormFactory(String diagramKey, Block block) {
+        super(diagramKey, block);
+    }
 
-	@Override
-	public TwoColumnForm getForm() {
-		if (!IconBlock.class.isInstance(entity)) {
-			return null;
-		}
+    @Override
+    public TwoColumnForm getForm() {
+        if (!IconBlock.class.isInstance(entity)) {
+            return null;
+        }
 
-		final IconBlock iconBlock = IconBlock.class.cast(entity);
+        final IconBlock iconBlock = IconBlock.class.cast(entity);
 
-		final PredefinedSelect<Icon> iconSelectField = new PredefinedSelect<Icon>(
-				Icon.values(), iconBlock.getIcon());
+        final PredefinedSelect<Icon> iconSelectField = new PredefinedSelect<Icon>(
+                Icon.values(), iconBlock.getIcon());
 
-		final TwoColumnForm form = new TwoColumnForm("edit-icon-block-save", "Edit Icon Block")
-				.addHiddenField(InputParameter.DiagramKey, diagramKey)
-				.addReadOnlyField(InputParameter.BlockKey, entity.getKey())
-				.addTextField(InputParameter.Name, entity.getName())
-				.addSelectField(Parameter.IconID, iconSelectField);
+        final TwoColumnForm form = new TwoColumnForm("edit-icon-block-save", "Edit Icon Block")
+                .addHiddenField(InputParameter.DiagramKey, diagramKey)
+                .addReadOnlyField(InputParameter.BlockKey, entity.getKey())
+                .addTextField(InputParameter.Name, entity.getName())
+                .addSelectField(Parameter.IconID, iconSelectField);
 
-		return form;
-	}
+        return form;
+    }
 
-	@Override
-	public String getSubmitCall() {
-		return "submitEditBlock()";
-	}
+    @Override
+    public String getSubmitCall() {
+        return "submitEditBlock()";
+    }
 
-	@Override
-	public String getTitle() {
-		return "Edit Icon Block";
-	}
+    @Override
+    public String getTitle() {
+        return "Edit Icon Block";
+    }
 
 }

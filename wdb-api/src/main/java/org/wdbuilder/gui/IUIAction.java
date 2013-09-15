@@ -4,11 +4,11 @@ import org.wdbuilder.jaxbhtml.HtmlElement;
 
 public interface IUIAction {
 
-	public String getResourceId();
+    String getResourceId();
 
-	public String getTitle();
-	
-	public void setActionToHTMLElement( HtmlElement element );
-	
-	public String getClassName();
+    String getTitle();
+
+    void setActionToHTMLElement(HtmlElement element);
+
+    String getClassName();
 }

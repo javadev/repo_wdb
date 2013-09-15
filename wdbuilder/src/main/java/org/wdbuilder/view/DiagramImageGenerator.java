@@ -11,28 +11,28 @@ import org.wdbuilder.web.ApplicationState;
 
 public class DiagramImageGenerator extends ImageGenerator {
 
-	private final IServiceFacade serviceFacade;
+    private final IServiceFacade serviceFacade;
 
-	public DiagramImageGenerator(ApplicationState appState,
-			IServiceFacade serviceFacade) {
-		super(appState);
-		this.serviceFacade = serviceFacade;
-	}
+    public DiagramImageGenerator(ApplicationState appState,
+            IServiceFacade serviceFacade) {
+        super(appState);
+        this.serviceFacade = serviceFacade;
+    }
 
-	@Override
-	protected BufferedImage generateImage(String blockKey, Diagram diagram) {
-		final BufferedImage image = new BufferedImage(diagram.getSize()
-				.getWidth(), diagram.getSize().getHeight(),
-				BufferedImage.TYPE_INT_ARGB);
+    @Override
+    protected BufferedImage generateImage(String blockKey, Diagram diagram) {
+        final BufferedImage image = new BufferedImage(diagram.getSize()
+                .getWidth(), diagram.getSize().getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
 
-		final Graphics2D gr = getGraphics(image);
+        final Graphics2D gr = getGraphics(image);
 
-		final RenderContext renderCtx = new RenderContext();
-		renderCtx.setOpaque(false);
-		renderCtx.setGraphics(gr);
+        final RenderContext renderCtx = new RenderContext();
+        renderCtx.setOpaque(false);
+        renderCtx.setGraphics(gr);
 
-		new DiagramRenderer(appState, serviceFacade).draw(diagram, renderCtx);
-		gr.dispose();
-		return image;
-	}
+        new DiagramRenderer(appState, serviceFacade).draw(diagram, renderCtx);
+        gr.dispose();
+        return image;
+    }
 }

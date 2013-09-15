@@ -9,85 +9,85 @@ import org.wdbuilder.domain.helper.Point;
 import org.wdbuilder.view.line.LineStyle;
 
 public class Link extends Entity {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private List<LinkSocket> sockets;
+    private List<LinkSocket> sockets;
 
-	private Point pivot;
+    private Point pivot;
 
-	private LineColor lineColor = LineColor.Black;
+    private LineColor lineColor = LineColor.Black;
 
-	private LineStyle lineStyle = LineStyle.SOLID;
+    private LineStyle lineStyle = LineStyle.SOLID;
 
-	public Point getPivot() {
-		return pivot;
-	}
+    public Point getPivot() {
+        return pivot;
+    }
 
-	public void setPivot(Point pivot) {
-		if (null == pivot) {
-			throw new IllegalArgumentException("Pivot can't be null");
-		}
-		this.pivot = pivot;
-	}
+    public void setPivot(Point pivot) {
+        if (null == pivot) {
+            throw new IllegalArgumentException("Pivot can't be null");
+        }
+        this.pivot = pivot;
+    }
 
-	public List<LinkSocket> getSockets() {
-		return sockets;
-	}
+    public List<LinkSocket> getSockets() {
+        return sockets;
+    }
 
-	public void setSockets(List<LinkSocket> sockets) {
-		this.sockets = sockets;
-	}
+    public void setSockets(List<LinkSocket> sockets) {
+        this.sockets = sockets;
+    }
 
-	@XmlAttribute
-	public LineColor getLineColor() {
-		return lineColor;
-	}
+    @XmlAttribute
+    public LineColor getLineColor() {
+        return lineColor;
+    }
 
-	public void setLineColor(LineColor lineColor) {
-		this.lineColor = lineColor;
-	}
+    public void setLineColor(LineColor lineColor) {
+        this.lineColor = lineColor;
+    }
 
-	@XmlAttribute
-	public LineStyle getLineStyle() {
-		return lineStyle;
-	}
+    @XmlAttribute
+    public LineStyle getLineStyle() {
+        return lineStyle;
+    }
 
-	public void setLineStyle(LineStyle lineStyle) {
-		this.lineStyle = lineStyle;
-	}
+    public void setLineStyle(LineStyle lineStyle) {
+        this.lineStyle = lineStyle;
+    }
 
-	public void calculatePivot(Diagram diagram) {
-		final LinkSocket socket0 = getSockets().get(0);
-		final LinkSocket socket1 = getSockets().get(1);
+    public void calculatePivot(Diagram diagram) {
+        final LinkSocket socket0 = getSockets().get(0);
+        final LinkSocket socket1 = getSockets().get(1);
 
-		final Point beginP = socket0.getLocation(diagram);
-		final Point endP = socket1.getLocation(diagram);
-		final int x = (beginP.getX() + endP.getX()) / 2;
-		final int y = (beginP.getY() + endP.getY()) / 2;
-		setPivot(new Point(x, y));
-	}
+        final Point beginP = socket0.getLocation(diagram);
+        final Point endP = socket1.getLocation(diagram);
+        final int x = (beginP.getX() + endP.getX()) / 2;
+        final int y = (beginP.getY() + endP.getY()) / 2;
+        setPivot(new Point(x, y));
+    }
 
-	public static enum LineColor implements IForegroundProvider,
-			DisplayNameAware {
-		Red(0xff0000, "Red"), Green(0x00cc00, "Green"), Blue(0x0000cc, "Blue"), Black(
-				0x000000, "Black"), Gray(0x999999, "Gray");
-		private final String displayName;
-		private final Color foregroundColor;
+    public static enum LineColor implements IForegroundProvider,
+            DisplayNameAware {
+        Red(0xff0000, "Red"), Green(0x00cc00, "Green"), Blue(0x0000cc, "Blue"), Black(
+                0x000000, "Black"), Gray(0x999999, "Gray");
+        private final String displayName;
+        private final Color foregroundColor;
 
-		private LineColor(int foregroundColor, String displayName) {
-			this.foregroundColor = new Color(foregroundColor);
-			this.displayName = displayName;
-		}
+        private LineColor(int foregroundColor, String displayName) {
+            this.foregroundColor = new Color(foregroundColor);
+            this.displayName = displayName;
+        }
 
-		@Override
-		public Color getForegroundColor() {
-			return foregroundColor;
-		}
+        @Override
+        public Color getForegroundColor() {
+            return foregroundColor;
+        }
 
-		@Override
-		public String getDisplayName() {
-			return displayName;
-		}
-	}
+        @Override
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
 
 }

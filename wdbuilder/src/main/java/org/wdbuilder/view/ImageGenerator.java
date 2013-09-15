@@ -13,28 +13,28 @@ import static org.wdbuilder.web.ImageServlet.IMAGE_FORMAT;
 
 public abstract class ImageGenerator {
 
-	protected final ApplicationState appState;
+    protected final ApplicationState appState;
 
-	protected abstract BufferedImage generateImage(String blockKey,
-			Diagram diagram);
+    protected abstract BufferedImage generateImage(String blockKey,
+            Diagram diagram);
 
-	public ImageGenerator(ApplicationState appState) {
-		this.appState = appState;
-	}
+    public ImageGenerator(ApplicationState appState) {
+        this.appState = appState;
+    }
 
-	public byte[] render(String blockKey) throws IOException {
+    public byte[] render(String blockKey) throws IOException {
 
-		final Diagram diagram = appState.getDiagram();
+        final Diagram diagram = appState.getDiagram();
 
-		final BufferedImage image = generateImage(blockKey, diagram);
+        final BufferedImage image = generateImage(blockKey, diagram);
 
-		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream(
-				8192);
-		ImageIO.write(image, IMAGE_FORMAT, outputStream);
-		outputStream.close();
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream(
+                8192);
+        ImageIO.write(image, IMAGE_FORMAT, outputStream);
+        outputStream.close();
 
-		final byte[] result = outputStream.toByteArray();
-		return result;
-	}
+        final byte[] result = outputStream.toByteArray();
+        return result;
+    }
 
 }

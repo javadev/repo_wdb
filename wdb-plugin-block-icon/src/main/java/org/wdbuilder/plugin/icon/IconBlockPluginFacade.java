@@ -17,106 +17,113 @@ import org.wdbuilder.validator.IValidator;
 
 public class IconBlockPluginFacade implements IBlockPluginFacade {
 
-	static enum Parameter implements IParameter {
-		IconID("iconID", "Icon");
+    private final class UIActionCreateIUIActionClick extends IUIActionClick {
+        private final String diagramKey;
 
-		private final String name;
-		private final String label;
+        private UIActionCreateIUIActionClick(String diagramKey) {
+            this.diagramKey = diagramKey;
+        }
 
-		Parameter(String name, String label) {
-			this.name = name;
-			this.label = label;
-		}
+        @Override
+        public String getTitle() {
+            return "New Icon Diagram Block";
+        }
 
-		@Override
-		public String getName() {
-			return name;
-		}
+        @Override
+        public String getResourceId() {
+            return "icon-picture";
+        }
 
-		@Override
-		public String getString(InputAdapter input) {
-			return input.getString(this);
-		}
+        @Override
+        public String getOnClickHandler() {
+            return "openCreateBlockDialog(" + diagramKey + ", '"
+                    + getEntityClass().getCanonicalName() + "' )";
+        }
 
-		@Override
-		public int getInt(InputAdapter input) {
-			return input.getInt(this);
-		}
+        @Override
+        public String getClassName() {
+            return "btn-success";
+        }
+    }
 
-		@Override
-		public boolean getBoolean(InputAdapter input) {
-			return input.getBoolean(this);
-		}
+    static enum Parameter implements IParameter {
+        IconID("iconID", "Icon");
 
-		@Override
-		public String getDisplayName() {
-			return label;
-		}
-	}
+        private final String name;
+        private final String label;
 
-	@Override
-	public Class<?> getEntityClass() {
-		return IconBlock.class;
-	}
+        Parameter(String name, String label) {
+            this.name = name;
+            this.label = label;
+        }
 
-	@Override
-	public IRenderer<Block,IRenderContext> getRenderer() {
-		return new IconBlockRenderer();
-	}
+        @Override
+        public String getName() {
+            return name;
+        }
 
-	@Override
-	public Block create(InputAdapter input) {
-		final IconBlock result = new IconBlock();
-		final String iconIdStr = Parameter.IconID.getString(input);
-		final Icon icon = Icon.valueOf(iconIdStr);
-		Dimension size = icon.getSize();
-		result.setSize(size);
-		result.setName(InputParameter.Name.getString(input));
-		result.setIcon(icon);
-		return result;
-	}
+        @Override
+        public String getString(InputAdapter input) {
+            return input.getString(this);
+        }
 
-	@Override
-	public IUIActionClick getUIActionCreate(final String diagramKey) {
-		return new IUIActionClick() {
+        @Override
+        public int getInt(InputAdapter input) {
+            return input.getInt(this);
+        }
 
-			@Override
-			public String getTitle() {
-				return "New Icon Diagram Block";
-			}
+        @Override
+        public boolean getBoolean(InputAdapter input) {
+            return input.getBoolean(this);
+        }
 
-			@Override
-			public String getResourceId() {
-				return "icon-picture";
-			}
+        @Override
+        public String getDisplayName() {
+            return label;
+        }
+    }
 
-			@Override
-			public String getOnClickHandler() {
-				return "openCreateBlockDialog(" + diagramKey + ", '"
-						+ getEntityClass().getCanonicalName() + "' )";
-			}
-			
-			@Override
-			public String getClassName() {
-				return "btn-success";
-			}			
-		};
+    @Override
+    public Class<?> getEntityClass() {
+        return IconBlock.class;
+    }
 
-	}
+    @Override
+    public IRenderer<Block, IRenderContext> getRenderer() {
+        return new IconBlockRenderer();
+    }
 
-	@Override
-	public IValidator<Block> getValidator() {
-		return new BlockValidator();
-	}
+    @Override
+    public Block create(InputAdapter input) {
+        final IconBlock result = new IconBlock();
+        final String iconIdStr = Parameter.IconID.getString(input);
+        final Icon icon = Icon.valueOf(iconIdStr);
+        Dimension size = icon.getSize();
+        result.setSize(size);
+        result.setName(InputParameter.Name.getString(input));
+        result.setIcon(icon);
+        return result;
+    }
 
-	@Override
-	public UINewBlockFormFactory getCreateFormFactory(String diagramKey) {
-		return new CreateFormFactory(diagramKey, getEntityClass());
-	}
+    @Override
+    public IUIActionClick getUIActionCreate(final String diagramKey) {
+        return new UIActionCreateIUIActionClick(diagramKey);
 
-	@Override
-	public UIExistingEntityFormFactory<Block> getEditFormFactory(
-			String diagramKey, Block block) {
-		return new EditFormFactory(diagramKey, block);
-	}
+    }
+
+    @Override
+    public IValidator<Block> getValidator() {
+        return new BlockValidator();
+    }
+
+    @Override
+    public UINewBlockFormFactory getCreateFormFactory(String diagramKey) {
+        return new CreateFormFactory(diagramKey, getEntityClass());
+    }
+
+    @Override
+    public UIExistingEntityFormFactory<Block> getEditFormFactory(
+            String diagramKey, Block block) {
+        return new EditFormFactory(diagramKey, block);
+    }
 }

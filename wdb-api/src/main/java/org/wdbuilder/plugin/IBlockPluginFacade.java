@@ -6,7 +6,7 @@ import org.wdbuilder.gui.UINewBlockFormFactory;
 
 public interface IBlockPluginFacade extends IEntityPluginFacade<Block, IRenderContext> {
 
-	public IUIActionClick getUIActionCreate(String diagramKey);
+    IUIActionClick getUIActionCreate(String diagramKey);
 
-	public UINewBlockFormFactory getCreateFormFactory(String diagramKey);
+    UINewBlockFormFactory getCreateFormFactory(String diagramKey);
 }

@@ -16,8 +16,8 @@ public class IconBlock extends Block {
   }
 
   public void setIcon(Icon icon) {
-    if( null==icon ) {
-      throw new IllegalArgumentException("Icon can't be empty" );
+    if (null == icon) {
+      throw new IllegalArgumentException("Icon can't be empty");
     }
     this.icon = icon;
   }

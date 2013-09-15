@@ -23,131 +23,137 @@ import org.wdbuilder.view.line.end.LineEnd;
 
 public class DefaultLinkPluginFacade implements ILinkPluginFacade {
 
-	public enum Parameter implements IParameter {
-		LineColor("lineColor", "Line Color"), LineStyle("lineStyle",
-				"Line Style"), StartType("s0", "Line Start Type"), EndType(
-				"s1", "Line End Type");
+    private final class ValidatorCompositeValidator extends CompositeValidator<Link> {
+        private final class NestedValidatorsIValidator2 implements IValidator<Link> {
+            @Override
+            public void validate(Diagram diagram, Link link)
+                    throws IllegalArgumentException {
+                if (2 > link.getSockets().size()) {
+                    new IllegalArgumentException(
+                            "Link should have at least 2 ends");
+                }
+            }
+        }
 
-		private final String name;
-		private final String label;
+        private final class NestedValidatorsIValidator implements IValidator<Link> {
+            @Override
+            public void validate(Diagram diagram, Link link)
+                    throws IllegalArgumentException {
+                if (null == link) {
+                    throw new IllegalArgumentException(
+                            "Link can't be null");
+                }
+                if (isEmpty(link.getKey())) {
+                    throw new IllegalArgumentException(
+                            "Link key can't be empty");
 
-		Parameter(String name, String label) {
-			this.name = name;
-			this.label = label;
-		}
+                }
+                if (null == link.getSockets()) {
+                    throw new IllegalArgumentException(
+                            "Socket list cat be null");
 
-		@Override
-		public String getName() {
-			return name;
-		}
+                }
+            }
+        }
 
-		@Override
-		public String getDisplayName() {
-			return label;
-		}
+        private ValidatorCompositeValidator(IValidator<Link> baseValidator) {
+            super(baseValidator);
+        }
 
-		@Override
-		public String getString(InputAdapter input) {
-			return input.getString(this);
-		}
+        @Override
+        protected Iterable<IValidator<Link>> getNestedValidators() {
+            final List<IValidator<Link>> result = new ArrayList<IValidator<Link>>(
+                    2);
+            result.add(new NestedValidatorsIValidator());
+            result.add(new NestedValidatorsIValidator2());
 
-		@Override
-		public int getInt(InputAdapter input) {
-			return input.getInt(this);
-		}
+            return result;
+        }
+    }
 
-		@Override
-		public boolean getBoolean(InputAdapter input) {
-			return input.getBoolean(this);
-		}
+    public enum Parameter implements IParameter {
+        LineColor("lineColor", "Line Color"), LineStyle("lineStyle",
+                "Line Style"), StartType("s0", "Line Start Type"), EndType(
+                "s1", "Line End Type");
 
-	}
+        private final String name;
+        private final String label;
 
-	@Override
-	public Class<?> getEntityClass() {
-		return Link.class;
-	}
+        Parameter(String name, String label) {
+            this.name = name;
+            this.label = label;
+        }
 
-	@Override
-	public IValidator<Link> getValidator() {
-		return new CompositeValidator<Link>(null) {
+        @Override
+        public String getName() {
+            return name;
+        }
 
-			@Override
-			protected Iterable<IValidator<Link>> getNestedValidators() {
-				final List<IValidator<Link>> result = new ArrayList<IValidator<Link>>(
-						2);
-				result.add(new IValidator<Link>() {
+        @Override
+        public String getDisplayName() {
+            return label;
+        }
 
-					@Override
-					public void validate(Diagram diagram, Link link)
-							throws IllegalArgumentException {
-						if (null == link) {
-							throw new IllegalArgumentException(
-									"Link can't be null");
-						}
-						if (isEmpty(link.getKey())) {
-							throw new IllegalArgumentException(
-									"Link key can't be empty");
+        @Override
+        public String getString(InputAdapter input) {
+            return input.getString(this);
+        }
 
-						}
-						if (null == link.getSockets()) {
-							throw new IllegalArgumentException(
-									"Socket list cat be null");
+        @Override
+        public int getInt(InputAdapter input) {
+            return input.getInt(this);
+        }
 
-						}
-					}
-				});
-				result.add(new IValidator<Link>() {
+        @Override
+        public boolean getBoolean(InputAdapter input) {
+            return input.getBoolean(this);
+        }
 
-					@Override
-					public void validate(Diagram diagram, Link link)
-							throws IllegalArgumentException {
-						if (2 > link.getSockets().size()) {
-							new IllegalArgumentException(
-									"Link should have at least 2 ends");
-						}
-					}
+    }
 
-				});
+    @Override
+    public Class<?> getEntityClass() {
+        return Link.class;
+    }
 
-				return result;
-			}
-		};
-	}
+    @Override
+    public IValidator<Link> getValidator() {
+        return new ValidatorCompositeValidator(null);
+    }
 
-	@Override
-	public UIExistingEntityFormFactory<Link> getEditFormFactory(
-			String diagramKey, Link entity) {
-		return new EditFormFactory(diagramKey, entity);
-	}
+    @Override
+    public UIExistingEntityFormFactory<Link> getEditFormFactory(
+            String diagramKey, Link entity) {
+        return new EditFormFactory(diagramKey, entity);
+    }
 
-	@Override
-	public IRenderer<Link, ILinkRenderContext> getRenderer() {
-		return new LinkRenderer();
-	}
+    @Override
+    public IRenderer<Link, ILinkRenderContext> getRenderer() {
+        return new LinkRenderer();
+    }
 
-	@Override
-	public Link create(InputAdapter input) {
-		Link result = new Link();
-		result.setName(InputParameter.Name.getString(input));
-		result.setLineColor(Link.LineColor.valueOf(Parameter.LineColor
-				.getString(input)));
-		result.setLineStyle(LineStyle.valueOf(Parameter.LineStyle
-				.getString(input)));
+    @Override
+    public Link create(InputAdapter input) {
+        Link result = new Link();
+        result.setName(InputParameter.Name.getString(input));
+        result.setLineColor(Link.LineColor.valueOf(Parameter.LineColor
+                .getString(input)));
+        result.setLineStyle(LineStyle.valueOf(Parameter.LineStyle
+                .getString(input)));
 
-		// Create fake sockets: (TODO: not the best approach (2013/05/07))
-		List<LinkSocket> socketList = new ArrayList<LinkSocket>(2);
-		socketList.add(createLinkSocket(Parameter.StartType, input));
-		socketList.add(createLinkSocket(Parameter.EndType, input));
-		result.setSockets(socketList);
+        // Create fake sockets: (TODO: not the best approach (2013/05/07))
+        List<LinkSocket> socketList = new ArrayList<LinkSocket>(2);
+        socketList.add(createLinkSocket(Parameter.StartType, input));
+        socketList.add(createLinkSocket(Parameter.EndType, input));
+        result.setSockets(socketList);
 
-		return result;
-	}
+        return result;
+    }
 
-	private static LinkSocket createLinkSocket(Parameter param,
-			InputAdapter input) {
-		LinkSocket result = new LinkSocket();
-		result.setLineEnd(LineEnd.valueOf(param.getString(input)));
-		return result;
-	}
+    private static LinkSocket createLinkSocket(Parameter param,
+            InputAdapter input) {
+        LinkSocket result = new LinkSocket();
+        result.setLineEnd(LineEnd.valueOf(param.getString(input)));
+        return result;
+    }
 }
