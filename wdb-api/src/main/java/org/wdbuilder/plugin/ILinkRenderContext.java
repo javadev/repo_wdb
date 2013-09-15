@@ -6,12 +6,12 @@ import java.awt.Graphics2D;
 import org.wdbuilder.domain.Block;
 
 public interface ILinkRenderContext {
-	
-	public Graphics2D getGraphics();
 
-	public Block getBlock(String key);
+    Graphics2D getGraphics();
 
-	public boolean isBlockMode();
-	
-	public Color getDiagramBackgroundColor(); 
+    Block getBlock(String key);
+
+    boolean isBlockMode();
+
+    Color getDiagramBackgroundColor(); 
 }

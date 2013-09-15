@@ -1,6 +1,6 @@
 package org.wdbuilder.plugin;
 
-public interface IPluginFacade<T,S> {	
-	public IRenderer<T,S> getRenderer();
-	public Class<?> getEntityClass();
+public interface IPluginFacade<T, S> {  
+    IRenderer<T, S> getRenderer();
+    Class<?> getEntityClass();
 }
