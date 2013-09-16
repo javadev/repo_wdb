@@ -4,26 +4,26 @@ import org.wdbuilder.domain.LinkSocket;
 import org.wdbuilder.domain.helper.Point;
 
 class LineEndRenderContext extends LineRendererContextBase implements
-		ILineEndRendererContext {
-	private Point baseLocation;
-	private LinkSocket.Direction direction;
+        ILineEndRendererContext {
+    private Point baseLocation;
+    private LinkSocket.Direction direction;
 
-	@Override
-	public Point getBaseLocation() {
-		return baseLocation;
-	}
+    @Override
+    public Point getBaseLocation() {
+        return baseLocation;
+    }
 
-	@Override
-	public LinkSocket.Direction getDirection() {
-		return direction;
-	}
+    @Override
+    public LinkSocket.Direction getDirection() {
+        return direction;
+    }
 
-	void setBaseLocation(Point baseLocation) {
-		this.baseLocation = baseLocation;
-	}
+    void setBaseLocation(Point baseLocation) {
+        this.baseLocation = baseLocation;
+    }
 
-	void setDirection(LinkSocket.Direction direction) {
-		this.direction = direction;
-	}
+    void setDirection(LinkSocket.Direction direction) {
+        this.direction = direction;
+    }
 
 }

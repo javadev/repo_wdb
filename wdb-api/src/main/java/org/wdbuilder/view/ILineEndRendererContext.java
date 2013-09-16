@@ -5,8 +5,8 @@ import org.wdbuilder.domain.helper.Point;
 
 public interface ILineEndRendererContext extends ILineRendererContextBase {
 
-	Point getBaseLocation();
+    Point getBaseLocation();
 
-	LinkSocket.Direction getDirection();
+    LinkSocket.Direction getDirection();
 
 }

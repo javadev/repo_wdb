@@ -11,15 +11,15 @@ import org.wdbuilder.domain.helper.Point;
 // TODO: extract IBlockRenderContext and base for ILinkRenderContext (2013/05/06)
 public interface IRenderContext {
 
-	public boolean isOpaque();
+    boolean isOpaque();
 
-	public boolean isBlockMode();
+    boolean isBlockMode();
 
-	public Point getOffset();
-	
-	public Diagram getDiagram();
-	
-	public Graphics2D getGraphics();
-	
-	public Collection<LinkSocket> getUsedLinkSockets(final Block block);
+    Point getOffset();
+    
+    Diagram getDiagram();
+    
+    Graphics2D getGraphics();
+    
+    Collection<LinkSocket> getUsedLinkSockets(final Block block);
 }

@@ -7,5 +7,5 @@ import org.wdbuilder.domain.ISimpleBackgroundProvider;
 
 
 public interface IBackgroundRenderer<B extends ISimpleBackgroundProvider> {
-  void render( Graphics2D gr, SizedEntity entity,  B background);
-} 
+    void render(Graphics2D gr, SizedEntity entity, B background);
+}
