@@ -7,9 +7,9 @@ import org.wdbuilder.jaxbhtml.HtmlContainer;
 @XmlRootElement(name = "b")
 public class B extends HtmlContainer {
   public B() {
-		super();
-	}
-	public B( String className ) {
-		super( className );
-	}
+        super();
+    }
+    public B(String className) {
+        super(className);
+    }
 }
