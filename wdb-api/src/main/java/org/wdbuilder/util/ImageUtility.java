@@ -9,23 +9,23 @@ import java.awt.image.ImageObserver;
 public abstract class ImageUtility {
 
   public static Graphics2D getGraphics(BufferedImage image) {
-		final Graphics2D result = image.createGraphics();
-		result.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		result.setRenderingHint(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_QUALITY);
-		result.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		return result;
-	}
+        final Graphics2D result = image.createGraphics();
+        result.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        result.setRenderingHint(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
+        result.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        return result;
+    }
 
-	public static ImageObserver getImageObserver() {
-		return new ImageObserver() {
-			@Override
-			public boolean imageUpdate(Image img, int infoflags, int x, int y,
-					int width, int height) {
-				return true;
-			}
-		};
-	}
+    public static ImageObserver getImageObserver() {
+        return new ImageObserver() {
+            @Override
+            public boolean imageUpdate(Image img, int infoflags, int x, int y,
+                    int width, int height) {
+                return true;
+            }
+        };
+    }
 }

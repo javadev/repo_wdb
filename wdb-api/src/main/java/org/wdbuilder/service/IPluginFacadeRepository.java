@@ -7,9 +7,9 @@ import org.wdbuilder.plugin.IPluginFacade;
 
 public interface IPluginFacadeRepository<T extends Entity, U extends IPluginFacade<T, S>, S> {
 
-	public Iterable<U> getPlugins();
+    Iterable<U> getPlugins();
 
-	public U getFacade(Class<?> klass);
+    U getFacade(Class<?> klass);
 
-	public Collection<Class<?>> getEntityClasses();
+    Collection<Class<?>> getEntityClasses();
 }

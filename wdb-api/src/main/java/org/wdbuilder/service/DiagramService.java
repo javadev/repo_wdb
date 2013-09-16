@@ -9,28 +9,28 @@ import org.wdbuilder.domain.helper.Dimension;
 
 public interface DiagramService {
 
-	public static final int LINE_OFFSET = 10;
+    int LINE_OFFSET = 10;
 
-	public static final Dimension LINE_AREA = new Dimension(6, 6);
+    Dimension LINE_AREA = new Dimension(6, 6);
 
-	public static final Dimension RESIZE_AREA = new Dimension(11, 11);
+    Dimension RESIZE_AREA = new Dimension(11, 11);
 
-	Collection<Diagram> retrieveList();
+    Collection<Diagram> retrieveList();
 
-	Diagram get(String diagramKey);
+    Diagram get(String diagramKey);
 
-	void setSize(String diagramKey, int width, int height);
+    void setSize(String diagramKey, int width, int height);
 
-	String persist(String name, String backgroundKey);
-	
-	void upload( Diagram diagram );
+    String persist(String name, String backgroundKey);
 
-	void update(String diagramKey, String name, String backgroundKey);
+    void upload(Diagram diagram);
 
-	void delete(String diagramKey);
-	
-	EntityServiceBase<Block> getBlockService( String diagramKey );
-	
-	EntityServiceBase<Link> getLinkService( String diagramKey );
+    void update(String diagramKey, String name, String backgroundKey);
+
+    void delete(String diagramKey);
+
+    EntityServiceBase<Block> getBlockService(String diagramKey);
+
+    EntityServiceBase<Link> getLinkService(String diagramKey);
 
 }

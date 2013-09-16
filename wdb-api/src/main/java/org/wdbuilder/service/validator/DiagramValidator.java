@@ -11,118 +11,122 @@ import org.wdbuilder.validator.IValidator;
 
 public class DiagramValidator extends CompositeValidator<Diagram> {
 
-  private static final int MIN_NAME_LENGTH = 3;
-	private static final int MAX_NAME_LENGTH = 128;
-	public static final Dimension MIN_SIZE = new Dimension(320, 240);
-	private static final Dimension MAX_SIZE = new Dimension(1280, 1024);
+    private final class NestedValidator3IValidator implements IValidator<Diagram> {
+    @Override
+    public void validate(Diagram diagram, Diagram entity)
+            throws IllegalArgumentException {
+        int height = diagram.getSize().getHeight();
 
-	private static final int MARGIN = 10;
+        if (getMinHeight() > height) {
+            throw new IllegalArgumentException(
+                    "Diagram's height is too small");
+        }
+        if (MAX_SIZE.getHeight() < height) {
+            throw new IllegalArgumentException(
+                    "Diagram's height is too large");
+        }
+    }
+  }
 
-	private final Diagram diagram;
+    private final class NestedValidator2IValidator implements IValidator<Diagram> {
+    @Override
+    public void validate(Diagram diagram, Diagram entity)
+            throws IllegalArgumentException {
+        int width = diagram.getSize().getWidth();
 
-	public DiagramValidator(Diagram diagram) {
-		super(null);
-		this.diagram = diagram;
-	}
+        if (getMinWidth() > width) {
+            throw new IllegalArgumentException(
+                    "Diagram's width is too small");
+        }
+        if (MAX_SIZE.getWidth() < width) {
+            throw new IllegalArgumentException(
+                    "Diagram's width is too large");
+        }
+    }
+  }
 
-	@Override
-	protected Iterable<IValidator<Diagram>> getNestedValidators() {
-		List<IValidator<Diagram>> result = new ArrayList<IValidator<Diagram>>(2);
-		result.add(new IValidator<Diagram>() {
-			@Override
-			public void validate(Diagram diagram, Diagram entity) // TODO ????
-					throws IllegalArgumentException {
-				if (null == diagram) {
-					throw new IllegalArgumentException("Diagram can't be null");
-				}
-			}
-		});
+    private final class NestedValidator1IValidator implements IValidator<Diagram> {
+    @Override
+    public void validate(Diagram diagram, Diagram entity)
+            throws IllegalArgumentException {
+        String name = diagram.getName();
+        if (null == name) {
+            throw new IllegalArgumentException(
+                    "Diagram's name can't be null");
+        }
+        int len = name.trim().length();
+        if (MIN_NAME_LENGTH > len) {
+            throw new IllegalArgumentException(
+                    "Diagram's name is too short");
+        }
+        if (MAX_NAME_LENGTH < len) {
+            throw new IllegalArgumentException(
+                    "Diagrams's name is too long");
+        }
+    }
+  }
 
-		result.add(new IValidator<Diagram>() {
-			@Override
-			public void validate(Diagram diagram, Diagram entity)
-					throws IllegalArgumentException {
-				String name = diagram.getName();
-				if (null == name) {
-					throw new IllegalArgumentException(
-							"Diagram's name can't be null");
-				}
-				int len = name.trim().length();
-				if (MIN_NAME_LENGTH > len) {
-					throw new IllegalArgumentException(
-							"Diagram's name is too short");
-				}
-				if (MAX_NAME_LENGTH < len) {
-					throw new IllegalArgumentException(
-							"Diagrams's name is too long");
-				}
-			}
-		});
+    public static final Dimension MIN_SIZE = new Dimension(320, 240);
+    private static final int MIN_NAME_LENGTH = 3;
+    private static final int MAX_NAME_LENGTH = 128;
+    private static final Dimension MAX_SIZE = new Dimension(1280, 1024);
 
-		result.add(new IValidator<Diagram>() {
+    private static final int MARGIN = 10;
 
-			@Override
-			public void validate(Diagram diagram, Diagram entity)
-					throws IllegalArgumentException {
-				int width = diagram.getSize().getWidth();
+    private final Diagram diagram;
 
-				if ( getMinWidth() > width) {
-					throw new IllegalArgumentException(
-							"Diagram's width is too small");
-				}
-				if (MAX_SIZE.getWidth() < width) {
-					throw new IllegalArgumentException(
-							"Diagram's width is too large");
-				}
-			}
-		});
+    public DiagramValidator(Diagram diagram) {
+        super(null);
+        this.diagram = diagram;
+    }
 
-		result.add(new IValidator<Diagram>() {
+    @Override
+    protected Iterable<IValidator<Diagram>> getNestedValidators() {
+        List<IValidator<Diagram>> result = new ArrayList<IValidator<Diagram>>(2);
+        result.add(new IValidator<Diagram>() {
+            @Override
+            public void validate(Diagram diagram, Diagram entity)
+                    throws IllegalArgumentException {
+                if (null == diagram) {
+                    throw new IllegalArgumentException("Diagram can't be null");
+                }
+            }
+        });
 
-			@Override
-			public void validate(Diagram diagram, Diagram entity)
-					throws IllegalArgumentException {
-				int height = diagram.getSize().getHeight();
+        result.add(new NestedValidator1IValidator());
 
-				if ( getMinHeight() > height) {
-					throw new IllegalArgumentException(
-							"Diagram's height is too small");
-				}
-				if ( MAX_SIZE.getHeight() < height) {
-					throw new IllegalArgumentException(
-							"Diagram's height is too large");
-				}
-			}
-		});
+        result.add(new NestedValidator2IValidator());
 
-		return result;
-	}
+        result.add(new NestedValidator3IValidator());
 
-	public int getMinHeight() {
-		int result = MIN_SIZE.getHeight();
-		for (Block block : diagram.getBlocks()) {
-			int y = 2 * MARGIN + block.getLocation().getY()
-					+ block.getSize().getHeight() / 2;
-			if( y>result ) {
-				result = y;
-			}
-		}
+        return result;
+    }
 
-		return result;
-	}
-	
-	public int getMinWidth() {
-		int result = MIN_SIZE.getWidth();
-		for (Block block : diagram.getBlocks()) {
-			int x = 2 * MARGIN + block.getLocation().getX()
-					+ block.getSize().getWidth() / 2;
-			if( x>result ) {
-				result = x;
-			}
-		}
+    public int getMinHeight() {
+        int result = MIN_SIZE.getHeight();
+        for (Block block : diagram.getBlocks()) {
+            int y = 2 * MARGIN + block.getLocation().getY()
+                    + block.getSize().getHeight() / 2;
+            if (y > result) {
+                result = y;
+            }
+        }
 
-		return result;
-	}
-	
+        return result;
+    }
+
+    public int getMinWidth() {
+        int result = MIN_SIZE.getWidth();
+        for (Block block : diagram.getBlocks()) {
+            int x = 2 * MARGIN + block.getLocation().getX()
+                    + block.getSize().getWidth() / 2;
+            if (x > result) {
+                result = x;
+            }
+        }
+
+        return result;
+    }
+
 
 }

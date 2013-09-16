@@ -3,12 +3,12 @@ package org.wdbuilder.service;
 import org.wdbuilder.domain.Entity;
 
 public interface EntityServiceBase<T extends Entity> {
-	
-	void setPosition(String key, int x, int y);
 
-	void delete(String key);
+    void setPosition(String key, int x, int y);
 
-	void update(String key, T entity);	
-	
-	String persist(T entity);
+    void delete(String key);
+
+    void update(String key, T entity);
+
+    String persist(T entity);
 }

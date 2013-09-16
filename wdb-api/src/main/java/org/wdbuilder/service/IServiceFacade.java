@@ -9,9 +9,9 @@ import org.wdbuilder.plugin.IRenderContext;
 
 public interface IServiceFacade {
 
-	DiagramService getDiagramService();
+    DiagramService getDiagramService();
 
-	IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> getBlockPluginRepository();
+    IPluginFacadeRepository<Block, IBlockPluginFacade, IRenderContext> getBlockPluginRepository();
 
-	IPluginFacadeRepository<Link, ILinkPluginFacade, ILinkRenderContext> getLinkPluginRepository();
+    IPluginFacadeRepository<Link, ILinkPluginFacade, ILinkRenderContext> getLinkPluginRepository();
 }
