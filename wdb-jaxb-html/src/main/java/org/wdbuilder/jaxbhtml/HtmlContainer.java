@@ -7,20 +7,20 @@ import javax.xml.bind.annotation.XmlAnyElement;
 
 public class HtmlContainer extends AHtmlContainer<IHtml> {
 
-	private Collection<IHtml> list = new ArrayList<IHtml>(8);
-	
-	public HtmlContainer() {
-		super();
-    }	
+    private Collection<IHtml> list = new ArrayList<IHtml>(8);
 
-	public HtmlContainer(String className) {
-		super( className );
+    public HtmlContainer() {
+        super();
     }
 
-	@Override
-	@XmlAnyElement
-	public Collection<IHtml> getContent() {
-		return list;
-	}
+    public HtmlContainer(String className) {
+        super(className);
+    }
+
+    @Override
+    @XmlAnyElement
+    public Collection<IHtml> getContent() {
+        return list;
+    }
 
 }

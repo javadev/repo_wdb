@@ -4,99 +4,99 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 public class HtmlElement implements IHtml {
 
-	private String id;
+    private String id;
 
-	private String className;
+    private String className;
 
-	private String style;
+    private String style;
 
-	private String onClick;
+    private String onClick;
 
-	private String onMouseOver;
+    private String onMouseOver;
 
-	private String title;
-	
-	private String dataToggle;
-	
-	private String dataOriginalTitle;
+    private String title;
 
-	public HtmlElement() {
-		this(null);
-	}
+    private String dataToggle;
 
-	public HtmlElement(String className) {
-		this.className = className;
-	}
+    private String dataOriginalTitle;
 
-	@XmlAttribute(name = "class")
-	public String getClassName() {
-		return this.className;
-	}
+    public HtmlElement() {
+        this(null);
+    }
 
-	public void setClassName(String className) {
-		this.className = className;
-	}
+    public HtmlElement(String className) {
+        this.className = className;
+    }
 
-	@XmlAttribute(name = "style")
-	public String getStyle() {
-		return this.style;
-	}
+    @XmlAttribute(name = "class")
+    public String getClassName() {
+        return this.className;
+    }
 
-	public void setStyle(String style) {
-		this.style = style;
-	}
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
-	@XmlAttribute(name = "id")
-	public String getId() {
-		return this.id;
-	}
+    @XmlAttribute(name = "style")
+    public String getStyle() {
+        return this.style;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setStyle(String style) {
+        this.style = style;
+    }
 
-	@XmlAttribute(name = "onclick")
-	public String getOnClick() {
-		return onClick;
-	}
+    @XmlAttribute(name = "id")
+    public String getId() {
+        return this.id;
+    }
 
-	public void setOnClick(String onClick) {
-		this.onClick = onClick;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	@XmlAttribute(name = "onmouseover")
-	public String getOnMouseOver() {
-		return onMouseOver;
-	}
+    @XmlAttribute(name = "onclick")
+    public String getOnClick() {
+        return onClick;
+    }
 
-	public void setOnMouseOver(String onMouseOver) {
-		this.onMouseOver = onMouseOver;
-	}
+    public void setOnClick(String onClick) {
+        this.onClick = onClick;
+    }
 
-	@XmlAttribute(name = "title")
-	public String getTitle() {
-		return title;
-	}
+    @XmlAttribute(name = "onmouseover")
+    public String getOnMouseOver() {
+        return onMouseOver;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setOnMouseOver(String onMouseOver) {
+        this.onMouseOver = onMouseOver;
+    }
 
-	@XmlAttribute( name = "data-toggle" )
-	public String getDataToggle() {
-		return dataToggle;
-	}
+    @XmlAttribute(name = "title")
+    public String getTitle() {
+        return title;
+    }
 
-	public void setDataToggle(String dataToggle) {
-		this.dataToggle = dataToggle;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	@XmlAttribute( name = "data-original-title" )
-	public String getDataOriginalTitle() {
-		return dataOriginalTitle;
-	}
+    @XmlAttribute(name = "data-toggle")
+    public String getDataToggle() {
+        return dataToggle;
+    }
 
-	public void setDataOriginalTitle(String dataOriginalTitle) {
-		this.dataOriginalTitle = dataOriginalTitle;
-	}
+    public void setDataToggle(String dataToggle) {
+        this.dataToggle = dataToggle;
+    }
+
+    @XmlAttribute(name = "data-original-title")
+    public String getDataOriginalTitle() {
+        return dataOriginalTitle;
+    }
+
+    public void setDataOriginalTitle(String dataOriginalTitle) {
+        this.dataOriginalTitle = dataOriginalTitle;
+    }
 }

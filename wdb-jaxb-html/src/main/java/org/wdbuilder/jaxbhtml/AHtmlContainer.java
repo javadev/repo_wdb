@@ -7,51 +7,51 @@ import javax.xml.bind.annotation.XmlElement;
 
 public abstract class AHtmlContainer<T extends IHtml> extends HtmlElement {
 
-	public AHtmlContainer() {
-		super();
-	}
+    public AHtmlContainer() {
+        super();
+    }
 
-	public AHtmlContainer(String className) {
-		super(className);
-	}
+    public AHtmlContainer(String className) {
+        super(className);
+    }
 
-	public abstract Collection<T> getContent();
+    public abstract Collection<T> getContent();
 
-	private String span;
+    private String span;
 
-	public final AHtmlContainer<T> add(Collection<T> content) {
-		if (null != content) {
-			getContent().addAll(content);
-		}
-		return this;
-	}
+    public final AHtmlContainer<T> add(Collection<T> content) {
+        if (null != content) {
+            getContent().addAll(content);
+        }
+        return this;
+    }
 
-	public final AHtmlContainer<T> add(T[] content) {
-		if (null != content) {
-			add(Arrays.asList(content));
-		}
-		return this;
-	}
+    public final AHtmlContainer<T> add(T[] content) {
+        if (null != content) {
+            add(Arrays.asList(content));
+        }
+        return this;
+    }
 
-	public final AHtmlContainer<T> add(T content) {
-		if (null != content) {
-			getContent().add(content);
-		}
-		return this;
-	}
+    public final AHtmlContainer<T> add(T content) {
+        if (null != content) {
+            getContent().add(content);
+        }
+        return this;
+    }
 
-	public final AHtmlContainer<T> setText(String text) {
-		getContent().clear();
-		this.setSpan(text);
-		return this;
-	}
+    public final AHtmlContainer<T> setText(String text) {
+        getContent().clear();
+        this.setSpan(text);
+        return this;
+    }
 
-	@XmlElement
-	public String getSpan() {
-		return span;
-	}
+    @XmlElement
+    public String getSpan() {
+        return span;
+    }
 
-	public void setSpan(String span) {
-		this.span = span;
-	}
+    public void setSpan(String span) {
+        this.span = span;
+    }
 }

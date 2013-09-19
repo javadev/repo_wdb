@@ -4,18 +4,18 @@ import javax.xml.bind.annotation.XmlValue;
 
 public class HtmlContainedText implements IHtml {
 
-	private String text;
+    private String text;
 
-	public HtmlContainedText() {
+    public HtmlContainedText() {
 
-	}
+    }
 
-	public HtmlContainedText(String text) {
-		this.text = text;
-	}
+    public HtmlContainedText(String text) {
+        this.text = text;
+    }
 
-	@XmlValue
-	public String getText() {
-		return this.text;
-	}
+    @XmlValue
+    public String getText() {
+        return this.text;
+    }
 }
