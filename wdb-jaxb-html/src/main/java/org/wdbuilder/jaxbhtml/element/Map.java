@@ -12,25 +12,24 @@ import org.wdbuilder.jaxbhtml.AHtmlContainer;
 
 @XmlRootElement(name = "map")
 public class Map extends AHtmlContainer<Area> {
-	
-	private String name;
 
-	private Collection<Area> area = new ArrayList<Area>( 4 );
+    private String name;
 
-	@Override
-	@XmlElement( name="area" )
+    private Collection<Area> area = new ArrayList<Area>(4);
+
+    @Override
+    @XmlElement(name = "area")
     public Collection<Area> getContent() {
-	    return this.area;
+        return this.area;
     }
-	
-	public void setName( String name ) {
-		this.name = name;
-	}
-	
-	@XmlAttribute
-	public String getName() {
-		return this.name;
-	}
-	
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlAttribute
+    public String getName() {
+        return this.name;
+    }
 
 }

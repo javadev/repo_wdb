@@ -6,10 +6,10 @@ import org.wdbuilder.jaxbhtml.HtmlContainer;
 
 @XmlRootElement(name = "i")
 public class I extends HtmlContainer {
-	public I() {
-		super();
-	}
-	public I( String className ) {
-		super( className );
-	}
+    public I() {
+        super();
+    }
+    public I(String className) {
+        super(className);
+    }
 }

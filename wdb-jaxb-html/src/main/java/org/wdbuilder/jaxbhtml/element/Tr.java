@@ -12,13 +12,13 @@ import org.wdbuilder.jaxbhtml.AHtmlContainer;
 
 @XmlRootElement(name = "tr")
 public class Tr extends AHtmlContainer<Td> {
-	
-	@XmlElement
-	private final List<Td> td = new ArrayList<Td>( 4 );
+
+    @XmlElement
+    private final List<Td> td = new ArrayList<Td>(4);
 
     @Override
     public Collection<Td> getContent() {
-	    return this.td;
+        return this.td;
     }
-	
+
 }

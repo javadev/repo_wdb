@@ -10,19 +10,19 @@ import org.wdbuilder.jaxbhtml.AHtmlContainer;
 
 class HtmlList extends AHtmlContainer<Li> {
 
-	@XmlElement
-	private List<Li> li = new ArrayList<Li>(8);
+    @XmlElement
+    private List<Li> li = new ArrayList<Li>(8);
 
-	HtmlList() {
-		super();
-	}
+    HtmlList() {
+        super();
+    }
 
-	HtmlList(String className) {
-		super(className);
-	}
+    HtmlList(String className) {
+        super(className);
+    }
 
-	@Override
-	public Collection<Li> getContent() {
-		return this.li;
-	}
+    @Override
+    public Collection<Li> getContent() {
+        return this.li;
+    }
 }
