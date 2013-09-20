@@ -1,4 +1,4 @@
-repo-wdb
+repo-wdb [![Build Status](https://secure.travis-ci.org/javadev/repo_wdb.png)](http://travis-ci.org/javadev/repo_wdb)
 ========
 
 for AJAX based small diagram editor.
