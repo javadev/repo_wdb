@@ -2,8 +2,34 @@ package org.wdbuilder.jaxbhtml.element;
 
 import org.junit.Test;
 import org.w3c.dom.Element;
+import org.wdbuilder.jaxbhtml.element.ElementTest.IChildElementChecker;
 
 public class SimpleHtmlContainerTest extends ElementTest {
+
+    private static final class IChildElementChecker1 implements IChildElementChecker {
+        private final IChildElementChecker noBrChecker;
+        private final IChildElementChecker firstTextSectionChecker;
+
+        private IChildElementChecker1(IChildElementChecker noBrChecker, IChildElementChecker firstTextSectionChecker) {
+            this.noBrChecker = noBrChecker;
+            this.firstTextSectionChecker = firstTextSectionChecker;
+        }
+
+        @Override
+        public void assertElement(int index, Element elem) {
+            switch (index) {
+            case 0:
+                firstTextSectionChecker.assertElement(0, elem);
+                break;
+            case 1:
+                assertElementAndChildren(elem, "nobr", 1,
+                        noBrChecker);
+                break;
+            default:
+                break;
+            }
+        }
+    }
 
     @Test
     public void div() {
@@ -31,20 +57,7 @@ public class SimpleHtmlContainerTest extends ElementTest {
         noBr.setText("non breakable");
         div.add(noBr);
         assertElementAndChildren(toDOM(div), "div", 2,
-                new IChildElementChecker() {
-                    @Override
-                    public void assertElement(int index, Element elem) {
-                        switch (index) {
-                        case 0:
-                            firstTextSectionChecker.assertElement(0, elem);
-                            break;
-                        case 1:
-                            assertElementAndChildren(elem, "nobr", 1,
-                                    noBrChecker);
-                            break;
-                        }
-                    }
-                }, new String[] { "class", "the-class" });
+                new IChildElementChecker1(noBrChecker, firstTextSectionChecker), new String[] { "class", "the-class" });
     }
 
 }

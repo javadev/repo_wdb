@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,7 +44,7 @@ public class ElementTest {
             return doc.getDocumentElement();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Logger.getLogger(ElementTest.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
