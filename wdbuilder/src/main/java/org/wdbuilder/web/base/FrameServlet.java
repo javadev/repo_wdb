@@ -11,55 +11,55 @@ import org.wdbuilder.input.InputParameter;
 import org.wdbuilder.jaxbhtml.element.Img;
 
 public abstract class FrameServlet extends DiagramHelperServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final Random random = new Random(System.currentTimeMillis());
+    private static final Random RANDOM = new Random(System.currentTimeMillis());
 
-	protected abstract void do4Frame(ServletInput input) throws Exception;
+    protected abstract void do4Frame(ServletInput input) throws Exception;
 
-	@Override
-	protected String getContentType() {
-		return CONTENT_TYPE_XML;
-	}
+    @Override
+    protected String getContentType() {
+        return CONTENT_TYPE_XML;
+    }
 
-	@Override
-	protected final void do4DiagramHelper(ServletInput input) throws Exception {
-		do4Frame(input);
-	}
+    @Override
+    protected final void do4DiagramHelper(ServletInput input) throws Exception {
+        do4Frame(input);
+    }
 
-	public static class Image extends Img {
+    public static class Image extends Img {
 
-		public Image(Diagram diagram, Block block, String htmlElementId,
-				String imageMapName) throws JAXBException {
+        public Image(Diagram diagram, Block block, String htmlElementId,
+                String imageMapName) throws JAXBException {
 
-			String map = null == imageMapName ? null : "#" + imageMapName;
+            String map = null == imageMapName ? null : "#" + imageMapName;
 
-			Dimension size = null == block ? diagram.getSize() : block
-					.getSize();
+            Dimension size = null == block ? diagram.getSize() : block
+                    .getSize();
 
-			setSrc(getUrl(diagram, block));
-			setSize(size.toAWT());
-			setUseMap(map);
-			setId(htmlElementId);
-		}
+            setSrc(getUrl(diagram, block));
+            setSize(size.toAWT());
+            setUseMap(map);
+            setId(htmlElementId);
+        }
 
-		private static String getUrl(Diagram diagram, Block block) {
-			StringBuilder url = new StringBuilder(128);
-			url.append("image?").append(getURLPartToAvoidCaching());
-			addParameter(url, InputParameter.DiagramKey.getName(),
-					diagram.getKey());
-			if (null != block) {
-				addParameter(url, InputParameter.BlockKey.getName(),
-						block.getKey());
-			}
-			addParameter(url, "blockOnly", (null != block));
-			return url.toString();
-		}
+        private static String getUrl(Diagram diagram, Block block) {
+            StringBuilder url = new StringBuilder(128);
+            url.append("image?").append(getURLPartToAvoidCaching());
+            addParameter(url, InputParameter.DiagramKey.getName(),
+                    diagram.getKey());
+            if (null != block) {
+                addParameter(url, InputParameter.BlockKey.getName(),
+                        block.getKey());
+            }
+            addParameter(url, "blockOnly", null != block);
+            return url.toString();
+        }
 
-	}
+    }
 
-	public static String getURLPartToAvoidCaching() {
-		return "r=" + random.nextGaussian();
-	}
+    public static String getURLPartToAvoidCaching() {
+        return "r=" + RANDOM.nextGaussian();
+    }
 
 }

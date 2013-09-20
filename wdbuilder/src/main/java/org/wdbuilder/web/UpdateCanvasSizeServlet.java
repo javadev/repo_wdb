@@ -10,11 +10,11 @@ import org.wdbuilder.web.base.ServletInput;
 
 @WebServlet("/update-canvas-size")
 public class UpdateCanvasSizeServlet extends EmptyOutputServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void do4DiagramService(ServletInput input) throws Exception {
-		serviceFacade.getDiagramService().setSize(DiagramKey.getString(input),
-				Width.getInt(input), Height.getInt(input));
-	}
+    @Override
+    protected void do4DiagramService(ServletInput input) throws Exception {
+        serviceFacade.getDiagramService().setSize(DiagramKey.getString(input),
+                Width.getInt(input), Height.getInt(input));
+    }
 }

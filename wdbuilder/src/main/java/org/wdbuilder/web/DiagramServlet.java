@@ -11,18 +11,18 @@ import org.wdbuilder.web.base.ServletInput;
 
 @WebServlet("/diagram")
 public class DiagramServlet extends FrameServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void do4Frame(ServletInput input) throws Exception {
-		input.getState().setDiagram(getDiagram(input));
-		printCanvasFrame(input);
-	}
+    @Override
+    protected void do4Frame(ServletInput input) throws Exception {
+        input.getState().setDiagram(getDiagram(input));
+        printCanvasFrame(input);
+    }
 
-	protected void printCanvasFrame(ServletInput input) throws JAXBException,
-			IOException {
-		new DiagramImage(getDiagram(input),
-				serviceFacade.getBlockPluginRepository())
-				.printCanvasFrame(input);
-	}
+    protected void printCanvasFrame(ServletInput input) throws JAXBException,
+            IOException {
+        new DiagramImage(getDiagram(input),
+                serviceFacade.getBlockPluginRepository())
+                .printCanvasFrame(input);
+    }
 }

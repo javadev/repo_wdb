@@ -12,23 +12,23 @@ import org.wdbuilder.web.base.ServletInput;
 @WebServlet("/create-diagram-save")
 public class CreateDiagramSaveServlet extends DiagramServiceServlet {
 
-	@Override
-	protected void do4DiagramService(ServletInput input) throws Exception {
-		final String key = serviceFacade.getDiagramService().persist(
-				InputParameter.Name.getString(input),
-				InputParameter.Background.getString(input));
+    @Override
+    protected void do4DiagramService(ServletInput input) throws Exception {
+        final String key = serviceFacade.getDiagramService().persist(
+                InputParameter.Name.getString(input),
+                InputParameter.Background.getString(input));
 
-		Diagram diagram = getDiagram(key);
+        Diagram diagram = getDiagram(key);
 
-		// Set the current diagram (TODO silly method):
-		input.getState().setDiagram(diagram);
+        // Set the current diagram (TODO silly method):
+        input.getState().setDiagram(diagram);
 
-		new DiagramImage(diagram, serviceFacade.getBlockPluginRepository())
-				.printCanvasFrame(input);
-	}
+        new DiagramImage(diagram, serviceFacade.getBlockPluginRepository())
+                .printCanvasFrame(input);
+    }
 
-	@Override
-	protected String getContentType() {
-		return CONTENT_TYPE_XML;
-	}
+    @Override
+    protected String getContentType() {
+        return CONTENT_TYPE_XML;
+    }
 }

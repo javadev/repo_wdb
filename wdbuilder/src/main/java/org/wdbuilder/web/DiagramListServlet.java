@@ -26,193 +26,202 @@ import org.wdbuilder.web.base.ServletInput;
 @WebServlet("/diagram-list")
 public class DiagramListServlet extends DiagramServiceServlet {
 
-	private static final String CLASS = "nav nav-list";
+    private static final String CLASS = "nav nav-list";
 
-	private static final IUIAction[] ICONS_FULL = { new IUIActionClick() {
+    private static final IUIAction[] ICONS_FULL = { new IUIActionClick1(), new IUIActionClick2(), new IUIActionClick3(), new IUIActionClick4() };
 
-		@Override
-		public String getTitle() {
-			return "New Diagram";
-		}
+    @Override
+    protected void do4DiagramService(ServletInput input) throws Exception {
+        final PrintWriter writer = input.getResponse().getWriter();
+        final boolean full = Full.getBoolean(input);
+        final String activeKey = getActiveDiagramKey(input);
 
-		@Override
-		public String getResourceId() {
-			return "icon-calendar";
-		}
+        final HtmlWriter htmlWriter = new HtmlWriter(writer);
 
-		@Override
-		public String getOnClickHandler() {
-			return "openCreateCanvasDialog()";
-		}
+        Tr tr = new Tr();
+        if (full) {
+            Td td = new Td();
+            td.setStyle("vertical-align:top");
+            td.add(new DiagramList(activeKey));
+            tr.add(td);
+        }
 
-		@Override
-		public String getClassName() {
-			return "btn-success";
-		}
+        final SectionHeader sectionHeader = new SectionHeader() {
+            @Override
+            public Iterable<IUIAction> getIcons() {
+                IUIAction[] icons = full ? ICONS_FULL
+                        : getIconsForCondensed(activeKey);
+                return Arrays.asList(icons);
+            }
+        };
+        Td td = new Td();
+        td.setStyle("vertical-align: top");
+        td.add(sectionHeader);
+        tr.add(td);
 
-	}, new IUIActionClick() {
+        // Prepare the nested table:
+        Table table = new Table();
+        table.add(tr);
+        htmlWriter.write(table);
+    }
 
-		@Override
-		public String getTitle() {
-			return "Import Diagram";
-		}
+    private static String getActiveDiagramKey(ServletInput input) {
+        if (null == input) {
+            return null;
+        }
+        ApplicationState state = input.getState();
+        if (null == state) {
+            return null;
+        }
+        Diagram diagram = state.getDiagram();
+        if (null == diagram) {
+            return null;
+        }
+        return diagram.getKey();
+    }
 
-		@Override
-		public String getResourceId() {
-			return "icon-upload";
-		}
+    private static IUIAction[] getIconsForCondensed(final String activeKey) {
+        IUIAction[] result = new IUIAction[1];
+        result[0] = new IUIActionClickResult(activeKey);
+        return result;
 
-		@Override
-		public String getOnClickHandler() {
-			return "openImportDiagramDialog()";
-		}
+    }
 
-		@Override
-		public String getClassName() {
-			return "btn-success";
-		}
+    @Override
+    protected String getContentType() {
+        return CONTENT_TYPE_XML;
+    }
 
-	}, new IUIActionClick() {
+    private static final class IUIActionClickResult extends IUIActionClick {
+        private final String activeKey;
 
-		@Override
-		public String getResourceId() {
-			return "icon-refresh";
-		}
+        private IUIActionClickResult(String activeKey) {
+            this.activeKey = activeKey;
+        }
 
-		@Override
-		public String getTitle() {
-			return "Refresh Diagram List";
-		}
+        @Override
+        public String getTitle() {
+            return "Show Diagram List";
+        }
 
-		@Override
-		public String getOnClickHandler() {
-			return "refreshDiagramList()";
-		}
-	}, new IUIActionClick() {
+        @Override
+        public String getResourceId() {
+            return "icon-list-alt";
+        }
 
-		@Override
-		public String getResourceId() {
-			return "icon-off";
-		}
+        @Override
+        public String getOnClickHandler() {
+            return "loadDiagramList(true, '" + activeKey + "')";
+        }
+    }
 
-		@Override
-		public String getTitle() {
-			return "Hide Diagram List";
-		}
+    private static final class IUIActionClick4 extends IUIActionClick {
+        @Override
+        public String getResourceId() {
+            return "icon-off";
+        }
 
-		@Override
-		public String getOnClickHandler() {
-			return "loadDiagramList(false, '')";
-		}
-	} };
+        @Override
+        public String getTitle() {
+            return "Hide Diagram List";
+        }
 
-	@Override
-	protected void do4DiagramService(ServletInput input) throws Exception {
-		final PrintWriter writer = input.getResponse().getWriter();
-		final boolean full = Full.getBoolean(input);
-		final String activeKey = getActiveDiagramKey(input);
+        @Override
+        public String getOnClickHandler() {
+            return "loadDiagramList(false, '')";
+        }
+    }
 
-		final HtmlWriter htmlWriter = new HtmlWriter(writer);
+    private static final class IUIActionClick3 extends IUIActionClick {
+        @Override
+        public String getResourceId() {
+            return "icon-refresh";
+        }
 
-		Tr tr = new Tr();
-		if (full) {
-			Td td = new Td();
-			td.setStyle("vertical-align:top");
-			td.add(new DiagramList(activeKey));
-			tr.add(td);
-		}
+        @Override
+        public String getTitle() {
+            return "Refresh Diagram List";
+        }
 
-		final SectionHeader sectionHeader = new SectionHeader() {
-			@Override
-			public Iterable<IUIAction> getIcons() {
-				IUIAction[] icons = full ? ICONS_FULL
-						: getIconsForCondensed(activeKey);
-				return Arrays.asList(icons);
-			}
-		};
-		Td td = new Td();
-		td.setStyle("vertical-align: top");
-		td.add(sectionHeader);
-		tr.add(td);
+        @Override
+        public String getOnClickHandler() {
+            return "refreshDiagramList()";
+        }
+    }
 
-		// Prepare the nested table:
-		Table table = new Table();
-		table.add(tr);
-		htmlWriter.write(table);
-	}
+    private static final class IUIActionClick2 extends IUIActionClick {
+        @Override
+        public String getTitle() {
+            return "Import Diagram";
+        }
 
-	private static String getActiveDiagramKey(ServletInput input) {
-		if (null == input) {
-			return null;
-		}
-		ApplicationState state = input.getState();
-		if (null == state) {
-			return null;
-		}
-		Diagram diagram = state.getDiagram();
-		if (null == diagram) {
-			return null;
-		}
-		return diagram.getKey();
-	}
+        @Override
+        public String getResourceId() {
+            return "icon-upload";
+        }
 
-	private static final IUIAction[] getIconsForCondensed(final String activeKey) {
-		IUIAction[] result = new IUIAction[1];
-		result[0] = new IUIActionClick() {
+        @Override
+        public String getOnClickHandler() {
+            return "openImportDiagramDialog()";
+        }
 
-			@Override
-			public String getTitle() {
-				return "Show Diagram List";
-			}
+        @Override
+        public String getClassName() {
+            return "btn-success";
+        }
+    }
 
-			@Override
-			public String getResourceId() {
-				return "icon-list-alt";
-			}
+    private static final class IUIActionClick1 extends IUIActionClick {
+        @Override
+        public String getTitle() {
+            return "New Diagram";
+        }
 
-			@Override
-			public String getOnClickHandler() {
-				return "loadDiagramList(true, '" + activeKey + "')";
-			}
-		};
-		return result;
+        @Override
+        public String getResourceId() {
+            return "icon-calendar";
+        }
 
-	}
+        @Override
+        public String getOnClickHandler() {
+            return "openCreateCanvasDialog()";
+        }
 
-	@Override
-	protected String getContentType() {
-		return CONTENT_TYPE_XML;
-	}
+        @Override
+        public String getClassName() {
+            return "btn-success";
+        }
+    }
 
-	private class DiagramList extends Ul {
+    private class DiagramList extends Ul {
 
-		private final String activeKey;
+        private final String activeKey;
 
-		public DiagramList(String activeKey) throws JAXBException {
-			super(CLASS);
-			this.activeKey = activeKey;
-			final Collection<Diagram> list = serviceFacade.getDiagramService()
-					.retrieveList();
-			for (final Diagram obj : list) {
-				add(createItem(obj));
-			}
-		}
+        public DiagramList(String activeKey) throws JAXBException {
+            super(CLASS);
+            this.activeKey = activeKey;
+            final Collection<Diagram> list = serviceFacade.getDiagramService()
+                    .retrieveList();
+            for (final Diagram obj : list) {
+                add(createItem(obj));
+            }
+        }
 
-		private Li createItem(Diagram obj) {
-			final String key = obj.getKey();
-			final String onClick = "loadDiagram( '" + key + "')";
-			A a = new A();
-			a.setOnClick(onClick);
-			a.setText(obj.getName());
-			Li result = new Li();
-			result.setId("d" + key);
-			if (key.equals(activeKey)) {
-				result.setClassName("active");
-			}
-			result.add(a);
-			return result;
-		}
+        private Li createItem(Diagram obj) {
+            final String key = obj.getKey();
+            final String onClick = "loadDiagram( '" + key + "')";
+            A a = new A();
+            a.setOnClick(onClick);
+            a.setText(obj.getName());
+            Li result = new Li();
+            result.setId("d" + key);
+            if (key.equals(activeKey)) {
+                result.setClassName("active");
+            }
+            result.add(a);
+            return result;
+        }
 
-	}
+    }
 
 }

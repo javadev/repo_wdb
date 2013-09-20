@@ -14,18 +14,18 @@ import com.google.common.io.Resources;
 public class ResourceImageServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-	public static final String IMAGE_FORMAT = "png";
+    public static final String IMAGE_FORMAT = "png";
 
-	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException {
-		try {
-			final String path = request.getParameter("path");
-			final URL url = Resources.getResource(path);
-			response.setContentType("image/" + IMAGE_FORMAT);
-			Resources.copy(url, response.getOutputStream());
-		} catch (Exception ex) {
-			throw new ServletException(ex);
-		}
-	}
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException {
+        try {
+            final String path = request.getParameter("path");
+            final URL url = Resources.getResource(path);
+            response.setContentType("image/" + IMAGE_FORMAT);
+            Resources.copy(url, response.getOutputStream());
+        } catch (Exception ex) {
+            throw new ServletException(ex);
+        }
+    }
 }

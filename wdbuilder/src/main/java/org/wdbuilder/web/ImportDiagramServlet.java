@@ -14,20 +14,20 @@ import org.wdbuilder.web.base.ServletInput;
 @WebServlet("/import-diagram")
 public class ImportDiagramServlet extends DiagramServiceServlet {
 
-	@Override
-	protected void do4DiagramService(ServletInput input) throws Exception {
-		final PrintWriter writer = input.getResponse().getWriter();
+    @Override
+    protected void do4DiagramService(ServletInput input) throws Exception {
+        final PrintWriter writer = input.getResponse().getWriter();
 
-		final TwoColumnForm form = new TwoColumnForm("import-diagram-save",
-				"Import Diagram").addFileField(DiagramKey).addFooter(
-				"submitImportDiagram()", "refreshDiagramList()");
-		form.setEncodeType("multipart/form-data; boundary=--------------------6361092470262692186");
+        final TwoColumnForm form = new TwoColumnForm("import-diagram-save",
+                "Import Diagram").addFileField(DiagramKey).addFooter(
+                "submitImportDiagram()", "refreshDiagramList()");
+        form.setEncodeType("multipart/form-data; boundary=--------------------6361092470262692186");
 
-		new HtmlWriter(writer).write(form);
-	}
+        new HtmlWriter(writer).write(form);
+    }
 
-	@Override
-	protected String getContentType() {
-		return DiagramServlet.CONTENT_TYPE_XML;
-	}
+    @Override
+    protected String getContentType() {
+        return DiagramServlet.CONTENT_TYPE_XML;
+    }
 }

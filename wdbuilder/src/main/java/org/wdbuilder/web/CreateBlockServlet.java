@@ -18,34 +18,34 @@ import org.wdbuilder.web.base.ServletInput;
 @WebServlet("/create-block")
 public class CreateBlockServlet extends DiagramHelperFormServlet {
 
-	@Override
-	protected void do4DiagramHelperForm(ServletInput input) throws Exception {
-		final PrintWriter writer = input.getResponse().getWriter();
+    @Override
+    protected void do4DiagramHelperForm(ServletInput input) throws Exception {
+        final PrintWriter writer = input.getResponse().getWriter();
 
-		final String str = DiagramKey.getString(input);
+        final String str = DiagramKey.getString(input);
 
-		final String blockClassStr = BlockClass.getString(input);
-		if (StringUtils.isEmpty(blockClassStr)) {
-			return;
-		}
+        final String blockClassStr = BlockClass.getString(input);
+        if (StringUtils.isEmpty(blockClassStr)) {
+            return;
+        }
 
-		IBlockPluginFacade pluginFacade = serviceFacade
-				.getBlockPluginRepository().getFacade(
-						Class.forName(blockClassStr));
-		if (null == pluginFacade) {
-			return;
-		}
-		final UINewBlockFormFactory formFactory = pluginFacade
-				.getCreateFormFactory(str);
+        IBlockPluginFacade pluginFacade = serviceFacade
+                .getBlockPluginRepository().getFacade(
+                        Class.forName(blockClassStr));
+        if (null == pluginFacade) {
+            return;
+        }
+        final UINewBlockFormFactory formFactory = pluginFacade
+                .getCreateFormFactory(str);
 
-		final String submitFunctionCall = formFactory.getSubmitCall();
+        final String submitFunctionCall = formFactory.getSubmitCall();
 
-		String closeHandler = "loadDiagram('" + str + "')";
+        String closeHandler = "loadDiagram('" + str + "')";
 
-		final TwoColumnForm form = formFactory.getForm().addFooter(
-				submitFunctionCall, closeHandler);
+        final TwoColumnForm form = formFactory.getForm().addFooter(
+                submitFunctionCall, closeHandler);
 
-		new HtmlWriter(writer).write(form);
-	}
+        new HtmlWriter(writer).write(form);
+    }
 
 }

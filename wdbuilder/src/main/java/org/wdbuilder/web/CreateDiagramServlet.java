@@ -16,22 +16,22 @@ import org.wdbuilder.web.base.ServletInput;
 @WebServlet("/create-diagram")
 public class CreateDiagramServlet extends DiagramServiceServlet {
 
-	@Override
-	protected void do4DiagramService(ServletInput input) throws Exception {
-		final PrintWriter writer = input.getResponse().getWriter();
+    @Override
+    protected void do4DiagramService(ServletInput input) throws Exception {
+        final PrintWriter writer = input.getResponse().getWriter();
 
-		final PredefinedSelect<DiagramBackground> selectField = new PredefinedSelect<DiagramBackground>(
-				DiagramBackground.values(), DiagramBackground.White);
+        final PredefinedSelect<DiagramBackground> selectField = new PredefinedSelect<DiagramBackground>(
+                DiagramBackground.values(), DiagramBackground.White);
 
-		final TwoColumnForm form = new TwoColumnForm("create-diagram-save", "New Diagram")
-				.addTextField(InputParameter.Name, "")
-				.addSelectField(InputParameter.Background, selectField)
-				.addFooter("submitCreateCanvas()", "refreshDiagramList()");
-		new HtmlWriter(writer).write(form);
-	}
+        final TwoColumnForm form = new TwoColumnForm("create-diagram-save", "New Diagram")
+                .addTextField(InputParameter.Name, "")
+                .addSelectField(InputParameter.Background, selectField)
+                .addFooter("submitCreateCanvas()", "refreshDiagramList()");
+        new HtmlWriter(writer).write(form);
+    }
 
-	@Override
-	protected String getContentType() {
-		return DiagramServlet.CONTENT_TYPE_XML;
-	}
+    @Override
+    protected String getContentType() {
+        return DiagramServlet.CONTENT_TYPE_XML;
+    }
 }

@@ -11,10 +11,10 @@ import org.wdbuilder.web.base.ServletInput;
 @WebServlet("/edit-diagram-save")
 public class EditDiagramSaveServlet extends DiagramServlet {
 
-	@Override
-	protected void do4Frame(ServletInput input) throws Exception {
-		serviceFacade.getDiagramService().update(DiagramKey.getString(input),
-				Name.getString(input), Background.getString(input));
-		printCanvasFrame(input);
-	}
+    @Override
+    protected void do4Frame(ServletInput input) throws Exception {
+        serviceFacade.getDiagramService().update(DiagramKey.getString(input),
+                Name.getString(input), Background.getString(input));
+        printCanvasFrame(input);
+    }
 }

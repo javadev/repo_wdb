@@ -12,24 +12,24 @@ import org.wdbuilder.web.base.ServletInput;
 @WebServlet("/edit-link-save")
 public class EditLinkSaveServlet extends DiagramServlet {
 
-	@Override
-	protected void do4Frame(ServletInput input) throws Exception {
+    @Override
+    protected void do4Frame(ServletInput input) throws Exception {
 
-		final String diagramKey = DiagramKey.getString(input);
-		final String linkKey = LinkKey.getString(input);
-		final Link persistedLink = getDiagram(input).getLink(linkKey);
-		if (null == persistedLink) {
-			return;
-		}
+        final String diagramKey = DiagramKey.getString(input);
+        final String linkKey = LinkKey.getString(input);
+        final Link persistedLink = getDiagram(input).getLink(linkKey);
+        if (null == persistedLink) {
+            return;
+        }
 
-		ILinkPluginFacade pluginFacade = serviceFacade
-				.getLinkPluginRepository().getFacade(persistedLink.getClass());
-		Link link = pluginFacade.create(input);
+        ILinkPluginFacade pluginFacade = serviceFacade
+                .getLinkPluginRepository().getFacade(persistedLink.getClass());
+        Link link = pluginFacade.create(input);
 
-		serviceFacade.getDiagramService().getLinkService(diagramKey)
-				.update(linkKey, link);
-		printCanvasFrame(input);
+        serviceFacade.getDiagramService().getLinkService(diagramKey)
+                .update(linkKey, link);
+        printCanvasFrame(input);
 
-	}
+    }
 
 }

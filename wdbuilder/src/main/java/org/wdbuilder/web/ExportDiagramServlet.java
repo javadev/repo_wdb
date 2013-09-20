@@ -12,27 +12,27 @@ import org.wdbuilder.web.base.ServletInput;
 
 @WebServlet("/exported/*")
 public class ExportDiagramServlet extends DiagramHelperServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void do4DiagramHelper(ServletInput input) throws Exception {
-		
-		JAXBContext jaxbContext = JAXBContext.newInstance(getClassesForMarshaling());
-		Marshaller marshaller = jaxbContext.createMarshaller();
+    @Override
+    protected void do4DiagramHelper(ServletInput input) throws Exception {
+        
+        JAXBContext jaxbContext = JAXBContext.newInstance(getClassesForMarshaling());
+        Marshaller marshaller = jaxbContext.createMarshaller();
 
-		ZipOutputStream zipStream = new ZipOutputStream(input.getResponse().getOutputStream());
-		zipStream.putNextEntry(new ZipEntry("diagram.xml"));
+        ZipOutputStream zipStream = new ZipOutputStream(input.getResponse().getOutputStream());
+        zipStream.putNextEntry(new ZipEntry("diagram.xml"));
 
-		marshaller.marshal(getDiagram(input), zipStream);
+        marshaller.marshal(getDiagram(input), zipStream);
 
-		zipStream.closeEntry();
+        zipStream.closeEntry();
 
-		zipStream.close();
-	}
+        zipStream.close();
+    }
 
-	@Override
-	protected String getContentType() {
-		return "application/zip";
-	}
+    @Override
+    protected String getContentType() {
+        return "application/zip";
+    }
 
 }
